@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen>
                       ));
                 }),
 
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
                 const Padding(
                   padding: EdgeInsets.all(50.0),
