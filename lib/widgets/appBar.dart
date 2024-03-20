@@ -26,36 +26,28 @@ class _MoticarAppBarState extends State<MoticarAppBar> {
       title: Text(
         widget.title,
         style: const TextStyle(
-          fontFamily: "Onest",
-          fontSize: 15,
-          letterSpacing: 1,
-          color: AppColors.textGrey,
-          // const Color(0xff344054),
-          fontWeight: FontWeight.w700,
+          fontFamily: "Neulis",
+          fontSize: 16,
+          fontStyle: FontStyle.normal,
+          letterSpacing: 1.2,
+          color: AppColors.white,
+          fontWeight: FontWeight.w500,
         ),
       ),
-      elevation: 0,
+      elevation: 1,
       centerTitle: true,
       automaticallyImplyLeading: false,
       leading: IconButton(
         onPressed: () {
           Navigator.pop(context);
         },
-        icon: Container(
-          height: 40,
-          width: 40,
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-               color: AppColors.fadeWhite
-               ),
-          child: const Icon(
-            Icons.keyboard_backspace_rounded,
-            color: Colors.black,
-          ),
+        icon: const Icon(
+          Icons.arrow_back_ios_new_rounded,
+          size: 20,
+          color: Colors.white,
         ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.appThemeColor,
       shadowColor: Colors.white,
       surfaceTintColor: Colors.white,
     );

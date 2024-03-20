@@ -14,18 +14,18 @@ class PageIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 20.0),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(totalPages, (index) {
               return Container(
-                width: 40.0,
+                width: 85.0,
                 height: 5.0,
                 // padding: EdgeInsets.all(2),
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 3.0,
+                margin: const EdgeInsets.only(
+                  right: 6.0,
                 ),
                 decoration: BoxDecoration(
                   // shape: BoxShape.rectangle,

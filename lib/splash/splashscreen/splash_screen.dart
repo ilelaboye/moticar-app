@@ -39,6 +39,8 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return const OnBoardingScreenPage();
       }));
+
+      //
     });
   }
 
@@ -59,12 +61,11 @@ class _SplashScreenState extends State<SplashScreen>
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         alignment: Alignment.center,
-        color: AppColors.white,
+        color: AppColors.yellow,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(),
-
             AnimatedBuilder(
                 animation: _animation,
                 builder: (context, child) {
@@ -72,20 +73,19 @@ class _SplashScreenState extends State<SplashScreen>
                       scale: _animation.value,
                       child: Image.asset(
                         'assets/images/moticar.png',
-                        height: 100,
-                        width: 100,
+                        height: 150,
+                        width: 150,
                       ));
                 }),
-
-                const SizedBox(height: 10,),
-
-                const Padding(
-                  padding: EdgeInsets.all(50.0),
-                  child: MoticarText(text: 'Every kobo of your car expenses is just a tap away!', fontSize: 15, fontWeight: FontWeight.w600,
-                   fontColor: AppColors.appThemeColor),
-                ),
-
-                  
+            const Padding(
+              padding: EdgeInsets.only(top: 90.0, left: 50, right: 50),
+              child: MoticarText(
+                  text:
+                      'Every kobo of your car \nexpenses \nis just a tap away!',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  fontColor: AppColors.appThemeColor),
+            ),
           ],
         ),
       ),

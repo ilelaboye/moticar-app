@@ -1,23 +1,19 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-
 import '../../auth/login/login.dart';
 import '../../auth/signup/signup.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 import 'intro_page_1.dart';
-import 'intro_page_3.dart';
 
-class IntroPage2 extends StatefulWidget {
-  const IntroPage2({super.key});
+class IntroPage4 extends StatefulWidget {
+  const IntroPage4({super.key});
 
   @override
-  State<IntroPage2> createState() => _IntroPage2State();
+  State<IntroPage4> createState() => _IntroPage4State();
 }
 
-class _IntroPage2State extends State<IntroPage2> with TickerProviderStateMixin {
+class _IntroPage4State extends State<IntroPage4> with TickerProviderStateMixin {
   //lottie controller
   late final AnimationController lottiecontroller;
 
@@ -65,7 +61,7 @@ class _IntroPage2State extends State<IntroPage2> with TickerProviderStateMixin {
 
                 SizedBox(
                     height: MediaQuery.of(context).size.height * 0.48,
-                    child: Image.asset("assets/images/step2.png")),
+                    child: Image.asset("assets/images/step4.png")),
 
                 const SizedBox(
                   height: 20,

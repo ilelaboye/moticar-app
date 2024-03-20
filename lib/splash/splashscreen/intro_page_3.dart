@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:moticar/splash/splashscreen/intro_page_4.dart';
 
-import '../../auth/login-android.dart';
+import '../../auth/login/login.dart';
+import '../../auth/signup/signup.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
-import '../../widgets/page_indicator.dart';
+import 'intro_page_1.dart';
 
 class IntroPage3 extends StatefulWidget {
   const IntroPage3({super.key});
@@ -29,86 +32,131 @@ class _IntroPage3State extends State<IntroPage3> with TickerProviderStateMixin {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          color: AppColors.white,
+          color: AppColors.appThemeColor,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Padding(
-            padding: const EdgeInsets.all(0),
+            padding:
+                const EdgeInsets.only(top: 35, left: 10, right: 10, bottom: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // const SizedBox(
-                //   height: 30,
-                // ),
-
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  alignment: Alignment.bottomCenter,
-                  child: Image.asset(
-                    'assets/images/invoice.png',
-                    // height: 400,
-                    width: 350,
-                  ),
+                const MoticarText(
+                    text: "How moticar works",
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    fontColor: Colors.white),
+                const Padding(
+                  padding: EdgeInsets.only(
+                      left: 50.0, right: 50, top: 15, bottom: 20),
+                  child: Text(
+                      "Get all the insights to your car in 4 easy steps!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: "Neulis",
+                          fontSize: 18,
+                          fontStyle: FontStyle.normal,
+                          height: 1.2,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white)),
                 ),
 
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text("Effortless Record-Keeping! \n Auto Receipts!",
-                          textAlign: TextAlign.center,
-                          // maxLines: 2,
-                          style: TextStyle(fontFamily: "Onest",
-                              fontSize: 22,
-                              height: 1.5,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.green)),
-                      const Text(
-                          "Say goodbye to paper clutter. Auto Receipts \n gives you immediate access to purchased details after each transaction - try it now!",
-                          textAlign: TextAlign.center,
-                          // maxLines: 3,
-                          softWrap: true,
-                          style: TextStyle(fontFamily: "Onest",
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.black)),
-                      const PageIndicator(
-                          indicatorColor: AppColors.appThemeColor,
-                          currentPage: 3,
-                          totalPages: 3),
-                      MoticarButton(
-                        height: 60,
-                        width: MediaQuery.of(context).size.width - 30,
-                        onTap: () {
-                           Navigator.push(context, MaterialPageRoute(builder: (context){
+                SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.48,
+                    child: Image.asset("assets/images/step3.png")),
+
+                const SizedBox(
+                  height: 20,
+                ),
+
+                // const PageIndicator(
+                //     indicatorColor: AppColors.successYellow,
+                //     currentPage: 1,
+                //     totalPages: 3),
+                Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    MoticarLoginButton(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const SignUpPage();
+                        }));
+                        // context.router.push(const LoginRouteCopy());
+                      },
+                      child: const MoticarText(
+                        fontColor: AppColors.appThemeColor,
+                        text: 'Sign up & get started',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 8,
+                    ),
+
+                    //other social media buttons
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        //facebook, google and twitter
+
+                        OtherLoginButton(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                            "assets/svgs/faceB.svg",
+                            height: 32,
+                          ),
+                        ),
+
+                        OtherLoginButton(
+                            onTap: () {},
+                            child: SvgPicture.asset("assets/svgs/Google.svg")),
+
+                        OtherLoginButton(
+                          onTap: () {},
+                          child: SvgPicture.asset("assets/svgs/x.svg"),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 12,
+                    ),
+
+                    //login button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const MoticarText(
+                          fontColor: Colors.white,
+                          text: "Already have an account?",
+                          fontSize: 16,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                        ),
+
+                        //
+                        TextButton(
+                          child: const MoticarText(
+                            fontColor: AppColors.lightGreen,
+                            text: 'Sign in',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          onPressed: () {
+                             Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
                               return const LoginPage();
                             }));
-                        },
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            MoticarText(
-                              fontColor: AppColors.white,
-                              text: 'Start Shopping',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Icon(
-                              Icons.arrow_forward,
-                              color: AppColors.white,
-                              size: 19,
-                            )
-                          ],
+                          },
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
-
-                //
               ],
             ),
           ),

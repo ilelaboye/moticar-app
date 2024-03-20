@@ -4,8 +4,8 @@ import '../widgets/app_texts.dart';
 import '../widgets/colors.dart';
 import 'otp.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginOldPage extends StatelessWidget {
+  const LoginOldPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -156,10 +156,10 @@ class _ForgotPasswordBottomSheetState extends State<ForgotPasswordBottomSheet> {
               height: 60,
               width: MediaQuery.of(context).size.width - 30,
               onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) {
-                  return VerificationPage(email: emailController.text);
-                }));
+                // Navigator.pushReplacement(context,
+                //     MaterialPageRoute(builder: (context) {
+                //   return VerificationPage(email: emailController.text);
+                // }));
               },
               child: const MoticarText(
                 fontColor: AppColors.white,

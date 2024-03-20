@@ -8,10 +8,12 @@ class MoticarText extends StatelessWidget {
   final double fontSize;
   final Color fontColor;
   final FontWeight fontWeight;
+  final FontStyle? fontStyle;
   const MoticarText(
       {super.key,
       required this.text,
       required this.fontSize,
+      this.fontStyle,
       required this.fontWeight,
       required this.fontColor});
 
@@ -21,9 +23,10 @@ class MoticarText extends StatelessWidget {
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
-          fontFamily: 'Onest',
+          fontFamily: 'Neulis',
           fontSize: fontSize,
           fontWeight: fontWeight,
+          letterSpacing: 1.2,
           color: fontColor),
     );
   }
@@ -59,7 +62,13 @@ class MoticarButton extends StatelessWidget {
 class MoticarLoginButton extends StatelessWidget {
   final child;
   final void Function() onTap;
-  const MoticarLoginButton({super.key, required this.child, required this.onTap});
+  final Color? myColor, borderColor;
+  const MoticarLoginButton(
+      {super.key,
+      required this.child,
+      this.borderColor,
+      this.myColor,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +76,13 @@ class MoticarLoginButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
           height: 60,
-          width: 330,
+          width: MediaQuery.of(context).size.width - 30,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: AppColors.successYellow,
+              color: myColor ?? AppColors.successYellow,
               border: Border.all(
-                  color: AppColors.appThemeColor, style: BorderStyle.solid),
+                  color: borderColor ?? AppColors.appThemeColor,
+                  style: BorderStyle.solid),
               borderRadius: BorderRadius.circular(40)),
           child: child),
     );

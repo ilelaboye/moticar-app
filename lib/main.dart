@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:moticar/widgets/colors.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'services/hivekeys.dart';
 import 'splash/splashscreen/splash_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+
+  await Hive.initFlutter();
+  await Hive.openBox(HiveKeys.appBox);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (_) async {
+      runApp(
+        const ProviderScope(child: MyApp()),
+      );
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,10 +30,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Color.fromARGB(255, 248, 200, 7)),
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
           useMaterial3: true,
-          fontFamily: "Onest"),
+          fontFamily: "Neulis",
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(fontFamily: 'Neulis'),
+          )),
       home: const SplashScreen(),
     );
   }

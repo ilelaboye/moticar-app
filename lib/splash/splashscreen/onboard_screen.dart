@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'intro_page_1.dart';
 import 'intro_page_2.dart';
 import 'intro_page_3.dart';
+import 'intro_page_4.dart';
 
 // @RoutePage()
 class OnBoardingScreenPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
                 });
               },
               controller: _controller,
-              children: const [IntroPage1(), IntroPage2(), IntroPage3()],
+              children: const [IntroPage1(), IntroPage2(), IntroPage3(), IntroPage4()],
             ),
           ),
         ],
