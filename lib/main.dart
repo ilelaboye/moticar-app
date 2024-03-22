@@ -7,7 +7,6 @@ import 'services/hivekeys.dart';
 import 'splash/splashscreen/splash_screen.dart';
 
 Future<void> main() async {
-
   await Hive.initFlutter();
   await Hive.openBox(HiveKeys.appBox);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
@@ -30,12 +29,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
-          useMaterial3: true,
-          fontFamily: "Neulis",
-          textTheme: const TextTheme(
-            bodyLarge: TextStyle(fontFamily: 'Neulis'),
-          )),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
+        useMaterial3: true,
+        fontFamily: "NeulisAlt",
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(fontFamily: 'NeulisAlt'),
+        ),
+      ),
       home: const SplashScreen(),
     );
   }

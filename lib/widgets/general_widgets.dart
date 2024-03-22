@@ -18,9 +18,8 @@ Widget agencyDefaultButton({
         onTap: loading ? null : onTap,
         child: Container(
           decoration: BoxDecoration(
-              color: icon != null
-                  ? Colors.transparent
-                  : color ?? AppColors.white,
+              color:
+                  icon != null ? Colors.transparent : color ?? AppColors.white,
               borderRadius: BorderRadius.circular(8),
               border: icon != null ? Border.all(color: textColor) : null,
               boxShadow: [
@@ -43,7 +42,7 @@ Widget agencyDefaultButton({
                           Text(
                             "Loading",
                             style: TextStyle(
-                              fontFamily: "Onest",
+                              fontFamily: "NeulisAlt",
                               color: textColor,
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
@@ -65,7 +64,7 @@ Widget agencyDefaultButton({
                           Text(
                             text ?? '',
                             style: TextStyle(
-                              fontFamily: "Onest",
+                                fontFamily: "NeulisAlt",
                                 color: textColor,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 15),
@@ -86,8 +85,7 @@ Widget strengthText(text, {color}) {
       Expanded(
         child: Text(
           text,
-          style: TextStyle(
-            fontFamily: "Onest",fontSize: 12, color: color),
+          style: TextStyle(fontFamily: "NeulisAlt", fontSize: 12, color: color),
         ),
       )
     ]),
@@ -108,7 +106,7 @@ Widget smallButton({onTap, color, text, textColor}) {
         child: Text(
           text ?? 'Close',
           style: TextStyle(
-            fontFamily: "Onest",
+            fontFamily: "NeulisAlt",
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: textColor ?? AppColors.black,

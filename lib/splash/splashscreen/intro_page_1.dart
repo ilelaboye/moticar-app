@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../auth/login/login.dart';
+import '../../auth/login/login_email.dart';
 import '../../auth/signup/signup.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
@@ -53,7 +53,7 @@ class _IntroPage1State extends State<IntroPage1> {
                       "Get all the insights to your car in 4 easy steps!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontFamily: "Neulis",
+                          fontFamily: "NeulisAlt",
                           fontSize: 18,
                           fontStyle: FontStyle.normal,
                           height: 1.2,
@@ -167,9 +167,11 @@ class _IntroPage1State extends State<IntroPage1> {
 }
 
 class OtherLoginButton extends StatelessWidget {
-  const OtherLoginButton({super.key, required this.child, required this.onTap});
+  const OtherLoginButton(
+      {super.key, required this.child, this.myColor, required this.onTap});
   final Widget child;
   final void Function() onTap;
+  final Color? myColor;
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +180,7 @@ class OtherLoginButton extends StatelessWidget {
       child: Container(
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: myColor ?? Colors.white,
               shape: BoxShape.circle,
               border: Border.all(width: 1.2, color: AppColors.newGrey)),
           child: child),

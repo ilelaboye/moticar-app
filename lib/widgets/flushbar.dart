@@ -67,7 +67,8 @@ class Alert {
       messageText: Text(
         message,
         textAlign: TextAlign.center,
-        style:  TextStyle(
+        style:  const TextStyle(
+          fontFamily: 'NeulisAlt',
           fontSize: 13,
           color: Colors.black,
         ),

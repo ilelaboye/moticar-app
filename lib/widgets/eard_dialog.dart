@@ -33,6 +33,7 @@ class MoticarDialog extends StatelessWidget {
           icon ??
               SvgPicture.asset(
                 "assets/svgs/success.svg",
+                height: 30,
               ),
           const SizedBox(
             height: 8,
@@ -40,7 +41,8 @@ class MoticarDialog extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontFamily: "Onest",
+            style: const TextStyle(
+                fontFamily: "NeulisAlt",
                 fontSize: 13,
                 color: AppColors.textColor,
                 fontWeight: FontWeight.w700),
@@ -51,7 +53,8 @@ class MoticarDialog extends StatelessWidget {
           Text(
             subtitle,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontFamily: "Onest",
+            style: const TextStyle(
+              fontFamily: "NeulisAlt",
               fontSize: 14,
               color: AppColors.textColor,
               fontWeight: FontWeight.w500,

@@ -26,7 +26,7 @@ class _MoticarAppBarState extends State<MoticarAppBar> {
       title: Text(
         widget.title,
         style: const TextStyle(
-          fontFamily: "Neulis",
+          fontFamily: "NeulisAlt",
           fontSize: 16,
           fontStyle: FontStyle.normal,
           letterSpacing: 1.2,

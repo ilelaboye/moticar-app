@@ -23,7 +23,7 @@ class MoticarText extends StatelessWidget {
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
-          fontFamily: 'Neulis',
+          fontFamily: 'NeulisAlt',
           fontSize: fontSize,
           fontWeight: fontWeight,
           letterSpacing: 1.2,
@@ -76,7 +76,7 @@ class MoticarLoginButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
           height: 60,
-          width: MediaQuery.of(context).size.width - 30,
+          width: MediaQuery.of(context).size.width - 50,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: myColor ?? AppColors.successYellow,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../auth/login/login.dart';
+import '../../auth/login/login_email.dart';
 import '../../auth/signup/signup.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
@@ -51,7 +51,7 @@ class _IntroPage4State extends State<IntroPage4> with TickerProviderStateMixin {
                       "Get all the insights to your car in 4 easy steps!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontFamily: "Neulis",
+                          fontFamily: "NeulisAlt",
                           fontSize: 18,
                           fontStyle: FontStyle.normal,
                           height: 1.2,
