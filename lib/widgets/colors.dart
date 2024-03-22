@@ -22,4 +22,6 @@ class AppColors {
   static const Color lightGreen = Color(0xFF00AEB5);
   static const Color indieC = Color(0xFF29D7DE);
   static const Color diaColor = Color(0xFFB8F2F4);
+  static const Color avaterColor = Color(0xff7AE6EB);
+  static const Color passStrength = Color(0xffFF1744);
 }

@@ -21,6 +21,7 @@ import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/eard_dialog.dart';
+import 'sign_2.dart';
 
 class SignUpPage extends StatefulHookConsumerWidget {
   const SignUpPage({super.key});
@@ -466,54 +467,59 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       setState(() {
                         _isButtonClicked = true;
                       });
-                      if (_formKey.currentState!.validate()) {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return const IntroPage2();
-                        // }));
+                      // if (_formKey.currentState!.validate()) {
+                      //   // Navigator.push(context,
+                      //   //     MaterialPageRoute(builder: (context) {
+                      //   //   return const IntroPage2();
+                      //   // }));
 
-                        if (_isCheckboxChecked) {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (context) {
-                              return Center(
-                                child: AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  shadowColor: Colors.white,
-                                  content: Container(
-                                    padding: const EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: const Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SpinKitWave(
-                                          color: AppColors.appThemeColor,
-                                          size: 30.0,
-                                        ),
-                                        SizedBox(height: 8),
-                                        Text(
-                                          'Processing, please wait.',
-                                          textAlign: TextAlign.center,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
+                      //   if (_isCheckboxChecked) {
+                      //     showDialog(
+                      //       context: context,
+                      //       barrierDismissible: true,
+                      //       builder: (context) {
+                      //         return Center(
+                      //           child: AlertDialog(
+                      //             backgroundColor: Colors.white,
+                      //             shadowColor: Colors.white,
+                      //             content: Container(
+                      //               padding: const EdgeInsets.all(20),
+                      //               decoration: BoxDecoration(
+                      //                 borderRadius: BorderRadius.circular(10),
+                      //               ),
+                      //               child: const Column(
+                      //                 mainAxisSize: MainAxisSize.min,
+                      //                 children: [
+                      //                   SpinKitWave(
+                      //                     color: AppColors.appThemeColor,
+                      //                     size: 30.0,
+                      //                   ),
+                      //                   SizedBox(height: 8),
+                      //                   Text(
+                      //                     'Processing, please wait.',
+                      //                     textAlign: TextAlign.center,
+                      //                   )
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         );
+                      //       },
+                      //     );
 
-                          await Future.delayed(
-                              const Duration(milliseconds: 1000));
-                        }
+                      //     await Future.delayed(
+                      //         const Duration(milliseconds: 1000));
+                      //   }
 
-                        Navigator.pop(context);
+                      //   Navigator.pop(context);
 
-                        _showOTPVerificationPage(context);
-                      }
+                      //   _showOTPVerificationPage(context);
+                      // }
+
+                      //push to page 2
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return const SignUpPage2();
+                      }));
 
                       // else{}
 
