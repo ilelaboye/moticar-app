@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // import '../../router/app_router.gr.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
+import 'new_onboardIntro.dart';
 import 'onboard_screen.dart';
 
 // @RoutePage()
@@ -71,13 +72,15 @@ class _SplashScreenState extends State<SplashScreen>
                 builder: (context, child) {
                   return Transform.scale(
                       scale: _animation.value,
-                      child: Image.asset(
-                        'assets/images/moticar.png',
-                        height: 150,
-                        width: 150,
-                      ));
-                }),
-            const Padding(
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/moticar.png',
+                            height: 150,
+                            width: 150,
+                          ),
+
+                          const Padding(
               padding: EdgeInsets.only(top: 90.0, left: 50, right: 50),
               child: MoticarText(
                   text:
@@ -86,6 +89,10 @@ class _SplashScreenState extends State<SplashScreen>
                   fontWeight: FontWeight.w500,
                   fontColor: AppColors.appThemeColor),
             ),
+                        ],
+                      ));
+                }),
+            
           ],
         ),
       ),

@@ -76,7 +76,7 @@ class MoticarLoginButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
           height: 60,
-          width: MediaQuery.of(context).size.width - 50,
+          width: MediaQuery.of(context).size.width - 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: myColor ?? AppColors.successYellow,

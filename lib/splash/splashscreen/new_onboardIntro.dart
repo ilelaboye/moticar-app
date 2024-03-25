@@ -5,17 +5,18 @@ import '../../auth/login/login_email.dart';
 import '../../auth/signup/signup.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
-// import '../../widgets/page_indicator.dart';
-import 'intro_page_2.dart';
 
-class IntroPage1 extends StatefulWidget {
-  const IntroPage1({super.key});
+class OnBoardingScreenPage extends StatefulWidget {
+  const OnBoardingScreenPage({super.key});
 
   @override
-  State<IntroPage1> createState() => _IntroPage1State();
+  State<OnBoardingScreenPage> createState() => _OnBoardingScreenPageState();
 }
 
-class _IntroPage1State extends State<IntroPage1> {
+class _OnBoardingScreenPageState extends State<OnBoardingScreenPage> with SingleTickerProviderStateMixin {
+  //controller to keep track of the no of pages....
+  final PageController _controller = PageController();
+  bool onLastPage = false;
   //lottie controller
 
 // Handle login result
@@ -63,7 +64,24 @@ class _IntroPage1State extends State<IntroPage1> {
 
                 SizedBox(
                     height: MediaQuery.of(context).size.height * 0.48,
-                    child: Image.asset("assets/images/step1.png")),
+                    child: PageView(
+                      onPageChanged: (value) {
+                        setState(() {
+                          onLastPage = (value == 4);
+                        });
+                      },
+                      controller: _controller,
+                      children:  [
+                        Image.asset("assets/images/step1.png"),
+                        Image.asset("assets/images/step2.png"),
+                        Image.asset("assets/images/step3.png"),
+                        Image.asset("assets/images/step4.png"),
+                      ],
+                    ),
+                  ),
+                    
+                    
+                    // PageView(child: )),
 
                 const SizedBox(
                   height: 20,

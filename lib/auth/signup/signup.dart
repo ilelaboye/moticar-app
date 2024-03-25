@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,11 +17,12 @@ import 'package:moticar/widgets/page_indicator.dart';
 import '../../providers/app_providers.dart';
 import '../../services/hivekeys.dart';
 import '../../services/localdatabase.dart';
-import '../../splash/splashscreen/intro_page_1.dart';
+import '../../splash/splashscreen/new_onboardIntro.dart';
 import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/eard_dialog.dart';
+import '../../widgets/pin_field.dart';
 import 'sign_2.dart';
 
 class SignUpPage extends StatefulHookConsumerWidget {
@@ -37,11 +39,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       text: HiveStorage.get(HiveKeys.hasLoggedIn) ?? false
           ? HiveStorage.get(HiveKeys.userEmail)
           : '');
-  final phoneController = TextEditingController(
-      // text: HiveStorage.get(HiveKeys.hasLoggedIn) ?? false
-      //     ? HiveStorage.get(HiveKeys.userPassword)
-      //     : ''
-      );
+  final phoneController = TextEditingController();
   String email = '', password = '';
 
   // bool _isObscure = false;
@@ -50,6 +48,16 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   bool _isChecked = false;
   String? _emailError;
+
+  String? completePhoneNumber;
+
+  List<String> pinValues = List.filled(5, '');
+
+  void updatePinValue(int index, String value) {
+    setState(() {
+      pinValues[index] = value;
+    });
+  }
 
   @override
   void initState() {
@@ -81,6 +89,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     PageIndicator(
                         currentPage: 1,
                         indicatorColor: AppColors.indieC,
+                        inactiveIndicatorColor: Color(0xffD7E2E4),
                         totalPages: 4),
                   ],
                 ),
@@ -255,8 +264,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             fontWeight: FontWeight.w600,
                             letterSpacing: 1.2,
                             fontSize: 16),
-                        validator: (value) =>
-                            PasswordValidator.validatePassword(value as String),
+                        // validator: (value) =>
+                        //     PhoneNumberValidator.validatePhoneNumber(value as String),
                         decoration: InputDecoration(
                           counterText: '',
                           border: InputBorder.none,
@@ -285,6 +294,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         initialCountryCode: 'NG',
                         onChanged: (phone) {
                           print(phone.completeNumber);
+                          completePhoneNumber = phone.completeNumber;
                         },
                       ),
                     ],
@@ -393,15 +403,21 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     ),
 
                     //
-                    const Text(
-                      "I agree the terms of use & the privacy policy",
-                      style: TextStyle(
-                          fontFamily: "NeulisAlt",
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textColor,
-                          letterSpacing: 1.2,
-                          fontSize: 14),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: const Text(
+                          "I agree the terms of use & the privacy policy",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontFamily: "NeulisAlt",
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textColor,
+                              letterSpacing: 1.2,
+                              fontSize: 14),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -467,61 +483,60 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       setState(() {
                         _isButtonClicked = true;
                       });
-                      // if (_formKey.currentState!.validate()) {
-                      //   // Navigator.push(context,
-                      //   //     MaterialPageRoute(builder: (context) {
-                      //   //   return const IntroPage2();
-                      //   // }));
+                      if (_formKey.currentState!.validate()) {
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return const IntroPage2();
+                        // }));
 
-                      //   if (_isCheckboxChecked) {
-                      //     showDialog(
-                      //       context: context,
-                      //       barrierDismissible: true,
-                      //       builder: (context) {
-                      //         return Center(
-                      //           child: AlertDialog(
-                      //             backgroundColor: Colors.white,
-                      //             shadowColor: Colors.white,
-                      //             content: Container(
-                      //               padding: const EdgeInsets.all(20),
-                      //               decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.circular(10),
-                      //               ),
-                      //               child: const Column(
-                      //                 mainAxisSize: MainAxisSize.min,
-                      //                 children: [
-                      //                   SpinKitWave(
-                      //                     color: AppColors.appThemeColor,
-                      //                     size: 30.0,
-                      //                   ),
-                      //                   SizedBox(height: 8),
-                      //                   Text(
-                      //                     'Processing, please wait.',
-                      //                     textAlign: TextAlign.center,
-                      //                   )
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //           ),
-                      //         );
-                      //       },
-                      //     );
+                        if (_isCheckboxChecked) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) {
+                              return Center(
+                                child: AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  shadowColor: Colors.white,
+                                  content: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SpinKitWave(
+                                          color: AppColors.appThemeColor,
+                                          size: 30.0,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Text(
+                                          'Processing, please wait.',
+                                          textAlign: TextAlign.center,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
 
-                      //     await Future.delayed(
-                      //         const Duration(milliseconds: 1000));
-                      //   }
+                          await Future.delayed(
+                              const Duration(milliseconds: 1000));
+                        }
 
-                      //   Navigator.pop(context);
+                        Navigator.pop(context);
 
-                      //   _showOTPVerificationPage(context);
-                      // }
+                        _showOTPVerificationPage(context);
+                      }
 
                       //push to page 2
-                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return const SignUpPage2();
-                      }));
-
-                      // else{}
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return const SignUpPage2();
+                      // }));
 
                       // context.router.push(const LoginRouteCopy());
                     },
@@ -709,6 +724,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   void _showOTPVerificationPage(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      backgroundColor: AppColors.diaColor,
       builder: (context) {
         return SingleChildScrollView(
           child: Container(
@@ -733,12 +749,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 //image
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 30.0, left: 40, right: 40, bottom: 20),
+                      top: 10.0, left: 40, right: 40, bottom: 20),
                   child: Image.asset("assets/images/verify_motic.png"),
                 ),
-                // Add your terms and conditions here
+
                 const Text(
-                  'Terms and Conditions',
+                  "Enter Verification Code",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "NeulisAlt",
                     fontWeight: FontWeight.bold,
@@ -746,15 +763,149 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     color: AppColors.textColor,
                   ),
                 ),
+
+                const SizedBox(height: 20),
+
+                // Add your terms and conditions here
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: const TextStyle(
+                      fontFamily: "NeulisAlt",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      color: AppColors.textColor,
+                    ),
+                    children: [
+                      const TextSpan(
+                        text: "We have sent a code to ",
+                      ),
+                      TextSpan(
+                        text: completePhoneNumber.toString(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
                 const SizedBox(height: 10),
                 // Add your terms and conditions content here
                 const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue ligula et eros bibendum, sit amet dapibus justo dignissim.',
+                  'Please enter it below',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "NeulisAlt",
-                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
                     color: AppColors.textColor,
                   ),
+                ),
+
+                const SizedBox(
+                  height: 15,
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PinField(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(8.0),
+                        bottomLeft: Radius.circular(8.0),
+                      ),
+                      onChanged: (value) => updatePinValue(0, value),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    PinField(
+                      onChanged: (value) => updatePinValue(1, value),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    PinField(
+                      onChanged: (value) => updatePinValue(2, value),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    PinField(
+                      onChanged: (value) => updatePinValue(3, value),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    PinField(
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(8.0),
+                        bottomRight: Radius.circular(8.0),
+                      ),
+                      onChanged: (value) => updatePinValue(4, value),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 15,
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MoticarLoginButton(
+                    myColor: AppColors.appThemeColor,
+                    borderColor: AppColors.diaColor,
+                    onTap: () async {
+                       Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return   SignUpPage2(
+                          pin: "  "
+                        );
+                      }));
+                    },
+                    child: const MoticarText(
+                      fontColor: AppColors.white,
+                      text: 'Continue',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const MoticarText(
+                      fontColor: AppColors.appThemeColor,
+                      text: "Didn’t get the code?",
+                      fontSize: 14,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w400,
+                    ),
+
+                    //
+                    TextButton(
+                      child: const MoticarText(
+                        fontColor: AppColors.appThemeColor,
+                        text: 'Send it again',
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      onPressed: () {
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return const LoginPage();
+                        // }));
+                      },
+                    ),
+                  ],
+                ),
+
+                const SizedBox(
+                  height: 45,
                 ),
               ],
             ),

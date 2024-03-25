@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:moticar/auth/add_car.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'services/hivekeys.dart';
@@ -36,7 +37,9 @@ class MyApp extends StatelessWidget {
           bodyLarge: TextStyle(fontFamily: 'NeulisAlt'),
         ),
       ),
-      home: const SplashScreen(),
+      home: const AddCarPage()
+      
+      //  SplashScreen(),
     );
   }
 }

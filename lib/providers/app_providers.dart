@@ -2,9 +2,11 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 // import 'package:image_picker/image_picker.dart';
   
 import '../models/profile_viewmodel.dart';
+import '../services/imagepicker.dart';
 import 'fingerprint_provider.dart';
 
 //This file stores all providers that will be used throughout the app.
@@ -24,6 +26,11 @@ import 'fingerprint_provider.dart';
 ///Leaves the screen
 ///To use it simply call _reader(pinProvider) to access the value.
 final pinProvider = StateProvider.autoDispose<List>((ref) => []);
+
+final imagePickerService = Provider((ref) => MoticarImagePicker(ImagePicker()));
+
+
+/////
 // final fingerPrintProvider =
 //     StateNotifierProvider<FingerPrint, bool>((ref) => FingerPrint());
 // final verifyPinProvider =

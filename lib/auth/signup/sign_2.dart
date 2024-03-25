@@ -1,14 +1,10 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:moticar/auth/login-android.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:moticar/auth/login/login_email.dart';
 import 'package:moticar/auth/signup/sign_3.dart';
 import 'package:moticar/widgets/appBar.dart';
@@ -18,15 +14,20 @@ import 'package:moticar/widgets/pass_strength_indicator.dart';
 import '../../providers/app_providers.dart';
 import '../../services/hivekeys.dart';
 import '../../services/localdatabase.dart';
-import '../../splash/splashscreen/intro_page_1.dart';
 import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
-import '../../widgets/eard_dialog.dart';
-import 'signup.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+
+import '../../widgets/image_picker_bottom_sheet.dart';
+import '../../widgets/picked_image_display.dart';
 
 class SignUpPage2 extends StatefulHookConsumerWidget {
-  const SignUpPage2({super.key});
+  const SignUpPage2({
+    super.key,
+    required this.pin,
+  });
+  final String pin;
 
   @override
   ConsumerState<SignUpPage2> createState() => _SignUpPage2State();
@@ -34,31 +35,25 @@ class SignUpPage2 extends StatefulHookConsumerWidget {
 
 class _SignUpPage2State extends ConsumerState<SignUpPage2> {
   bool _isObscure = true;
-  final passwordController = TextEditingController(
-      // text: HiveStorage.get(HiveKeys.hasLoggedIn) ?? false
-      //     ? HiveStorage.get(HiveKeys.userPassword)
-      //     : ''
-      );
+  final passwordController = TextEditingController();
 
   bool hasLogged = HiveStorage.get(HiveKeys.hasLoggedIn) ?? false;
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final emailController = TextEditingController(
-      text: HiveStorage.get(HiveKeys.hasLoggedIn) ?? false
-          ? HiveStorage.get(HiveKeys.userEmail)
-          : '');
-  final phoneController = TextEditingController(
-      // text: HiveStorage.get(HiveKeys.hasLoggedIn) ?? false
-      //     ? HiveStorage.get(HiveKeys.userPassword)
-      //     : ''
-      );
+  final firstController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final preferControl = TextEditingController();
+  final passWControl = TextEditingController();
+  final confamControl = TextEditingController();
   String email = '', password = '';
 
   // bool _isObscure = false;
-  bool _isCheckboxChecked = false;
-  bool _isButtonClicked = false;
+  bool _isConfirmObscure = false;
+  // _isConfirmObscure
 
   bool _isChecked = false;
   String? _emailError;
+
+  bool _showPasswordStrength = false; // Define _showPasswordStrength variable
 
   @override
   void initState() {
@@ -67,8 +62,11 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
 
   @override
   void dispose() {
-    emailController.dispose();
-    phoneController.dispose();
+    firstController.dispose();
+    lastNameController.dispose();
+    preferControl.dispose();
+    passWControl.dispose();
+    confamControl.dispose();
     super.dispose();
   }
 
@@ -76,6 +74,8 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
   Widget build(BuildContext context) {
     final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
+    var images = useState(XFile(''));
+    final _imagePicker = ref.read(imagePickerService);
     return Scaffold(
       backgroundColor: const Color(0xffEEF5F5),
       appBar: const MoticarAppBar(title: 'Sign up to moticar'),
@@ -91,6 +91,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                     PageIndicator(
                         currentPage: 2,
                         indicatorColor: AppColors.indieC,
+                        inactiveIndicatorColor: Color(0xffD7E2E4),
                         totalPages: 4),
                   ],
                 ),
@@ -103,19 +104,105 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                     fontColor: AppColors.appThemeColor),
 
                 const SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
-                const Center(
-                  child: CircleAvatar(
-                    backgroundColor: AppColors.diaColor,
-                    child: Padding(
-                      padding: EdgeInsets.all(2.0),
-                      child: CircleAvatar(
-                        backgroundColor: AppColors.avaterColor,
-                        child: Icon(Icons.person),
+
+                Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // showModalBottomSheet(
+                        //   // backgroundColor: Colors.transparent,
+                        //   barrierColor: Colors.black.withOpacity(0.5),
+                        //   context: context,
+                        //   builder: (context) => ImagePickerWidget(
+                        //     picker: _imagePicker,
+                        //     imageList: images,
+                        //     onImageSelected: () {},
+                        //   ),
+                        //   // context: context,
+                        // );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (images.value.path.isNotEmpty)
+                            PickedImageDisplay(
+                              imageList: images,
+                              isDark: false,
+                            ),
+                          if (images.value.path.isEmpty)
+                            Container(
+                              height: 120,
+                              width: 120,
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: Color(0xffb8f2f4),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xff7AE6EB),
+
+                                  // borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.person_3_outlined,
+                                    size: 45,
+                                    color: AppColors.appThemeColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
-                  ),
+
+                    //
+                    Positioned(
+                      bottom: 6,
+                      left: MediaQuery.of(context).size.width * 0.525,
+                      child: InkWell(
+                        onTap: () {
+                          showModalBottomSheet(
+                            // backgroundColor: Colors.transparent,
+                            barrierColor: Colors.black.withOpacity(0.5),
+                            context: context,
+                            builder: (context) => ImagePickerWidget(
+                              picker: _imagePicker,
+                              imageList: images,
+                              onImageSelected: () {},
+                            ),
+                            // context: context,
+                          );
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                              color: Colors.white, shape: BoxShape.circle),
+                          padding: const EdgeInsets.all(3),
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: const BoxDecoration(
+                                color: Colors.green, shape: BoxShape.circle),
+                            child: const Icon(
+                              Icons.camera_alt,
+                              color: AppColors.appThemeColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                //
+                const SizedBox(
+                  height: 12,
                 ),
 
                 Form(
@@ -135,23 +222,23 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                     text: "First Name",
                                     fontSize: 13,
                                     fontWeight: FontWeight.w700,
-                                    fontColor: AppColors.appThemeColor),
+                                    fontColor: AppColors.textColor),
                               ),
                               //email
                               TextFormField(
-                                controller: emailController,
+                                controller: firstController,
                                 keyboardType: TextInputType.emailAddress,
-                                onTapOutside: (event) {
-                                  FocusScope.of(context)
-                                      .unfocus(); // Close the keyboard
-                                },
+                                // onTapOutside: (event) {
+                                //   FocusScope.of(context)
+                                //       .unfocus(); // Close the keyboard
+                                // },
                                 textInputAction: TextInputAction.next,
                                 style: const TextStyle(
                                     fontFamily: "NeulisAlt",
                                     color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                     letterSpacing: 1.2,
-                                    fontSize: 16),
+                                    fontSize: 15),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   errorBorder: OutlineInputBorder(
@@ -201,23 +288,23 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                     text: "Last Name",
                                     fontSize: 13,
                                     fontWeight: FontWeight.w700,
-                                    fontColor: AppColors.appThemeColor),
+                                    fontColor: AppColors.textColor),
                               ),
                               //email
                               TextFormField(
-                                controller: emailController,
+                                controller: lastNameController,
                                 keyboardType: TextInputType.emailAddress,
-                                onTapOutside: (event) {
-                                  FocusScope.of(context)
-                                      .unfocus(); // Close the keyboard
-                                },
+                                // onTapOutside: (event) {
+                                //   FocusScope.of(context)
+                                //       .unfocus(); // Close the keyboard
+                                // },
                                 textInputAction: TextInputAction.next,
                                 style: const TextStyle(
                                     fontFamily: "NeulisAlt",
                                     color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                     letterSpacing: 1.2,
-                                    fontSize: 16),
+                                    fontSize: 15),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   errorBorder: OutlineInputBorder(
@@ -257,6 +344,10 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                   ),
                 ),
 
+                const SizedBox(
+                  height: 12,
+                ),
+
                 //preffered
 
                 Column(
@@ -268,22 +359,22 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                           text: "Preferred Name (optional)",
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
-                          fontColor: AppColors.appThemeColor),
+                          fontColor: AppColors.textColor),
                     ),
                     //email
                     TextFormField(
-                      controller: emailController,
+                      controller: preferControl,
                       keyboardType: TextInputType.emailAddress,
-                      onTapOutside: (event) {
-                        FocusScope.of(context).unfocus(); // Close the keyboard
-                      },
+                      // onTapOutside: (event) {
+                      //   FocusScope.of(context).unfocus(); // Close the keyboard
+                      // },
                       textInputAction: TextInputAction.next,
                       style: const TextStyle(
                           fontFamily: "NeulisAlt",
                           color: AppColors.textColor,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           letterSpacing: 1.2,
-                          fontSize: 16),
+                          fontSize: 15),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         errorBorder: OutlineInputBorder(
@@ -343,71 +434,96 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                     fontWeight: FontWeight.w700,
                     fontColor: AppColors.textColor),
               ),
-              TextFormField(
-                controller: passwordController,
-                obscureText: _isObscure,
-                keyboardType: TextInputType.text,
-                textCapitalization: TextCapitalization.words,
-                onTapOutside: (event) {
-                  FocusScope.of(context).unfocus(); // Close the keyboard
+              Listener(
+                onPointerDown: (_) {
+                  if (passwordController.text.isNotEmpty) {
+                    setState(() {
+                      _showPasswordStrength = true;
+                    });
+                  }
                 },
-                textInputAction: TextInputAction.done,
-                style: const TextStyle(
-                    fontFamily: "NeulisAlt",
-                    color: AppColors.textColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) =>
-                    PasswordValidator.validatePassword(value!),
-                onSaved: (value) {
-                  password = value!;
-                },
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  hintText: 'Enter your password',
-
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                          color: Color(0xffD0D5DD), width: 1.5)),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide:
-                          const BorderSide(color: AppColors.appThemeColor)),
-                  filled: true,
-                  fillColor: Colors.white,
-                  // hintText: 'Enter your password',
-                  hintStyle: const TextStyle(
+                child: TextFormField(
+                  controller: passwordController,
+                  obscureText: _isObscure,
+                  keyboardType: TextInputType.text,
+                  textCapitalization: TextCapitalization.words,
+                  // onTapOutside: (event) {
+                  //   FocusScope.of(context).unfocus(); // Close the keyboard
+                  // },
+                  textInputAction: TextInputAction.done,
+                  style: const TextStyle(
                       fontFamily: "NeulisAlt",
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xffC1C3C3),
+                      color: AppColors.textColor,
+                     fontWeight: FontWeight.w500,
                       letterSpacing: 1.2,
-                      fontSize: 14),
-
-                  suffixIcon: IconButton(
-                    onPressed: () {
+                      fontSize: 15),
+                  // autovalidateMode: AutovalidateMode.onUserInteraction,
+                  // validator: (value) =>
+                  //     PasswordValidator.validatePassword(value!),
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
                       setState(() {
-                        _isObscure = !_isObscure;
+                        _showPasswordStrength = true;
                       });
-                    },
-                    icon: Icon(
-                        _isObscure
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: _isObscure
-                            ? AppColors.oldGrey
-                            : Colors.black.withOpacity(0.55)),
+                    } else {
+                      setState(() {
+                        _showPasswordStrength = false;
+                      });
+                    }
+                  },
+                  onSaved: (value) {
+                    password = value!;
+                  },
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    hintText: 'Enter your password',
+
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                            color: Color(0xffD0D5DD), width: 1.5)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            const BorderSide(color: AppColors.appThemeColor)),
+                    filled: true,
+                    fillColor: Colors.white,
+                    // hintText: 'Enter your password',
+                    hintStyle: const TextStyle(
+                        fontFamily: "NeulisAlt",
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xffC1C3C3),
+                        letterSpacing: 1.2,
+                        fontSize: 14),
+
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                      icon: Icon(
+                          _isObscure
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          color: _isObscure
+                              ? AppColors.oldGrey
+                              : Colors.black.withOpacity(0.55)),
+                    ),
                   ),
                 ),
               ),
 
               //password strength indicator
-              const PassStrenghtIndicator(
-                        currentPage: 1,
-                        indicatorColor: AppColors.passStrength,
-                        totalPages: 4),
+              if (_showPasswordStrength)
+                PasswordStrengthIndicator(
+                  password: passwordController.text,
+                ),
+
+              const SizedBox(
+                height: 12,
+              ),
 
 //confirm password
 
@@ -420,30 +536,31 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                     fontColor: AppColors.textColor),
               ),
               TextFormField(
-                controller: passwordController,
-                obscureText: _isObscure,
+                controller: confamControl,
+                obscureText: _isConfirmObscure,
                 keyboardType: TextInputType.text,
                 textCapitalization: TextCapitalization.words,
-                onTapOutside: (event) {
-                  FocusScope.of(context).unfocus(); // Close the keyboard
-                },
+                // onTapOutside: (event) {
+                //   FocusScope.of(context).unfocus(); // Close the keyboard
+                // },
                 textInputAction: TextInputAction.done,
                 style: const TextStyle(
                     fontFamily: "NeulisAlt",
                     color: AppColors.textColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16),
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1.2,
+                    fontSize: 15),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) =>
-                    PasswordValidator.validatePassword(value!),
+                    ConfirmPasswordValidator.validateConfirmPassword(
+                        value, passwordController.text),
                 onSaved: (value) {
-                  password = value!;
+                  // confirmPassword = value!;
                 },
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   errorBorder: InputBorder.none,
-                  hintText: 'Enter your password',
-
+                  hintText: 'Confirm your password',
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: const BorderSide(
@@ -454,29 +571,31 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                           const BorderSide(color: AppColors.appThemeColor)),
                   filled: true,
                   fillColor: Colors.white,
-                  // hintText: 'Enter your password',
                   hintStyle: const TextStyle(
                       fontFamily: "NeulisAlt",
                       fontWeight: FontWeight.w400,
                       color: Color(0xffC1C3C3),
                       letterSpacing: 1.2,
                       fontSize: 14),
-
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        _isObscure = !_isObscure;
+                        _isConfirmObscure = !_isConfirmObscure;
                       });
                     },
                     icon: Icon(
-                        _isObscure
+                        _isConfirmObscure
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
-                        color: _isObscure
+                        color: _isConfirmObscure
                             ? AppColors.oldGrey
                             : Colors.black.withOpacity(0.55)),
                   ),
                 ),
+              ),
+
+              const SizedBox(
+                height: 12,
               ),
 
               //
@@ -490,9 +609,6 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                     myColor: AppColors.indieC,
                     borderColor: AppColors.indieC,
                     onTap: () {
-                      setState(() {
-                        _isButtonClicked = true;
-                      });
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return const SignUpPage3();
@@ -509,6 +625,40 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                   const SizedBox(
                     height: 10,
                   ),
+
+                  //
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const MoticarText(
+                        fontColor: AppColors.textGrey,
+                        text: "Already have an account?",
+                        fontSize: 16,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300,
+                      ),
+
+                      //
+                      TextButton(
+                        child: const MoticarText(
+                          fontColor: AppColors.appThemeColor,
+                          text: 'Sign in',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const LoginPage();
+                          }));
+                        },
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             ],
@@ -521,101 +671,64 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
   }
 
   // Function to show bottom sheet with terms and conditions
-  void _showTermsAndConditionsBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: const Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Add your terms and conditions here
-                Text(
-                  'Terms and Conditions',
-                  style: TextStyle(
-                    fontFamily: "NeulisAlt",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: AppColors.textColor,
-                  ),
-                ),
-                SizedBox(height: 10),
-                // Add your terms and conditions content here
-                Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue ligula et eros bibendum, sit amet dapibus justo dignissim.',
-                  style: TextStyle(
-                    fontFamily: "NeulisAlt",
-                    fontSize: 14,
-                    color: AppColors.textColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+  
 
   //verify otp modal
-  void _showOTPVerificationPage(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Color(0xff101828)),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
+  // void _showOTPVerificationPage(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) {
+  //       return SingleChildScrollView(
+  //         child: Container(
+  //           padding: const EdgeInsets.all(20),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             crossAxisAlignment: CrossAxisAlignment.stretch,
+  //             children: [
+  //               Row(
+  //                 mainAxisAlignment: MainAxisAlignment.end,
+  //                 children: [
+  //                   IconButton(
+  //                     icon: const Icon(Icons.close, color: Color(0xff101828)),
+  //                     onPressed: () {
+  //                       Navigator.pop(context);
+  //                     },
+  //                   ),
+  //                 ],
+  //               ),
 
-                //
-                //image
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 30.0, left: 40, right: 40, bottom: 20),
-                  child: Image.asset("assets/images/verify_motic.png"),
-                ),
-                // Add your terms and conditions here
-                const Text(
-                  'Terms and Conditions',
-                  style: TextStyle(
-                    fontFamily: "NeulisAlt",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: AppColors.textColor,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                // Add your terms and conditions content here
-                const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue ligula et eros bibendum, sit amet dapibus justo dignissim.',
-                  style: TextStyle(
-                    fontFamily: "NeulisAlt",
-                    fontSize: 14,
-                    color: AppColors.textColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+  //               //
+  //               //image
+  //               Padding(
+  //                 padding: const EdgeInsets.only(
+  //                     top: 30.0, left: 40, right: 40, bottom: 20),
+  //                 child: Image.asset("assets/images/verify_motic.png"),
+  //               ),
+  //               // Add your terms and conditions here
+  //               const Text(
+  //                 'Terms and Conditions',
+  //                 style: TextStyle(
+  //                   fontFamily: "NeulisAlt",
+  //                   fontWeight: FontWeight.bold,
+  //                   fontSize: 18,
+  //                   color: AppColors.textColor,
+  //                 ),
+  //               ),
+  //               const SizedBox(height: 10),
+  //               // Add your terms and conditions content here
+  //               const Text(
+  //                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam congue ligula et eros bibendum, sit amet dapibus justo dignissim.',
+  //                 style: TextStyle(
+  //                   fontFamily: "NeulisAlt",
+  //                   fontSize: 14,
+  //                   color: AppColors.textColor,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }
