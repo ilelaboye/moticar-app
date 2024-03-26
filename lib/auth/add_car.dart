@@ -98,13 +98,13 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
           shadowColor: Colors.white,
           surfaceTintColor: Colors.white,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 4,
-                child: SingleChildScrollView(
+        body: Column(
+          children: [
+            Expanded(
+              flex: 4,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
                   child: Column(
                     children: [
                       Column(
@@ -330,7 +330,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     onChanged: (value) {
                                       setState(() {
                                         popular = value.toString();
-                                           selectedImage =
+                                        selectedImage =
                                             'assets/carLogos/toyota.svg';
                                         selectedCarName = 'Toyota';
                                       });
@@ -392,7 +392,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     onChanged: (value) {
                                       setState(() {
                                         popular = value.toString();
-                                           selectedImage =
+                                        selectedImage =
                                             'assets/carLogos/kia.svg';
                                         selectedCarName = 'Kia';
                                       });
@@ -455,7 +455,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     onChanged: (value) {
                                       setState(() {
                                         popular = value.toString();
-                                           selectedImage =
+                                        selectedImage =
                                             'assets/carLogos/mercedes.svg';
                                         selectedCarName = 'Mercedez Benz';
                                       });
@@ -517,7 +517,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     onChanged: (value) {
                                       setState(() {
                                         popular = value.toString();
-                                           selectedImage =
+                                        selectedImage =
                                             'assets/carLogos/nissan.svg';
                                         selectedCarName = 'Nissan';
                                       });
@@ -581,11 +581,10 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                         popular = value.toString();
 
                                         //
-                                        selectedImage  = 'assets/carLogos/honda.svg';
+                                        selectedImage =
+                                            'assets/carLogos/honda.svg';
                                         selectedCarName = 'Honda';
                                       });
-
-                                        
                                     },
                                   ),
                                 ],
@@ -699,22 +698,25 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                   ),
                 ),
               ),
+            ),
 
-              //bottom
-              Expanded(
-                flex: 1,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                      color: Color(0xffEEF5F5),
-                      border: Border(
-                          top: BorderSide(color: Color(0xffEEF5F5), width: 4))),
-                  padding: const EdgeInsets.all(8),
+            //bottom
+            Expanded(
+              flex: 1,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                    // color: Color(0xffEEF5F5),
+                    color: Colors.white,
+                    border: Border(
+                        top: BorderSide(color: Color(0xffEEF5F5), width: 4))),
+                padding: const EdgeInsets.all(8),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsets.only(bottom: 8, left: 3, right: 3),
+                        padding: const EdgeInsets.only(
+                            bottom: 8, left: 8, right: 8, top: 8),
                         child: DropdownButtonFormField(
                             icon: const Icon(Icons.keyboard_arrow_down_sharp),
                             // dropdownColor: AppColors.appThemeColor,
@@ -774,21 +776,23 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                             }),
                       ),
 
+                      SizedBox(height: 8),
+
                       //create an account
                       MoticarLoginButton(
                         myColor: AppColors.indieC,
                         borderColor: AppColors.indieC,
                         onTap: () {
-                          if(selectedCarName.isNotEmpty && selectedImage.isNotEmpty){
-
-                             Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return AddCarPage2(
-                                  imagePath: selectedImage, carName: selectedCarName);
-                            },
-                          ));
+                          if (selectedCarName.isNotEmpty &&
+                              selectedImage.isNotEmpty) {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return AddCarPage2(
+                                    imagePath: selectedImage,
+                                    carName: selectedCarName);
+                              },
+                            ));
                           }
-                         
                         },
                         child: const MoticarText(
                           fontColor: AppColors.appThemeColor,
@@ -801,8 +805,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

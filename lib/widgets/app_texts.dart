@@ -75,7 +75,7 @@ class MoticarLoginButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-          height: 60,
+          height: 55,
           width: MediaQuery.of(context).size.width - 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(

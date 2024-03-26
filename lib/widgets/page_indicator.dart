@@ -24,7 +24,7 @@ class PageIndicator extends StatelessWidget {
             children: List.generate(totalPages, (index) {
               return Container(
                 width: 75.0,
-                height: 5.0,
+                height: 8.0,
                 margin: const EdgeInsets.only(right: 6.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
