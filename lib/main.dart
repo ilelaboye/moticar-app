@@ -27,19 +27,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
-        useMaterial3: true,
-        fontFamily: "NeulisAlt",
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(fontFamily: 'NeulisAlt'),
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          floatingActionButtonTheme:
+              const FloatingActionButtonThemeData(
+                // largeSizeConstraints: BoxConstraints.tight(10),
+                backgroundColor: AppColors.yellow),
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
+          useMaterial3: true,
+          fontFamily: "NeulisAlt",
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(fontFamily: 'NeulisAlt'),
+          ),
         ),
-      ),
-      home: const AddCarPage()
-      
-      //  SplashScreen(),
-    );
+        home: 
+        // const AddCarPage()
+
+         const SplashScreen(),
+        );
   }
 }

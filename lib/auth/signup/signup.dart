@@ -781,7 +781,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         text: "We have sent a code to ",
                       ),
                       TextSpan(
-                        text: completePhoneNumber.toString(),
+                        text: emailController.text,
+                        // completePhoneNumber.toString(),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,

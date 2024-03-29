@@ -306,8 +306,8 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                                     ),
                                                   ],
                                                 ),
-                                                SvgPicture.asset(
-                                                    'assets/carLogos/car_diagram.svg'),
+                                                Image.asset(
+                                                    'assets/images/car_diagram.png'),
                                                 Container(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -674,8 +674,8 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                                     ),
                                                   ],
                                                 ),
-                                                SvgPicture.asset(
-                                                    'assets/carLogos/car_diagram.svg'),
+                                                Image.asset(
+                                                    'assets/images/car_diagram.png'),
                                                 Container(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -992,8 +992,8 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                                     ),
                                                   ],
                                                 ),
-                                                SvgPicture.asset(
-                                                    'assets/carLogos/car_diagram.svg'),
+                                                Image.asset(
+                                                    'assets/images/car_diagram.png'),
                                                 Container(
                                                   padding:
                                                       const EdgeInsets.only(

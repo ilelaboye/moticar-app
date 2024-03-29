@@ -274,8 +274,8 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                                     ),
                                                   ],
                                                 ),
-                                                SvgPicture.asset(
-                                                    'assets/carLogos/car_diagram.svg'),
+                                                Image.asset(
+                                                    'assets/images/car_diagram.png'),
                                                 Container(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -288,7 +288,8 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                                   child: const Padding(
                                                     padding:
                                                         EdgeInsets.symmetric(
-                                                            vertical: 8),
+                                                      vertical: 8,
+                                                    ),
                                                     child: Text(
                                                       "2.0L 6MT FWD (175 HP)",
                                                       textAlign:
@@ -537,8 +538,8 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                                     ),
                                                   ],
                                                 ),
-                                                SvgPicture.asset(
-                                                    'assets/carLogos/car_diagram.svg'),
+                                                Image.asset(
+                                                    'assets/images/car_diagram.png'),
                                                 Container(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -997,7 +998,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(left: 50.0, right: 50),
+                  padding: const EdgeInsets.only(left: 45.0, right: 45),
                   child: Container(
                     // height: 50,
                     // width: 80,
@@ -1017,7 +1018,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                           style: TextStyle(
                             fontFamily: "NeulisAlt",
                             fontWeight: FontWeight.bold,
-                            fontSize: 13,
+                            fontSize: 12,
                             color: Color(0xff002D36),
                           ),
                         ),
