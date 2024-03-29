@@ -13,7 +13,8 @@ class OnBoardingScreenPage extends StatefulWidget {
   State<OnBoardingScreenPage> createState() => _OnBoardingScreenPageState();
 }
 
-class _OnBoardingScreenPageState extends State<OnBoardingScreenPage> with SingleTickerProviderStateMixin {
+class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
+    with SingleTickerProviderStateMixin {
   //controller to keep track of the no of pages....
   final PageController _controller = PageController();
   bool onLastPage = false;
@@ -63,28 +64,27 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage> with Single
                 ),
 
                 SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.48,
-                    child: PageView(
-                      onPageChanged: (value) {
-                        setState(() {
-                          onLastPage = (value == 4);
-                        });
-                      },
-                      controller: _controller,
-                      children:  [
-                        Image.asset("assets/images/step1.png"),
-                        Image.asset("assets/images/step2.png"),
-                        Image.asset("assets/images/step3.png"),
-                        Image.asset("assets/images/step4.png"),
-                      ],
-                    ),
+                  height: MediaQuery.of(context).size.height * 0.48,
+                  child: PageView(
+                    onPageChanged: (value) {
+                      setState(() {
+                        onLastPage = (value == 4);
+                      });
+                    },
+                    controller: _controller,
+                    children: [
+                      Image.asset("assets/images/step1.png"),
+                      Image.asset("assets/images/step2.png"),
+                      Image.asset("assets/images/step3.png"),
+                      Image.asset("assets/images/step4.png"),
+                    ],
                   ),
-                    
-                    
-                    // PageView(child: )),
+                ),
+
+                // PageView(child: )),
 
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
 
                 // const PageIndicator(
@@ -111,7 +111,7 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage> with Single
                     ),
 
                     const SizedBox(
-                      height: 8,
+                      height: 25,
                     ),
 
                     //other social media buttons
