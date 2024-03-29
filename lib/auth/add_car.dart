@@ -121,11 +121,11 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                       totalPages: 4),
                                 ],
                               ),
-                                  
+
                               const SizedBox(
                                 height: 10,
                               ),
-                                  
+
                               //
                               Container(
                                 padding: const EdgeInsets.all(15),
@@ -152,11 +152,11 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                   ),
                                 ),
                               ),
-                                  
+
                               const SizedBox(
                                 height: 20,
                               ),
-                                  
+
                               const Center(
                                 child: Text(
                                   "Select by brand",
@@ -170,11 +170,11 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                       color: AppColors.appThemeColor),
                                 ),
                               ),
-                                  
+
                               const SizedBox(
                                 height: 20,
                               ),
-                                  
+
                               Form(
                                 key: _formKey,
                                 child: Column(
@@ -195,28 +195,35 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                           letterSpacing: 1.2,
                                           fontSize: 16),
                                       validator: (value) =>
-                                          FieldValidaor.validateEmptyfield(value!),
+                                          FieldValidaor.validateEmptyfield(
+                                              value!),
                                       onSaved: (value) {
                                         // email = value!;
                                       },
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         errorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           borderSide: const BorderSide(
                                               color: AppColors.red, width: 1.5),
                                         ),
-                                        hintText: 'Search by car name or moticode',
-                                  
+                                        hintText:
+                                            'Search by car name or moticode',
+
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           borderSide: const BorderSide(
-                                              color: Color(0xffD0D5DD), width: 1.5),
+                                              color: Color(0xffD0D5DD),
+                                              width: 1.5),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                             borderSide: const BorderSide(
-                                                color: AppColors.appThemeColor)),
+                                                color:
+                                                    AppColors.appThemeColor)),
                                         filled: true,
                                         fillColor: Colors.white,
                                         // hintText: 'Enter your password',
@@ -226,7 +233,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                             color: Color(0xffC1C3C3),
                                             letterSpacing: 1.2,
                                             fontSize: 14),
-                                  
+
                                         suffixIcon: const Icon(
                                           Icons.search_sharp,
                                           color: Color(0xffC1C3C3),
@@ -236,7 +243,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                   ],
                                 ),
                               ),
-                                  
+
                               const Padding(
                                 padding: EdgeInsets.all(12.0),
                                 child: Row(
@@ -274,13 +281,13 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                   ],
                                 ),
                               ),
-                                  
+
                               //stay signed in
-                                  
+
                               const SizedBox(
                                 height: 12,
                               ),
-                                  
+
                               //most popular cars
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -297,7 +304,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     ),
                                     boxShadow: const [
                                       BoxShadow(
-                                          color: Colors.black45, blurRadius: 0.1),
+                                          color: Colors.black45,
+                                          blurRadius: 0.1),
                                     ],
                                   ),
                                   child: Row(
@@ -342,7 +350,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                   ),
                                 ),
                               ),
-                                  
+
                               //kia
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -359,7 +367,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     ),
                                     boxShadow: const [
                                       BoxShadow(
-                                          color: Colors.black45, blurRadius: 0.1),
+                                          color: Colors.black45,
+                                          blurRadius: 0.1),
                                     ],
                                   ),
                                   child: Row(
@@ -404,7 +413,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                   ),
                                 ),
                               ),
-                                  
+
                               //
                               // benzo
                               Padding(
@@ -422,7 +431,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     ),
                                     boxShadow: const [
                                       BoxShadow(
-                                          color: Colors.black45, blurRadius: 0.1),
+                                          color: Colors.black45,
+                                          blurRadius: 0.1),
                                     ],
                                   ),
                                   child: Row(
@@ -467,7 +477,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                   ),
                                 ),
                               ),
-                                  
+
                               //Nissan
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -484,7 +494,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     ),
                                     boxShadow: const [
                                       BoxShadow(
-                                          color: Colors.black45, blurRadius: 0.1),
+                                          color: Colors.black45,
+                                          blurRadius: 0.1),
                                     ],
                                   ),
                                   child: Row(
@@ -529,7 +540,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                   ),
                                 ),
                               ),
-                                  
+
                               //peugeot
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -546,7 +557,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     ),
                                     boxShadow: const [
                                       BoxShadow(
-                                          color: Colors.black45, blurRadius: 0.1),
+                                          color: Colors.black45,
+                                          blurRadius: 0.1),
                                     ],
                                   ),
                                   child: Row(
@@ -581,7 +593,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                         onChanged: (value) {
                                           setState(() {
                                             popular = value.toString();
-                                  
+
                                             //
                                             selectedImage =
                                                 'assets/carLogos/honda.svg';
@@ -593,16 +605,16 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                   ),
                                 ),
                               ),
-                                  
+
                               //
                               const SizedBox(
                                 height: 8,
                               ),
                             ],
                           ),
-                                  
+
                           //
-                                  
+
                           const Padding(
                             padding: EdgeInsets.all(12.0),
                             child: Row(
@@ -640,9 +652,9 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                               ],
                             ),
                           ),
-                                  
+
                           //tabs for all A-J K-P others
-                                  
+
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -677,14 +689,15 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                               ),
                             ),
                           ),
-                                  
+
                           const SizedBox(
                             height: 12,
                           ),
-                                  
+
                           const SizedBox(
                             height: 300,
                             child: Expanded(
+                              flex: 2,
                               child: TabBarView(
                                 children: [
                                   // All Cars
@@ -701,7 +714,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                     ),
                   ),
                 ),
-        
+
                 //bottom
                 Expanded(
                   flex: 1,
@@ -711,7 +724,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                         // color: Color(0xffEEF5F5),
                         color: Colors.white,
                         border: Border(
-                            top: BorderSide(color: Color(0xffEEF5F5), width: 4))),
+                            top: BorderSide(
+                                color: Color(0xffEEF5F5), width: 4))),
                     padding: const EdgeInsets.all(8),
                     child: SingleChildScrollView(
                       child: Column(
@@ -720,7 +734,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                             padding: const EdgeInsets.only(
                                 bottom: 8, left: 8, right: 8, top: 8),
                             child: DropdownButtonFormField(
-                                icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                                icon:
+                                    const Icon(Icons.keyboard_arrow_down_sharp),
                                 // dropdownColor: AppColors.appThemeColor,
                                 //  style: TextStyle(
                                 //   color: AppColors.red,
@@ -745,7 +760,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8)),
                                     borderSide: BorderSide(
-                                        color: AppColors.appThemeColor, width: 1.5),
+                                        color: AppColors.appThemeColor,
+                                        width: 1.5),
                                   ),
                                 ),
                                 items: myCarList
@@ -756,7 +772,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                               value.toString(),
                                               style: const TextStyle(
                                                   fontFamily: "NeulisAlt",
-                                                  color: AppColors.appThemeColor,
+                                                  color:
+                                                      AppColors.appThemeColor,
                                                   fontWeight: FontWeight.w500,
                                                   letterSpacing: 1.2,
                                                   fontSize: 12),
@@ -766,7 +783,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                 onChanged: (value) {
                                   setState(() {
                                     selectCar = value!;
-        
+
                                     // showModalBottomSheet(
                                     //   context: context,
                                     //   backgroundColor: Colors.white,
@@ -777,9 +794,9 @@ class _AddCarPageState extends ConsumerState<AddCarPage> {
                                   });
                                 }),
                           ),
-        
+
                           SizedBox(height: 8),
-        
+
                           //create an account
                           MoticarLoginButton(
                             myColor: AppColors.indieC,
