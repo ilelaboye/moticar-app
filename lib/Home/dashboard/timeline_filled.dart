@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/Home/profile/my_cars.dart';
 import 'package:moticar/widgets/app_texts.dart';
+import '../../auth/add_car.dart';
 import '../../models/expensesmodel.dart';
 import '../../providers/app_providers.dart';
 import '../../widgets/bottom_sheet_service.dart';
@@ -192,62 +193,92 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                             const SizedBox(
                               width: 8,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "${carz.car} ${carz.model}",
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                        color: Colors.white,
+                            GestureDetector(
+                              onTap: (){
+                                 showMoticarBottom(
+                                  context: context,
+                                  child: FractionallySizedBox(
+                                    heightFactor: 0.89,
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(20.0),
+                                        topRight: Radius.circular(20.0),
                                       ),
+                                      child: MyCarInfoPage(
+                                          plateNumber: carz.plateNumber,
+                                          chasisNumber: carz.chasisNumber,
+                                          engineNumber: carz.engineNumber,
+                                          dateOfPurchase: carz.dateOfPurchase,
+                                          vehicleLicense: carz.vehicleLicense,
+                                          roadWorthiness: carz.roadWorthiness,
+                                          thirdPartyInsurance:
+                                              carz.thirdPartyInsurance,
+                                          engine: carz.engine.toString(),
+                                          gearbox: carz.gearbox.toString(),
+                                          car: carz.car.toString(),
+                                          model: carz.model.toString(),
+                                          category: carz.category.toString()),
                                     ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 8, right: 8, top: 4, bottom: 4),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xff00343f),
-                                        borderRadius: BorderRadius.circular(40),
-                                      ),
-                                      child: Text(
-                                        "exp. $remainingDays days",
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "${carz.car} ${carz.model}",
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           fontFamily: "NeulisAlt",
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 13,
-                                          color: Color(0xff92BEC1),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                          color: Colors.white,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-
-                                //petrol and gear
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.6,
-                                  child: Text(
-                                    "${carz.engine} . ${carz.category} . ${carz.gearbox}",
-                                    textAlign: TextAlign.left,
-                                    style: const TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: Color(0xff7AE6EB),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 8, right: 8, top: 4, bottom: 4),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xff00343f),
+                                          borderRadius: BorderRadius.circular(40),
+                                        ),
+                                        child: Text(
+                                          "exp. $remainingDays days",
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            fontFamily: "NeulisAlt",
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 13,
+                                            color: Color(0xff92BEC1),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                            
+                                  //petrol and gear
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    child: Text(
+                                      "${carz.engine} . ${carz.category} . ${carz.gearbox}",
+                                      textAlign: TextAlign.left,
+                                      style: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                        color: Color(0xff7AE6EB),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Padding(
                               padding:
@@ -376,7 +407,13 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                               ),
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                             Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const AddCarPage();
+                              },
+                            ));
+                          },
                         ),
                       ),
                     ],
@@ -681,7 +718,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                       child: getImageWidget(
                                           breakdown.category.toString()),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 3,
                                     ),
                                     Text(
