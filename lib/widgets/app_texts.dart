@@ -79,7 +79,7 @@ class MoticarLoginButton extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              color: myColor ?? AppColors.successYellow,
+              color: myColor ?? AppColors.yellow,
               border: Border.all(
                   color: borderColor ?? AppColors.appThemeColor,
                   style: BorderStyle.solid),

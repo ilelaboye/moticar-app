@@ -20,7 +20,7 @@ Widget agencyDefaultButton({
           decoration: BoxDecoration(
               color:
                   icon != null ? Colors.transparent : color ?? AppColors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(40),
               border: icon != null ? Border.all(color: textColor) : null,
               boxShadow: [
                 BoxShadow(

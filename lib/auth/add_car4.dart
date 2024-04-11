@@ -1,14 +1,21 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/utils/validator.dart';
 import 'package:moticar/widgets/page_indicator.dart';
+import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
+import '../widgets/bottom_sheet_service.dart';
+import '../widgets/eard_dialog.dart';
+import 'first_know.dart';
 
 class AddCarPage4 extends StatefulHookConsumerWidget {
   const AddCarPage4(
@@ -194,21 +201,23 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   }
 
   @override
-  void dispose() {
-    plateController.dispose();
-    mileageControl.dispose();
-    chasisControl.dispose();
-    engineNoController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    DateTime endOfYear = DateTime(now.year + 1, 1, 1);
-    int remainingDays = endOfYear.difference(now).inDays;
-    final state = ref.watch(profileProvider);
-    final model = ref.read(profileProvider.notifier);
+   String formatPlateText(String text) {
+      // Check if the text is numeric
+      if (int.tryParse(text) != null) {
+        // Format the numeric text as "000 00 000"
+        return text
+            .padLeft(8, '0')
+            .replaceAllMapped(
+                RegExp(r'.{3}(?!$)'), (match) => '${match.group(0)} ')
+            .trim();
+      } else {
+        // Return the text as is if it's not numeric
+        return text;
+      }
+    }
+
+
     return Scaffold(
       backgroundColor: const Color(0xffEEF5F5),
       appBar: AppBar(
@@ -313,7 +322,32 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Image.asset('assets/svgs/numberPlateRep.png'),
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            height: 150,
+                            width: double.infinity,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.contain,
+                                image: AssetImage(
+                                    'assets/svgs/numberPlateRep.png'),
+                              ),
+                            ),
+                            child: Text(
+                                // plateController.text.isNotEmpty
+                                //     ? plateController.text
+                                //     : '000 00 000',
+                                formatPlateText(plateController.text),
+                                style: GoogleFonts.russoOne(
+                                  fontSize: 50,
+                                  letterSpacing: 1.5,
+                                  fontWeight: FontWeight.w700,
+                                  color: plateController.text.isNotEmpty
+                                      ? AppColors.appThemeColor
+                                      : const Color(0xffC1C3C3),
+                                )),
+                          ),
                         ),
 
                         //
@@ -347,6 +381,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                 //   FocusScope.of(context)
                                 //       .unfocus(); // Close the keyboard
                                 // },
+                                maxLength: 8,
                                 textInputAction: TextInputAction.next,
                                 style: const TextStyle(
                                     fontFamily: "NeulisAlt",
@@ -355,13 +390,14 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     fontSize: 16),
                                 // autovalidateMode:
                                 //     AutovalidateMode.onUserInteraction,
-                                validator: (value) =>
-                                    FieldValidaor.validateEmptyfield(value!),
+                                // validator: (value) =>
+                                //     FieldValidaor.validateEmptyfield(value!),
                                 onSaved: (value) {},
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintText: 'eg NJM 98 OLM',
+                                  counterText: '',
 
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -411,8 +447,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     fontSize: 16),
                                 // autovalidateMode:
                                 //     AutovalidateMode.onUserInteraction,
-                                validator: (value) =>
-                                    FieldValidaor.validateEmptyfield(value!),
+                                // validator: (value) =>
+                                //     FieldValidaor.validateEmptyfield(value!),
                                 onSaved: (value) {},
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -462,10 +498,12 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16),
                                 onSaved: (value) {},
+                                maxLength: 17,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintText: 'eg 2TIKR98D23C456159',
+                                  counterText: '',
 
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -517,10 +555,12 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                 // validator: (value) =>
                                 //     FieldValidaor.validateEmptyfield(value!),
                                 onSaved: (value) {},
+                                maxLength: 10,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintText: 'eg NJM 98 OLM',
+                                  counterText: '',
 
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -1411,7 +1451,87 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                       borderColor: AppColors.indieC,
                       onTap: () {
                         //showDialog AI Generator
-                        _showOTPVerificationPage(context);
+                        // _showOTPVerificationPage(context);
+
+                        if (_formKey.currentState!.validate()) {
+                          final String plate = plateController.text;
+                          final String mileage = mileageControl.text;
+                          final String chasis = chasisControl.toString();
+                          final String engine = engineNoController.text;
+                          final String third = thirdPartyControl.text;
+                          final String licensez = vehicleLicense.text;
+
+                          //dates
+                          final String purchase = _newFormatDate(_selectedDate);
+                          final String select = _newFormatDate(_selectedDate);
+                          final String selectRenewal =
+                              _newFormatDate(_selectRenewal);
+                          final String selectThirdParty =
+                              _newFormatDate(_selectThirdParty);
+                          final String selectTinted =
+                              _newFormatDate(_selectTinted);
+
+                          if (licensez.isNotEmpty &&
+                              third.isNotEmpty &&
+                              purchase.isNotEmpty &&
+                              select.isNotEmpty &&
+                              selectTinted.isNotEmpty &&
+                              selectRenewal.isNotEmpty &&
+                              selectThirdParty.isNotEmpty) {
+                            showMoticarBottom(
+                              context: context,
+                              child: FractionallySizedBox(
+                                heightFactor: 0.89,
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: Radius.circular(30.0),
+                                  ),
+                                  child: FinishcarPage(
+                                    carName: widget.carName,
+                                    imagePath: 'assets/images/car_ai.png',
+                                    model: widget.model,
+                                    petrol: widget.petrol,
+                                    gearbox: widget.gearbox,
+                                    purchaseDate: _newFormatDate(_selectedDate),
+                                    plateController: '',
+                                    mileageControl: '',
+                                    chasisControl: chasisControl.text,
+                                    engineNoController: engineNoController.text,
+                                    selectedDate: _newFormatDate(_selectedDate),
+                                    selectRenewal:
+                                        _newFormatDate(_selectRenewal),
+                                    selectThirdParty:
+                                        _newFormatDate(_selectThirdParty),
+                                    selectTinted: _newFormatDate(_selectTinted),
+                                    //  thirdPartyControl: '',
+                                    //  vehicleLicense: '',
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {
+                            // Show dialog if any required fields are empty
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return MoticarDialog(
+                                  icon: const Icon(Icons.info_rounded,
+                                      color: AppColors.appThemeColor, size: 50),
+                                  title: '',
+                                  subtitle:
+                                      'All Fields are required to proceed',
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  buttonColor: AppColors.appThemeColor,
+                                  textColor: AppColors.white,
+                                  buttonText: "Dismiss",
+                                );
+                              },
+                            );
+                          }
+                        }
                       },
                       child: const MoticarText(
                         fontColor: AppColors.appThemeColor,
@@ -1429,503 +1549,582 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
       ),
     );
   }
+}
 
-  //AI GENERATOR
-  void _showOTPVerificationPage(BuildContext context) {
+class FinishcarPage extends StatefulHookConsumerWidget {
+  const FinishcarPage({
+    super.key,
+    required this.plateController,
+    required this.mileageControl,
+    required this.chasisControl,
+    required this.engineNoController,
+    required this.imagePath,
+    required this.carName,
+    required this.petrol,
+    required this.gearbox,
+    required this.selectedDate,
+    required this.selectRenewal,
+    required this.selectThirdParty,
+    required this.selectTinted,
+    required this.purchaseDate,
+    required this.model,
+    // required this.vehicleLicense
+  });
+  final String imagePath,
+      purchaseDate,
+      petrol,
+      gearbox,
+      carName,
+      model,
+      plateController,
+      mileageControl,
+      chasisControl,
+      engineNoController;
+  // vehicleLicense;
+  final String selectedDate, selectRenewal, selectThirdParty, selectTinted;
+
+  @override
+  ConsumerState<FinishcarPage> createState() => _FinishcarPageState();
+}
+
+class _FinishcarPageState extends ConsumerState<FinishcarPage> {
+  @override
+  Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     DateTime endOfYear = DateTime(now.year + 1, 1, 1);
     int remainingDays = endOfYear.difference(now).inDays;
-    showModalBottomSheet(
-      context: context,
+    final state = ref.watch(profileProvider);
+    final model = ref.read(profileProvider.notifier);
+    return Scaffold(
       backgroundColor: const Color(0xff001A1F),
-      builder: (context) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Colors.white),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
 
-                const Padding(
-                  padding: EdgeInsets.only(left: 15.0, right: 15),
-                  child: Text(
-                    "This is all the information we got from you",
+              const Padding(
+                padding: EdgeInsets.only(left: 15.0, right: 15),
+                child: Text(
+                  "This is all the information we got from you",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "NeulisAlt",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
+
+              //
+              //image
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 15.0, left: 30, right: 30, bottom: 15),
+                child: Container(
+                  // height: 200,
+                  // width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  alignment: Alignment.center,
+                  child: Image.asset(widget.imagePath),
+                ),
+              ),
+
+              //car model and plate number
+              Column(
+                children: [
+                  Text(
+                    '${widget.carName} ${widget.model}',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: "NeulisAlt",
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-
-                //
-                //image
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 15.0, left: 30, right: 30, bottom: 15),
-                  child: Container(
-                    // height: 200,
-                    // width: double.infinity,
-                    decoration: BoxDecoration(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
                     ),
-                    padding: const EdgeInsets.all(8),
-                    alignment: Alignment.center,
-                    child: Image.asset(widget.imagePath),
                   ),
-                ),
 
-                //car model and plate number
-                Column(
-                  children: [
-                    Text(
-                      '${widget.carName} ${widget.model}',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: "NeulisAlt",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: Colors.white,
+                  //
+
+                  const SizedBox(height: 8),
+
+                  //plate no
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.plateController,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                          color: Color(0xff7AE6EB),
+                        ),
                       ),
-                    ),
-
-                    //
-
-                    const SizedBox(height: 8),
-
-                    //plate no
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          plateController.text,
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 8, right: 8, top: 4, bottom: 4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xff00343f),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Text(
+                          "exp. $remainingDays days",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontFamily: "NeulisAlt",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                            color: Color(0xff7AE6EB),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            color: Color(0xff92BEC1),
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 8, top: 4, bottom: 4),
-                          decoration: BoxDecoration(
-                            color: const Color(0xff00343f),
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          child: Text(
-                            "exp. $remainingDays days",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13,
-                              color: Color(0xff92BEC1),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 8),
-
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 60, right: 60),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffF8E761),
-                        borderRadius: BorderRadius.circular(32),
                       ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "moticarID :",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13,
-                              color: Color(0xff002D36),
-                            ),
-                          ),
-                          Text(
-                            "THIFNJ34349",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13,
-                              color: Color(0xff002D36),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
-                ),
+                ],
+              ),
 
-                const SizedBox(height: 8),
+              const SizedBox(height: 8),
 
-                // Add your terms and conditions content here
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15, right: 15.0),
-                    child: Text(
-                      "${widget.petrol}.${widget.gearbox}",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: "NeulisAlt",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13,
-                        color: Color(0xffF8F6E7),
-                      ),
-                    ),
-                  ),
-                ),
-
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: Text(
-                      "Date of Purchase: ${_newFormatDate(_selectedDate)}",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: "NeulisAlt",
-                        fontWeight: FontWeight.w300,
-                        fontSize: 13,
-                        color: Color(0xffC1C3C3),
-                      ),
-                    ),
-                  ),
-                ),
-
-                //car details
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 60, right: 60),
                   child: Container(
-                    padding: const EdgeInsets.only(
-                        left: 8, right: 8, top: 4, bottom: 4),
+                    padding: const EdgeInsets.all(8),
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: const Color(0xff00343f),
-                      borderRadius: BorderRadius.circular(40),
+                      color: const Color(0xffF8E761),
+                      borderRadius: BorderRadius.circular(32),
                     ),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 1.5,
-                            color: AppColors.divider,
+                        Text(
+                          "moticarID :",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "NeulisAlt",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            color: Color(0xff002D36),
                           ),
                         ),
-                        SizedBox(
-                          width: 8,
-                        ),
                         Text(
-                          "Car Details",
+                          "THIFNJ34349",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textGrey,
-                              letterSpacing: 1.5,
-                              fontSize: 10),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 1.5,
-                            color: AppColors.divider,
+                            fontFamily: "NeulisAlt",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            color: Color(0xff002D36),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
+              ),
 
-                //listTile of car details
-                Column(
-                  children: [
-                    ListTile(
-                      title: const Text(
-                        "Chasis Number",
-                        style: TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                      trailing: Text(
-                        chasisControl.text,
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                    ),
+              const SizedBox(height: 8),
 
-                    //
-                    ListTile(
-                      title: const Text(
-                        "Engine Number",
-                        style: TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                      trailing: Text(
-                        engineNoController.text,
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(
-                  height: 8,
-                ),
-
-                //
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                        left: 8, right: 8, top: 4, bottom: 4),
-                    decoration: BoxDecoration(
-                      color: const Color(0xff00343f),
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 1.5,
-                            color: AppColors.divider,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          "Car Papers - Expiry Dates",
-                          style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textGrey,
-                              letterSpacing: 1.5,
-                              fontSize: 10),
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 1.5,
-                            color: AppColors.divider,
-                          ),
-                        ),
-                      ],
+              // Add your terms and conditions content here
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15.0),
+                  child: Text(
+                    "${widget.petrol}.${widget.gearbox}",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: "NeulisAlt",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 13,
+                      color: Color(0xffF8F6E7),
                     ),
                   ),
                 ),
+              ),
 
-                //
-                //listTile of car details
-                Column(
-                  children: [
-                    ListTile(
-                      title: const Text(
-                        "Date of Purchase",
-                        style: TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                      trailing: Text(
-                        _newFormatDate(_selectedDate),
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Text(
+                    "Date of Purchase: ${widget.purchaseDate}",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: "NeulisAlt",
+                      fontWeight: FontWeight.w300,
+                      fontSize: 13,
+                      color: Color(0xffC1C3C3),
                     ),
-
-                    //
-                    ListTile(
-                      title: const Text(
-                        "Vehicle License",
-                        style: TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                      trailing: Text(
-                        _newFormatDate(_selectRenewal),
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                    ),
-
-                    //
-                    ListTile(
-                      title: const Text(
-                        "Third Party Insurance",
-                        style: TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                      trailing: Text(
-                        _newFormatDate(_selectThirdParty),
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                    ),
-
-                    //tinted
-
-                    ListTile(
-                      title: const Text(
-                        "Tinted Permit",
-                        style: TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                      trailing: Text(
-                        _newFormatDate(_selectTinted),
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white,
-                            letterSpacing: 1.5,
-                            fontSize: 12),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
+              ),
 
-                const SizedBox(height: 15),
-
-                //
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: MoticarLoginButton(
-                        myColor: Colors.transparent,
-                        borderColor: const Color(0xff00AEB5),
-                        onTap: () async {
-                          Navigator.pop(context);
-                        },
-                        child: const MoticarText(
-                          fontColor: Color(0xff00AEB5),
-                          text: 'Cancel',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+              //car details
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  padding: const EdgeInsets.only(
+                      left: 8, right: 8, top: 4, bottom: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff00343f),
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 1.5,
+                          color: AppColors.divider,
                         ),
                       ),
-                    ),
-
-                    const SizedBox(width: 8),
-
-                    //
-                    Expanded(
-                      child: MoticarLoginButton(
-                        myColor: const Color(0xff29d7de),
-                        borderColor: const Color(0xff29d7de),
-                        onTap: () async {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return const BottomHomePage();
-                          }));
-                        },
-                        child: const MoticarText(
-                          fontColor: AppColors.appThemeColor,
-                          text: 'Finish',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "Car Details",
+                        style: TextStyle(
+                            fontFamily: "NeulisAlt",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textGrey,
+                            letterSpacing: 1.5,
+                            fontSize: 10),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Divider(
+                          thickness: 1.5,
+                          color: AppColors.divider,
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+              ),
 
-                const SizedBox(
-                  height: 45,
+              //listTile of car details
+              Column(
+                children: [
+                  ListTile(
+                    title: const Text(
+                      "Chasis Number",
+                      style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                    trailing: Text(
+                      widget.chasisControl,
+                      style: const TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                  ),
+
+                  //
+                  ListTile(
+                    title: const Text(
+                      "Engine Number",
+                      style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                    trailing: Text(
+                      widget.engineNoController,
+                      style: const TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 8,
+              ),
+
+              //
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  padding: const EdgeInsets.only(
+                      left: 8, right: 8, top: 4, bottom: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xff00343f),
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 1.5,
+                          color: AppColors.divider,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "Car Papers - Expiry Dates",
+                        style: TextStyle(
+                            fontFamily: "NeulisAlt",
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textGrey,
+                            letterSpacing: 1.5,
+                            fontSize: 10),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Divider(
+                          thickness: 1.5,
+                          color: AppColors.divider,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+
+              //
+              //listTile of car details
+              Column(
+                children: [
+                  ListTile(
+                    title: const Text(
+                      "Date of Purchase",
+                      style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                    trailing: Text(
+                      widget.selectedDate,
+                      style: const TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                  ),
+
+                  //
+                  ListTile(
+                    title: const Text(
+                      "Vehicle License",
+                      style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                    trailing: Text(
+                      widget.selectRenewal,
+                      style: const TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                  ),
+
+                  //
+                  ListTile(
+                    title: const Text(
+                      "Third Party Insurance",
+                      style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                    trailing: Text(
+                      widget.selectThirdParty,
+                      style: const TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                  ),
+
+                  //tinted
+
+                  ListTile(
+                    title: const Text(
+                      "Tinted Permit",
+                      style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                    trailing: Text(
+                      widget.selectTinted,
+                      style: const TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 12),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 15),
+
+              //   // Expanded(
+              //   child: MoticarLoginButton(
+              //     myColor: Colors.transparent,
+              //     borderColor: const Color(0xff00AEB5),
+              //     onTap: () async {
+              //       Navigator.pop(context);
+              //     },
+              //     child: const MoticarText(
+              //       fontColor: Color(0xff00AEB5),
+              //       text: 'Cancel',
+              //       fontSize: 16,
+              //       fontWeight: FontWeight.w700,
+              //     ),
+              //   ),
+              // ),
+
+              const SizedBox(width: 8),
+
+              //
+              MoticarLoginButton(
+                myColor: const Color(0xff29d7de),
+                borderColor: const Color(0xff29d7de),
+                onTap: () async {
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  //   return const BottomHomePage();
+                  // }));
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (context) {
+                      return Center(
+                        child: AlertDialog(
+                          backgroundColor: AppColors.appThemeColor,
+                          shadowColor: AppColors.appThemeColor,
+                          content: Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                // const SpinKitWave(
+                                //   color: AppColors.appThemeColor,
+                                //   size: 30.0,
+                                // ),
+
+                                SizedBox(
+                                  height: 100,
+                                  width: 100,
+                                  child: RiveAnimation.asset(
+                                    'assets/images/preloader.riv',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+
+                  await Future.delayed(const Duration(seconds: 4));
+
+                  Navigator.pop(context);
+
+                  showMoticarBottom(
+                      context: context,
+                      child: const FractionallySizedBox(
+                        heightFactor: 0.90,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
+                            ),
+                            child: FirstKnow()),
+                      ));
+                },
+                child: const MoticarText(
+                  fontColor: AppColors.appThemeColor,
+                  text: 'Looks good!',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+
+              const SizedBox(
+                height: 15,
+              ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

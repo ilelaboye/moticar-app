@@ -32,7 +32,7 @@ void handleError({
           context: context,
         );
         break;
-      case DioErrorType.connectionTimeout:
+      case DioErrorType.connectTimeout:
         Alert.showNotificationError(
           message: "Your request timed out, please try again",
           notificationType: 1,
@@ -47,7 +47,7 @@ void handleError({
           context: context,
         );
         break;
-      case DioErrorType.badResponse:
+      case DioErrorType.response:
         Alert.showNotificationError(
           message: e.response!.data.runtimeType == String
               ? "${e.response != null && e.response!.data.isNotEmpty ? e.response!.data : "Something went wrong, please try again"}"
@@ -64,7 +64,7 @@ void handleError({
           context: context,
         );
         break;
-      case DioErrorType.unknown:
+      case DioErrorType.other:
         Alert.showNotificationError(
           message:
               'Please check your internet connection',
@@ -133,7 +133,7 @@ void handleBankOneError({
           context: context,
         );
         break;
-      case DioErrorType.connectionTimeout:
+      case DioErrorType.connectTimeout:
         Alert.showNotification(
           message: "Your request timed out, please try again",
           notificationType: 1,
@@ -148,7 +148,7 @@ void handleBankOneError({
           context: context,
         );
         break;
-      case DioErrorType.badResponse:
+      case DioErrorType.response:
         Alert.showNotification(
           message: e.response!.data.runtimeType != List
               ? "Something went wrong, please try again"
@@ -165,7 +165,7 @@ void handleBankOneError({
           context: context,
         );
         break;
-      case DioErrorType.unknown:
+      case DioErrorType.other:
         Alert.showNotification(
           message: 'Please check your internet connection',
           notificationType: 1,

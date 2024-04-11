@@ -1,19 +1,27 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/auth/login/login_email.dart';
 import 'package:moticar/auth/signup/sign_up3_postal.dart';
 import 'package:moticar/auth/signup/signup_4.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
+import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
+import '../../services/hivekeys.dart';
+import '../../services/localdatabase.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
+import '../../widgets/eard_dialog.dart';
 
 class SignUpPage3 extends StatefulHookConsumerWidget {
-  const SignUpPage3({super.key});
+  const SignUpPage3({super.key, required this.token});
+  final String token;
 
   @override
   ConsumerState<SignUpPage3> createState() => _SignUpPage3State();
@@ -30,14 +38,45 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
   String? selectedCountry;
   String? selectedStatez;
 
-  final List myStatez = ['Osun', "Lagos", "Abuja"];
+  late List<Country> countries;
 
-  final List myCount = ['Nigeria', "London UK", "Canada"];
-  final List myLGA = ['Ori ade', "Ogbomoso", "Bodija"];
+  // final List myStatez = ['Osun', "Lagos", "Abuja"];
+
+  // // final List myCount = ['Nigeria', "London UK", "Canada"];
+  // final List myLGA = ['Ori ade', "Ogbomoso", "Bodija"];
 
   @override
   void initState() {
     super.initState();
+    loadCountries();
+  }
+
+  Future<void> loadCountries() async {
+    String data = await rootBundle.loadString('assets/images/country.json');
+    List<dynamic> countriesData = json.decode(data);
+    countries = countriesData.map((countryData) {
+      List<dynamic> statesData = countryData['states'];
+      List<StateData> states = statesData.map((stateData) {
+        List<dynamic> citiesData = stateData['cities'];
+        List<City> cities = citiesData.map((cityData) {
+          return City(
+            id: cityData['id'],
+            name: cityData['name'],
+          );
+        }).toList();
+        return StateData(
+          id: stateData['id'],
+          name: stateData['name'],
+          cities: cities,
+        );
+      }).toList();
+      return Country(
+        id: countryData['id'],
+        name: countryData['name'],
+        states: states,
+      );
+    }).toList();
+    setState(() {});
   }
 
   @override
@@ -97,7 +136,9 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return const SignUpPage3Postal();
+                          return SignUpPage3Postal(
+                            token: widget.token,
+                          );
                         }));
                       },
                       child: const Row(
@@ -138,11 +179,11 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                       //email
                       TextFormField(
                         controller: addressControl,
-                        keyboardType: TextInputType.emailAddress,
-                        onTapOutside: (event) {
-                          FocusScope.of(context)
-                              .unfocus(); // Close the keyboard
-                        },
+                        keyboardType: TextInputType.streetAddress,
+                        // onTapOutside: (event) {
+                        //   FocusScope.of(context)
+                        //       .unfocus(); // Close the keyboard
+                        // },
                         textInputAction: TextInputAction.next,
                         style: const TextStyle(
                             fontFamily: "NeulisAlt",
@@ -184,11 +225,11 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                       const SizedBox(height: 10),
                       TextFormField(
                         controller: address2Control,
-                        keyboardType: TextInputType.emailAddress,
-                        onTapOutside: (event) {
-                          FocusScope.of(context)
-                              .unfocus(); // Close the keyboard
-                        },
+                        keyboardType: TextInputType.streetAddress,
+                        // onTapOutside: (event) {
+                        //   FocusScope.of(context)
+                        //       .unfocus(); // Close the keyboard
+                        // },
                         textInputAction: TextInputAction.next,
                         style: const TextStyle(
                             fontFamily: "NeulisAlt",
@@ -205,7 +246,6 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                 color: AppColors.red, width: 1.5),
                           ),
                           hintText: 'Street address line 2',
-
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(
@@ -227,7 +267,9 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                         ),
                       ),
 
-//coutry and state
+                      const SizedBox(height: 8),
+
+                      //coutry and state
                       Row(
                         children: [
                           Expanded(
@@ -249,7 +291,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 8, left: 3, right: 3),
-                                    child: DropdownButtonFormField(
+                                    child: DropdownButtonFormField<String>(
                                         decoration: const InputDecoration(
                                           hintText: 'Select Country',
                                           hintStyle: TextStyle(
@@ -275,30 +317,31 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                 width: 1.5),
                                           ),
                                         ),
-                                        items: myCount
+                                        items: countries
                                             .map<DropdownMenuItem<String>>(
-                                                (value) =>
-                                                    DropdownMenuItem<String>(
-                                                        value: value.toString(),
-                                                        child: Text(
-                                                          value.toString(),
-                                                          style: const TextStyle(
-                                                              fontFamily:
-                                                                  "NeulisAlt",
-                                                              color: AppColors
-                                                                  .textColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              letterSpacing:
-                                                                  1.2,
-                                                              fontSize: 14),
-                                                        )))
+                                                (country) => DropdownMenuItem<
+                                                        String>(
+                                                    value:
+                                                        country.name.toString(),
+                                                    child: Text(
+                                                      country.name.toString(),
+                                                      style: const TextStyle(
+                                                          fontFamily:
+                                                              "NeulisAlt",
+                                                          color: AppColors
+                                                              .textColor,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          letterSpacing: 1.2,
+                                                          fontSize: 14),
+                                                    )))
                                             .toList(),
                                         value: selectedCountry,
                                         onChanged: (value) {
                                           setState(() {
                                             selectedCountry = value!;
+                                            selectedStatez =
+                                                null; // Reset selected state
                                           });
                                         }),
                                   ),
@@ -326,7 +369,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 8, left: 3, right: 3),
-                                    child: DropdownButtonFormField(
+                                    child: DropdownButtonFormField<String>(
                                         decoration: const InputDecoration(
                                           hintText: 'Select State',
                                           hintStyle: TextStyle(
@@ -352,13 +395,19 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                 width: 1.5),
                                           ),
                                         ),
-                                        items: myStatez
-                                            .map<DropdownMenuItem<String>>(
-                                                (value) =>
-                                                    DropdownMenuItem<String>(
-                                                        value: value.toString(),
+                                        items: selectedCountry != null
+                                            ? countries
+                                                .firstWhere((country) =>
+                                                    country.name ==
+                                                    selectedCountry)
+                                                .states
+                                                .map<DropdownMenuItem<String>>(
+                                                    (state) => DropdownMenuItem<
+                                                            String>(
+                                                        value: state.name
+                                                            .toString(),
                                                         child: Text(
-                                                          value.toString(),
+                                                          state.name.toString(),
                                                           style: const TextStyle(
                                                               fontFamily:
                                                                   "NeulisAlt",
@@ -371,11 +420,13 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                                   1.2,
                                                               fontSize: 14),
                                                         )))
-                                            .toList(),
+                                                .toList()
+                                            : null,
                                         value: selectedStatez,
                                         onChanged: (value) {
                                           setState(() {
                                             selectedStatez = value!;
+                                            selectedLGA = null;
                                           });
                                         }),
                                   ),
@@ -406,7 +457,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 bottom: 8, left: 3, right: 3),
-                            child: DropdownButtonFormField(
+                            child: DropdownButtonFormField<String>(
                                 decoration: const InputDecoration(
                                   hintText: 'Select LGA',
                                   hintStyle: TextStyle(
@@ -431,20 +482,35 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                         width: 1.5),
                                   ),
                                 ),
-                                items: myLGA
-                                    .map<DropdownMenuItem<String>>(
-                                        (value) => DropdownMenuItem<String>(
-                                            value: value.toString(),
-                                            child: Text(
-                                              value.toString(),
-                                              style: const TextStyle(
-                                                  fontFamily: "NeulisAlt",
-                                                  color: AppColors.textColor,
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 1.2,
-                                                  fontSize: 14),
-                                            )))
-                                    .toList(),
+                                items: selectedCountry != null &&
+                                        selectedStatez != null
+                                    ? countries
+                                        .firstWhere(
+                                          (country) =>
+                                              country.name == selectedCountry,
+                                        )
+                                        .states
+                                        .firstWhere(
+                                          (state) =>
+                                              state.name == selectedStatez,
+                                        )
+                                        .cities
+                                        .map<DropdownMenuItem<String>>(
+                                            (city) => DropdownMenuItem<String>(
+                                                value: city.name.toString(),
+                                                child: Text(
+                                                  city.name.toString(),
+                                                  style: const TextStyle(
+                                                      fontFamily: "NeulisAlt",
+                                                      color:
+                                                          AppColors.textColor,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      letterSpacing: 1.2,
+                                                      fontSize: 14),
+                                                )))
+                                        .toList()
+                                    : null,
                                 value: selectedLGA,
                                 onChanged: (value) {
                                   setState(() {
@@ -471,7 +537,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                           //email
                           TextFormField(
                             controller: landmarkControl,
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.streetAddress,
                             onTapOutside: (event) {
                               FocusScope.of(context)
                                   .unfocus(); // Close the keyboard
@@ -543,7 +609,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                     onTap: () async {
                       // Navigator.push(context,
                       //     MaterialPageRoute(builder: (context) {
-                      //   return const SignUpPage2();
+                      //   return const LoginPage();
                       // }));
                     },
                     child: const MoticarText(
@@ -562,11 +628,95 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                   MoticarLoginButton(
                     myColor: AppColors.indieC,
                     borderColor: AppColors.indieC,
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const SignUpPage4();
-                      }));
+                    onTap: () async {
+                      if (_formKey.currentState!.validate()) {
+                        final String address1 = addressControl.text;
+                        final String address2 = address2Control.text;
+                        final String newCountry = selectedCountry.toString();
+                        final String land = landmarkControl.text;
+                        // phoneController.text;
+
+                        if (address1.isNotEmpty &&
+                            address2.isNotEmpty &&
+                            land.isNotEmpty &&
+                            newCountry.isNotEmpty) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) {
+                              return Center(
+                                child: AlertDialog(
+                                  backgroundColor: AppColors.appThemeColor,
+                                  shadowColor: AppColors.appThemeColor,
+                                  content: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          height: 100,
+                                          width: 100,
+                                          child: RiveAnimation.asset(
+                                            'assets/images/preloader.riv',
+                                          ),
+                                        ),
+                                        SizedBox(height: 15),
+                                        Text(
+                                            'Uploading your address, please wait.',
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                TextStyle(color: Colors.white))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+
+                          await Future.delayed(const Duration(seconds: 2));
+
+                          Navigator.pop(context);
+
+                           await HiveStorage.put(
+                                                  HiveKeys.token,
+                                                  widget.token);
+
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return SignUpPage4(
+                                address1: address1,
+                                address2: address2,
+                                newCountry: newCountry,
+                                state: selectedStatez.toString(),
+                                lga: selectedLGA.toString(),
+                                land: land,
+                                token: widget.token);
+                          }));
+                        } else {
+                          // Show dialog if any required fields are empty
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return MoticarDialog(
+                                icon: const Icon(Icons.info_rounded,
+                                    color: AppColors.appThemeColor, size: 50),
+                                title: '',
+                                subtitle: 'All Fields are required to proceed',
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                buttonColor: AppColors.appThemeColor,
+                                textColor: AppColors.white,
+                                buttonText: "Dismiss",
+                              );
+                            },
+                          );
+                        }
+                      }
                     },
                     child: const MoticarText(
                       fontColor: AppColors.appThemeColor,
@@ -583,4 +733,38 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
       ),
     );
   }
+}
+
+class Country {
+  final int id;
+  final String name;
+  final List<StateData> states;
+
+  Country({
+    required this.id,
+    required this.name,
+    required this.states,
+  });
+}
+
+class StateData {
+  final int id;
+  final String name;
+  final List<City> cities;
+
+  StateData({
+    required this.id,
+    required this.name,
+    required this.cities,
+  });
+}
+
+class City {
+  final int id;
+  final String name;
+
+  City({
+    required this.id,
+    required this.name,
+  });
 }

@@ -1,22 +1,30 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/auth/add_car3.dart';
 import 'package:moticar/utils/validator.dart';
 import 'package:moticar/widgets/page_indicator.dart';
+import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
+import '../models/newcars_model.dart';
+import '../utils/enums.dart';
+import '../widgets/eard_dialog.dart';
+import '../widgets/eard_loader.dart';
 import 'car_list_all.dart';
 
 class AddCarPage2 extends StatefulHookConsumerWidget {
-  const AddCarPage2({
+  const  AddCarPage2( {
     super.key,
-    required this.imagePath,
+    required this.moticatz,
     required this.carName,
   });
-  final String imagePath, carName;
+  final String carName;
+final  List<Category> moticatz;
 
   @override
   ConsumerState<AddCarPage2> createState() => _AddCarPage2State();
@@ -29,9 +37,9 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
   String? popular;
   bool isClicked = false;
 
-  bool isVisible = false;
-  bool isVisible2 = false;
-  bool isVisible3 = false;
+  bool isVisible = true;
+  bool isVisible2 = true;
+  bool isVisible3 = true;
 
   //
   String selectedModel = '';
@@ -85,16 +93,16 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
         elevation: 1,
         centerTitle: true,
         automaticallyImplyLeading: false,
-        // leading: IconButton(
-        //   onPressed: () {
-        //     Navigator.pop(context);
-        //   },
-        //   icon: const Icon(
-        //     Icons.arrow_back_ios_new_rounded,
-        //     size: 20,
-        //     color: Colors.white,
-        //   ),
-        // ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 20,
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: AppColors.appThemeColor,
         shadowColor: Colors.white,
         surfaceTintColor: Colors.white,
@@ -143,7 +151,7 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SvgPicture.asset(widget.imagePath),
+                                SvgPicture.asset(widget.carName),
                                 const SizedBox(height: 8),
                                 Text(
                                   widget.carName,
@@ -396,219 +404,125 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                         //suvs cars
                         Visibility(
                           visible: isVisible,
-                          child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'yaris'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'yaris'
-                                        ? const MoticarText(
-                                            text: 'Yaris Cross',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Yaris Cross',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'yaris',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel = 'Yaris Cross [SUV]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                          child: Column(
+                            children: [
+                              if (state.loading != Loader.loading &&
+                                  widget.moticatz.isNotEmpty)
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.25,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: widget.moticatz.length,
+                                    itemBuilder: (context, index) {
+                                      final moticar = widget.moticatz[index];
+                                      final categoriez = moticar.models;
+                                      final carname = moticar.name;
 
-                            //kia
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'corolla'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'corolla'
-                                        ? const MoticarText(
-                                            text: 'Corolla Cross',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Corolla Cross',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'corolla',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel = 'Corolla Cross [SUV]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            // moticatz = categoriez;
+                                            selectedCarName = carname;
+                                          });
 
-                            //
-                            // benzo
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'sequioa'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'sequioa'
-                                        ? const MoticarText(
-                                            text: 'Sequioa',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Sequioa',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'sequioa',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel = 'Sequioa [SUV]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                          //
+                                          // print(
+                                          //     'my $moticatz $selectedCarName');
 
-                            //C-HR
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'c-hr'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'c-hr'
-                                        ? const MoticarText(
-                                            text: 'C-HR',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'C-HR',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
+                                           
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: popular == moticar.name
+                                                    ? AppColors.lightGreen
+                                                    : const Color(0xfff0f5f5),
+                                                width: 1,
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    color: Colors.black45,
+                                                    blurRadius: 0.1),
+                                              ],
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                popular == moticar.name
+                                                    ? MoticarText(
+                                                        text: moticar.name,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontColor:
+                                                            AppColors.green,
+                                                      )
+                                                    : MoticarText(
+                                                        text: moticar.name,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontColor:
+                                                            const Color(
+                                                                0xff495353),
+                                                      ),
+                                                Radio(
+                                                  toggleable: true,
+                                                  value: moticar.name,
+                                                  activeColor:
+                                                      AppColors.lightGreen,
+                                                  groupValue: popular,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      popular =
+                                                          value.toString();
+                                                      // moticatz = categoriez;
+                                                      selectedCarName = carname;
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'c-hr',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel = 'C-HR [SUV]';
-                                        });
-                                      },
-                                    ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                              else if (state.loading == Loader.loading)
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    MoticarLoader(
+                                      size: 40,
+                                    )
                                   ],
+                                )
+                              else
+                                const Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: 30),
+                                      MoticarText(
+                                          text: 'No Cars Available',
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          fontColor: AppColors.textColor),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ]),
+                            ],
+                          ),
                         ),
 
                         //
@@ -764,169 +678,133 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                         //visible hatchbck
                         Visibility(
                           visible: isVisible2,
-                          child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'toyota'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'toyota'
-                                        ? const MoticarText(
-                                            text: 'Toyota Prius-Prime',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Toyota Prius-Prime',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'toyota',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel =
-                                              'Toyota Prius-Prime [Hatchback]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                          child: Column(
+                            children: [
+                              if (state.loading != Loader.loading &&
+                                  widget.moticatz.isNotEmpty)
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.25,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: widget.moticatz.length,
+                                    itemBuilder: (context, index) {
+                                      final moticar = widget.moticatz[index];
+                                      final categoriez = moticar.models;
+                                      final carname = moticar.name;
 
-                            //kia
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'ford'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'ford'
-                                        ? const MoticarText(
-                                            text: 'Ford Fiesta',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Ford Fiesta',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'ford',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel =
-                                              'Ford Fiesta [Hatchback]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            // moticatz = categoriez;
+                                            selectedCarName = carname;
+                                          });
 
-                            //
-                            // benzo
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'mitsu'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'mitsu'
-                                        ? const MoticarText(
-                                            text: 'Mitsubishi Mirage',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Mitsubishi Mirage',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
+                                          //
+                                          // print(
+                                          //     'my $moticatz $selectedCarName');
+
+                                          // Navigator.push(context,
+                                          //     MaterialPageRoute(builder: (context) {
+                                          //   return PersonalAcctOpenPageOne(
+                                          //     acctType: moticatz,
+                                          //     acctCode: selectedCarName,
+                                          //   );
+                                          // }));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: popular == moticar.name
+                                                    ? AppColors.lightGreen
+                                                    : const Color(0xfff0f5f5),
+                                                width: 1,
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    color: Colors.black45,
+                                                    blurRadius: 0.1),
+                                              ],
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                popular == moticar.name
+                                                    ? MoticarText(
+                                                        text: moticar.name,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontColor:
+                                                            AppColors.green,
+                                                      )
+                                                    : MoticarText(
+                                                        text: moticar.name,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontColor:
+                                                            const Color(
+                                                                0xff495353),
+                                                      ),
+
+                                                      //
+                                                Radio(
+                                                  toggleable: true,
+                                                  value: moticar.name,
+                                                  activeColor:
+                                                      AppColors.lightGreen,
+                                                  groupValue: popular,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      popular =
+                                                          value.toString();
+                                                      // moticatz = categoriez;
+                                                      selectedCarName = carname;
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'mitsu',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel =
-                                              'Mitsubishi Mirage [Hatchback]';
-                                        });
-                                      },
-                                    ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                              else if (state.loading == Loader.loading)
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    MoticarLoader(
+                                      size: 40,
+                                    )
                                   ],
+                                )
+                              else
+                                const Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: 30),
+                                      MoticarText(
+                                          text: 'No Cars Available',
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          fontColor: AppColors.textColor),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ]),
+                            ],
+                          ),
                         ),
 
                         //sedans
@@ -1082,220 +960,125 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                         //visible sedan
                         Visibility(
                           visible: isVisible3,
-                          child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'camry'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'camry'
-                                        ? const MoticarText(
-                                            text: 'Camry',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Camry',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'camry',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel = 'Camry [Sedan]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                          child: Column(
+                            children: [
+                              if (state.loading != Loader.loading &&
+                                  widget.moticatz.isNotEmpty)
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.25,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: widget.moticatz.length,
+                                    itemBuilder: (context, index) {
+                                      final moticar = widget.moticatz[index];
+                                      final categoriez = moticar.models;
+                                      final carname = moticar.name;
 
-                            //kia
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'cor sedan'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'cor sedan'
-                                        ? const MoticarText(
-                                            text: 'Corolla Sedan',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Corolla Sedan',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'cor sedan',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel =
-                                              'Corolla Sedan [Sedan]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                      return GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            // moticatz = categoriez;
+                                            selectedCarName = carname;
+                                          });
 
-                            //
-                            // Avalon
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'avalon'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'avalon'
-                                        ? const MoticarText(
-                                            text: 'Avalon',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Avalon',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'avalon',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel = 'Avalon [Sedan]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                                          //
+                                          // print(
+                                          //     'my $moticatz $selectedCarName');
 
-                            //avensis
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'aven'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'aven'
-                                        ? const MoticarText(
-                                            text: 'Avensis',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Avensis',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
+                                         
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              border: Border.all(
+                                                color: popular == moticar.name
+                                                    ? AppColors.lightGreen
+                                                    : const Color(0xfff0f5f5),
+                                                width: 1,
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    color: Colors.black45,
+                                                    blurRadius: 0.1),
+                                              ],
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                popular == moticar.name
+                                                    ?
+                                                  MoticarText(
+                                                  text: moticar.name,
+                                                  fontSize: 14,
+                                                  fontWeight:
+                                                      FontWeight.w700,
+                                                  fontColor:
+                                                      AppColors.green,
+                                                )
+                                                :   MoticarText(
+                                                    text: moticar.name,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w400,
+                                                    fontColor: const Color(
+                                                        0xff495353),
+                                                  ),
+                                                Radio(
+                                                  toggleable: true,
+                                                  value: moticar.name,
+                                                  activeColor:
+                                                      AppColors.lightGreen,
+                                                  groupValue: popular,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      popular =
+                                                          value.toString();
+                                                      // moticatz = categoriez;
+                                                      selectedCarName = carname;
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'aven',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedModel = 'Avensis [Sedan]';
-                                        });
-                                      },
-                                    ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                              else if (state.loading == Loader.loading)
+                                const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    MoticarLoader(
+                                      size: 40,
+                                    )
                                   ],
+                                )
+                              else
+                                const Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(height: 30),
+                                      MoticarText(
+                                          text: 'No Cars Available',
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          fontColor: AppColors.textColor),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ]),
+                            ],
+                          ),
                         ),
 
                         const SizedBox(
@@ -1330,14 +1113,80 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                   MoticarLoginButton(
                     myColor: AppColors.indieC,
                     borderColor: AppColors.indieC,
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return AddCarPage3(
-                            model: selectedModel,
-                            imagePath: widget.imagePath,
-                            carName: widget.carName);
-                      }));
+                    onTap: () async {
+                      if (selectedModel.isNotEmpty) {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (context) {
+                            return Center(
+                              child: AlertDialog(
+                                backgroundColor: AppColors.appThemeColor,
+                                shadowColor: AppColors.appThemeColor,
+                                content: Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      // const SpinKitWave(
+                                      //   color: AppColors.appThemeColor,
+                                      //   size: 30.0,
+                                      // ),
+
+                                      SizedBox(
+                                        height: 100,
+                                        width: 100,
+                                        child: RiveAnimation.asset(
+                                          'assets/images/preloader.riv',
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text('Processing, please wait.',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(color: Colors.white))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+
+                        await Future.delayed(const Duration(seconds: 3));
+
+                        Navigator.pop(context);
+
+                        //
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return AddCarPage3(
+                              model: selectedModel,
+                              imagePath: widget.carName,
+                              carName: widget.carName);
+                        }));
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return MoticarDialog(
+                              icon: const Icon(Icons.info_rounded,
+                                  color: AppColors.appThemeColor, size: 50),
+                              title: '',
+                              subtitle:
+                                  'Please select your car model, before proceeding',
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              buttonColor: AppColors.appThemeColor,
+                              textColor: AppColors.white,
+                              buttonText: "Dismiss",
+                            );
+                          },
+                        );
+                      }
                     },
                     child: const MoticarText(
                       fontColor: AppColors.appThemeColor,
@@ -1351,42 +1200,6 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class CarStatusBottomSheet extends StatelessWidget {
-  final String selectCar;
-
-  CarStatusBottomSheet(this.selectCar);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Car Status: $selectCar",
-                style: const TextStyle(
-                  fontFamily: "NeulisAlt",
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(height: 20),
-              // Add additional content here
-            ],
-          ),
-        ),
       ),
     );
   }

@@ -5,6 +5,7 @@ import '../../auth/login/login_email.dart';
 import '../../auth/signup/signup.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
+import '../../widgets/eard_dialog.dart';
 
 class OnBoardingScreenPage extends StatefulWidget {
   const OnBoardingScreenPage({super.key});
@@ -100,6 +101,24 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
                             MaterialPageRoute(builder: (context) {
                           return const SignUpPage();
                         }));
+
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (BuildContext context) {
+                        //     return MoticarDialog(
+                        //       // icon: const Icon(Icons.info_rounded,
+                        //       //     color: AppColors.appThemeColor, size: 50),
+                        //       title: '',
+                        //       subtitle: 'All Fields are required to proceed',
+                        //       onTap: () {
+                        //         Navigator.pop(context);
+                        //       },
+                        //       buttonColor: AppColors.appThemeColor,
+                        //       textColor: AppColors.white,
+                        //       buttonText: "Dismiss",
+                        //     );
+                        //   },
+                        // );
                         // context.router.push(const LoginRouteCopy());
                       },
                       child: const MoticarText(

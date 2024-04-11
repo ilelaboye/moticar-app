@@ -1,9 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/auth/signup/signup.dart';
 import 'package:moticar/widgets/appBar.dart';
+import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
 import '../../services/hivekeys.dart';
@@ -12,6 +16,7 @@ import '../../splash/splashscreen/new_onboardIntro.dart';
 import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
+import '../../widgets/eard_dialog.dart';
 import 'login_phone.dart';
 
 class LoginPage extends StatefulHookConsumerWidget {
@@ -150,34 +155,34 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ),
 
                               //switch to phone number instead
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return const LoginPhonePage();
-                                  }));
-                                },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Icon(
-                                      Icons.phone_iphone_rounded,
-                                      size: 20,
-                                      color: AppColors.lightGreen,
-                                    ),
+                              // TextButton(
+                              //   onPressed: () {
+                              //     Navigator.push(context,
+                              //         MaterialPageRoute(builder: (context) {
+                              //       return const LoginPhonePage();
+                              //     }));
+                              //   },
+                              //   child: const Row(
+                              //     mainAxisAlignment: MainAxisAlignment.end,
+                              //     children: [
+                              //       Icon(
+                              //         Icons.phone_iphone_rounded,
+                              //         size: 20,
+                              //         color: AppColors.lightGreen,
+                              //       ),
 
-                                    //
-                                    MoticarText(
-                                      fontColor: AppColors.lightGreen,
-                                      text: 'Use phone number instead',
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              //       //
+                              //       MoticarText(
+                              //         fontColor: AppColors.lightGreen,
+                              //         text: 'Use phone number instead',
+                              //         fontSize: 13,
+                              //         fontWeight: FontWeight.w500,
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
 
-                              const SizedBox(height: 20),
+                              // const SizedBox(height: 20),
 
                               //password
                               const Padding(
@@ -206,8 +211,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                     fontSize: 16),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: (value) =>
-                                    PasswordValidator.validatePassword(value!),
+                                // validator: (value) =>
+                                //     PasswordValidator.validatePassword(value!),
                                 onSaved: (value) {
                                   password = value!;
                                 },
@@ -343,24 +348,115 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       height: 8,
                     ),
 
-                    //button
-                    MoticarLoginButton(
-                      myColor: AppColors.indieC,
-                      borderColor: AppColors.indieC,
-                      onTap: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return const IntroPage2();
-                        // }));
-                        // context.router.push(const LoginRouteCopy());
-                      },
-                      child: const MoticarText(
-                        fontColor: AppColors.appThemeColor,
-                        text: 'Login',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                    //Login
+                    Consumer(builder: (context, ref, child) {
+                      final model =
+                          ref.read(loginViewModelProvider.notifier);
+                      return MoticarLoginButton(
+                        myColor: AppColors.indieC,
+                        borderColor: AppColors.indieC,
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            final String myEmail = emailController.text;
+                            final String myPass = passwordController.text;
+
+                            // if(myEmail.isNotEmpty && myPass.isNotEmpty){
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (context) {
+                                return Center(
+                                  child: AlertDialog(
+                                    backgroundColor: AppColors.appThemeColor,
+                                    shadowColor: AppColors.appThemeColor,
+                                    content: Container(
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: const Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SizedBox(
+                                            height: 100,
+                                            width: 100,
+                                            child: RiveAnimation.asset(
+                                              'assets/images/preloader.riv',
+                                            ),
+                                          ),
+                                          SizedBox(height: 8),
+                                          Text('Welcome to Moticar',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white))
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+
+                            await Future.delayed(const Duration(seconds: 3));
+
+                            
+
+                            // All fields are filled, attempt sign-up
+                            final signUpResult = await model.login(
+                              formData: {
+                                'email': emailController.text,
+                                'password': passwordController.text,
+                              },
+                            );
+
+                            if (signUpResult.successMessage.isNotEmpty) {
+                              Navigator.pop(context);
+                              // Sign-up successful, show success dialog
+                              await Future.delayed(
+                                  const Duration(milliseconds: 100), () async {
+                                await HiveStorage.put(
+                                    HiveKeys.userEmail, emailController.text);
+                                await HiveStorage.put(HiveKeys.userPassword,
+                                    passwordController.text);
+                                await HiveStorage.put(
+                                    HiveKeys.hasLoggedIn, true);
+                              });
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const BottomHomePage();
+                              }));
+                            } else if (signUpResult.errorMessage.isNotEmpty) {
+                              // Sign-up failed, show error dialog
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return MoticarDialog(
+                                    icon: const Icon(Icons.error_outline_sharp,
+                                        color: AppColors.red, size: 50),
+                                    title: '',
+                                    subtitle: signUpResult.errorMessage,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    buttonColor: AppColors.red,
+                                    textColor: AppColors.white,
+                                    buttonText: "Dismiss",
+                                  );
+                                },
+                              );
+                            }
+                          }
+
+                          // context.router.push(const LoginRouteCopy());
+                        },
+                        child: const MoticarText(
+                          fontColor: AppColors.appThemeColor,
+                          text: 'Login',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      );
+                    }),
 
                     const SizedBox(
                       height: 10,

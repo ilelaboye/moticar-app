@@ -7,6 +7,7 @@ import 'dashboard/more_page.dart';
 import 'dashboard/moticar_page.dart';
 import 'dashboard/spend.dart';
 import 'dashboard/timeline.dart';
+import 'dashboard/timeline_filled.dart';
 // import 'package:sizer/sizer.dart';
 
 // @RoutePage()
@@ -24,7 +25,8 @@ class _BottomHomePageState extends State<BottomHomePage> {
 
   final List<Widget> _pages = [
     const TimelinePage(),
-    const SpendPage(),
+    // const SpendPage(),
+    const TimelineFilledPage(),
     const MoticarPage(),
     const MePage(),
     const MorePage(),
@@ -44,7 +46,7 @@ class _BottomHomePageState extends State<BottomHomePage> {
     });
 
     // Simulate a delay to showcase the loader
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         isLoading[currentPageIndex] =
             false; // Hide loader for the selected page
