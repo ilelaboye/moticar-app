@@ -22,6 +22,8 @@ class _AllCarsPageState extends State<AllCarsPage> {
     'BMW',
     'Bentley',
     'Bugatti',
+    "Gordon",
+    "Geely",
   ];
 
   // String carImage = 'assets/carLogos/gordon.svg';
@@ -38,6 +40,7 @@ class _AllCarsPageState extends State<AllCarsPage> {
     'assets/carLogos/bentley.svg',
     "assets/carLogos/bugatti.svg",
     'assets/carLogos/gordon.svg',
+    "assets/carLogos/geely.svg"
   ];
 
   @override

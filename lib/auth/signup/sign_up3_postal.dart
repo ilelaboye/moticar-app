@@ -5,14 +5,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/auth/login/login_email.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
+import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
+import '../../widgets/eard_dialog.dart';
 import 'sign_3.dart';
 
 class SignUpPage3Postal extends StatefulHookConsumerWidget {
-  const SignUpPage3Postal({super.key});
+  const SignUpPage3Postal( {super.key, required this.token,
+  });
+  final String token;
 
   @override
   ConsumerState<SignUpPage3Postal> createState() => _SignUpPage3PostalState();
@@ -89,7 +93,9 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return const SignUpPage3();
+                            return  SignUpPage3(
+                              token: widget.token
+                            );
                           }));
                         },
                         child: const Row(
@@ -213,14 +219,91 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                   ),
 
                   //create an account
-                  MoticarLoginButton(
+                   MoticarLoginButton(
                     myColor: AppColors.indieC,
                     borderColor: AppColors.indieC,
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const LoginPage();
-                      }));
+                    onTap: () async {
+                      if (_formKey.currentState!.validate()) {
+                        final String postal = postalController.text;
+                        // final String address2 = address2Control.text;
+                        // final String newCountry = selectedCountry.toString();
+                        // final String land = landmarkControl.text;
+                        // phoneController.text;
+
+                        if (postal.isNotEmpty) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) {
+                              return Center(
+                                child: AlertDialog(
+                                  backgroundColor: AppColors.appThemeColor,
+                                  shadowColor: AppColors.appThemeColor,
+                                  content: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SizedBox(
+                                          height: 100,
+                                          width: 100,
+                                          child: RiveAnimation.asset(
+                                            'assets/images/preloader.riv',
+                                          ),
+                                        ),
+                                        SizedBox(height: 15),
+                                        Text(
+                                            'Uploading your address, please wait.',
+                                            textAlign: TextAlign.center,
+                                            style:
+                                                TextStyle(color: Colors.white))
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+
+                          await Future.delayed(const Duration(seconds: 2));
+
+                          Navigator.pop(context);
+
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (context) {
+                          //   return SignUpPage4(
+                          //       address1: address1,
+                          //       address2: address2,
+                          //       newCountry: newCountry,
+                          //       state: selectedStatez.toString(),
+                          //       lga: selectedLGA.toString(),
+                          //       land: land,
+                          //       token: widget.token);
+                          // }));
+                        } else {
+                          // Show dialog if any required fields are empty
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return MoticarDialog(
+                                icon: const Icon(Icons.info_rounded,
+                                    color: AppColors.appThemeColor, size: 50),
+                                title: '',
+                                subtitle: 'All Fields are required to proceed',
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                buttonColor: AppColors.appThemeColor,
+                                textColor: AppColors.white,
+                                buttonText: "Dismiss",
+                              );
+                            },
+                          );
+                        }
+                      }
                     },
                     child: const MoticarText(
                       fontColor: AppColors.appThemeColor,
@@ -229,6 +312,9 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
+
+
+                  //
                   const SizedBox(
                     height: 10,
                   ),
@@ -256,7 +342,9 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return const SignUpPage3();
+                            return SignUpPage3(
+                              token: widget.token
+                            );
                           }));
                         },
                       ),

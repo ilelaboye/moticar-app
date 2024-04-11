@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/svg.dart';
 
 import 'colors.dart';
 import 'general_widgets.dart';
@@ -25,15 +26,18 @@ class MoticarDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
+      shadowColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           icon ??
-              SvgPicture.asset(
-                "assets/svgs/success.svg",
-                height: 30,
+              Image.asset(
+                "assets/images/failed_mo.png",
+                height: 100,
+                // color: const Color(0xff000000),
               ),
           const SizedBox(
             height: 8,
@@ -44,7 +48,7 @@ class MoticarDialog extends StatelessWidget {
             style: const TextStyle(
                 fontFamily: "NeulisAlt",
                 fontSize: 13,
-                color: AppColors.textColor,
+                color: AppColors.appThemeColor,
                 fontWeight: FontWeight.w700),
           ),
           const SizedBox(
@@ -56,7 +60,7 @@ class MoticarDialog extends StatelessWidget {
             style: const TextStyle(
               fontFamily: "NeulisAlt",
               fontSize: 14,
-              color: AppColors.textColor,
+              color: AppColors.appThemeColor,
               fontWeight: FontWeight.w500,
             ),
           ),

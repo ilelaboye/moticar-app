@@ -1,15 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/auth/add_car4.dart';
-import 'package:moticar/utils/validator.dart';
 import 'package:moticar/widgets/page_indicator.dart';
+import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
-import 'car_list_all.dart';
+import '../widgets/bottom_sheet_service.dart';
+import '../widgets/eard_dialog.dart';
 
 class AddCarPage3 extends StatefulHookConsumerWidget {
   const AddCarPage3(
@@ -31,10 +34,10 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
   String? gear;
   bool isClicked = false;
 
-  bool isVisible = false;
-  bool isVisible2 = false;
+  bool isVisible = true;
+  bool isVisible2 = true;
 
-  bool isVisible3 = false;
+  bool isVisible3 = true;
 
   String selectedPetrol = '';
   String selectedGearBox = '';
@@ -143,11 +146,11 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                             child: Padding(
                               padding: const EdgeInsets.only(
                                 top: 8,
-                                bottom: 8,
+                                // bottom: 8,
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(widget.imagePath),
                                   // const SizedBox(height: 4),
@@ -344,136 +347,134 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                               const SizedBox(
                                 width: 8,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isVisible = !isVisible;
-                                  });
-                                },
-                                child: isVisible
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_up_rounded,
-                                        color: AppColors.textGrey)
-                                    : const Icon(
-                                        Icons.keyboard_arrow_down_sharp,
-                                        color: AppColors.textGrey),
-                              ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     setState(() {
+                              //       isVisible = !isVisible;
+                              //     });
+                              //   },
+                              //   child: isVisible
+                              //       ? const Icon(
+                              //           Icons.keyboard_arrow_up_rounded,
+                              //           color: AppColors.textGrey)
+                              //       : const Icon(
+                              //           Icons.keyboard_arrow_down_sharp,
+                              //           color: AppColors.textGrey),
+                              // ),
                             ],
                           ),
                         ),
 
                         //2.0L 6MT FWD (175 HP)
-                        Visibility(
-                          visible: isVisible,
-                          child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == '2.0L 6MT FWD (175 HP)'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
+                        // visible: isVisible, Visisbility
+                        Column(children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: popular == '2.0L 6MT FWD (175 HP)'
+                                      ? AppColors.lightGreen
+                                      : const Color(0xfff0f5f5),
+                                  width: 1,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black45, blurRadius: 0.1),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  popular == '2.0L 6MT FWD (175 HP)'
+                                      ? const MoticarText(
+                                          text: '2.0L 6MT FWD (175 HP)',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          fontColor: AppColors.green,
+                                        )
+                                      : const MoticarText(
+                                          text: '2.0L 6MT FWD (175 HP)',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontColor: Color(0xff495353),
+                                        ),
+                                  Radio(
+                                    toggleable: true,
+                                    value: '2.0L 6MT FWD (175 HP)',
+                                    activeColor: AppColors.lightGreen,
+                                    groupValue: popular,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        popular = value.toString();
+                                        selectedPetrol =
+                                            'Petrol [2.0L 6MT FWD (175 HP)]';
+                                      });
+                                    },
                                   ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == '2.0L 6MT FWD (175 HP)'
-                                        ? const MoticarText(
-                                            text: '2.0L 6MT FWD (175 HP)',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: '2.0L 6MT FWD (175 HP)',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: '2.0L 6MT FWD (175 HP)',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedPetrol =
-                                              'Petrol [2.0L 6MT FWD (175 HP)]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                ],
                               ),
                             ),
+                          ),
 
-                            //TRD 2.5L 8AT (203 HP)
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: popular == 'TRD 2.5L 8AT (203 HP)'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
+                          //TRD 2.5L 8AT (203 HP)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: popular == 'TRD 2.5L 8AT (203 HP)'
+                                      ? AppColors.lightGreen
+                                      : const Color(0xfff0f5f5),
+                                  width: 1,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black45, blurRadius: 0.1),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  popular == 'TRD 2.5L 8AT (203 HP)'
+                                      ? const MoticarText(
+                                          text: 'TRD 2.5L 8AT (203 HP)',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          fontColor: AppColors.green,
+                                        )
+                                      : const MoticarText(
+                                          text: 'TRD 2.5L 8AT (203 HP)',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontColor: Color(0xff495353),
+                                        ),
+                                  Radio(
+                                    toggleable: true,
+                                    value: 'TRD 2.5L 8AT (203 HP)',
+                                    activeColor: AppColors.lightGreen,
+                                    groupValue: popular,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        popular = value.toString();
+                                        selectedPetrol =
+                                            'Petrol [TRD 2.5L 8AT (203 HP)]';
+                                      });
+                                    },
                                   ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    popular == 'TRD 2.5L 8AT (203 HP)'
-                                        ? const MoticarText(
-                                            text: 'TRD 2.5L 8AT (203 HP)',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'TRD 2.5L 8AT (203 HP)',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'TRD 2.5L 8AT (203 HP)',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: popular,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          popular = value.toString();
-                                          selectedPetrol =
-                                              'Petrol [TRD 2.5L 8AT (203 HP)]';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                ],
                               ),
                             ),
-                          ]),
-                        ),
+                          ),
+                        ]),
 
                         //
                         //GearBox
@@ -604,278 +605,275 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                   color: AppColors.divider,
                                 ),
                               ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isVisible2 = !isVisible2;
-                                  });
-                                },
-                                child: isVisible2
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_up_rounded,
-                                        color: AppColors.textGrey)
-                                    : const Icon(
-                                        Icons.keyboard_arrow_down_sharp,
-                                        color: AppColors.textGrey),
-                              ),
+                              // const SizedBox(
+                              //   width: 8,
+                              // ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     setState(() {
+                              //       isVisible2 = !isVisible2;
+                              //     });
+                              //   },
+                              //   child: isVisible2
+                              //       ? const Icon(
+                              //           Icons.keyboard_arrow_up_rounded,
+                              //           color: AppColors.textGrey)
+                              //       : const Icon(
+                              //           Icons.keyboard_arrow_down_sharp,
+                              //           color: AppColors.textGrey),
+                              // ),
                             ],
                           ),
                         ),
 
                         //visible gearbox
-                        Visibility(
-                          visible: isVisible2,
-                          child: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: gear == 'Planetary Gear System'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
+                        // visible: isVisible2,
+                        Column(children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: gear == 'Planetary Gear System'
+                                      ? AppColors.lightGreen
+                                      : const Color(0xfff0f5f5),
+                                  width: 1,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black45, blurRadius: 0.1),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  gear == 'Planetary Gear System'
+                                      ? const MoticarText(
+                                          text: 'Planetary Gear System',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          fontColor: AppColors.green,
+                                        )
+                                      : const MoticarText(
+                                          text: 'Planetary Gear System',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontColor: Color(0xff495353),
+                                        ),
+                                  Radio(
+                                    toggleable: true,
+                                    value: 'Planetary Gear System',
+                                    activeColor: AppColors.lightGreen,
+                                    groupValue: gear,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        gear = value.toString();
+                                        selectedGearBox =
+                                            'Planetary Gear System';
+                                      });
+                                    },
                                   ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    gear == 'Planetary Gear System'
-                                        ? const MoticarText(
-                                            text: 'Planetary Gear System',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: 'Planetary Gear System',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Radio(
-                                      toggleable: true,
-                                      value: 'Planetary Gear System',
-                                      activeColor: AppColors.lightGreen,
-                                      groupValue: gear,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          gear = value.toString();
-                                          selectedGearBox =
-                                              'Planetary Gear System';
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                ],
                               ),
                             ),
+                          ),
 
-                            //8-Speed
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: gear == '8-Speed'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
+                          //8-Speed
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: gear == '8-Speed'
+                                      ? AppColors.lightGreen
+                                      : const Color(0xfff0f5f5),
+                                  width: 1,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black45, blurRadius: 0.1),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  gear == '8-Speed'
+                                      ? const MoticarText(
+                                          text: '8-Speed',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          fontColor: AppColors.green,
+                                        )
+                                      : const MoticarText(
+                                          text: '8-Speed',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontColor: Color(0xff495353),
+                                        ),
+                                  Row(
+                                    children: [
+                                      const MoticarText(
+                                        text: 'Automatic',
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        fontColor: AppColors.lightGreen,
+                                      ),
+                                      Radio(
+                                        toggleable: true,
+                                        value: '8-Speed',
+                                        activeColor: AppColors.lightGreen,
+                                        groupValue: gear,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            gear = value.toString();
+                                            selectedGearBox =
+                                                '8-Speed Automatic';
+                                          });
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    gear == '8-Speed'
-                                        ? const MoticarText(
-                                            text: '8-Speed',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: '8-Speed',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Row(
-                                      children: [
-                                        const MoticarText(
-                                          text: 'Automatic',
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600,
-                                          fontColor: AppColors.lightGreen,
-                                        ),
-                                        Radio(
-                                          toggleable: true,
-                                          value: '8-Speed',
-                                          activeColor: AppColors.lightGreen,
-                                          groupValue: gear,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              gear = value.toString();
-                                              selectedGearBox =
-                                                  '8-Speed Automatic';
-                                            });
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                ],
                               ),
                             ),
+                          ),
 
-                            //
-                            // 5-Speed
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: gear == '5-Speed'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
+                          //
+                          // 5-Speed
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: gear == '5-Speed'
+                                      ? AppColors.lightGreen
+                                      : const Color(0xfff0f5f5),
+                                  width: 1,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black45, blurRadius: 0.1),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  gear == '5-Speed'
+                                      ? const MoticarText(
+                                          text: '5-Speed',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          fontColor: AppColors.green,
+                                        )
+                                      : const MoticarText(
+                                          text: '5-Speed',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontColor: Color(0xff495353),
+                                        ),
+                                  Row(
+                                    children: [
+                                      const MoticarText(
+                                        text: 'Automatic',
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        fontColor: AppColors.lightGreen,
+                                      ),
+                                      Radio(
+                                        toggleable: true,
+                                        value: '5-Speed',
+                                        activeColor: AppColors.lightGreen,
+                                        groupValue: gear,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            gear = value.toString();
+                                            selectedGearBox =
+                                                '5-Speed Automatic';
+                                          });
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    gear == '5-Speed'
-                                        ? const MoticarText(
-                                            text: '5-Speed',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: '5-Speed',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Row(
-                                      children: [
-                                        const MoticarText(
-                                          text: 'Automatic',
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600,
-                                          fontColor: AppColors.lightGreen,
-                                        ),
-                                        Radio(
-                                          toggleable: true,
-                                          value: '5-Speed',
-                                          activeColor: AppColors.lightGreen,
-                                          groupValue: gear,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              gear = value.toString();
-                                              selectedGearBox =
-                                                  '5-Speed Automatic';
-                                            });
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                ],
                               ),
                             ),
+                          ),
 
-                            //6-speed
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: gear == '6-Speed'
-                                        ? AppColors.lightGreen
-                                        : const Color(0xfff0f5f5),
-                                    width: 1,
+                          //6-speed
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: gear == '6-Speed'
+                                      ? AppColors.lightGreen
+                                      : const Color(0xfff0f5f5),
+                                  width: 1,
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black45, blurRadius: 0.1),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  gear == '6-Speed'
+                                      ? const MoticarText(
+                                          text: '6-Speed',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          fontColor: AppColors.green,
+                                        )
+                                      : const MoticarText(
+                                          text: '6-Speed',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontColor: Color(0xff495353),
+                                        ),
+                                  Row(
+                                    children: [
+                                      const MoticarText(
+                                        text: 'Manual',
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        fontColor: AppColors.lightGreen,
+                                      ),
+                                      Radio(
+                                        toggleable: true,
+                                        value: '6-Speed',
+                                        activeColor: AppColors.lightGreen,
+                                        groupValue: gear,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            gear = value.toString();
+                                            selectedGearBox = '6-Speed Manual';
+                                          });
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Colors.black45, blurRadius: 0.1),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    gear == '6-Speed'
-                                        ? const MoticarText(
-                                            text: '6-Speed',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            fontColor: AppColors.green,
-                                          )
-                                        : const MoticarText(
-                                            text: '6-Speed',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            fontColor: Color(0xff495353),
-                                          ),
-                                    Row(
-                                      children: [
-                                        const MoticarText(
-                                          text: 'Manual',
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w600,
-                                          fontColor: AppColors.lightGreen,
-                                        ),
-                                        Radio(
-                                          toggleable: true,
-                                          value: '6-Speed',
-                                          activeColor: AppColors.lightGreen,
-                                          groupValue: gear,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              gear = value.toString();
-                                              selectedGearBox =
-                                                  '6-Speed Manual';
-                                            });
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                ],
                               ),
                             ),
-                          ]),
-                        ),
+                          ),
+                        ]),
 
                         const SizedBox(
                           height: 8,
@@ -909,9 +907,93 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                   MoticarLoginButton(
                     myColor: AppColors.indieC,
                     borderColor: AppColors.indieC,
-                    onTap: () {
+                    onTap: () async {
+                      if (selectedGearBox.isNotEmpty &&
+                          selectedPetrol.isNotEmpty) {
+                        // _showOTPVerificationPage(context);
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (context) {
+                            return Center(
+                              child: AlertDialog(
+                                backgroundColor: AppColors.appThemeColor,
+                                shadowColor: AppColors.appThemeColor,
+                                content: Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      // const SpinKitWave(
+                                      //   color: AppColors.appThemeColor,
+                                      //   size: 30.0,
+                                      // ),
+
+                                      SizedBox(
+                                        height: 100,
+                                        width: 100,
+                                        child: RiveAnimation.asset(
+                                          'assets/images/preloader.riv',
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text('Processing, please wait.',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(color: Colors.white))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+
+                        await Future.delayed(const Duration(seconds: 2));
+
+                        Navigator.pop(context);
+
+                        showMoticarBottom(
+                            context: context,
+                            child: FractionallySizedBox(
+                              heightFactor: 0.89,
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  topRight: Radius.circular(30.0),
+                                ),
+                                child: ImageAI(
+                                  carName: widget.carName,
+                                  imagePath: 'assets/images/car_ai.png',
+                                  model: widget.model,
+                                  petrol: selectedPetrol,
+                                  gearbox: selectedGearBox,
+                                ),
+                              ),
+                            ));
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return MoticarDialog(
+                              icon: const Icon(Icons.info_rounded,
+                                  color: AppColors.appThemeColor, size: 50),
+                              title: '',
+                              subtitle:
+                                  'Please select your gear type and the petrol type, before proceeding',
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              buttonColor: AppColors.appThemeColor,
+                              textColor: AppColors.white,
+                              buttonText: "Dismiss",
+                            );
+                          },
+                        );
+                      }
                       //showDialog AI Generator
-                      _showOTPVerificationPage(context);
                     },
                     child: const MoticarText(
                       fontColor: AppColors.appThemeColor,
@@ -930,204 +1012,474 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
   }
 
   //AI GENERATOR
-  void _showOTPVerificationPage(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
+//   void _showOTPVerificationPage(BuildContext context) {
+//     showModalBottomSheet(
+//       context: context,
+//       backgroundColor: AppColors.diaColor,
+//       builder: (context) {
+//         return SingleChildScrollView(
+//           child: Container(
+//             padding: const EdgeInsets.all(20),
+//             child: Column(
+//               mainAxisSize: MainAxisSize.min,
+//               crossAxisAlignment: CrossAxisAlignment.stretch,
+//               children: [
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.end,
+//                   children: [
+//                     IconButton(
+//                       icon: const Icon(Icons.close, color: Color(0xff101828)),
+//                       onPressed: () {
+//                         Navigator.pop(context);
+//                       },
+//                     ),
+//                   ],
+//                 ),
+
+//                 const Text(
+//                   "Is this what your car look like?",
+//                   textAlign: TextAlign.center,
+//                   style: TextStyle(
+//                     fontFamily: "NeulisAlt",
+//                     fontWeight: FontWeight.w600,
+//                     fontSize: 20,
+//                     color: AppColors.appThemeColor,
+//                   ),
+//                 ),
+
+//                 //
+//                 //image
+//                 Padding(
+//                   padding: const EdgeInsets.only(
+//                       top: 15.0, left: 30, right: 30, bottom: 15),
+//                   child: Container(
+//                       // height: 200,
+//                       // width: double.infinity,
+//                       decoration: BoxDecoration(
+//                         color: Colors.white,
+//                         borderRadius: BorderRadius.circular(20),
+//                       ),
+//                       padding: const EdgeInsets.all(8),
+//                       alignment: Alignment.center,
+//                       child: Column(
+//                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                         children: [
+//                           Image.asset("assets/images/car_ai.png"),
+//                           const Text(
+//                             "Image generated by AI",
+//                             textAlign: TextAlign.center,
+//                             style: TextStyle(
+//                               fontFamily: "NeulisAlt",
+//                               fontWeight: FontWeight.w400,
+//                               fontSize: 10,
+//                               color: AppColors.textGrey,
+//                             ),
+//                           ),
+//                         ],
+//                       )),
+//                 ),
+
+//                 Padding(
+//                   padding: const EdgeInsets.only(left: 45.0, right: 45),
+//                   child: Container(
+//                     // height: 50,
+//                     // width: 80,
+//                     padding: const EdgeInsets.all(8),
+//                     decoration: BoxDecoration(
+//                       color: const Color(0xffF8E761),
+//                       borderRadius: BorderRadius.circular(32),
+//                     ),
+//                     child: const Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         Icon(Icons.cached, color: AppColors.lightGreen),
+//                         SizedBox(width: 8),
+//                         Text(
+//                           "Show me another image sample",
+//                           textAlign: TextAlign.center,
+//                           style: TextStyle(
+//                             fontFamily: "NeulisAlt",
+//                             fontWeight: FontWeight.bold,
+//                             fontSize: 12,
+//                             color: Color(0xff002D36),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+
+//                 const SizedBox(height: 8),
+
+//                 // Add your terms and conditions content here
+//                 const Padding(
+//                   padding: EdgeInsets.all(15.0),
+//                   child: Text(
+//                     'The image is just an example. It doesn’t have to be this color, shade or car look alike.',
+//                     textAlign: TextAlign.center,
+//                     style: TextStyle(
+//                       fontFamily: "NeulisAlt",
+//                       fontWeight: FontWeight.w400,
+//                       fontSize: 13,
+//                       color: AppColors.textColor,
+//                     ),
+//                   ),
+//                 ),
+
+//                 const SizedBox(
+//                   height: 8,
+//                 ),
+
+//                 Row(
+//                   children: [
+//                     // Transform.scale(
+//                     //   scale: 0.8,
+//                     //   child: CupertinoSwitch(
+//                     //     value: isClicked,
+//                     //     activeColor: AppColors.yellow,
+//                     //     trackColor: AppColors.appThemeColor,
+//                     //     thumbColor: AppColors.white,
+//                     //     onChanged: (value) {
+//                     //       setState(() {
+//                     //         isClicked = !isClicked;
+//                     //       });
+//                     //     },
+//                     //   ),
+//                     // ),
+
+//                     Checkbox(
+//                       activeColor: AppColors.lightGreen,
+//                       checkColor: Colors.white,
+//                       value: isClicked,
+//                       onChanged: (value) {
+//                         setState(() {
+//                           isClicked =
+//                               value ?? false; // Ensure value is not null
+//                         });
+//                       },
+//                     ),
+
+//                     const Text(
+//                       "Yes, this is what my car looks like",
+//                       style: TextStyle(
+//                           fontFamily: "NeulisAlt",
+//                           fontStyle: FontStyle.normal,
+//                           fontWeight: FontWeight.w400,
+//                           color: AppColors.textColor,
+//                           letterSpacing: 1.2,
+//                           fontSize: 14),
+//                     ),
+//                   ],
+//                 ),
+
+//                 const SizedBox(
+//                   height: 15,
+//                 ),
+
+//                 Padding(
+//                   padding: const EdgeInsets.all(8.0),
+//                   child: MoticarLoginButton(
+//                     myColor: AppColors.appThemeColor,
+//                     borderColor: AppColors.diaColor,
+//                     onTap: () async {
+//                       Navigator.push(context,
+//                           MaterialPageRoute(builder: (context) {
+//                         return AddCarPage4(
+//                           imagePath: 'assets/images/car_ai.png',
+//                           carName: widget.carName,
+//                           petrol: selectedPetrol,
+//                           gearbox: selectedGearBox,
+//                           model: widget.model,
+//                         );
+//                       }));
+//                     },
+//                     child: const MoticarText(
+//                       fontColor: AppColors.white,
+//                       text: 'Continue',
+//                       fontSize: 16,
+//                       fontWeight: FontWeight.w700,
+//                     ),
+//                   ),
+//                 ),
+
+//                 const SizedBox(
+//                   height: 45,
+//                 ),
+//               ],
+//             ),
+//           ),
+//         );
+//       },
+//     );
+  // }
+}
+
+class ImageAI extends StatefulWidget {
+  const ImageAI(
+      {super.key,
+      required this.imagePath,
+      required this.carName,
+      required this.petrol,
+      required this.gearbox,
+      required this.model});
+  final String imagePath, carName, model, petrol, gearbox;
+
+  @override
+  State<ImageAI> createState() => _ImageAIState();
+}
+
+class _ImageAIState extends State<ImageAI> {
+  // String selectedPetrol = '';
+  // String selectedGearBox = '';
+  // String? popular;
+  // String? gear;
+  bool isClicked = false;
+
+  bool isVisible = false;
+  bool isVisible2 = false;
+
+  bool isVisible3 = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       backgroundColor: AppColors.diaColor,
-      builder: (context) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Color(0xff101828)),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-
-                const Text(
-                  "Is this what your car look like?",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "NeulisAlt",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: AppColors.appThemeColor,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(15),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Color(0xff101828)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                ),
+                ],
+              ),
 
-                //
-                //image
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 15.0, left: 30, right: 30, bottom: 15),
-                  child: Container(
-                      // height: 200,
-                      // width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: const EdgeInsets.all(8),
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image.asset("assets/images/car_ai.png"),
-                          const Text(
-                            "Image generated by AI",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 10,
-                              color: AppColors.textGrey,
-                            ),
-                          ),
-                        ],
-                      )),
+              const Text(
+                "Is this what your car look like?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "NeulisAlt",
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                  color: AppColors.appThemeColor,
                 ),
+              ),
 
-                Padding(
-                  padding: const EdgeInsets.only(left: 45.0, right: 45),
-                  child: Container(
-                    // height: 50,
-                    // width: 80,
-                    padding: const EdgeInsets.all(8),
+              //
+              //image
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 15.0, left: 30, right: 30, bottom: 15),
+                child: Container(
+                    // height: 200,
+                    // width: double.infinity,
                     decoration: BoxDecoration(
-                      color: const Color(0xffF8E761),
-                      borderRadius: BorderRadius.circular(32),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    padding: const EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Icon(Icons.cached, color: AppColors.lightGreen),
-                        SizedBox(width: 8),
-                        Text(
-                          "Show me another image sample",
+                        Image.asset("assets/images/car_ai.png"),
+                        const Text(
+                          "Image generated by AI",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: "NeulisAlt",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Color(0xff002D36),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10,
+                            color: AppColors.textGrey,
                           ),
                         ),
                       ],
-                    ),
+                    )),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 45.0, right: 45),
+                child: Container(
+                  // height: 50,
+                  // width: 80,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffF8E761),
+                    borderRadius: BorderRadius.circular(32),
                   ),
-                ),
-
-                const SizedBox(height: 8),
-
-                // Add your terms and conditions content here
-                const Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text(
-                    'The image is just an example. It doesn’t have to be this color, shade or car look alike.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: "NeulisAlt",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: AppColors.textColor,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 8,
-                ),
-
-                Row(
-                  children: [
-                    // Transform.scale(
-                    //   scale: 0.8,
-                    //   child: CupertinoSwitch(
-                    //     value: isClicked,
-                    //     activeColor: AppColors.yellow,
-                    //     trackColor: AppColors.appThemeColor,
-                    //     thumbColor: AppColors.white,
-                    //     onChanged: (value) {
-                    //       setState(() {
-                    //         isClicked = !isClicked;
-                    //       });
-                    //     },
-                    //   ),
-                    // ),
-
-                    Checkbox(
-                      activeColor: AppColors.lightGreen,
-                      checkColor: Colors.white,
-                      value: isClicked,
-                      onChanged: (value) {
-                        setState(() {
-                          isClicked =
-                              value ?? false; // Ensure value is not null
-                        });
-                      },
-                    ),
-
-                    const Text(
-                      "Yes, this is what my car looks like",
-                      style: TextStyle(
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.cached, color: AppColors.lightGreen),
+                      SizedBox(width: 8),
+                      Text(
+                        "Show me another image sample",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
                           fontFamily: "NeulisAlt",
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textColor,
-                          letterSpacing: 1.2,
-                          fontSize: 14),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(
-                  height: 15,
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MoticarLoginButton(
-                    myColor: AppColors.appThemeColor,
-                    borderColor: AppColors.diaColor,
-                    onTap: () async {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return AddCarPage4(
-                          imagePath: 'assets/images/car_ai.png',
-                          carName: widget.carName,
-                          petrol: selectedPetrol,
-                          gearbox: selectedGearBox,
-                          model: widget.model,
-                        );
-                      }));
-                    },
-                    child: const MoticarText(
-                      fontColor: AppColors.white,
-                      text: 'Continue',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Color(0xff002D36),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+              ),
 
-                const SizedBox(
-                  height: 45,
+              const SizedBox(height: 8),
+
+              // Add your terms and conditions content here
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  'The image is just an example. It doesn’t have to be this color, shade or car look alike.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "NeulisAlt",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13,
+                    color: AppColors.textColor,
+                  ),
                 ),
-              ],
-            ),
+              ),
+
+              const SizedBox(
+                height: 8,
+              ),
+
+              Row(
+                children: [
+                  // Transform.scale(
+                  //   scale: 0.8,
+                  //   child: CupertinoSwitch(
+                  //     value: isClicked,
+                  //     activeColor: AppColors.yellow,
+                  //     trackColor: AppColors.appThemeColor,
+                  //     thumbColor: AppColors.white,
+                  //     onChanged: (value) {
+                  //       setState(() {
+                  //         isClicked = !isClicked;
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
+
+                  Checkbox(
+                    activeColor: AppColors.lightGreen,
+                    checkColor: Colors.white,
+                    value: isClicked,
+                    onChanged: (value) {
+                      setState(() {
+                        isClicked = value ?? false; // Ensure value is not null
+                      });
+                    },
+                  ),
+
+                  const Text(
+                    "Yes, this is what my car looks like",
+                    style: TextStyle(
+                        fontFamily: "NeulisAlt",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textColor,
+                        letterSpacing: 1.2,
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 15,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MoticarLoginButton(
+                  myColor: AppColors.appThemeColor,
+                  borderColor: AppColors.diaColor,
+                  onTap: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (context) {
+                        return Center(
+                          child: AlertDialog(
+                            backgroundColor: AppColors.appThemeColor,
+                            shadowColor: AppColors.appThemeColor,
+                            content: Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  // const SpinKitWave(
+                                  //   color: AppColors.appThemeColor,
+                                  //   size: 30.0,
+                                  // ),
+
+                                  SizedBox(
+                                    height: 100,
+                                    width: 100,
+                                    child: RiveAnimation.asset(
+                                      'assets/images/preloader.riv',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+
+                    await Future.delayed(const Duration(seconds: 5));
+
+                    Navigator.pop(context);
+
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return AddCarPage4(
+                        imagePath: 'assets/images/car_ai.png',
+                        carName: widget.carName,
+                        petrol: widget.petrol,
+                        gearbox: widget.gearbox,
+                        model: widget.model,
+                      );
+                    }));
+                  },
+                  child: const MoticarText(
+                    fontColor: AppColors.white,
+                    text: 'Continue',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+
+              const SizedBox(
+                height: 45,
+              ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

@@ -1,18 +1,14 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:moticar/auth/login-android.dart';
 import 'package:moticar/auth/login/login_email.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
+import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
 import '../../services/hivekeys.dart';
@@ -20,9 +16,11 @@ import '../../services/localdatabase.dart';
 import '../../splash/splashscreen/new_onboardIntro.dart';
 import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
+import '../../widgets/bottom_sheet_service.dart';
 import '../../widgets/colors.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+
 import '../../widgets/eard_dialog.dart';
-import '../../widgets/pin_field.dart';
 import 'sign_2.dart';
 
 class SignUpPage extends StatefulHookConsumerWidget {
@@ -35,10 +33,7 @@ class SignUpPage extends StatefulHookConsumerWidget {
 class _SignUpPageState extends ConsumerState<SignUpPage> {
   bool hasLogged = HiveStorage.get(HiveKeys.hasLoggedIn) ?? false;
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final emailController = TextEditingController(
-      text: HiveStorage.get(HiveKeys.hasLoggedIn) ?? false
-          ? HiveStorage.get(HiveKeys.userEmail)
-          : '');
+  final emailController = TextEditingController();
   final phoneController = TextEditingController();
   String email = '', password = '';
 
@@ -131,6 +126,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       TextFormField(
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onTapOutside: (event) {
                           FocusScope.of(context)
                               .unfocus(); // Close the keyboard
@@ -142,26 +138,26 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             fontWeight: FontWeight.w600,
                             letterSpacing: 1.2,
                             fontSize: 16),
-                        // validator: (value) =>
-                        //     EmailValidator.validateEmail(value!),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            setState(() {
-                              _emailError = 'Email address is required';
-                            });
-                            return 'Email address is required';
-                          } else if (!value.contains('@') ||
-                              !value.contains('.')) {
-                            setState(() {
-                              _emailError = 'Enter a valid email address';
-                            });
-                            return 'Enter a valid email address';
-                          }
-                          setState(() {
-                            _emailError = null;
-                          });
-                          return null;
-                        },
+                        validator: (value) =>
+                            EmailValidator.validateEmail(value!),
+                        // validator: (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     setState(() {
+                        //       _emailError = 'Email address is required';
+                        //     });
+                        //     return 'Email address is required';
+                        //   } else if (!value.contains('@') ||
+                        //       !value.contains('.')) {
+                        //     setState(() {
+                        //       _emailError = 'Enter a valid email address';
+                        //     });
+                        //     return 'Enter a valid email address';
+                        //   }
+                        //   setState(() {
+                        //     _emailError = null;
+                        //   });
+                        //   return null;
+                        // },
 
                         onSaved: (value) {
                           email = value!;
@@ -257,6 +253,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             fontColor: AppColors.appThemeColor),
                       ),
                       IntlPhoneField(
+                        key: const Key('phoneField'),
                         controller: phoneController,
                         style: const TextStyle(
                             fontFamily: "NeulisAlt",
@@ -405,9 +402,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                     //
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.only(top: 8, right: 8),
                         child: const Text(
-                          "I agree the terms of use & the privacy policy",
+                          "I agree to the terms of use & the privacy policy",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               fontFamily: "NeulisAlt",
@@ -475,78 +472,254 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                   const SizedBox(
                     height: 40,
                   ),
-                  //button
-                  MoticarLoginButton(
-                    myColor: AppColors.indieC,
-                    borderColor: AppColors.indieC,
-                    onTap: () async {
-                      setState(() {
-                        _isButtonClicked = true;
-                      });
-                      if (_formKey.currentState!.validate()) {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return const IntroPage2();
-                        // }));
 
-                        if (_isCheckboxChecked) {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            builder: (context) {
-                              return Center(
-                                child: AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  shadowColor: Colors.white,
-                                  content: Container(
-                                    padding: const EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: const Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SpinKitWave(
-                                          color: AppColors.appThemeColor,
-                                          size: 30.0,
-                                        ),
-                                        SizedBox(height: 8),
-                                        Text(
-                                          'Processing, please wait.',
-                                          textAlign: TextAlign.center,
-                                        )
-                                      ],
+                  //
+                  Consumer(builder: (context, ref, child) {
+                    final model = ref.read(registerViewmodelProvider.notifier);
+
+                    return MoticarLoginButton(
+                      myColor: AppColors.indieC,
+                      borderColor: AppColors.indieC,
+                      onTap: () async {
+                        setState(() {
+                          _isButtonClicked = true;
+                        });
+                        if (_formKey.currentState!.validate()) {
+                          final String emailz = emailController.text;
+                          final String phonie =
+                              completePhoneNumber!.substring(1).toString();
+                          // phoneController.text;
+
+                          if (emailz.isNotEmpty &&
+                              phonie.isNotEmpty &&
+                              _isCheckboxChecked) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              builder: (context) {
+                                return Center(
+                                  child: AlertDialog(
+                                    backgroundColor: AppColors.appThemeColor,
+                                    shadowColor: AppColors.appThemeColor,
+                                    content: Container(
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: const Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SizedBox(
+                                            height: 100,
+                                            width: 100,
+                                            child: RiveAnimation.asset(
+                                              'assets/images/preloader.riv',
+                                            ),
+                                          ),
+                                          SizedBox(height: 8),
+                                          Text('Processing, please wait.',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white))
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
+                                );
+                              },
+                            );
+
+                            await Future.delayed(const Duration(seconds: 2));
+
+                            // Navigator.pop(context);
+
+                            // All fields are filled, attempt sign-up
+                            final signUpResult = await model.signUp1(
+                              formData: {
+                                'email': emailz,
+                                'phone': phonie,
+                              },
+                            );
+
+                            // Check the result of sign-up
+                            if (signUpResult.successMessage.isNotEmpty) {
+                              // Sign-up successful, show success dialog
+                              // showDialog(
+                              //   barrierDismissible: false,
+                              //   context: context,
+                              //   builder: (context) => MoticarDialog(
+                              //     buttonColor: AppColors.textColor,
+                              //     textColor: AppColors.diaColor,
+                              //     buttonText: "Continue",
+                              //     subtitle: signUpResult.successMessage,
+                              //     onTap: () {
+
+                              //     },
+                              //   ),
+                              // );
+                              showMoticarBottom(
+                                  context: context,
+                                  child: FractionallySizedBox(
+                                    heightFactor: 0.89,
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(30.0),
+                                        topRight: Radius.circular(30.0),
+                                      ),
+                                      child: VerificationPage(
+                                        phone: phoneController.text,
+                                        emailController: emailController.text,
+                                      ),
+                                    ),
+                                  ));
+                            } else if (signUpResult.errorMessage.isNotEmpty) {
+                              // Sign-up failed, show error dialog
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return MoticarDialog(
+                                    icon: const Icon(Icons.error_outline_sharp,
+                                        color: AppColors.red, size: 50),
+                                    title: '',
+                                    subtitle: signUpResult.errorMessage,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    },
+                                    buttonColor: AppColors.red,
+                                    textColor: AppColors.white,
+                                    buttonText: "Dismiss",
+                                  );
+                                },
                               );
-                            },
-                          );
-
-                          await Future.delayed(
-                              const Duration(milliseconds: 1000));
+                            }
+                          } else {
+                            // Show dialog if any required fields are empty
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return MoticarDialog(
+                                  icon: const Icon(Icons.info_rounded,
+                                      color: AppColors.appThemeColor, size: 50),
+                                  title: '',
+                                  subtitle:
+                                      'All Fields are required to proceed',
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  buttonColor: AppColors.appThemeColor,
+                                  textColor: AppColors.white,
+                                  buttonText: "Dismiss",
+                                );
+                              },
+                            );
+                          }
                         }
+                      },
+                      child: const MoticarText(
+                        fontColor: AppColors.appThemeColor,
+                        text: 'Continue',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    );
+                  }),
 
-                        Navigator.pop(context);
+                  // //button
+                  // MoticarLoginButton(
+                  //   myColor: AppColors.indieC,
+                  //   borderColor: AppColors.indieC,
+                  //   onTap: () async {
+                  //     setState(() {
+                  //       _isButtonClicked = true;
+                  //     });
+                  //     if (_formKey.currentState!.validate()) {
+                  //       // Navigator.push(context,
+                  //       //     MaterialPageRoute(builder: (context) {
+                  //       //   return const IntroPage2();
+                  //       // }));
 
-                        _showOTPVerificationPage(context);
-                      }
+                  //       if (_isCheckboxChecked) {
+                  //         showDialog(
+                  //           context: context,
+                  //           barrierDismissible: true,
+                  //           builder: (context) {
+                  //             return Center(
+                  //               child: AlertDialog(
+                  //                 backgroundColor: AppColors.appThemeColor,
+                  //                 shadowColor: AppColors.appThemeColor,
+                  //                 content: Container(
+                  //                   padding: const EdgeInsets.all(20),
+                  //                   decoration: BoxDecoration(
+                  //                     borderRadius: BorderRadius.circular(10),
+                  //                   ),
+                  //                   child: const Column(
+                  //                     mainAxisSize: MainAxisSize.min,
+                  //                     children: [
+                  //                       // const SpinKitWave(
+                  //                       //   color: AppColors.appThemeColor,
+                  //                       //   size: 30.0,
+                  //                       // ),
 
-                      //push to page 2
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) {
-                      //   return const SignUpPage2();
-                      // }));
+                  //                       SizedBox(
+                  //                         height: 100,
+                  //                         width: 100,
+                  //                         child: RiveAnimation.asset(
+                  //                           'assets/images/preloader.riv',
+                  //                         ),
+                  //                       ),
+                  //                       SizedBox(height: 8),
+                  //                       Text('Processing, please wait.',
+                  //                           textAlign: TextAlign.center,
+                  //                           style:
+                  //                               TextStyle(color: Colors.white))
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             );
+                  //           },
+                  //         );
 
-                      // context.router.push(const LoginRouteCopy());
-                    },
-                    child: const MoticarText(
-                      fontColor: AppColors.appThemeColor,
-                      text: 'Continue',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  //         await Future.delayed(const Duration(seconds: 3));
+                  //       }
+
+                  //       Navigator.pop(context);
+
+                  //       // _showOTPVerificationPage(context);
+
+                  //       showMoticarBottom(
+                  //           context: context,
+                  //           child: FractionallySizedBox(
+                  //             heightFactor: 0.89,
+                  //             child: ClipRRect(
+                  //               borderRadius: const BorderRadius.only(
+                  //                 topLeft: Radius.circular(30.0),
+                  //                 topRight: Radius.circular(30.0),
+                  //               ),
+                  //               child: VerificationPage(
+                  //                 phone: phoneController.text,
+                  //                 emailController: emailController.text,
+                  //               ),
+                  //             ),
+                  //           ));
+                  //     }
+
+                  //     //push to page 2
+                  //     // Navigator.push(context,
+                  //     //     MaterialPageRoute(builder: (context) {
+                  //     //   return const SignUpPage2();
+                  //     // }));
+
+                  //     // context.router.push(const LoginRouteCopy());
+                  //   },
+                  //   child: const MoticarText(
+                  //     fontColor: AppColors.appThemeColor,
+                  //     text: 'Continue',
+                  //     fontSize: 16,
+                  //     fontWeight: FontWeight.w700,
+                  //   ),
+                  // ),
 
                   const SizedBox(
                     height: 10,
@@ -719,153 +892,299 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       },
     );
   }
+}
 
-  //verify otp modal
-  void _showOTPVerificationPage(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
+class VerificationPage extends StatefulHookConsumerWidget {
+  const VerificationPage(
+      {super.key, required this.emailController, this.phone});
+  final String emailController;
+  final String? phone;
+
+  @override
+  ConsumerState<VerificationPage> createState() => _VerificationPageState();
+}
+
+class _VerificationPageState extends ConsumerState<VerificationPage> {
+  final TextEditingController pinController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       backgroundColor: AppColors.diaColor,
-      builder: (context) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.close, color: Color(0xff101828)),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-
-                //
-                //image
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10.0, left: 40, right: 40, bottom: 20),
-                  child: Image.asset("assets/images/verify_motic.png"),
-                ),
-
-                const Text(
-                  "Enter Verification Code",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "NeulisAlt",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: AppColors.textColor,
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Color(0xff101828)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
+                ],
+              ),
+
+              //
+              //image
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 10.0, left: 40, right: 40, bottom: 20),
+                child: Image.asset("assets/images/verify_motic.png"),
+              ),
+
+              const Text(
+                "Enter Verification Code",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "NeulisAlt",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: AppColors.textColor,
                 ),
+              ),
 
-                const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-                // Add your terms and conditions here
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: const TextStyle(
-                      fontFamily: "NeulisAlt",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16,
-                      color: AppColors.textColor,
-                    ),
-                    children: [
-                      const TextSpan(
-                        text: "We have sent a code to ",
-                      ),
-                      TextSpan(
-                        text: emailController.text,
-                        // completePhoneNumber.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 10),
-                // Add your terms and conditions content here
-                const Text(
-                  'Please enter it below',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
+              // Add your terms and conditions here
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(
                     fontFamily: "NeulisAlt",
                     fontWeight: FontWeight.w400,
                     fontSize: 16,
                     color: AppColors.textColor,
                   ),
-                ),
-
-                const SizedBox(
-                  height: 15,
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    PinField(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8.0),
-                        bottomLeft: Radius.circular(8.0),
+                    const TextSpan(
+                      text: "We have sent a code to ",
+                    ),
+                    TextSpan(
+                      text: widget.emailController,
+                      // completePhoneNumber.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
-                      onChanged: (value) => updatePinValue(0, value),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    PinField(
-                      onChanged: (value) => updatePinValue(1, value),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    PinField(
-                      onChanged: (value) => updatePinValue(2, value),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    PinField(
-                      onChanged: (value) => updatePinValue(3, value),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    PinField(
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(8.0),
-                        bottomRight: Radius.circular(8.0),
-                      ),
-                      onChanged: (value) => updatePinValue(4, value),
                     ),
                   ],
                 ),
+              ),
 
-                const SizedBox(
-                  height: 15,
+              const SizedBox(height: 10),
+              // Add your terms and conditions content here
+              const Text(
+                'Please enter it below',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "NeulisAlt",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: AppColors.textColor,
                 ),
+              ),
 
-                Padding(
+              const SizedBox(
+                height: 15,
+              ),
+
+              PinCodeTextField(
+                // obscureText: true,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                pinTheme: PinTheme(
+                    inactiveColor: Colors.grey,
+                    activeColor: AppColors.appThemeColor,
+                    selectedColor: AppColors.appThemeColor,
+                    fieldHeight: 60,
+                    fieldWidth: 50,
+                    borderWidth: 0.7,
+                    activeBorderWidth: 0.7,
+                    shape: PinCodeFieldShape.box,
+                    borderRadius: BorderRadius.circular(15)),
+                appContext: context,
+                controller: pinController,
+                length: 5,
+                onChanged: (value) {
+                  // Handle PIN code changes
+                },
+              ),
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     PinField(
+              //       borderRadius: const BorderRadius.only(
+              //         topLeft: Radius.circular(8.0),
+              //         bottomLeft: Radius.circular(8.0),
+              //       ),
+              //       onChanged: (value) => updatePinValue(0, value),
+              //     ),
+              //     const SizedBox(
+              //       width: 8,
+              //     ),
+              //     PinField(
+              //       onChanged: (value) => updatePinValue(1, value),
+              //     ),
+              //     const SizedBox(
+              //       width: 8,
+              //     ),
+              //     PinField(
+              //       onChanged: (value) => updatePinValue(2, value),
+              //     ),
+              //     const SizedBox(
+              //       width: 8,
+              //     ),
+              //     PinField(
+              //       onChanged: (value) => updatePinValue(3, value),
+              //     ),
+              //     const SizedBox(
+              //       width: 8,
+              //     ),
+              //     PinField(
+              //       borderRadius: const BorderRadius.only(
+              //         topRight: Radius.circular(8.0),
+              //         bottomRight: Radius.circular(8.0),
+              //       ),
+              //       onChanged: (value) => updatePinValue(4, value),
+              //     ),
+              //   ],
+              // ),
+
+              const SizedBox(
+                height: 15,
+              ),
+
+              Consumer(builder: (context, ref, child) {
+                final model = ref.read(registerViewmodelProvider.notifier);
+                return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: MoticarLoginButton(
                     myColor: AppColors.appThemeColor,
                     borderColor: AppColors.diaColor,
                     onTap: () async {
-                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return   SignUpPage2(
-                          pin: "  "
+                      String pinCode = pinController.text;
+
+                      if (pinCode.length == 5) {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (context) {
+                            return Center(
+                              child: AlertDialog(
+                                backgroundColor: AppColors.appThemeColor,
+                                shadowColor: AppColors.appThemeColor,
+                                content: Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      // const SpinKitWave(
+                                      //   color: AppColors.appThemeColor,
+                                      //   size: 30.0,
+                                      // ),
+
+                                      SizedBox(
+                                        height: 100,
+                                        width: 100,
+                                        child: RiveAnimation.asset(
+                                          'assets/images/preloader.riv',
+                                        ),
+                                      ),
+
+                                      SizedBox(height: 8),
+                                      Text('Validating, please wait.',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(color: Colors.white))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         );
-                      }));
+
+                        await Future.delayed(const Duration(seconds: 3));
+
+                        Navigator.pop(context);
+
+                        // All fields are filled, attempt sign-up
+                        final signUpResult = await model.verifyEmail(
+                          formData: {
+                            'email': widget.emailController,
+                            "token": pinCode
+                          },
+                        );
+
+                        // Check the result of sign-up
+                        if (signUpResult.successMessage.isNotEmpty) {
+                          // Sign-up successful, show success dialog
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) => MoticarDialog(
+                              buttonColor: AppColors.textColor,
+                              textColor: AppColors.diaColor,
+                              buttonText: "Continue",
+                              subtitle: signUpResult.successMessage,
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return SignUpPage2(
+                                    email: widget.emailController,
+                                  );
+                                }));
+                              },
+                            ),
+                          );
+                        } else if (signUpResult.errorMessage.isNotEmpty) {
+                          // Sign-up failed, show error dialog
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return MoticarDialog(
+                                icon: const Icon(Icons.error_outline_sharp,
+                                    color: AppColors.red, size: 50),
+                                title: '',
+                                subtitle: signUpResult.errorMessage,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                buttonColor: AppColors.red,
+                                textColor: AppColors.white,
+                                buttonText: "Dismiss",
+                              );
+                            },
+                          );
+                        }
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return MoticarDialog(
+                              icon: const Icon(Icons.info_rounded,
+                                  color: AppColors.appThemeColor, size: 50),
+                              title: '',
+                              subtitle:
+                                  'Please enter a valid 5-digit PIN code.',
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              buttonColor: AppColors.diaColor,
+                              textColor: AppColors.textColor,
+                              buttonText: "Dismiss",
+                            );
+                          },
+                        );
+                      }
                     },
                     child: const MoticarText(
                       fontColor: AppColors.white,
@@ -874,45 +1193,141 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                ),
+                );
+              }),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const MoticarText(
-                      fontColor: AppColors.appThemeColor,
-                      text: "Didn’t get the code?",
-                      fontSize: 14,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                    ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const MoticarText(
+                    fontColor: AppColors.appThemeColor,
+                    text: "Didn’t get the code?",
+                    fontSize: 14,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w400,
+                  ),
 
-                    //
-                    TextButton(
+                  //
+                  Consumer(builder: (context, ref, child) {
+                    final model = ref.read(registerViewmodelProvider.notifier);
+                    return TextButton(
                       child: const MoticarText(
                         fontColor: AppColors.appThemeColor,
                         text: 'Send it again',
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
                       ),
-                      onPressed: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return const LoginPage();
-                        // }));
-                      },
-                    ),
-                  ],
-                ),
+                      onPressed: () async {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (context) {
+                            return Center(
+                              child: AlertDialog(
+                                backgroundColor: AppColors.appThemeColor,
+                                shadowColor: AppColors.appThemeColor,
+                                content: Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(
+                                        height: 100,
+                                        width: 100,
+                                        child: RiveAnimation.asset(
+                                          'assets/images/preloader.riv',
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text('Please wait.',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(color: Colors.white))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
 
-                const SizedBox(
-                  height: 45,
-                ),
-              ],
-            ),
+                        await Future.delayed(const Duration(seconds: 2));
+
+                        Navigator.pop(context);
+
+                        // All fields are filled, attempt sign-up
+                        final signUpResult = await model.resetGenPass(
+                          formData: {
+                            'email': widget.emailController,
+                          },
+                        );
+
+                        // Check the result of sign-up
+                        if (signUpResult.successMessage.isNotEmpty) {
+                          // Sign-up successful, show success dialog
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) => MoticarDialog(
+                              buttonColor: AppColors.textColor,
+                              textColor: AppColors.diaColor,
+                              buttonText: "Proceed",
+                              subtitle: "Proceed to enter the new code",
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          );
+                          // showMoticarBottom(
+                          //     context: context,
+                          //     child: FractionallySizedBox(
+                          //       heightFactor: 0.89,
+                          //       child: ClipRRect(
+                          //         borderRadius: const BorderRadius.only(
+                          //           topLeft: Radius.circular(30.0),
+                          //           topRight: Radius.circular(30.0),
+                          //         ),
+                          //         child: VerificationPage(
+                          //           phone: phoneController.text,
+                          //           emailController: emailController.text,
+                          //         ),
+                          //       ),
+                          //     ));
+                        } else if (signUpResult.errorMessage.isNotEmpty) {
+                          // Sign-up failed, show error dialog
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return MoticarDialog(
+                                icon: const Icon(Icons.error_outline_sharp,
+                                    color: AppColors.red, size: 50),
+                                title: '',
+                                subtitle: signUpResult.errorMessage,
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                buttonColor: AppColors.red,
+                                textColor: AppColors.white,
+                                buttonText: "Dismiss",
+                              );
+                            },
+                          );
+                        }
+                      },
+                    );
+                  }),
+                ],
+              ),
+
+              const SizedBox(
+                height: 45,
+              ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

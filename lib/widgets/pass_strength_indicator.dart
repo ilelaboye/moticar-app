@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moticar/widgets/colors.dart';
 
+import '../utils/agency_constants.dart';
+
 class PasswordStrengthIndicator extends StatelessWidget {
   final String password;
 
@@ -86,15 +88,23 @@ class PasswordStrengthIndicator extends StatelessWidget {
   PasswordStrength _calculatePasswordStrength(String password) {
     // You can implement your password strength logic here.
     // For simplicity, I'll just use the length for demonstration.
+    final regExp = RegExp(passwordRegex);
     if (password.length < 4) {
       return PasswordStrength.weak;
     } else if (password.length < 8) {
       return PasswordStrength.normal;
     } else if (password.length < 12) {
       return PasswordStrength.good;
-    } else {
+    }
+    
+     else {
       return PasswordStrength.excellent;
     }
+
+     
+
+     
+
   }
 }
 

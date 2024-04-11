@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/auth/add_car.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'auth/signup/sign_2.dart';
+import 'auth/signup/sign_3.dart';
 import 'services/hivekeys.dart';
 import 'splash/splashscreen/splash_screen.dart';
 
@@ -27,9 +30,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
         debugShowCheckedModeBanner: false,
+      
         title: 'Flutter Demo',
         theme: ThemeData(
+          
           floatingActionButtonTheme:
               const FloatingActionButtonThemeData(
                 // largeSizeConstraints: BoxConstraints.tight(10),
@@ -42,7 +48,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         home: 
-        // const AddCarPage()
+
+        // BottomHomePage()
+        // SignUpPage3(token: '',)
 
          const SplashScreen(),
         );

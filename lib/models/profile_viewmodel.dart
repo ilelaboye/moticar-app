@@ -4,23 +4,28 @@ import 'dart:convert';
 
 // import 'package:dio/dio.dart';
 
+import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../services/localdatabase.dart';
 import '../network/dio_utils.dart';
+import '../providers/app_providers.dart';
 import '../services/hivekeys.dart';
 import '../utils/enums.dart';
+import 'expensesmodel.dart';
+import 'newcars_model.dart';
 
 class ProfileViewModel extends StateNotifier<ProfileState> {
   ProfileViewModel(this._reader)
       : super(ProfileState(
           // accountz: Account.fromJson({}),
-          // getProfile: GetProfileModel.fromJson({}),
+          getProfile: GetProfileModel.fromJson({}),
           hasEnabledBiometricLogin:
               HiveStorage.get(HiveKeys.hasEnabledBiometricLogin) ?? false,
           hasEnabledBiometricTrasactions:
               HiveStorage.get(HiveKeys.hasEnabledBiometricTransacitons) ??
                   false,
-                stayLoggedIn : HiveStorage.get(HiveKeys.stayLoggedIn) ?? false,
+          stayLoggedIn: HiveStorage.get(HiveKeys.stayLoggedIn) ?? false,
           // userProfile: UserProfile.fromJson({}),
           // user: UserProfile.fromJson({}),
           // dataBalance: DataBalance.fromJson({}),
@@ -28,98 +33,340 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
 
   final Ref _reader;
 
-  // /auth/me
-  // Future<ApiResponse> getMeProfile() async {
-  //   try {
-  //     final response = await _reader.read(serviceProvider).postWithToken(
-  //       formData: {},
-  //       path: "/api/web/auth/me",
-  //     );
-  //     var body = response.data;
-  //     if (response.statusCode == 200) {
-  //       final userProfile = GetProfileModel.fromJson(body);
+  Future<ApiResponse> changePassword(
+      {required Map<String, dynamic> formData}) async {
+    try {
+      state = state.copyWith(
+        loading: Loader.loading,
+      );
+      final response = await _reader.read(serviceProvider).postWithToken(
+            formData: formData,
+            path: 'change-password',
+          );
+      if (response.statusCode == 200) {
+        state = state.copyWith(loading: Loader.loaded);
+        return ApiResponse(
+          successMessage:
+              response.data['message'] ?? 'Password reset successful',
+        );
+      } else {
+        state = state.copyWith(loading: Loader.error);
+        return ApiResponse(
+          errorMessage: response.data['message'] ?? "Failed",
+        );
+      }
+    } on DioError catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      return ApiResponse(
+        error: e.response!.data['message'] ??
+            e.response!.data['detail'] ??
+            "Error",
+      );
+    } catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      rethrow;
+    }
+  }
 
-  //       final acctDetails =
-  //           body['accounts'] as List<dynamic>; // Explicit casting
-  //       List<Account> bettings =
-  //           acctDetails.map((json) => Account.fromJson(json)).toList();
+  //  final List<dynamic> responseData = response.data;
 
-  //       state = state.copyWith(
-  //         loading: Loader.loaded,
-  //         getProfile: userProfile,
-  //         accountz: bettings,
-  //       );
-  //       return ApiResponse(
-  //         successMessage: body["status"] ?? 'Success',
-  //       );
-  //     } else {
-  //       state = state.copyWith(
-  //         loading: Loader.error,
-  //       );
-  //       return ApiResponse(
-  //         errorMessage: body['status'] ?? 'Cannot find profile',
-  //       );
-  //     }
-  //   } on DioError catch (e) {
-  //     state = state.copyWith(
-  //       loading: Loader.error,
-  //     );
-  //     return ApiResponse(
-  //       errorMessage: e.response?.data['status'] ?? "Error",
-  //     );
-  //   } catch (e) {
-  //     state = state.copyWith(
-  //       loading: Loader.error,
-  //     );
-  //     rethrow;
-  //   }
-  // }
+  //       // Map response data to GetExpenses objects
+  //       final List<GetExpenses> newexpense =
+  //           responseData.map((json) => GetExpenses.fromJson(json)).toList();
 
-   
+  //       // Update state with new expenses
+  //       state = state.copyWith(loading: Loader.loaded, getexpenses: newexpense);
 
-  // Future<ApiResponse> updateProfile(
-  //     {required Map<String, dynamic> formData}) async {
-  //   try {
-  //     final response = await _reader
-  //         .read(serviceProvider)
-  //         .put(path: 'api/profile/', formData: formData);
-  //     if (response.statusCode == 200) {
-  //       await HiveStorage.put(HiveKeys.user, response.data);
-  //       // var userProfile = UserProfile.fromJson(response.data['data']['user']);
+  // /expenses
+  Future<ApiResponse> getExpenses() async {
+    try {
+      state = state.copyWith(
+        loading: Loader.loading,
+      );
+      final response = await _reader.read(newService).getWithToken(
+            // formData: formData,
+            path: 'get-expenses',
+          );
+      if (response.statusCode == 200) {
+        final responseData = response.data['data']; // Access the "data" key
+        print(responseData);
+        // Check if responseData is empty
+        if (responseData.isEmpty) {
+          // Update state with empty list
+          state = state.copyWith(loading: Loader.loaded, getexpenses: []);
+          return ApiResponse(
+            successMessage: 'No expenses available',
+          );
+        }
+        // Map response data to GetExpenses objects
+        final List<GetExpenses> newExpense = (responseData as List<dynamic>)
+            .map((json) => GetExpenses.fromJson(json))
+            .toList();
 
-  //       state = state.copyWith(
-  //         loading: Loader.loaded,
-  //         // userProfile: userProfile,
-  //       );
-  //       return ApiResponse(
-  //         successMessage: "Profile updated successfully",
-  //       );
-  //     } else {
-  //       state = state.copyWith(
-  //         loading: Loader.error,
-  //       );
-  //       return ApiResponse(
-  //         errorMessage: response.data["message"],
-  //       );
-  //     }
-  //   } on DioError catch (e) {
-  //     state = state.copyWith(
-  //       loading: Loader.error,
-  //     );
-  //     return ApiResponse(
-  //       error: e,
-  //     );
-  //   } catch (e) {
-  //     state = state.copyWith(
-  //       loading: Loader.error,
-  //     );
-  //     return ApiResponse(
-  //         errorMessage: 'An error occurred while processing request');
-  //     //rethrow;
-  //   }
-  // }
+        // Update state with new expenses
+        state = state.copyWith(loading: Loader.loaded, getexpenses: newExpense);
+        return ApiResponse(
+          successMessage: 'Success',
+        );
+      } else {
+        state = state.copyWith(loading: Loader.error);
+        return ApiResponse(
+          errorMessage: response.data['message'] ?? "Error",
+        );
+      }
+    } on DioError catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      return ApiResponse(
+        error: e.response!.data['message'] ??
+            e.response!.data['detail'] ??
+            "Error",
+      );
+    } catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      rethrow;
+    }
+  }
 
+  //technicians
+  Future<ApiResponse> getTechnicians() async {
+    try {
+      state = state.copyWith(
+        loading: Loader.loading,
+      );
+      final response = await _reader.read(newService).getWithToken(
+            // formData: formData,
+            path: 'get-technicians',
+          );
+      if (response.statusCode == 200) {
+        final responseData = response.data['data']; // Access the "data" key
+        print(responseData);
+        // Check if responseData is empty
+        if (responseData.isEmpty) {
+          // Update state with empty list
+          state = state.copyWith(loading: Loader.loaded, getexpenses: []);
+          return ApiResponse(
+            successMessage: 'No Technicians available',
+          );
+        }
+        // Map response data to GetExpenses objects
+        final List<GetTechies> newTechies = (responseData as List<dynamic>)
+            .map((json) => GetTechies.fromJson(json))
+            .toList();
 
+        // Update state with new expenses
+        state = state.copyWith(loading: Loader.loaded, techies: newTechies);
+        return ApiResponse(
+          successMessage: 'Success',
+        );
+      } else {
+        state = state.copyWith(loading: Loader.error);
+        return ApiResponse(
+          errorMessage: response.data['message'] ?? "Error",
+        );
+      }
+    } on DioError catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      return ApiResponse(
+        error: e.response!.data['message'] ??
+            e.response!.data['detail'] ??
+            "Error",
+      );
+    } catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      rethrow;
+    }
+  }
+
+  //getCars
+  Future<ApiResponse> getMyCars() async {
+    try {
+      state = state.copyWith(
+        loading: Loader.loading,
+      );
+      final response = await _reader.read(newService).getWithToken(
+            // formData: formData,
+            path: 'get-my-cars',
+          );
+      if (response.statusCode == 200) {
+        final responseData = response.data['data']; // Access the "data" key
+        print(responseData);
+        // Check if responseData is empty
+        if (responseData.isEmpty) {
+          // Update state with empty list
+          state = state.copyWith(loading: Loader.loaded, getexpenses: []);
+          return ApiResponse(
+            successMessage: 'No Cars available',
+          );
+        }
+        // Map response data to GetExpenses objects
+        final List<GetCarz> newCarz = (responseData as List<dynamic>)
+            .map((json) => GetCarz.fromJson(json))
+            .toList();
+
+        // Update state with new expenses
+        state = state.copyWith(loading: Loader.loaded, getallCarz: newCarz);
+        return ApiResponse(
+          successMessage: 'Success',
+        );
+      } else {
+        state = state.copyWith(loading: Loader.error);
+        return ApiResponse(
+          errorMessage: response.data['message'] ?? "Error",
+        );
+      }
+    } on DioError catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      return ApiResponse(
+        error: e.response!.data['message'] ??
+            e.response!.data['detail'] ??
+            "Error",
+      );
+    } catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      rethrow;
+    }
+  }
+
+  //getAvailablecarz
+  Future<ApiResponse> getCars() async {
+    try {
+      state = state.copyWith(
+        loading: Loader.loading,
+      );
+      final response = await _reader.read(newService).getWithToken(
+            // formData: formData,
+            path: 'get-cars',
+          );
+      if (response.statusCode == 200) {
+        final responseData = response.data['data']; // Access the "data" key
+        print(responseData);
+        // Check if responseData is empty
+        if (responseData.isEmpty) {
+          // Update state with empty list
+          state = state.copyWith(loading: Loader.loaded, getexpenses: []);
+          return ApiResponse(
+            successMessage: 'No Cars available',
+          );
+        }
+        // Map response data to GetExpenses objects
+        final List<NewCarzModel> getCars = (responseData as List<dynamic>)
+            .map((json) => NewCarzModel.fromJson(json))
+            .toList();
+
+        // Update state with new expenses
+        state = state.copyWith(loading: Loader.loaded, getCars: getCars);
+        return ApiResponse(
+          successMessage: 'Success',
+        );
+      } else {
+        state = state.copyWith(loading: Loader.error);
+        return ApiResponse(
+          errorMessage: response.data['message'] ?? "Error",
+        );
+      }
+    } on DioError catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      return ApiResponse(
+        error: e.response!.data['message'] ??
+            e.response!.data['detail'] ??
+            "Error",
+      );
+    } catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      rethrow;
+    }
+  }
+
+//uploadz
+  Future<ApiResponse> uploadProfilePic({required XFile files}) async {
+    try {
+      state = state.copyWith(
+        loading: Loader.loading,
+      );
+      final response = await _reader.read(serviceProvider).postMultipart(
+            path: "api/changeimage/",
+            formData: {},
+            pathName: 'image',
+            files: files,
+          );
+      var body = json.decode(response.body);
+      if (response.statusCode == 200) {
+        state = state.copyWith(
+          loading: Loader.loaded,
+        );
+        return ApiResponse(
+          successMessage: "Image Uploaded Successfully",
+        );
+      } else {
+        state = state.copyWith(
+          loading: Loader.error,
+        );
+        return ApiResponse(
+          errorMessage: body["message"],
+        );
+      }
+    } catch (e) {
+      state = state.copyWith(
+        loading: Loader.error,
+      );
+      return ApiResponse(
+        errorMessage: "unable to update image please check the image selected ",
+      );
+    }
+  }
+
+  void enableBiometricLogin(bool value) async {
+    state = state.copyWith(
+        hasEnabledBiometricLogin: !state.hasEnabledBiometricLogin);
+    await HiveStorage.put(HiveKeys.hasEnabledBiometricLogin, value);
+  }
+
+  Future<ApiResponse> getMyProfile() async {
+    try {
+      // state = state.copyWith(
+      //   loading: Loader.loading,
+      // );
+      final response = await _reader.read(newService).getWithToken(
+            // formData: formData,
+            path: 'get-profile',
+          );
+      if (response.statusCode == 200) {
+        final responseData = response.data['data']; // Access the "data" key
+        print(responseData);
+        // Check if responseData is empty
+        if (responseData.isEmpty) {
+          // Update state with empty list
+          state = state.copyWith(loading: Loader.loaded, getexpenses: []);
+          return ApiResponse(
+            successMessage: 'No Profile available',
+          );
+        }
+        // Map response data to GetExpenses objects
+        var userProfile = GetProfileModel.fromJson(response.data['data']);
+
+        // Update state with new expenses
+        state = state.copyWith(loading: Loader.loaded, getProfile: userProfile);
+        return ApiResponse(
+          successMessage: 'Success',
+        );
+      } else {
+        state = state.copyWith(loading: Loader.error);
+        return ApiResponse(
+          errorMessage: response.data['message'] ?? "Error",
+        );
+      }
+    } on DioError catch (e) {
+      state = state.copyWith(loading: Loader.error);
+      return ApiResponse(
+        error: e.response!.data['message'] ??
+            e.response!.data['detail'] ??
+            "Error",
+      );
+    } catch (e) {
+      // state = state.copyWith(loading: Loader.error);
+      rethrow;
+    }
+  }
 
   // Future<ApiResponse> resetPin({
   //   required String otp,
@@ -339,23 +586,11 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
   //   }
   // }
 
-  void enableBiometricLogin(bool value) async {
-    state = state.copyWith(
-        hasEnabledBiometricLogin: !state.hasEnabledBiometricLogin);
-    await HiveStorage.put(HiveKeys.hasEnabledBiometricLogin, value);
-  }
-
   //stayLogged
   void stayLoggedIN(bool value) async {
-    state = state.copyWith(
-        stayLoggedIn: !state.stayLoggedIn);
+    state = state.copyWith(stayLoggedIn: !state.stayLoggedIn);
     await HiveStorage.put(HiveKeys.stayLoggedIn, value);
   }
-
-
-
-
-
 
 //
   // Future<ApiResponse> enableBiometricTransactions(
@@ -426,7 +661,11 @@ class ProfileState {
   final bool stayLoggedIn;
   final bool hasEnabledBiometricLogin;
   final bool hasEnabledBiometricTrasactions;
-  // final GetProfileModel getProfile;
+  final List<GetExpenses> getexpenses;
+  final List<GetTechies> techies;
+  final List<GetCarz> getallCarz;
+  final List<NewCarzModel> getCars;
+  final GetProfileModel getProfile;
   // final List<Account> accountz;
   // final List<ProductTypeModel> productList;
   // OtpResponseModel? otpResponse;
@@ -434,7 +673,11 @@ class ProfileState {
 
   ProfileState({
     this.loading = Loader.idle,
-    // required this.userProfile,
+    this.getexpenses = const [],
+    this.techies = const [],
+    this.getallCarz = const [],
+    this.getCars =const[],
+    required this.getProfile,
     required this.stayLoggedIn,
     required this.hasEnabledBiometricLogin,
     required this.hasEnabledBiometricTrasactions,
@@ -445,9 +688,11 @@ class ProfileState {
 
   ProfileState copyWith({
     Loader? loading,
-    // final GetProfileModel? getProfile,
-    // final List<Account>? accountz,
-    // final List<ProductTypeModel>? productList,
+    List<GetExpenses>? getexpenses,
+    GetProfileModel? getProfile,
+    List<GetTechies>? techies,
+    List<GetCarz>? getallCarz,
+    List<NewCarzModel>? getCars,
     // UserProfile? userProfile,
     // DataBalance? dataBalance,
     // AccountManager? accountManager,
@@ -458,17 +703,17 @@ class ProfileState {
     // OtpResponseModel? otpResponse,
   }) {
     return ProfileState(
-      // productList: productList ?? this.productList,
-      // accountz: accountz ?? this.accountz,
-      // getProfile: getProfile ?? this.getProfile,
+      getexpenses: getexpenses ?? this.getexpenses,
+      techies: techies ?? this.techies,
+      getallCarz: getallCarz ?? this.getallCarz,
       loading: loading ?? this.loading,
       stayLoggedIn: stayLoggedIn ?? this.stayLoggedIn,
       hasEnabledBiometricLogin:
           hasEnabledBiometricLogin ?? this.hasEnabledBiometricLogin,
       hasEnabledBiometricTrasactions:
           hasEnabledBiometricTrasactions ?? this.hasEnabledBiometricTrasactions,
-      // user: user ?? this.user,
-      // otpResponse: otpResponse ?? this.otpResponse,
+      getProfile: getProfile ?? this.getProfile,
+      getCars: getCars ?? this.getCars,
     );
   }
 }

@@ -80,21 +80,24 @@ class _SplashScreenState extends State<SplashScreen>
                             width: 150,
                           ),
 
+                             const Padding(
+                            padding:
+                                EdgeInsets.only(top: 90.0, left: 50, right: 50),
+                            child: MoticarText(
+                                text:
+                                    'Every kobo of your car \nexpenses \nis just a tap away!',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                fontColor: AppColors.appThemeColor),
+                          ),
+
                        
                         ],
                       ));
                 }),
 
 
-                   const Padding(
-              padding: EdgeInsets.only(top: 90.0, left: 50, right: 50),
-              child: MoticarText(
-                  text:
-                      'Every kobo of your car \nexpenses \nis just a tap away!',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  fontColor: AppColors.appThemeColor),
-            ),
+                
             
           ],
         ),

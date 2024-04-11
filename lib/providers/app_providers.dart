@@ -5,7 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:image_picker/image_picker.dart';
   
+import '../auth/login/login_viewmodel.dart';
+import '../auth/signup/register_viewmodel.dart';
 import '../models/profile_viewmodel.dart';
+import '../network/moticar_backend.dart';
+import '../network/new_back.dart';
 import '../services/imagepicker.dart';
 import 'fingerprint_provider.dart';
 
@@ -15,7 +19,8 @@ import 'fingerprint_provider.dart';
 //STATENOTIFIERPROVIDERS will be used to register viewmodels
 
 //SERVICE PROVIDERS
-// final serviceProvider = Provider((_) => AgencyBackEnd(Dio()));
+final serviceProvider = Provider((_) => AgencyBackEnd(Dio()));
+final newService = Provider((_) => NewAgencyBackEnd(Dio()));
 
 ///
 // final imagePickerService = Provider((ref) => AgencyImagePicker(ImagePicker()));
@@ -28,6 +33,14 @@ import 'fingerprint_provider.dart';
 final pinProvider = StateProvider.autoDispose<List>((ref) => []);
 
 final imagePickerService = Provider((ref) => MoticarImagePicker(ImagePicker()));
+
+final loginViewModelProvider =
+    StateNotifierProvider<LoginViewModel, LoginState>(
+        (ref) => LoginViewModel(ref));
+
+final registerViewmodelProvider =
+    StateNotifierProvider<RegisterViewmodel, RegisterState>(
+        (ref) => RegisterViewmodel(ref));
 
 
 /////
@@ -52,9 +65,6 @@ final imagePickerService = Provider((ref) => MoticarImagePicker(ImagePicker()));
 //     StateNotifierProvider<RegisterViewmodel, RegisterState>(
 //         (ref) => RegisterViewmodel(ref));
 
-// final loginViewModelProvider =
-//     StateNotifierProvider<LoginViewModel, LoginState>(
-//         (ref) => LoginViewModel(ref));
 
 // final openAccountModelProvider =
 //     StateNotifierProvider<OpenAccountViewModel, OpenAccountState>(

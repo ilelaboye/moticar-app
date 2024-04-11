@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../auth/add_car.dart';
+
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
 
@@ -10,10 +12,16 @@ class MorePage extends StatefulWidget {
 class _MorePageState extends State<MorePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xffEFF5F5),
+    return Scaffold(
+      backgroundColor: const Color(0xffEFF5F5),
       body: Center(
-        child: Text('More Page'),
+        child: GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const AddCarPage();
+              }));
+            },
+            child: const Text('More Page')),
       ),
     );
   }
