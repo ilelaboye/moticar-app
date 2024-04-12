@@ -177,93 +177,99 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                             fontColor: AppColors.appThemeColor),
                       ),
                       //email
-                      TextFormField(
-                        controller: addressControl,
-                        keyboardType: TextInputType.streetAddress,
-                        // onTapOutside: (event) {
-                        //   FocusScope.of(context)
-                        //       .unfocus(); // Close the keyboard
-                        // },
-                        textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            color: AppColors.textColor,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.2,
-                            fontSize: 14),
-                        onSaved: (value) {},
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                                color: AppColors.red, width: 1.5),
-                          ),
-                          hintText: 'Street address line 1',
-
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                                color: Color(0xffD0D5DD), width: 1.5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: AppColors.appThemeColor)),
-                          filled: true,
-                          fillColor: Colors.white,
-                          // hintText: 'Enter your password',
-                          hintStyle: const TextStyle(
+                      SizedBox(
+                        height: 55,
+                        child: TextFormField(
+                          controller: addressControl,
+                          keyboardType: TextInputType.streetAddress,
+                          // onTapOutside: (event) {
+                          //   FocusScope.of(context)
+                          //       .unfocus(); // Close the keyboard
+                          // },
+                          textInputAction: TextInputAction.next,
+                          style: const TextStyle(
                               fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xffC1C3C3),
+                              color: AppColors.textColor,
+                              fontWeight: FontWeight.w500,
                               letterSpacing: 1.2,
                               fontSize: 14),
+                          onSaved: (value) {},
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: AppColors.red, width: 1.5),
+                            ),
+                            hintText: 'Street address line 1',
+                      
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: Color(0xffD0D5DD), width: 1.5),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: AppColors.appThemeColor)),
+                            filled: true,
+                            fillColor: Colors.white,
+                            // hintText: 'Enter your password',
+                            hintStyle: const TextStyle(
+                                fontFamily: "NeulisAlt",
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xffC1C3C3),
+                                letterSpacing: 1.2,
+                                fontSize: 14),
+                          ),
                         ),
                       ),
 
                       const SizedBox(height: 10),
-                      TextFormField(
-                        controller: address2Control,
-                        keyboardType: TextInputType.streetAddress,
-                        // onTapOutside: (event) {
-                        //   FocusScope.of(context)
-                        //       .unfocus(); // Close the keyboard
-                        // },
-                        textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            color: AppColors.textColor,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.2,
-                            fontSize: 14),
-                        onSaved: (value) {},
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                                color: AppColors.red, width: 1.5),
-                          ),
-                          hintText: 'Street address line 2',
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                                color: Color(0xffD0D5DD), width: 1.5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: AppColors.appThemeColor)),
-                          filled: true,
-                          fillColor: Colors.white,
-                          // hintText: 'Enter your password',
-                          hintStyle: const TextStyle(
+                      SizedBox(
+                        height: 55,
+                        child: TextFormField(
+                          controller: address2Control,
+                          keyboardType: TextInputType.streetAddress,
+                          // onTapOutside: (event) {
+                          //   FocusScope.of(context)
+                          //       .unfocus(); // Close the keyboard
+                          // },
+                          textInputAction: TextInputAction.next,
+                          style: const TextStyle(
                               fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xffC1C3C3),
+                              color: AppColors.textColor,
+                              fontWeight: FontWeight.w500,
                               letterSpacing: 1.2,
                               fontSize: 14),
+                          onSaved: (value) {},
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: AppColors.red, width: 1.5),
+                            ),
+                            hintText: 'Street address line 2',
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: Color(0xffD0D5DD), width: 1.5),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: AppColors.appThemeColor)),
+                            filled: true,
+                            fillColor: Colors.white,
+                            // hintText: 'Enter your password',
+                            hintStyle: const TextStyle(
+                                fontFamily: "NeulisAlt",
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xffC1C3C3),
+                                letterSpacing: 1.2,
+                                fontSize: 14),
+                          ),
                         ),
                       ),
 
@@ -291,59 +297,62 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 8, left: 3, right: 3),
-                                    child: DropdownButtonFormField<String>(
-                                        decoration: const InputDecoration(
-                                          hintText: 'Select Country',
-                                          hintStyle: TextStyle(
-                                              fontFamily: "NeulisAlt",
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xffC1C3C3),
-                                              letterSpacing: 1.2,
-                                              fontSize: 14),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
-                                            borderSide: BorderSide(
-                                                color: Color(0xffD0D5DD),
-                                                width: 1.5),
+                                    child: SizedBox(
+                                      height: 55,
+                                      child: DropdownButtonFormField<String>(
+                                          decoration: const InputDecoration(
+                                            hintText: 'Select Country',
+                                            hintStyle: TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                fontWeight: FontWeight.w400,
+                                                color: Color(0xffC1C3C3),
+                                                letterSpacing: 1.2,
+                                                fontSize: 14),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: Color(0xffD0D5DD),
+                                                  width: 1.5),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: AppColors.appThemeColor,
+                                                  width: 1.5),
+                                            ),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
-                                            borderSide: BorderSide(
-                                                color: AppColors.appThemeColor,
-                                                width: 1.5),
-                                          ),
-                                        ),
-                                        items: countries
-                                            .map<DropdownMenuItem<String>>(
-                                                (country) => DropdownMenuItem<
-                                                        String>(
-                                                    value:
+                                          items: countries
+                                              .map<DropdownMenuItem<String>>(
+                                                  (country) => DropdownMenuItem<
+                                                          String>(
+                                                      value:
+                                                          country.name.toString(),
+                                                      child: Text(
                                                         country.name.toString(),
-                                                    child: Text(
-                                                      country.name.toString(),
-                                                      style: const TextStyle(
-                                                          fontFamily:
-                                                              "NeulisAlt",
-                                                          color: AppColors
-                                                              .textColor,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          letterSpacing: 1.2,
-                                                          fontSize: 14),
-                                                    )))
-                                            .toList(),
-                                        value: selectedCountry,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedCountry = value!;
-                                            selectedStatez =
-                                                null; // Reset selected state
-                                          });
-                                        }),
+                                                        style: const TextStyle(
+                                                            fontFamily:
+                                                                "NeulisAlt",
+                                                            color: AppColors
+                                                                .textColor,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            letterSpacing: 1.2,
+                                                            fontSize: 14),
+                                                      )))
+                                              .toList(),
+                                          value: selectedCountry,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedCountry = value!;
+                                              selectedStatez =
+                                                  null; // Reset selected state
+                                            });
+                                          }),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -369,66 +378,69 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 8, left: 3, right: 3),
-                                    child: DropdownButtonFormField<String>(
-                                        decoration: const InputDecoration(
-                                          hintText: 'Select State',
-                                          hintStyle: TextStyle(
-                                              fontFamily: "NeulisAlt",
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xffC1C3C3),
-                                              letterSpacing: 1.2,
-                                              fontSize: 14),
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
-                                            borderSide: BorderSide(
-                                                color: Color(0xffD0D5DD),
-                                                width: 1.5),
+                                    child: SizedBox(
+                                      height: 55,
+                                      child: DropdownButtonFormField<String>(
+                                          decoration: const InputDecoration(
+                                            hintText: 'Select State',
+                                            hintStyle: TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                fontWeight: FontWeight.w400,
+                                                color: Color(0xffC1C3C3),
+                                                letterSpacing: 1.2,
+                                                fontSize: 14),
+                                            filled: true,
+                                            fillColor: Colors.white,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: Color(0xffD0D5DD),
+                                                  width: 1.5),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(8)),
+                                              borderSide: BorderSide(
+                                                  color: AppColors.appThemeColor,
+                                                  width: 1.5),
+                                            ),
                                           ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
-                                            borderSide: BorderSide(
-                                                color: AppColors.appThemeColor,
-                                                width: 1.5),
-                                          ),
-                                        ),
-                                        items: selectedCountry != null
-                                            ? countries
-                                                .firstWhere((country) =>
-                                                    country.name ==
-                                                    selectedCountry)
-                                                .states
-                                                .map<DropdownMenuItem<String>>(
-                                                    (state) => DropdownMenuItem<
-                                                            String>(
-                                                        value: state.name
-                                                            .toString(),
-                                                        child: Text(
-                                                          state.name.toString(),
-                                                          style: const TextStyle(
-                                                              fontFamily:
-                                                                  "NeulisAlt",
-                                                              color: AppColors
-                                                                  .textColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              letterSpacing:
-                                                                  1.2,
-                                                              fontSize: 14),
-                                                        )))
-                                                .toList()
-                                            : null,
-                                        value: selectedStatez,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedStatez = value!;
-                                            selectedLGA = null;
-                                          });
-                                        }),
+                                          items: selectedCountry != null
+                                              ? countries
+                                                  .firstWhere((country) =>
+                                                      country.name ==
+                                                      selectedCountry)
+                                                  .states
+                                                  .map<DropdownMenuItem<String>>(
+                                                      (state) => DropdownMenuItem<
+                                                              String>(
+                                                          value: state.name
+                                                              .toString(),
+                                                          child: Text(
+                                                            state.name.toString(),
+                                                            style: const TextStyle(
+                                                                fontFamily:
+                                                                    "NeulisAlt",
+                                                                color: AppColors
+                                                                    .textColor,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                letterSpacing:
+                                                                    1.2,
+                                                                fontSize: 14),
+                                                          )))
+                                                  .toList()
+                                              : null,
+                                          value: selectedStatez,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedStatez = value!;
+                                              selectedLGA = null;
+                                            });
+                                          }),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -457,66 +469,69 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 bottom: 8, left: 3, right: 3),
-                            child: DropdownButtonFormField<String>(
-                                decoration: const InputDecoration(
-                                  hintText: 'Select LGA',
-                                  hintStyle: TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                    borderSide: BorderSide(
-                                        color: Color(0xffD0D5DD), width: 1.5),
+                            child: SizedBox(
+                              height: 55,
+                              child: DropdownButtonFormField<String>(
+                                  decoration: const InputDecoration(
+                                    hintText: 'Select LGA',
+                                    hintStyle: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffD0D5DD), width: 1.5),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      borderSide: BorderSide(
+                                          color: AppColors.appThemeColor,
+                                          width: 1.5),
+                                    ),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                    borderSide: BorderSide(
-                                        color: AppColors.appThemeColor,
-                                        width: 1.5),
-                                  ),
-                                ),
-                                items: selectedCountry != null &&
-                                        selectedStatez != null
-                                    ? countries
-                                        .firstWhere(
-                                          (country) =>
-                                              country.name == selectedCountry,
-                                        )
-                                        .states
-                                        .firstWhere(
-                                          (state) =>
-                                              state.name == selectedStatez,
-                                        )
-                                        .cities
-                                        .map<DropdownMenuItem<String>>(
-                                            (city) => DropdownMenuItem<String>(
-                                                value: city.name.toString(),
-                                                child: Text(
-                                                  city.name.toString(),
-                                                  style: const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      color:
-                                                          AppColors.textColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14),
-                                                )))
-                                        .toList()
-                                    : null,
-                                value: selectedLGA,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedLGA = value!;
-                                  });
-                                }),
+                                  items: selectedCountry != null &&
+                                          selectedStatez != null
+                                      ? countries
+                                          .firstWhere(
+                                            (country) =>
+                                                country.name == selectedCountry,
+                                          )
+                                          .states
+                                          .firstWhere(
+                                            (state) =>
+                                                state.name == selectedStatez,
+                                          )
+                                          .cities
+                                          .map<DropdownMenuItem<String>>(
+                                              (city) => DropdownMenuItem<String>(
+                                                  value: city.name.toString(),
+                                                  child: Text(
+                                                    city.name.toString(),
+                                                    style: const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14),
+                                                  )))
+                                          .toList()
+                                      : null,
+                                  value: selectedLGA,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedLGA = value!;
+                                    });
+                                  }),
+                            ),
                           ),
                         ],
                       ),
@@ -535,48 +550,51 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                 fontColor: AppColors.appThemeColor),
                           ),
                           //email
-                          TextFormField(
-                            controller: landmarkControl,
-                            keyboardType: TextInputType.streetAddress,
-                            onTapOutside: (event) {
-                              FocusScope.of(context)
-                                  .unfocus(); // Close the keyboard
-                            },
-                            textInputAction: TextInputAction.next,
-                            style: const TextStyle(
-                                fontFamily: "NeulisAlt",
-                                color: AppColors.textColor,
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 1.2,
-                                fontSize: 14),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.red, width: 1.5),
-                              ),
-                              hintText:
-                                  'Enter closest landmark to your address',
-
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: Color(0xffD0D5DD), width: 1.5),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                      color: AppColors.appThemeColor)),
-                              filled: true,
-                              fillColor: Colors.white,
-                              // hintText: 'Enter your password',
-                              hintStyle: const TextStyle(
+                          SizedBox(
+                            height: 55,
+                            child: TextFormField(
+                              controller: landmarkControl,
+                              keyboardType: TextInputType.streetAddress,
+                              onTapOutside: (event) {
+                                FocusScope.of(context)
+                                    .unfocus(); // Close the keyboard
+                              },
+                              textInputAction: TextInputAction.next,
+                              style: const TextStyle(
                                   fontFamily: "NeulisAlt",
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xffC1C3C3),
+                                  color: AppColors.textColor,
+                                  fontWeight: FontWeight.w500,
                                   letterSpacing: 1.2,
                                   fontSize: 14),
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                      color: AppColors.red, width: 1.5),
+                                ),
+                                hintText:
+                                    'Enter closest landmark to your address',
+                          
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xffD0D5DD), width: 1.5),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                        color: AppColors.appThemeColor)),
+                                filled: true,
+                                fillColor: Colors.white,
+                                // hintText: 'Enter your password',
+                                hintStyle: const TextStyle(
+                                    fontFamily: "NeulisAlt",
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xffC1C3C3),
+                                    letterSpacing: 1.2,
+                                    fontSize: 14),
+                              ),
                             ),
                           ),
                         ],

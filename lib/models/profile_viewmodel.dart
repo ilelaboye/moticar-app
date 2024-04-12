@@ -33,6 +33,64 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
 
   final Ref _reader;
 
+
+  //addnewCars
+  Future<ApiResponse> addNewCar({
+    required Map<String, dynamic> formData,
+  }) async {
+    // state = state.copyWith(
+    //   loadStatus: Loader.loading,
+    // );
+    try {
+      final response = await _reader.read(serviceProvider).postWithToken(
+            formData: formData,
+            path: "add-car",
+
+          );
+      // var body = json.decode(response.body);
+      // if (body != null) {
+      if (response.statusCode == 200) {
+        state = state.copyWith(
+          loading: Loader.loaded,
+          // token: response.data['data']['token']
+        );
+        return ApiResponse(
+          successMessage: response.data["message"] ?? "Success",
+        );
+      } else {
+        state = state.copyWith(
+          loading: Loader.error,
+        );
+        return ApiResponse(
+          errorMessage: response.data["message"] ?? "Unknown error",
+        );
+      }
+      // }
+      // else {
+      //   state = state.copyWith(
+      //     loading: Loader.error,
+      //   );
+      //   return ApiResponse(errorMessage: "Response body is null");
+      // }
+    } on DioError catch (e) {
+      state = state.copyWith(
+        loading: Loader.error,
+      );
+      if (e.response != null && e.response!.data != null) {
+        return ApiResponse(
+          errorMessage: e.response!.data['message'] ?? "Unknown error",
+        );
+      } else {
+        return ApiResponse(errorMessage: "Connection error, please try again.");
+      }
+    } catch (e) {
+      state = state.copyWith(
+        loading: Loader.error,
+      );
+      return ApiResponse(errorMessage: "Connection error, please try again.");
+    }
+  }
+
   Future<ApiResponse> changePassword(
       {required Map<String, dynamic> formData}) async {
     try {
@@ -238,7 +296,9 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
             path: 'get-cars',
           );
       if (response.statusCode == 200) {
-        final responseData = response.data['data']; // Access the "data" key
+        final responseData = response.data['data'];
+        // final responseData2 =
+        //     response.data['data']['categories']; // Access the "categories" key
         print(responseData);
         // Check if responseData is empty
         if (responseData.isEmpty) {
@@ -253,8 +313,15 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
             .map((json) => NewCarzModel.fromJson(json))
             .toList();
 
+        // final List<Category> getCategoriz = (responseData2 as List<dynamic>)
+        //     .map((json) => Category.fromJson(json))
+        //     .toList();
+
         // Update state with new expenses
-        state = state.copyWith(loading: Loader.loaded, getCars: getCars);
+        state = state.copyWith(
+            loading: Loader.loaded,
+            // getCategories: getCategoriz,
+            getCars: getCars);
         return ApiResponse(
           successMessage: 'Success',
         );
@@ -665,6 +732,7 @@ class ProfileState {
   final List<GetTechies> techies;
   final List<GetCarz> getallCarz;
   final List<NewCarzModel> getCars;
+  final List<Category> getCategories;
   final GetProfileModel getProfile;
   // final List<Account> accountz;
   // final List<ProductTypeModel> productList;
@@ -676,7 +744,8 @@ class ProfileState {
     this.getexpenses = const [],
     this.techies = const [],
     this.getallCarz = const [],
-    this.getCars =const[],
+    this.getCategories = const [],
+    this.getCars = const [],
     required this.getProfile,
     required this.stayLoggedIn,
     required this.hasEnabledBiometricLogin,
@@ -693,6 +762,7 @@ class ProfileState {
     List<GetTechies>? techies,
     List<GetCarz>? getallCarz,
     List<NewCarzModel>? getCars,
+    List<Category>? getCategories,
     // UserProfile? userProfile,
     // DataBalance? dataBalance,
     // AccountManager? accountManager,
@@ -703,6 +773,7 @@ class ProfileState {
     // OtpResponseModel? otpResponse,
   }) {
     return ProfileState(
+      getCategories: getCategories ?? this.getCategories,
       getexpenses: getexpenses ?? this.getexpenses,
       techies: techies ?? this.techies,
       getallCarz: getallCarz ?? this.getallCarz,

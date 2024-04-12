@@ -18,14 +18,16 @@ import '../widgets/eard_dialog.dart';
 import 'first_know.dart';
 
 class AddCarPage4 extends StatefulHookConsumerWidget {
-  const AddCarPage4(
+  const AddCarPage4( 
       {super.key,
       required this.imagePath,
       required this.carName,
       required this.petrol,
       required this.gearbox,
+     required this.carID, required this.modelID,required this.engineID,
+      required this.gearboxID,
       required this.model});
-  final String imagePath, carName, model, petrol, gearbox;
+  final String imagePath, carName, model, petrol, gearbox, carID, modelID, engineID, gearboxID;
 
   @override
   ConsumerState<AddCarPage4> createState() => _AddCarPage4State();
@@ -202,7 +204,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   @override
   Widget build(BuildContext context) {
-   String formatPlateText(String text) {
+    String formatPlateText(String text) {
       // Check if the text is numeric
       if (int.tryParse(text) != null) {
         // Format the numeric text as "000 00 000"
@@ -216,7 +218,6 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
         return text;
       }
     }
-
 
     return Scaffold(
       backgroundColor: const Color(0xffEEF5F5),
@@ -372,51 +373,54 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     fontWeight: FontWeight.w700,
                                     fontColor: AppColors.appThemeColor),
                               ),
-                              TextFormField(
-                                controller: plateController,
-                                keyboardType: TextInputType.text,
-                                textCapitalization:
-                                    TextCapitalization.characters,
-                                // onTapOutside: (event) {
-                                //   FocusScope.of(context)
-                                //       .unfocus(); // Close the keyboard
-                                // },
-                                maxLength: 8,
-                                textInputAction: TextInputAction.next,
-                                style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
-                                // autovalidateMode:
-                                //     AutovalidateMode.onUserInteraction,
-                                // validator: (value) =>
-                                //     FieldValidaor.validateEmptyfield(value!),
-                                onSaved: (value) {},
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  hintText: 'eg NJM 98 OLM',
-                                  counterText: '',
-
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD),
-                                          width: 1.5)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: AppColors.appThemeColor)),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  // hintText: 'Enter your password',
-                                  hintStyle: const TextStyle(
+                              SizedBox(
+                                height: 55,
+                                child: TextFormField(
+                                  controller: plateController,
+                                  keyboardType: TextInputType.text,
+                                  textCapitalization:
+                                      TextCapitalization.characters,
+                                  // onTapOutside: (event) {
+                                  //   FocusScope.of(context)
+                                  //       .unfocus(); // Close the keyboard
+                                  // },
+                                  maxLength: 8,
+                                  textInputAction: TextInputAction.next,
+                                  style: const TextStyle(
                                       fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
+                                      color: AppColors.textColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                  // autovalidateMode:
+                                  //     AutovalidateMode.onUserInteraction,
+                                  // validator: (value) =>
+                                  //     FieldValidaor.validateEmptyfield(value!),
+                                  onSaved: (value) {},
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    hintText: 'eg NJM 98 OLM',
+                                    counterText: '',
+                              
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D5DD),
+                                            width: 1.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: AppColors.appThemeColor)),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    // hintText: 'Enter your password',
+                                    hintStyle: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+                                  ),
                                 ),
                               ),
 
@@ -432,47 +436,50 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     fontWeight: FontWeight.w700,
                                     fontColor: AppColors.textColor),
                               ),
-                              TextFormField(
-                                controller: mileageControl,
-                                keyboardType: TextInputType.phone,
-                                // onTapOutside: (event) {
-                                //   FocusScope.of(context)
-                                //       .unfocus(); // Close the keyboard
-                                // },
-                                textInputAction: TextInputAction.done,
-                                style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
-                                // autovalidateMode:
-                                //     AutovalidateMode.onUserInteraction,
-                                // validator: (value) =>
-                                //     FieldValidaor.validateEmptyfield(value!),
-                                onSaved: (value) {},
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  hintText: 'eg 40000 ',
-
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD),
-                                          width: 1.5)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: AppColors.appThemeColor)),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  // hintText: 'Enter your password',
-                                  hintStyle: const TextStyle(
+                              SizedBox(
+                                height: 55,
+                                child: TextFormField(
+                                  controller: mileageControl,
+                                  keyboardType: TextInputType.phone,
+                                  // onTapOutside: (event) {
+                                  //   FocusScope.of(context)
+                                  //       .unfocus(); // Close the keyboard
+                                  // },
+                                  textInputAction: TextInputAction.done,
+                                  style: const TextStyle(
                                       fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
+                                      color: AppColors.textColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                  // autovalidateMode:
+                                  //     AutovalidateMode.onUserInteraction,
+                                  // validator: (value) =>
+                                  //     FieldValidaor.validateEmptyfield(value!),
+                                  onSaved: (value) {},
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    hintText: 'eg 40000 ',
+                              
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D5DD),
+                                            width: 1.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: AppColors.appThemeColor)),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    // hintText: 'Enter your password',
+                                    hintStyle: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+                                  ),
                                 ),
                               ),
 
@@ -488,41 +495,44 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     fontWeight: FontWeight.w700,
                                     fontColor: AppColors.appThemeColor),
                               ),
-                              TextFormField(
-                                controller: chasisControl,
-                                keyboardType: TextInputType.text,
-                                textInputAction: TextInputAction.next,
-                                style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
-                                onSaved: (value) {},
-                                maxLength: 17,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  hintText: 'eg 2TIKR98D23C456159',
-                                  counterText: '',
-
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD),
-                                          width: 1.5)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: AppColors.appThemeColor)),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  // hintText: 'Enter your password',
-                                  hintStyle: const TextStyle(
+                              SizedBox(
+                                height: 55,
+                                child: TextFormField(
+                                  controller: chasisControl,
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  style: const TextStyle(
                                       fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
+                                      color: AppColors.textColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                  onSaved: (value) {},
+                                  maxLength: 17,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    hintText: 'eg 2TIKR98D23C456159',
+                                    counterText: '',
+                              
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D5DD),
+                                            width: 1.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: AppColors.appThemeColor)),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    // hintText: 'Enter your password',
+                                    hintStyle: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+                                  ),
                                 ),
                               ),
 
@@ -537,49 +547,52 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     fontWeight: FontWeight.w700,
                                     fontColor: AppColors.appThemeColor),
                               ),
-                              TextFormField(
-                                controller: engineNoController,
-                                keyboardType: TextInputType.text,
-                                // onTapOutside: (event) {
-                                //   FocusScope.of(context)
-                                //       .unfocus(); // Close the keyboard
-                                // },
-                                textInputAction: TextInputAction.done,
-                                style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
-                                // autovalidateMode:
-                                //     AutovalidateMode.onUserInteraction,
-                                // validator: (value) =>
-                                //     FieldValidaor.validateEmptyfield(value!),
-                                onSaved: (value) {},
-                                maxLength: 10,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  hintText: 'eg NJM 98 OLM',
-                                  counterText: '',
-
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD),
-                                          width: 1.5)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: AppColors.appThemeColor)),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  // hintText: 'Enter your password',
-                                  hintStyle: const TextStyle(
+                              SizedBox(
+                                height: 55,
+                                child: TextFormField(
+                                  controller: engineNoController,
+                                  keyboardType: TextInputType.text,
+                                  // onTapOutside: (event) {
+                                  //   FocusScope.of(context)
+                                  //       .unfocus(); // Close the keyboard
+                                  // },
+                                  textInputAction: TextInputAction.done,
+                                  style: const TextStyle(
                                       fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
+                                      color: AppColors.textColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                  // autovalidateMode:
+                                  //     AutovalidateMode.onUserInteraction,
+                                  // validator: (value) =>
+                                  //     FieldValidaor.validateEmptyfield(value!),
+                                  onSaved: (value) {},
+                                  maxLength: 10,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    hintText: 'eg NJM 98 OLM',
+                                    counterText: '',
+                              
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D5DD),
+                                            width: 1.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: AppColors.appThemeColor)),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    // hintText: 'Enter your password',
+                                    hintStyle: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+                                  ),
                                 ),
                               ),
 
@@ -596,60 +609,63 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                               ),
 
                               //date of purcahse
-                              GestureDetector(
-                                onTap: () {
-                                  _selectDate(context);
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(
-                                      color: const Color(0xffD0D5DD),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(children: [
-                                        Icon(
-                                          Icons.calendar_today_outlined,
-                                          color: Colors.grey.withOpacity(0.8),
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                          _formatDate(_selectedDate),
-                                          style: _selectedDate != null
-                                              ? const TextStyle(
-                                                  fontFamily: "NeulisAlt",
-                                                  color: AppColors.textColor,
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 1.2,
-                                                  fontSize: 14)
-                                              : const TextStyle(
-                                                  fontFamily: "NeulisAlt",
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Color(0xffC1C3C3),
-                                                  letterSpacing: 1.2,
-                                                  fontSize: 14),
-                                        ),
-                                      ]),
-                                      GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            _selectedDate = null;
-                                          });
-                                        },
-                                        child: Icon(
-                                          Icons.cancel_sharp,
-                                          color: Colors.grey.withOpacity(0.8),
-                                        ),
+                              SizedBox(
+                                height: 55,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _selectDate(context);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(
+                                        color: const Color(0xffD0D5DD),
                                       ),
-                                    ],
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(children: [
+                                          Icon(
+                                            Icons.calendar_today_outlined,
+                                            color: Colors.grey.withOpacity(0.8),
+                                          ),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            _formatDate(_selectedDate),
+                                            style: _selectedDate != null
+                                                ? const TextStyle(
+                                                    fontFamily: "NeulisAlt",
+                                                    color: AppColors.textColor,
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: 1.2,
+                                                    fontSize: 14)
+                                                : const TextStyle(
+                                                    fontFamily: "NeulisAlt",
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Color(0xffC1C3C3),
+                                                    letterSpacing: 1.2,
+                                                    fontSize: 14),
+                                          ),
+                                        ]),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              _selectedDate = null;
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.cancel_sharp,
+                                            color: Colors.grey.withOpacity(0.8),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -716,67 +732,70 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                   ),
 
                                   //dob
-                                  GestureDetector(
-                                    onTap: () {
-                                      _selectRenewalDate(context);
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(15),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: const Color(0xffD0D5DD),
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(children: [
-                                            Icon(
-                                              Icons.calendar_today_outlined,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8),
-                                            ),
-                                            const SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text(
-                                              _formatDate(_selectRenewal),
-                                              style: _selectRenewal != null
-                                                  ? const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      color:
-                                                          AppColors.textColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14)
-                                                  : const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Color(0xffC1C3C3),
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14),
-                                            ),
-                                          ]),
-
-                                          //
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                _selectedDate = null;
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.cancel_sharp,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8),
-                                            ),
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectRenewalDate(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
                                           ),
-                                        ],
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color:
+                                                    Colors.grey.withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatDate(_selectRenewal),
+                                                style: _selectRenewal != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Color(0xffC1C3C3),
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14),
+                                              ),
+                                            ]),
+                                  
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _selectedDate = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color:
+                                                    Colors.grey.withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -858,67 +877,70 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                   ),
 
                                   //dob
-                                  GestureDetector(
-                                    onTap: () {
-                                      _selectWorthinessDate(context);
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(15),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: const Color(0xffD0D5DD),
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(children: [
-                                            Icon(
-                                              Icons.calendar_today_outlined,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8),
-                                            ),
-                                            const SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text(
-                                              _formatDate(_selectWorthiness),
-                                              style: _selectWorthiness != null
-                                                  ? const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      color:
-                                                          AppColors.textColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14)
-                                                  : const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Color(0xffC1C3C3),
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14),
-                                            ),
-                                          ]),
-
-                                          //
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                _selectedDate = null;
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.cancel_sharp,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8),
-                                            ),
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectWorthinessDate(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
                                           ),
-                                        ],
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color:
+                                                    Colors.grey.withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatDate(_selectWorthiness),
+                                                style: _selectWorthiness != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Color(0xffC1C3C3),
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14),
+                                              ),
+                                            ]),
+                                  
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _selectedDate = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color:
+                                                    Colors.grey.withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -997,65 +1019,68 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                   ),
 
                                   //dob
-                                  GestureDetector(
-                                    onTap: () {
-                                      _selectThirdDate(context);
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(15),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: const Color(0xffD0D5DD),
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(children: [
-                                            Icon(
-                                              Icons.calendar_today_outlined,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8),
-                                            ),
-                                            const SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text(
-                                              _formatDate(_selectThirdParty),
-                                              style: _selectThirdParty != null
-                                                  ? const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      color:
-                                                          AppColors.textColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14)
-                                                  : const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Color(0xffC1C3C3),
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14),
-                                            ),
-                                          ]),
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                _selectedDate = null;
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.cancel_sharp,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8),
-                                            ),
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectThirdDate(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
                                           ),
-                                        ],
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color:
+                                                    Colors.grey.withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatDate(_selectThirdParty),
+                                                style: _selectThirdParty != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Color(0xffC1C3C3),
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14),
+                                              ),
+                                            ]),
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _selectedDate = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color:
+                                                    Colors.grey.withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -1125,67 +1150,70 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                   ),
 
                                   //tinted permit
-                                  GestureDetector(
-                                    onTap: () {
-                                      _selectTintedDate(context);
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(15),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          color: const Color(0xffD0D5DD),
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(children: [
-                                            Icon(
-                                              Icons.calendar_today_outlined,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8),
-                                            ),
-                                            const SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text(
-                                              _formatDate(_selectTinted),
-                                              style: _selectTinted != null
-                                                  ? const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      color:
-                                                          AppColors.textColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14)
-                                                  : const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Color(0xffC1C3C3),
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14),
-                                            ),
-                                          ]),
-
-                                          //
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                _selectedDate = null;
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.cancel_sharp,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8),
-                                            ),
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectTintedDate(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
                                           ),
-                                        ],
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color:
+                                                    Colors.grey.withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatDate(_selectTinted),
+                                                style: _selectTinted != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: Color(0xffC1C3C3),
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14),
+                                              ),
+                                            ]),
+                                  
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _selectedDate = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color:
+                                                    Colors.grey.withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -1458,7 +1486,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                           final String mileage = mileageControl.text;
                           final String chasis = chasisControl.toString();
                           final String engine = engineNoController.text;
-                          final String third = thirdPartyControl.text;
+                          // final String third = thirdPartyControl.text;
                           final String licensez = vehicleLicense.text;
 
                           //dates
@@ -1471,13 +1499,14 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                           final String selectTinted =
                               _newFormatDate(_selectTinted);
 
-                          if (licensez.isNotEmpty &&
-                              third.isNotEmpty &&
-                              purchase.isNotEmpty &&
-                              select.isNotEmpty &&
+                          if (
+                              // licensez.isNotEmpty &&
+                              // third.isNotEmpty &&
+                              // purchase.isNotEmpty &&
+                              // select.isNotEmpty &&
                               selectTinted.isNotEmpty &&
-                              selectRenewal.isNotEmpty &&
-                              selectThirdParty.isNotEmpty) {
+                                  selectRenewal.isNotEmpty &&
+                                  selectThirdParty.isNotEmpty) {
                             showMoticarBottom(
                               context: context,
                               child: FractionallySizedBox(
@@ -1488,6 +1517,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     topRight: Radius.circular(30.0),
                                   ),
                                   child: FinishcarPage(
+                                    carID: widget.carID, modelID: widget.modelID,
+                                     engineID : widget.engineID, gearboxID: widget.gearbox,
                                     carName: widget.carName,
                                     imagePath: 'assets/images/car_ai.png',
                                     model: widget.model,
@@ -1568,7 +1599,8 @@ class FinishcarPage extends StatefulHookConsumerWidget {
     required this.selectTinted,
     required this.purchaseDate,
     required this.model,
-    // required this.vehicleLicense
+
+    required this.carID, required this.modelID, required this.engineID, required this.gearboxID,
   });
   final String imagePath,
       purchaseDate,
@@ -1582,6 +1614,7 @@ class FinishcarPage extends StatefulHookConsumerWidget {
       engineNoController;
   // vehicleLicense;
   final String selectedDate, selectRenewal, selectThirdParty, selectTinted;
+  final String carID, modelID, engineID, gearboxID;
 
   @override
   ConsumerState<FinishcarPage> createState() => _FinishcarPageState();
@@ -2095,20 +2128,56 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                   );
 
                   await Future.delayed(const Duration(seconds: 4));
+                     // All fields are filled, attempt sign-up
+                  final signUpResult = await model.addNewCar(
+                    formData: {
+                      'car': widget.carID,
+                      'model': widget.modelID,
+                      'engine': widget.engineID,
+                      'gear_box': widget.gearboxID,
+                      'date_of_purchase': widget.purchaseDate,
+                    },
+                  );
 
                   Navigator.pop(context);
 
-                  showMoticarBottom(
-                      context: context,
-                      child: const FractionallySizedBox(
-                        heightFactor: 0.90,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30.0),
-                              topRight: Radius.circular(30.0),
-                            ),
-                            child: FirstKnow()),
-                      ));
+                 if (signUpResult.successMessage.isNotEmpty)  {
+                   showMoticarBottom(
+                        context: context,
+                        child: const FractionallySizedBox(
+                          heightFactor: 0.90,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30.0),
+                                topRight: Radius.circular(30.0),
+                              ),
+                              child: FirstKnow()),
+                        ));
+
+                  }
+                  else if (signUpResult.errorMessage.isNotEmpty) {
+                              // Sign-up failed, show error dialog
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return MoticarDialog(
+                                    icon: const Icon(Icons.error_outline_sharp,
+                                        color: AppColors.red, size: 50),
+                                    title: '',
+                                    subtitle: signUpResult.errorMessage,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      // Navigator.pop(context);
+                                    },
+                                    buttonColor: AppColors.red,
+                                    textColor: AppColors.white,
+                                    buttonText: "Dismiss",
+                                  );
+                                },
+                              );
+                            }
+
+                 
                 },
                 child: const MoticarText(
                   fontColor: AppColors.appThemeColor,

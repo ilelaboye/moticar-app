@@ -135,48 +135,51 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                               fontColor: AppColors.appThemeColor),
                         ),
                         //email
-                        TextFormField(
-                          controller: postalController,
-                          keyboardType: TextInputType.emailAddress,
-                          onTapOutside: (event) {
-                            FocusScope.of(context)
-                                .unfocus(); // Close the keyboard
-                          },
-                          textInputAction: TextInputAction.next,
-                          style: const TextStyle(
-                              fontFamily: "NeulisAlt",
-                              color: AppColors.textColor,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 1.2,
-                              fontSize: 14),
-                          onSaved: (value) {},
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            errorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: AppColors.red, width: 1.5),
-                            ),
-                            hintText: 'Enter Postal Code',
-
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                  color: Color(0xffD0D5DD), width: 1.5),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.appThemeColor)),
-                            filled: true,
-                            fillColor: Colors.white,
-                            // hintText: 'Enter your password',
-                            hintStyle: const TextStyle(
+                        SizedBox(
+                          height: 55,
+                          child: TextFormField(
+                            controller: postalController,
+                            keyboardType: TextInputType.emailAddress,
+                            onTapOutside: (event) {
+                              FocusScope.of(context)
+                                  .unfocus(); // Close the keyboard
+                            },
+                            textInputAction: TextInputAction.next,
+                            style: const TextStyle(
                                 fontFamily: "NeulisAlt",
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xffC1C3C3),
+                                color: AppColors.textColor,
+                                fontWeight: FontWeight.w500,
                                 letterSpacing: 1.2,
                                 fontSize: 14),
+                            onSaved: (value) {},
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: AppColors.red, width: 1.5),
+                              ),
+                              hintText: 'Enter Postal Code',
+                        
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: Color(0xffD0D5DD), width: 1.5),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(
+                                      color: AppColors.appThemeColor)),
+                              filled: true,
+                              fillColor: Colors.white,
+                              // hintText: 'Enter your password',
+                              hintStyle: const TextStyle(
+                                  fontFamily: "NeulisAlt",
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xffC1C3C3),
+                                  letterSpacing: 1.2,
+                                  fontSize: 14),
+                            ),
                           ),
                         ),
 

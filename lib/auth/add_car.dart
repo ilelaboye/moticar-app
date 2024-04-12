@@ -42,9 +42,11 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
 
   String? popular;
   bool isClicked = false;
-  List<Category> moticatz = [];
 
   String selectedCarName = '';
+  String selectedID = '';
+  List<Category> moticatz = [];
+  List<Model> carmodelz = [];
 
   // String? withdraw;
 
@@ -70,7 +72,11 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
   Widget build(BuildContext context) {
     final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
+    // List<Category>? moticatz;
+    // List<Model>? carmodelz;
     List<NewCarzModel> newCarz = state.getCars;
+
+    // List<Category> getCategoriz = state.getCategories;
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -200,56 +206,58 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextFormField(
-                                  controller: carController,
-                                  keyboardType: TextInputType.emailAddress,
-                                  onTapOutside: (event) {
-                                    FocusScope.of(context)
-                                        .unfocus(); // Close the keyboard
-                                  },
-                                  textInputAction: TextInputAction.next,
-                                  style: const TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      color: AppColors.textColor,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 1.2,
-                                      fontSize: 16),
-                                  validator: (value) =>
-                                      FieldValidaor.validateEmptyfield(value!),
-                                  onSaved: (value) {
-                                    // email = value!;
-                                  },
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    errorBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: AppColors.red, width: 1.5),
-                                    ),
-                                    hintText: 'Search by car name or moticode',
-
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD), width: 1.5),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
+                                SizedBox(
+                                  height: 55,
+                                  child: TextFormField(
+                                    controller: carController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    onTapOutside: (event) {
+                                      FocusScope.of(context)
+                                          .unfocus(); // Close the keyboard
+                                    },
+                                    textInputAction: TextInputAction.next,
+                                    style: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        color: AppColors.textColor,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.2,
+                                        fontSize: 16),
+                                    validator: (value) =>
+                                        FieldValidaor.validateEmptyfield(value!),
+                                    onSaved: (value) {
+                                      // email = value!;
+                                    },
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      errorBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
                                         borderSide: const BorderSide(
-                                            color: AppColors.appThemeColor)),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    // hintText: 'Enter your password',
-                                    hintStyle: const TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        fontWeight: FontWeight.w300,
+                                            color: AppColors.red, width: 1.5),
+                                      ),
+                                      hintText: 'Search by car name or moticode',
+                                
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D5DD), width: 1.5),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          borderSide: const BorderSide(
+                                              color: AppColors.appThemeColor)),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      // hintText: 'Enter your password',
+                                      hintStyle: const TextStyle(
+                                          fontFamily: "NeulisAlt",
+                                          fontWeight: FontWeight.w300,
+                                          color: Color(0xffC1C3C3),
+                                          fontSize: 13),
+                                
+                                      suffixIcon: const Icon(
+                                        Icons.search_sharp,
                                         color: Color(0xffC1C3C3),
-                                        letterSpacing: 1.2,
-                                        fontSize: 14),
-
-                                    suffixIcon: const Icon(
-                                      Icons.search_sharp,
-                                      color: Color(0xffC1C3C3),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -280,7 +288,6 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                     fontStyle: FontStyle.normal,
                                     fontWeight: FontWeight.w500,
                                     color: Color(0xff202A2A),
-                                    letterSpacing: 1.5,
                                     fontSize: 12,
                                   ),
                                 ),
@@ -308,104 +315,123 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                   newCarz.isNotEmpty)
                                 SizedBox(
                                   height:
-                                      MediaQuery.of(context).size.height * 0.35,
+                                      MediaQuery.of(context).size.height * 0.3,
                                   child: ListView.builder(
                                     shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     itemCount: newCarz.length,
                                     itemBuilder: (context, index) {
                                       final moticar = newCarz[index];
                                       final categoriez = moticar.categories;
-                                      final carname = moticar.name;
 
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            moticatz = categoriez;
-                                            selectedCarName = carname;
-                                          });
+                                      // Check if categoriez is not empty and if index is within bounds
+                                      if (categoriez.isNotEmpty &&
+                                          index < categoriez.length) {
+                                        final carModelz =
+                                            categoriez[index].models;
+                                        final carname = moticar.name;
+                                        final carId = moticar.id;
 
-                                          //
-                                          print(
-                                              'my $moticatz $selectedCarName');
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              moticatz = categoriez;
+                                              carmodelz = carModelz;
+                                              selectedCarName = carname;
+                                            });
 
-                                          // Navigator.push(context,
-                                          //     MaterialPageRoute(builder: (context) {
-                                          //   return PersonalAcctOpenPageOne(
-                                          //     acctType: moticatz,
-                                          //     acctCode: selectedCarName,
-                                          //   );
-                                          // }));
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                color: popular == 'toyota'
-                                                    ? AppColors.lightGreen
-                                                    : const Color(0xfff0f5f5),
-                                                width: 1,
-                                              ),
-                                              boxShadow: const [
-                                                BoxShadow(
+                                            print(
+                                                'my $moticatz $selectedCarName');
+                                            print(
+                                                'Length of categoriez: ${categoriez.length}');
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              padding: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                  color: popular == moticar.name
+                                                      ? AppColors.lightGreen
+                                                      : const Color(0xfff0f5f5),
+                                                  width: 1,
+                                                ),
+                                                boxShadow: const [
+                                                  BoxShadow(
                                                     color: Colors.black45,
-                                                    blurRadius: 0.1),
-                                              ],
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                        moticar.icon ?? "assets/carLogos/toyota.svg"),
-                                                    const SizedBox(width: 8),
-                                                    popular == moticar.name
-                                                        ?
-                                                      MoticarText(
-                                                      text: moticar.name,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontColor:
-                                                          AppColors.green,
-                                                    )
-                                                    :   MoticarText(
-                                                        text: moticar.name,
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontColor: const Color(
-                                                            0xff495353),
+                                                    blurRadius: 0.1,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        "assets/carLogos/toyota.svg",
                                                       ),
-                                                  ],
-                                                ),
-                                                Radio(
-                                                  toggleable: true,
-                                                  value: moticar.name,
-                                                  activeColor:
-                                                      AppColors.lightGreen,
-                                                  groupValue: popular,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      popular =
-                                                          value.toString();
-                                                      moticatz = categoriez;
-                                                      selectedCarName = carname;
-                                                    });
-                                                  },
-                                                ),
-                                              ],
+                                                      const SizedBox(width: 8),
+                                                      popular == moticar.name
+                                                          ? MoticarText(
+                                                              text:
+                                                                  moticar.name,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              fontColor:
+                                                                  AppColors
+                                                                      .green,
+                                                            )
+                                                          : MoticarText(
+                                                              text:
+                                                                  moticar.name,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontColor:
+                                                                  const Color(
+                                                                      0xff495353),
+                                                            ),
+                                                    ],
+                                                  ),
+                                                  Radio(
+                                                    toggleable: true,
+                                                    value: moticar.name,
+                                                    activeColor:
+                                                        AppColors.lightGreen,
+                                                    groupValue: popular,
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        popular =
+                                                            value.toString();
+                                                        moticatz = categoriez;
+                                                        carmodelz = carModelz;
+                                                        selectedCarName =
+                                                            carname;
+
+                                                        selectedID = moticar.id
+                                                            .toString();
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      } else {
+                                        // Handle the case where categoriez is empty or index is out of bounds
+                                        return SizedBox.shrink();
+                                      }
                                     },
                                   ),
                                 )
@@ -425,21 +451,15 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                     children: [
                                       SizedBox(height: 30),
                                       MoticarText(
-                                          text: 'No Cars Available',
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500,
-                                          fontColor: AppColors.textColor),
+                                        text: 'No Cars Available',
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                        fontColor: AppColors.textColor,
+                                      ),
                                     ],
                                   ),
                                 ),
                             ],
-                          ),
-
-                          //kia
-
-                          //
-                          const SizedBox(
-                            height: 8,
                           ),
                         ],
                       ),
@@ -447,7 +467,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                       //
 
                       const Padding(
-                        padding: EdgeInsets.all(12.0),
+                        padding: EdgeInsets.only(
+                            left: 12.0, right: 12, top: 3, bottom: 3),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -467,7 +488,6 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xff202A2A),
-                                letterSpacing: 1.5,
                                 fontSize: 12,
                               ),
                             ),
@@ -521,10 +541,6 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                             ],
                           ),
                         ),
-                      ),
-
-                      const SizedBox(
-                        height: 4,
                       ),
 
                       SizedBox(
@@ -681,8 +697,10 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return AddCarPage2(
+                                    carID: selectedID,
                                     // imagePath: selectedImage,
-                                    moticatz : moticatz,
+                                    carmodelz: carmodelz,
+                                    moticatz: moticatz,
                                     carName: selectedCarName);
                               },
                             ));

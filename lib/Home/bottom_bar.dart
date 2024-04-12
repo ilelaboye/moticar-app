@@ -46,7 +46,7 @@ class _BottomHomePageState extends State<BottomHomePage> {
     });
 
     // Simulate a delay to showcase the loader
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 50), () {
       setState(() {
         isLoading[currentPageIndex] =
             false; // Hide loader for the selected page
@@ -73,7 +73,7 @@ class _BottomHomePageState extends State<BottomHomePage> {
                 child: Center(
                   child: SpinKitPouringHourGlassRefined(
                     color: AppColors.appThemeColor,
-                    size: 50.0,
+                    size: 30.0,
                   ),
                 ),
               ),

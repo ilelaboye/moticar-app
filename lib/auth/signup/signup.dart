@@ -123,73 +123,76 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             fontColor: AppColors.appThemeColor),
                       ),
                       //email
-                      TextFormField(
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        onTapOutside: (event) {
-                          FocusScope.of(context)
-                              .unfocus(); // Close the keyboard
-                        },
-                        textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            color: AppColors.textColor,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.2,
-                            fontSize: 16),
-                        validator: (value) =>
-                            EmailValidator.validateEmail(value!),
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     setState(() {
-                        //       _emailError = 'Email address is required';
-                        //     });
-                        //     return 'Email address is required';
-                        //   } else if (!value.contains('@') ||
-                        //       !value.contains('.')) {
-                        //     setState(() {
-                        //       _emailError = 'Enter a valid email address';
-                        //     });
-                        //     return 'Enter a valid email address';
-                        //   }
-                        //   setState(() {
-                        //     _emailError = null;
-                        //   });
-                        //   return null;
-                        // },
-
-                        onSaved: (value) {
-                          email = value!;
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                                color: AppColors.red, width: 1.5),
-                          ),
-                          hintText: 'Enter your email address',
-                          errorText: _emailError, // Show the error message here
-
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                                color: Color(0xffD0D5DD), width: 1.5),
-                          ),
-                          focusedBorder: OutlineInputBorder(
+                      SizedBox(
+                        height: 55,
+                        child: TextFormField(
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          onTapOutside: (event) {
+                            FocusScope.of(context)
+                                .unfocus(); // Close the keyboard
+                          },
+                          textInputAction: TextInputAction.next,
+                          style: const TextStyle(
+                              fontFamily: "NeulisAlt",
+                              color: AppColors.textColor,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                              fontSize: 16),
+                          validator: (value) =>
+                              EmailValidator.validateEmail(value!),
+                          // validator: (value) {
+                          //   if (value == null || value.isEmpty) {
+                          //     setState(() {
+                          //       _emailError = 'Email address is required';
+                          //     });
+                          //     return 'Email address is required';
+                          //   } else if (!value.contains('@') ||
+                          //       !value.contains('.')) {
+                          //     setState(() {
+                          //       _emailError = 'Enter a valid email address';
+                          //     });
+                          //     return 'Enter a valid email address';
+                          //   }
+                          //   setState(() {
+                          //     _emailError = null;
+                          //   });
+                          //   return null;
+                          // },
+                      
+                          onSaved: (value) {
+                            email = value!;
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            errorBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(
-                                  color: AppColors.appThemeColor)),
-                          filled: true,
-                          fillColor: Colors.white,
-                          // hintText: 'Enter your password',
-                          hintStyle: const TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xffC1C3C3),
-                              letterSpacing: 1.2,
-                              fontSize: 14),
+                                  color: AppColors.red, width: 1.5),
+                            ),
+                            hintText: 'Enter your email address',
+                            errorText: _emailError, // Show the error message here
+                      
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: Color(0xffD0D5DD), width: 1.5),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: AppColors.appThemeColor)),
+                            filled: true,
+                            fillColor: Colors.white,
+                            // hintText: 'Enter your password',
+                            hintStyle: const TextStyle(
+                                fontFamily: "NeulisAlt",
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xffC1C3C3),
+                                letterSpacing: 1.2,
+                                fontSize: 14),
+                          ),
                         ),
                       ),
 
@@ -252,47 +255,50 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             fontWeight: FontWeight.w700,
                             fontColor: AppColors.appThemeColor),
                       ),
-                      IntlPhoneField(
-                        key: const Key('phoneField'),
-                        controller: phoneController,
-                        style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            color: AppColors.textColor,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.2,
-                            fontSize: 16),
-                        // validator: (value) =>
-                        //     PhoneNumberValidator.validatePhoneNumber(value as String),
-                        decoration: InputDecoration(
-                          counterText: '',
-                          border: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          hintText: 'Enter your phone number',
-
-                          enabledBorder: OutlineInputBorder(
+                      SizedBox(
+                        height: 55,
+                        child: IntlPhoneField(
+                          key: const Key('phoneField'),
+                          controller: phoneController,
+                          style: const TextStyle(
+                              fontFamily: "NeulisAlt",
+                              color: AppColors.textColor,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.2,
+                              fontSize: 16),
+                          // validator: (value) =>
+                          //     PhoneNumberValidator.validatePhoneNumber(value as String),
+                          decoration: InputDecoration(
+                            counterText: '',
+                            border: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            hintText: 'Enter your phone number',
+                      
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                    color: Color(0xffD0D5DD), width: 1.5)),
+                            focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(
-                                  color: Color(0xffD0D5DD), width: 1.5)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                                color: AppColors.appThemeColor),
+                                  color: AppColors.appThemeColor),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            // hintText: 'Enter your password',
+                            hintStyle: const TextStyle(
+                                fontFamily: "NeulisAlt",
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xffC1C3C3),
+                                letterSpacing: 1.2,
+                                fontSize: 14),
                           ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          // hintText: 'Enter your password',
-                          hintStyle: const TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xffC1C3C3),
-                              letterSpacing: 1.2,
-                              fontSize: 14),
+                          initialCountryCode: 'NG',
+                          onChanged: (phone) {
+                            print(phone.completeNumber);
+                            completePhoneNumber = phone.completeNumber;
+                          },
                         ),
-                        initialCountryCode: 'NG',
-                        onChanged: (phone) {
-                          print(phone.completeNumber);
-                          completePhoneNumber = phone.completeNumber;
-                        },
                       ),
                     ],
                   ),

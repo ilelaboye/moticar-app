@@ -119,6 +119,64 @@ class RegisterViewmodel extends StateNotifier<RegisterState> {
     }
   }
 
+
+  //add_technician
+  Future<ApiResponse> addNewTechnician({
+    required FormData formData,
+    // required XFile image,
+  }) async {
+    // state = state.copyWith(
+    //   loadStatus: Loader.loading,
+    // );
+    try {
+      final response = await _reader.read(serviceProvider).newpost(
+            formData: formData,
+            path: "add-technician",
+            // pathName: 'profile_image',
+            // files: image,
+          );
+      // var body = json.decode(response.body);
+      // if (body != null) {
+      if (response.statusCode == 200) {
+        state = state.copyWith(
+            loadStatus: Loader.loaded, token: response.data['data']['token']);
+        return ApiResponse(
+          successMessage: response.data["message"] ?? "Success",
+        );
+      } else {
+        state = state.copyWith(
+          loadStatus: Loader.error,
+        );
+        return ApiResponse(
+          errorMessage: response.data["message"] ?? "Unknown error",
+        );
+      }
+      // }
+      // else {
+      //   state = state.copyWith(
+      //     loadStatus: Loader.error,
+      //   );
+      //   return ApiResponse(errorMessage: "Response body is null");
+      // }
+    } on DioError catch (e) {
+      state = state.copyWith(
+        loadStatus: Loader.error,
+      );
+      if (e.response != null && e.response!.data != null) {
+        return ApiResponse(
+          errorMessage: e.response!.data['message'] ?? "Unknown error",
+        );
+      } else {
+        return ApiResponse(errorMessage: "Connection error, please try again.");
+      }
+    } catch (e) {
+      state = state.copyWith(
+        loadStatus: Loader.error,
+      );
+      return ApiResponse(errorMessage: "Connection error, please try again.");
+    }
+  }
+
   //final signup
   Future<ApiResponse> signUpFinal({
     required Map<String, dynamic> formData,

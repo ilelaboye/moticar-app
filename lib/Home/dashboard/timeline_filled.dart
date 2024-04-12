@@ -7,10 +7,12 @@ import 'package:moticar/widgets/app_texts.dart';
 import '../../auth/add_car.dart';
 import '../../models/expensesmodel.dart';
 import '../../providers/app_providers.dart';
+import '../../utils/enums.dart';
 import '../../widgets/bottom_sheet_service.dart';
 import '../../widgets/colors.dart';
 import 'package:intl/intl.dart';
 
+import '../../widgets/eard_loader.dart';
 import '../breakdown/breakdown.dart';
 import '../expense/add_expense.dart';
 import 'pie_chart/pie.dart';
@@ -123,310 +125,352 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
           // height: MediaQuery.of(context).size.height * 0.2,
           //   width: MediaQuery.of(context).size.width,
           // top green screen
-          Container(
-            padding: const EdgeInsets.all(6),
-            // height: MediaQuery.of(context).size.height * 0.3,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.12,
-                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: AppColors.teal,
-                  ),
-                  child: ListView.builder(
-                    itemCount: 1, //myCarz.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final carz = myCarz[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                  showMoticarBottom(
-                                  context: context,
-                                  child: FractionallySizedBox(
-                                    heightFactor: 0.89,
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(20.0),
-                                        topRight: Radius.circular(20.0),
+          if (state.loading != Loader.loading && myCarz.isNotEmpty)
+            Container(
+              padding: const EdgeInsets.all(6),
+              // height: MediaQuery.of(context).size.height * 0.3,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  if (state.loading != Loader.loading && myCarz.isNotEmpty)
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.12,
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 10, right: 10),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: const BoxDecoration(
+                        color: AppColors.teal,
+                      ),
+                      child: ListView.builder(
+                        itemCount: 1, //myCarz.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final carz = myCarz[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    showMoticarBottom(
+                                      context: context,
+                                      child: FractionallySizedBox(
+                                        heightFactor: 0.89,
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20.0),
+                                            topRight: Radius.circular(20.0),
+                                          ),
+                                          child: MyCarInfoPage(
+                                              plateNumber: carz.plateNumber,
+                                              chasisNumber: carz.chasisNumber,
+                                              engineNumber: carz.engineNumber,
+                                              dateOfPurchase:
+                                                  carz.dateOfPurchase,
+                                              vehicleLicense:
+                                                  carz.vehicleLicense,
+                                              roadWorthiness:
+                                                  carz.roadWorthiness,
+                                              thirdPartyInsurance:
+                                                  carz.thirdPartyInsurance,
+                                              engine: carz.engine.toString(),
+                                              gearbox: carz.gearbox.toString(),
+                                              car: carz.car.toString(),
+                                              model: carz.model.toString(),
+                                              category:
+                                                  carz.category.toString()),
+                                        ),
                                       ),
-                                      child: MyCarInfoPage(
-                                          plateNumber: carz.plateNumber,
-                                          chasisNumber: carz.chasisNumber,
-                                          engineNumber: carz.engineNumber,
-                                          dateOfPurchase: carz.dateOfPurchase,
-                                          vehicleLicense: carz.vehicleLicense,
-                                          roadWorthiness: carz.roadWorthiness,
-                                          thirdPartyInsurance:
-                                              carz.thirdPartyInsurance,
-                                          engine: carz.engine.toString(),
-                                          gearbox: carz.gearbox.toString(),
-                                          car: carz.car.toString(),
-                                          model: carz.model.toString(),
-                                          category: carz.category.toString()),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(3),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(4),
+                                          topRight: Radius.circular(4),
+                                          bottomLeft: Radius.circular(4),
+                                          bottomRight: Radius.circular(4)),
+                                    ),
+                                    child: Image.asset(
+                                      'assets/images/car_ai.png',
+                                      height: 45,
                                     ),
                                   ),
-                                );
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(4),
-                                      topRight: Radius.circular(4),
-                                      bottomLeft: Radius.circular(4),
-                                      bottomRight: Radius.circular(4)),
                                 ),
-                                child: Image.asset(
-                                  'assets/images/car_ai.png',
-                                  height: 45,
+                                const SizedBox(
+                                  width: 8,
                                 ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            GestureDetector(
-                              onTap: (){
-                                 showMoticarBottom(
-                                  context: context,
-                                  child: FractionallySizedBox(
-                                    heightFactor: 0.89,
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(20.0),
-                                        topRight: Radius.circular(20.0),
+                                GestureDetector(
+                                  onTap: () {
+                                    showMoticarBottom(
+                                      context: context,
+                                      child: FractionallySizedBox(
+                                        heightFactor: 0.89,
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20.0),
+                                            topRight: Radius.circular(20.0),
+                                          ),
+                                          child: MyCarInfoPage(
+                                              plateNumber: carz.plateNumber,
+                                              chasisNumber: carz.chasisNumber,
+                                              engineNumber: carz.engineNumber,
+                                              dateOfPurchase:
+                                                  carz.dateOfPurchase,
+                                              vehicleLicense:
+                                                  carz.vehicleLicense,
+                                              roadWorthiness:
+                                                  carz.roadWorthiness,
+                                              thirdPartyInsurance:
+                                                  carz.thirdPartyInsurance,
+                                              engine: carz.engine.toString(),
+                                              gearbox: carz.gearbox.toString(),
+                                              car: carz.car.toString(),
+                                              model: carz.model.toString(),
+                                              category:
+                                                  carz.category.toString()),
+                                        ),
                                       ),
-                                      child: MyCarInfoPage(
-                                          plateNumber: carz.plateNumber,
-                                          chasisNumber: carz.chasisNumber,
-                                          engineNumber: carz.engineNumber,
-                                          dateOfPurchase: carz.dateOfPurchase,
-                                          vehicleLicense: carz.vehicleLicense,
-                                          roadWorthiness: carz.roadWorthiness,
-                                          thirdPartyInsurance:
-                                              carz.thirdPartyInsurance,
-                                          engine: carz.engine.toString(),
-                                          gearbox: carz.gearbox.toString(),
-                                          car: carz.car.toString(),
-                                          model: carz.model.toString(),
-                                          category: carz.category.toString()),
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
+                                    );
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        "${carz.car} ${carz.model}",
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontFamily: "NeulisAlt",
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "${carz.car} ${carz.model}",
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontFamily: "NeulisAlt",
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 14,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.only(
+                                                left: 8,
+                                                right: 8,
+                                                top: 4,
+                                                bottom: 4),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xff00343f),
+                                              borderRadius:
+                                                  BorderRadius.circular(40),
+                                            ),
+                                            child: Text(
+                                              "exp. $remainingDays days",
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 13,
+                                                color: Color(0xff92BEC1),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.only(
-                                            left: 8, right: 8, top: 4, bottom: 4),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xff00343f),
-                                          borderRadius: BorderRadius.circular(40),
-                                        ),
+
+                                      //petrol and gear
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
                                         child: Text(
-                                          "exp. $remainingDays days",
-                                          textAlign: TextAlign.center,
+                                          "${carz.engine} . ${carz.category} . ${carz.gearbox}",
+                                          textAlign: TextAlign.left,
                                           style: const TextStyle(
                                             fontFamily: "NeulisAlt",
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 13,
-                                            color: Color(0xff92BEC1),
+                                            fontSize: 12,
+                                            color: Color(0xff7AE6EB),
                                           ),
                                         ),
                                       ),
                                     ],
                                   ),
-                            
-                                  //petrol and gear
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.6,
-                                    child: Text(
-                                      "${carz.engine} . ${carz.category} . ${carz.gearbox}",
-                                      textAlign: TextAlign.left,
-                                      style: const TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                        color: Color(0xff7AE6EB),
-                                      ),
-                                    ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 8, bottom: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isVisible = !isVisible;
+                                      });
+                                    },
+                                    child: isVisible
+                                        ? const Icon(
+                                            Icons.keyboard_arrow_up_rounded,
+                                            color: AppColors.textGrey)
+                                        : const Icon(
+                                            Icons.keyboard_arrow_down_sharp,
+                                            color: AppColors.textGrey),
                                   ),
-                                ],
-                              ),
+                                ),
+
+                                // notfication
+
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 8, bottom: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _showMyNotification(context);
+                                    },
+                                    child: isVisible
+                                        ? const SizedBox()
+                                        : const Icon(
+                                            Icons.notifications_none_sharp,
+                                            color: AppColors.white),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8, bottom: 8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isVisible = !isVisible;
-                                  });
-                                },
-                                child: isVisible
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_up_rounded,
-                                        color: AppColors.textGrey)
-                                    : const Icon(
-                                        Icons.keyboard_arrow_down_sharp,
-                                        color: AppColors.textGrey),
+                          );
+                        },
+                      ),
+                    ),
+                  Visibility(
+                    visible: isVisible,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: MoticarLoginButton(
+                                  borderColor: const Color(0xff00AEB5),
+                                  myColor: Colors.transparent,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Edit',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: 'NeulisAlt',
+                                          color: Color(0xff00AEB5),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      SvgPicture.asset(
+                                          'assets/svgs/new_edit.svg'),
+                                    ],
+                                  ),
+                                  onTap: () {},
+                                ),
                               ),
                             ),
 
-                            // notfication
-
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8, bottom: 8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  _showMyNotification(context);
-                                },
-                                child: isVisible
-                                    ? const SizedBox()
-                                    : const Icon(Icons.notifications_none_sharp,
-                                        color: AppColors.white),
+                            //delete
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: MoticarLoginButton(
+                                  borderColor: const Color(0xff00AEB5),
+                                  myColor: Colors.transparent,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Delete',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: 'NeulisAlt',
+                                          color: Color(0xff00AEB5),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      SvgPicture.asset(
+                                          'assets/svgs/delete.svg'),
+                                    ],
+                                  ),
+                                  onTap: () {},
+                                ),
                               ),
-                            ),
+                            )
                           ],
                         ),
-                      );
-                    },
-                  ),
-                ),
-                Visibility(
-                  visible: isVisible,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: MoticarLoginButton(
-                                borderColor: const Color(0xff00AEB5),
-                                myColor: Colors.transparent,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'Edit',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'NeulisAlt',
-                                        color: Color(0xff00AEB5),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    SvgPicture.asset(
-                                        'assets/svgs/new_edit.svg'),
-                                  ],
+                        // const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: MoticarLoginButton(
+                            borderColor: const Color(0xff29D7DE),
+                            myColor: const Color(0xff29D7DE),
+                            child: const Center(
+                              child: Text(
+                                'Add new Car',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'NeulisAlt',
+                                  color: AppColors.appThemeColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                                onTap: () {},
                               ),
                             ),
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return const AddCarPage();
+                                },
+                              ));
+                            },
                           ),
-
-                          //delete
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: MoticarLoginButton(
-                                borderColor: const Color(0xff00AEB5),
-                                myColor: Colors.transparent,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'Delete',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'NeulisAlt',
-                                        color: Color(0xff00AEB5),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    SvgPicture.asset('assets/svgs/delete.svg'),
-                                  ],
-                                ),
-                                onTap: () {},
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      // const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: MoticarLoginButton(
-                          borderColor: const Color(0xff29D7DE),
-                          myColor: const Color(0xff29D7DE),
-                          child: const Center(
-                            child: Text(
-                              'Add new Car',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'NeulisAlt',
-                                color: AppColors.appThemeColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                             Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return const AddCarPage();
-                              },
-                            ));
-                          },
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          else if (state.loading == Loader.loading)
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MoticarLoader(
+                  size: 20,
                 )
               ],
+            )
+          else
+            const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 20),
+                  MoticarText(
+                      text: 'No Cars Available',
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      fontColor: AppColors.textColor),
+                ],
+              ),
             ),
-          ),
 
           //other half
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(1),
+              padding: const EdgeInsets.all(2),
               // height: MediaQuery.of(context).size.height * 0.78,
               // width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
@@ -459,14 +503,15 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                             children: [
                               Container(
                                 alignment: Alignment.center,
-                                width: 140,
-                                height: 55,
+                                width: 150,
+                                height: 48,
                                 child: SizedBox(
-                                  height: 50,
-                                  width: 135,
+                                  height: 46,
+                                  width: 145,
                                   child: Container(
                                     alignment: Alignment.center,
-                                    // padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.only(
+                                        left: 2, right: 2.0),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                       color: const Color(0xffCDD2D2),
@@ -616,7 +661,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                     // const SizedBox(height: 10),
 
                     const Padding(
-                      padding: EdgeInsets.only(left: 30, right: 30, bottom: 15),
+                      padding: EdgeInsets.only(left: 30, right: 30, bottom: 2),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -664,191 +709,187 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                     ),
 
                     //breakdowns
-                    Column(children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.5,
-                        width: double.infinity,
-                        child: ListView.builder(
-                          itemCount: myTechies.length,
-                          itemBuilder: (context, index) {
-                            final breakdown = myTechies[index];
-                            // final image
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      width: double.infinity,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: myTechies.length,
+                        itemBuilder: (context, index) {
+                          final breakdown = myTechies[index];
+                          // final image
 
-                            // final String catImaes = if(breakdown.category == "Body works"){}
-                            return ListTile(
-                              leading: GestureDetector(
-                                onTap: () {
-                                  showMoticarBottom(
-                                    context: context,
-                                    child: FractionallySizedBox(
-                                      heightFactor: 0.89,
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(30.0),
-                                          topRight: Radius.circular(30.0),
-                                        ),
-                                        child: BreakDownPage(
-                                          imagePath:
-                                              breakdown.category.toString(),
-                                          category:
-                                              breakdown.category.toString(),
-                                          amount: nairaFormat
-                                              .format(breakdown.total),
-                                          paymode: breakdown.methodOfPayment
-                                              .toString(),
-                                          title: breakdown.title.toString(),
-                                          description:
-                                              breakdown.description.toString(),
-                                          carparts: breakdown.carparts,
-                                        ),
+                          // final String catImaes = if(breakdown.category == "Body works"){}
+                          return ListTile(
+                            // contentPadding: EdgeInsets.all(5),
+                            leading: GestureDetector(
+                              onTap: () {
+                                showMoticarBottom(
+                                  context: context,
+                                  child: FractionallySizedBox(
+                                    heightFactor: 0.89,
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(30.0),
+                                        topRight: Radius.circular(30.0),
+                                      ),
+                                      child: BreakDownPage(
+                                        imagePath:
+                                            breakdown.category.toString(),
+                                        category: breakdown.category.toString(),
+                                        amount:
+                                            nairaFormat.format(breakdown.total),
+                                        paymode: breakdown.methodOfPayment
+                                            .toString(),
+                                        title: breakdown.title.toString(),
+                                        description:
+                                            breakdown.description.toString(),
+                                        carparts: breakdown.carparts,
                                       ),
                                     ),
-                                  );
-                                },
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: getImageColor(
-                                            breakdown.category.toString()),
-                                        // breakdown.imageColor,
-                                      ),
-                                      child: getImageWidget(
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: getImageColor(
                                           breakdown.category.toString()),
+                                      // breakdown.imageColor,
                                     ),
-                                    const SizedBox(
-                                      height: 3,
-                                    ),
-                                    Text(
-                                      DateFormat.Hm()
-                                          .format(breakdown.date!.toLocal()),
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                          color: Color(0xff293536)),
+                                    child: getImageWidget(
+                                        breakdown.category.toString()),
+                                  ),
+                                  const SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text(
+                                    DateFormat.Hm()
+                                        .format(breakdown.date!.toLocal()),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        color: Color(0xff293536)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(breakdown.category.toString()),
+                                    const SizedBox(width: 8),
+                                    Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 8, top: 4, bottom: 4, right: 8),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.anotherYellow,
+                                          borderRadius:
+                                              BorderRadius.circular(32)),
+                                      child: Text(
+                                        'x${breakdown.carpart}',
+                                        style: const TextStyle(
+                                            color: Color(0xff293536)),
+                                      ),
                                     ),
                                   ],
                                 ),
-                              ),
-                              title: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(breakdown.category.toString()),
-                                      const SizedBox(width: 8),
-                                      Container(
-                                        padding: const EdgeInsets.only(
-                                            left: 8,
-                                            top: 4,
-                                            bottom: 4,
-                                            right: 8),
-                                        decoration: BoxDecoration(
-                                            color: AppColors.anotherYellow,
-                                            borderRadius:
-                                                BorderRadius.circular(32)),
-                                        child: Text(
-                                          'x${breakdown.carpart}',
-                                          style: const TextStyle(
-                                              color: Color(0xff293536)),
+
+                                //amount and menu button
+                                Row(
+                                  children: [
+                                    Text(nairaFormat.format(breakdown.total),
+                                        style: const TextStyle(
+                                            fontFamily: "Neulis",
+                                            color: Color(0xff006C70),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500)),
+                                    // GestureDetector(
+                                    //   onTap: (){
+
+                                    //   },
+                                    //   child: const Icon(Icons.more_vert))
+
+                                    PopupMenuButton(
+                                      surfaceTintColor: Colors.white,
+                                      // color: const Color(0xffC1C3C3),
+                                      itemBuilder: (BuildContext context) => [
+                                        PopupMenuItem(
+                                          value: 'edit',
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                  'assets/svgs/edit.svg'),
+                                              const SizedBox(
+                                                width: 12,
+                                              ),
+                                              const Text('Edit'),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  //amount and menu button
-                                  Row(
-                                    children: [
-                                      Text(nairaFormat.format(breakdown.total),
-                                          style: const TextStyle(
-                                              fontFamily: "Neulis",
-                                              color: Color(0xff006C70),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500)),
-                                      // GestureDetector(
-                                      //   onTap: (){
-
-                                      //   },
-                                      //   child: const Icon(Icons.more_vert))
-
-                                      PopupMenuButton(
-                                        surfaceTintColor: Colors.white,
-                                        // color: const Color(0xffC1C3C3),
-                                        itemBuilder: (BuildContext context) => [
-                                          PopupMenuItem(
-                                            value: 'edit',
-                                            child: Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                    'assets/svgs/edit.svg'),
-                                                const SizedBox(
-                                                  width: 12,
-                                                ),
-                                                const Text('Edit'),
-                                              ],
-                                            ),
+                                        PopupMenuItem(
+                                          value: 'strike_off',
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                  'assets/svgs/strike.svg'),
+                                              const SizedBox(
+                                                width: 12,
+                                              ),
+                                              const Text('Strike off'),
+                                            ],
                                           ),
-                                          PopupMenuItem(
-                                            value: 'strike_off',
-                                            child: Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                    'assets/svgs/strike.svg'),
-                                                const SizedBox(
-                                                  width: 12,
-                                                ),
-                                                const Text('Strike off'),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                        onSelected: (String value) {
-                                          if (value == 'edit') {
-                                            // Handle edit action
-                                          } else if (value == 'strike_off') {
-                                            // Handle strike off action
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    breakdown.title.toString(),
-                                    style: const TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        color: Color(0xff425658),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                    breakdown.description.toString() ?? '',
-                                    style: const TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        color: Color(0xff7BA0A3),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              ),
-                              // trailing: Column(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: [
-                              //     Text(breakdown.amount),
-                              //   ],
-                              // ),
-                            );
-                          },
-                        ),
+                                        ),
+                                      ],
+                                      onSelected: (String value) {
+                                        if (value == 'edit') {
+                                          // Handle edit action
+                                        } else if (value == 'strike_off') {
+                                          // Handle strike off action
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  breakdown.title.toString(),
+                                  style: const TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      color: Color(0xff425658),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  breakdown.description.toString() ?? '',
+                                  style: const TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      color: Color(0xff7BA0A3),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ],
+                            ),
+                            // trailing: Column(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     Text(breakdown.amount),
+                            //   ],
+                            // ),
+                          );
+                        },
                       ),
-                      const SizedBox(height: 20),
-                    ]),
+                    ),
+                    const SizedBox(height: 20),
 
                     //
                     Row(

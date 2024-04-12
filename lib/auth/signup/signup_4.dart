@@ -212,52 +212,55 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                       ),
 
                       //dob
-                      GestureDetector(
-                        onTap: () {
-                          _selectDate(context);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                              color: const Color(0xffD0D5DD),
+                      SizedBox(
+                        height: 55,
+                        child: GestureDetector(
+                          onTap: () {
+                            _selectDate(context);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(
+                                color: const Color(0xffD0D5DD),
+                              ),
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(children: [
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(children: [
+                                  Icon(
+                                    Icons.calendar_today_outlined,
+                                    color: Colors.grey.withOpacity(0.8),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    _formatDate(_selectedDate),
+                                    style: _selectedDate != null
+                                        ? const TextStyle(
+                                            fontFamily: "NeulisAlt",
+                                            color: AppColors.textColor,
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 1.2,
+                                            fontSize: 14)
+                                        : const TextStyle(
+                                            fontFamily: "NeulisAlt",
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xffC1C3C3),
+                                            letterSpacing: 1.2,
+                                            fontSize: 14),
+                                  ),
+                                ]),
                                 Icon(
-                                  Icons.calendar_today_outlined,
+                                  Icons.cancel_sharp,
                                   color: Colors.grey.withOpacity(0.8),
                                 ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  _formatDate(_selectedDate),
-                                  style: _selectedDate != null
-                                      ? const TextStyle(
-                                          fontFamily: "NeulisAlt",
-                                          color: AppColors.textColor,
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 1.2,
-                                          fontSize: 14)
-                                      : const TextStyle(
-                                          fontFamily: "NeulisAlt",
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xffC1C3C3),
-                                          letterSpacing: 1.2,
-                                          fontSize: 14),
-                                ),
-                              ]),
-                              Icon(
-                                Icons.cancel_sharp,
-                                color: Colors.grey.withOpacity(0.8),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -286,7 +289,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                                   Padding(
                                     padding: const EdgeInsets.all(3.0),
                                     child: SizedBox(
-                                      height: 57,
+                                      height: 55,
                                       child: Container(
                                         padding: const EdgeInsets.all(10),
                                         decoration: BoxDecoration(
@@ -312,13 +315,13 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                                             gender == 'male'
                                                 ? const MoticarText(
                                                     text: 'Male',
-                                                    fontSize: 14,
+                                                    fontSize: 13,
                                                     fontWeight: FontWeight.w700,
                                                     fontColor: AppColors.green,
                                                   )
                                                 : const MoticarText(
                                                     text: 'Male',
-                                                    fontSize: 14,
+                                                    fontSize: 13,
                                                     fontWeight: FontWeight.w400,
                                                     fontColor:
                                                         Color(0xff495353),
@@ -365,7 +368,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: SizedBox(
-                                      height: 57,
+                                      height: 55,
                                       child: Container(
                                         padding: const EdgeInsets.all(10),
                                         decoration: BoxDecoration(
@@ -391,13 +394,13 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                                             gender == 'female'
                                                 ? const MoticarText(
                                                     text: 'Female',
-                                                    fontSize: 14,
+                                                    fontSize: 13,
                                                     fontWeight: FontWeight.w700,
                                                     fontColor: AppColors.green,
                                                   )
                                                 : const MoticarText(
                                                     text: 'Female',
-                                                    fontSize: 14,
+                                                    fontSize: 13,
                                                     fontWeight: FontWeight.w400,
                                                     fontColor:
                                                         Color(0xff495353),
@@ -446,51 +449,53 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 bottom: 8, left: 3, right: 3),
-                            child: DropdownButtonFormField(
-                                decoration: const InputDecoration(
-                                  hintText: '[ N ] Nigerian Naira',
-                                  hintStyle: TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                    borderSide: BorderSide(
-                                        color: Color(0xffD0D5DD), width: 1.5),
+                            child: SizedBox(
+                              height: 55,
+                              child: DropdownButtonFormField(
+                                  decoration: const InputDecoration(
+                                    hintText: '[ N ] Nigerian Naira',
+                                    hintStyle: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffD0D5DD), width: 1.5),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      borderSide: BorderSide(
+                                          color: AppColors.appThemeColor,
+                                          width: 1.5),
+                                    ),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                    borderSide: BorderSide(
-                                        color: AppColors.appThemeColor,
-                                        width: 1.5),
-                                  ),
-                                ),
-                                items: myCurrency
-                                    .map<DropdownMenuItem<String>>(
-                                        (value) => DropdownMenuItem<String>(
-                                            value: value.toString(),
-                                            child: Text(
-                                              value.toString(),
-                                              style: const TextStyle(
-                                                  fontFamily: "NeulisAlt",
-                                                  color: AppColors.textColor,
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 1.2,
-                                                  fontSize: 14),
-                                            )))
-                                    .toList(),
-                                value: selectedCurrency,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedCurrency = value!;
-                                  });
-                                }),
+                                  items: myCurrency
+                                      .map<DropdownMenuItem<String>>(
+                                          (value) => DropdownMenuItem<String>(
+                                              value: value.toString(),
+                                              child: Text(
+                                                value.toString(),
+                                                style: const TextStyle(
+                                                    fontFamily: "NeulisAlt",
+                                                    color: AppColors.textColor,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 13),
+                                              )))
+                                      .toList(),
+                                  value: selectedCurrency,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedCurrency = value!;
+                                    });
+                                  }),
+                            ),
                           ),
                         ],
                       ),
@@ -512,53 +517,55 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 bottom: 8, left: 3, right: 3),
-                            child: DropdownButtonFormField<String>(
-                                decoration: const InputDecoration(
-                                  hintText: 'Select Location',
-                                  hintStyle: TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                    borderSide: BorderSide(
-                                        color: Color(0xffD0D5DD), width: 1.5),
+                            child: SizedBox(
+                              height: 55,
+                              child: DropdownButtonFormField<String>(
+                                  decoration: const InputDecoration(
+                                    hintText: 'Select Location',
+                                    hintStyle: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffD0D5DD), width: 1.5),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      borderSide: BorderSide(
+                                          color: AppColors.appThemeColor,
+                                          width: 1.5),
+                                    ),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                    borderSide: BorderSide(
-                                        color: AppColors.appThemeColor,
-                                        width: 1.5),
-                                  ),
-                                ),
-                                items: countries
-                                    .map<DropdownMenuItem<String>>(
-                                        (country) => DropdownMenuItem<String>(
-                                            value: country.name.toString(),
-                                            child: Text(
-                                              country.name.toString(),
-                                              style: const TextStyle(
-                                                  fontFamily: "NeulisAlt",
-                                                  color: AppColors.textColor,
-                                                  fontWeight: FontWeight.w500,
-                                                  letterSpacing: 1.2,
-                                                  fontSize: 14),
-                                            )))
-                                    .toList(),
-                                value: selectedCountry,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedCountry = value!;
-                                    // selectedStatez =
-                                    //     null; // Reset selected state
-                                  });
-                                }),
+                                  items: countries
+                                      .map<DropdownMenuItem<String>>(
+                                          (country) => DropdownMenuItem<String>(
+                                              value: country.name.toString(),
+                                              child: Text(
+                                                country.name.toString(),
+                                                style: const TextStyle(
+                                                    fontFamily: "NeulisAlt",
+                                                    color: AppColors.textColor,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 13),
+                                              )))
+                                      .toList(),
+                                  value: selectedCountry,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedCountry = value!;
+                                      // selectedStatez =
+                                      //     null; // Reset selected state
+                                    });
+                                  }),
+                            ),
                           ),
                         ],
                       ),
@@ -569,7 +576,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                 //stay signed in
 
                 const SizedBox(
-                  height: 12,
+                  height: 8,
                 ),
 
                 //checks field

@@ -22,8 +22,8 @@ class NewCarzModel {
         return NewCarzModel(
             id: json["id"] ?? 0,
             name: json["name"] ?? "",
-            icon: json["icon"],
-            description: json["description"],
+            icon: json["icon"] ?? '',
+            description: json["description"] ?? '',
             createdAt: DateTime.tryParse(json["created_at"] ?? ""),
             updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
             categories: json["categories"] == null ? [] : List<Category>.from(json["categories"]!.map((x) => Category.fromJson(x))),
@@ -150,7 +150,7 @@ class Engine {
             id: json["id"] ?? 0,
             modelsId: json["models_id"] ?? 0,
             name: json["name"] ?? "",
-            others: json["others"],
+            others: json["others"] ?? '',
             createdAt: json["created_at"],
             updatedAt: json["updated_at"],
         );

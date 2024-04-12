@@ -51,7 +51,7 @@ class _MoticarPageState extends ConsumerState<MoticarPage> {
                             style: TextStyle(
                               fontFamily: "NeulisAlt",
                               fontWeight: FontWeight.w500,
-                              fontSize: 14,
+                              fontSize: 30,
                               color: Colors.white,
                             ),
                           ),
