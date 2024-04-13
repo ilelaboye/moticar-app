@@ -121,10 +121,6 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                             ],
                           ),
 
-                          const SizedBox(
-                            height: 10,
-                          ),
-
                           const Center(
                             child: Text(
                               "Select from the category below",
@@ -136,10 +132,6 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.appThemeColor),
                             ),
-                          ),
-
-                          const SizedBox(
-                            height: 10,
                           ),
 
                           Padding(

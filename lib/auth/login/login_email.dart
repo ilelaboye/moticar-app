@@ -2,11 +2,16 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/auth/signup/signup.dart';
 import 'package:moticar/widgets/appBar.dart';
+import 'package:moticar/widgets/bottom_sheet_service.dart';
+import 'package:moticar/widgets/eard_loader.dart';
+import 'package:moticar/widgets/loader.dart';
 import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
@@ -100,10 +105,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             children: [
                               const Padding(
                                 padding: EdgeInsets.only(
-                                    top: 8.0, bottom: 8, left: 3),
+                                    top: 8.0, bottom: 4, left: 3),
                                 child: MoticarText(
                                     text: "Email",
-                                    fontSize: 13,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                     fontColor: AppColors.textColor),
                               ),
@@ -132,12 +137,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintText: 'Enter your email address',
-
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 18, horizontal: 11),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD),
-                                          width: 1.5)),
+                                          color: Color(0xffD0D5DD), width: 1)),
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: const BorderSide(
@@ -182,15 +187,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               //   ),
                               // ),
 
-                              // const SizedBox(height: 20),
+                              const SizedBox(height: 20),
 
                               //password
                               const Padding(
                                 padding: EdgeInsets.only(
-                                    top: 8.0, bottom: 8, left: 3),
+                                    top: 8.0, bottom: 4, left: 3),
                                 child: MoticarText(
                                     text: "Password",
-                                    fontSize: 13,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                     fontColor: AppColors.textColor),
                               ),
@@ -219,8 +224,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
-                                  hintText: 'Enter your password',
-
+                                  hintText: 'Enter password',
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 18, horizontal: 11),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: const BorderSide(
@@ -323,7 +329,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           text: "Forgotten Details?",
                           fontSize: 16,
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w300,
+                          fontWeight: FontWeight.w400,
                         ),
 
                         //
@@ -335,10 +341,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             fontWeight: FontWeight.w600,
                           ),
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return const LoginPage();
-                            }));
+                            showMoticarBottom(
+                                context: context,
+                                child: FractionallySizedBox(
+                                  heightFactor: 0.36,
+                                  child: ForgotPassword(),
+                                ),
+                                radius: 0,
+                                isDismissible: true,
+                                background: true);
                           },
                         ),
                       ],
@@ -350,8 +361,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     //Login
                     Consumer(builder: (context, ref, child) {
-                      final model =
-                          ref.read(loginViewModelProvider.notifier);
+                      final model = ref.read(loginViewModelProvider.notifier);
                       return MoticarLoginButton(
                         myColor: AppColors.indieC,
                         borderColor: AppColors.indieC,
@@ -398,8 +408,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             );
 
                             await Future.delayed(const Duration(seconds: 3));
-
-                            
 
                             // All fields are filled, attempt sign-up
                             final signUpResult = await model.login(
@@ -554,6 +562,119 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             //forgot details
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
+
+  @override
+  State<ForgotPassword> createState() => _ForgotPasswordState();
+}
+
+class _ForgotPasswordState extends State<ForgotPassword> {
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final emailController = TextEditingController();
+  String email = '';
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(50.0),
+            topRight: Radius.circular(50.0),
+          )),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Forgot Password',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: AppColors.appThemeColor),
+          ),
+          Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 8.0, bottom: 4, left: 3),
+                  child: MoticarText(
+                      text: "Email",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      fontColor: AppColors.textColor),
+                ),
+                TextFormField(
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  onTapOutside: (event) {
+                    FocusScope.of(context).unfocus(); // Close the keyboard
+                  },
+                  textInputAction: TextInputAction.next,
+                  style: const TextStyle(
+                      fontFamily: "NeulisAlt",
+                      color: AppColors.textColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) => EmailValidator.validateEmail(value!),
+                  onSaved: (value) {
+                    email = value!;
+                  },
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    hintText: 'Enter your email address',
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 18, horizontal: 11),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                            color: Color(0xffD0D5DD), width: 1)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            const BorderSide(color: AppColors.appThemeColor)),
+                    filled: true,
+                    fillColor: Colors.white,
+                    // hintText: 'Enter your password',
+                    hintStyle: const TextStyle(
+                        fontFamily: "NeulisAlt",
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xffC1C3C3),
+                        letterSpacing: 1.2,
+                        fontSize: 14),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
+          ),
+          MoticarLoginButton(
+            myColor: AppColors.appThemeColor,
+            borderColor: AppColors.white,
+            onTap: () {
+              Navigator.pop(context);
+              // context.router.push(const LoginRouteCopy());
+              EasyLoading.show();
+            },
+            child: const MoticarText(
+              fontColor: Colors.white,
+              text: 'Send Code',
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -124,7 +124,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       ),
                       //email
                       SizedBox(
-                        height: 55,
+                        // height: 55,
                         child: TextFormField(
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
@@ -160,20 +160,23 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           //   });
                           //   return null;
                           // },
-                      
+
                           onSaved: (value) {
                             email = value!;
                           },
                           decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 10),
                             border: InputBorder.none,
                             errorBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(
-                                  color: AppColors.red, width: 1.5),
+                                  color: AppColors.red, width: 1),
                             ),
                             hintText: 'Enter your email address',
-                            errorText: _emailError, // Show the error message here
-                      
+                            errorText:
+                                _emailError, // Show the error message here
+
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(
@@ -256,7 +259,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             fontColor: AppColors.appThemeColor),
                       ),
                       SizedBox(
-                        height: 55,
+                        // height: 55,
                         child: IntlPhoneField(
                           key: const Key('phoneField'),
                           controller: phoneController,
@@ -273,7 +276,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                             border: InputBorder.none,
                             errorBorder: InputBorder.none,
                             hintText: 'Enter your phone number',
-                      
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 10),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(

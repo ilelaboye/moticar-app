@@ -23,7 +23,7 @@ class PageIndicator extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(totalPages, (index) {
               return Container(
-                width: 75.0,
+                width: (MediaQuery.of(context).size.width / totalPages) - 15,
                 height: 8.0,
                 margin: const EdgeInsets.only(right: 6.0),
                 decoration: BoxDecoration(

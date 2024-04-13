@@ -64,7 +64,7 @@ class _MonthSelectorState extends State<MonthSelector> {
                 alignment: AlignmentDirectional.center,
                 icon: const Icon(Icons.keyboard_arrow_down_rounded),
                 decoration: const InputDecoration(
-                  hintText: 'Select Month',
+                  hintText: 'Select Months',
                   hintStyle: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
