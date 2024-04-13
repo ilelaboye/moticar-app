@@ -253,8 +253,6 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
           yValueMapper: (GetExpenses myTechies, _) => myTechies.amount!.toInt(),
           // name: 'Gold',
           innerRadius: '75%',
-          // explode: true,
-          // explodeIndex: 1,
         )
       ],
     );

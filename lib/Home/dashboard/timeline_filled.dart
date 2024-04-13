@@ -739,7 +739,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                             breakdown.category.toString(),
                                         category: breakdown.category.toString(),
                                         amount:
-                                            nairaFormat.format(breakdown.total),
+                                            nairaFormat.format(breakdown.amount),
                                         paymode: breakdown.methodOfPayment
                                             .toString(),
                                         title: breakdown.title.toString(),
@@ -803,7 +803,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                 //amount and menu button
                                 Row(
                                   children: [
-                                    Text(nairaFormat.format(breakdown.total),
+                                    Text(nairaFormat.format(breakdown.amount),
                                         style: const TextStyle(
                                             fontFamily: "Neulis",
                                             color: Color(0xff006C70),
