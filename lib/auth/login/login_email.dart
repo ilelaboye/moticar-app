@@ -137,7 +137,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintText: 'Enter your email address',
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 18, horizontal: 11),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -225,7 +225,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintText: 'Enter password',
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 18, horizontal: 11),
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
@@ -343,7 +343,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           onPressed: () {
                             showMoticarBottom(
                                 context: context,
-                                child: FractionallySizedBox(
+                                child: const FractionallySizedBox(
                                   heightFactor: 0.36,
                                   child: ForgotPassword(),
                                 ),
@@ -581,8 +581,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(50.0),
@@ -591,7 +591,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'Forgot Password',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -633,7 +633,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     errorBorder: InputBorder.none,
                     hintText: 'Enter your email address',
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 18, horizontal: 11),
+                        const EdgeInsets.symmetric(vertical: 18, horizontal: 11),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(
@@ -653,7 +653,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         fontSize: 14),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 )
               ],
