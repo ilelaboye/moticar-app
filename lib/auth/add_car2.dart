@@ -207,56 +207,59 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              TextFormField(
-                                controller: carController,
-                                keyboardType: TextInputType.emailAddress,
-                                onTapOutside: (event) {
-                                  FocusScope.of(context)
-                                      .unfocus(); // Close the keyboard
-                                },
-                                textInputAction: TextInputAction.next,
-                                style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 1.2,
-                                    fontSize: 16),
-                                validator: (value) =>
-                                    FieldValidaor.validateEmptyfield(value!),
-                                onSaved: (value) {
-                                  // email = value!;
-                                },
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                        color: AppColors.red, width: 1.5),
-                                  ),
-                                  hintText: 'Search model name',
-
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xffD0D5DD), width: 1.5),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
+                              SizedBox(
+                                height: 50,
+                                child: TextFormField(
+                                  controller: carController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  onTapOutside: (event) {
+                                    FocusScope.of(context)
+                                        .unfocus(); // Close the keyboard
+                                  },
+                                  textInputAction: TextInputAction.next,
+                                  style: const TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      color: AppColors.textColor,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 1.2,
+                                      fontSize: 16),
+                                  validator: (value) =>
+                                      FieldValidaor.validateEmptyfield(value!),
+                                  onSaved: (value) {
+                                    // email = value!;
+                                  },
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    errorBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: const BorderSide(
-                                          color: AppColors.appThemeColor)),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  // hintText: 'Enter your password',
-                                  hintStyle: const TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w300,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
+                                          color: AppColors.red, width: 1.5),
+                                    ),
+                                    hintText: 'Search model name',
 
-                                  suffixIcon: const Icon(
-                                    Icons.search_sharp,
-                                    color: Color(0xffC1C3C3),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xffD0D5DD), width: 1.5),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: AppColors.appThemeColor)),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    // hintText: 'Enter your password',
+                                    hintStyle: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w300,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+
+                                    suffixIcon: const Icon(
+                                      Icons.search_sharp,
+                                      color: Color(0xffC1C3C3),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1380,8 +1383,8 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return AddCarPage3(
-                          carID: widget.carID,
-                          modelID: selectedModelID,
+                            carID: widget.carID,
+                            modelID: selectedModelID,
                             //  selectedEngine = ;
                             //                 selectedGearBox = myBox;
                             mygear: selectedGearBox,

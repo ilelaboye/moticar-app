@@ -318,15 +318,16 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                             Row(
                               children: [
                                 Container(
-                                  alignment: Alignment.center,
-                                  width: 140,
-                                  height: 58,
+                                  // alignment: Alignment.center,
+                                  // width: 140,
+                                  // height: 58,
                                   child: SizedBox(
-                                    height: 58,
-                                    width: 135,
+                                    height: 38,
+                                    width: 110,
                                     child: Container(
                                       alignment: Alignment.center,
-                                      // padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 7.0),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(8),
                                         color: const Color(0xffCDD2D2),
@@ -337,7 +338,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                           icon: const Icon(Icons
                                               .keyboard_arrow_down_rounded),
                                           decoration: const InputDecoration(
-                                            hintText: 'Select Frequency',
+                                            hintText: 'Today',
                                             // fillColor: const Color(0xffCDD2D2),
                                             hintStyle: TextStyle(
                                                 fontSize: 13,
@@ -996,7 +997,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                             onTap: () async {
                                               if (_formKey.currentState!
                                                   .validate()) {
-
                                                 // final String myEmail =
                                                 //     emailController.text;
                                                 // final String myPass =

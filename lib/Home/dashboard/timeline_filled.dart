@@ -418,7 +418,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                             myColor: const Color(0xff29D7DE),
                             child: const Center(
                               child: Text(
-                                'Add new Car',
+                                'Add new Cars',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'NeulisAlt',
@@ -501,59 +501,54 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                           ),
                           Row(
                             children: [
-                              Container(
-                                alignment: Alignment.center,
-                                width: 150,
-                                height: 48,
-                                child: SizedBox(
-                                  height: 46,
-                                  width: 145,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.only(
-                                        left: 2, right: 2.0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: const Color(0xffCDD2D2),
-                                    ),
-                                    child: DropdownButtonFormField<String>(
-                                        alignment: AlignmentDirectional.center,
-                                        icon: const Icon(
-                                            Icons.keyboard_arrow_down_rounded),
-                                        decoration: const InputDecoration(
-                                          hintText: 'Select Month',
-                                          // fillColor: const Color(0xffCDD2D2),
-                                          hintStyle: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColors.textGrey),
-                                          enabledBorder: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                        ),
-                                        items: myMonthz
-                                            .map<DropdownMenuItem<String>>(
-                                              (entry) =>
-                                                  DropdownMenuItem<String>(
-                                                value: entry,
-                                                child: Text(
-                                                  entry,
-                                                  style: const TextStyle(
-                                                      color: Color(0xff002D36),
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 13),
-                                                ),
-                                              ),
-                                            )
-                                            .toList(),
-                                        value: selectedMonth,
-                                        onChanged: (nvalue) {
-                                          setState(() {
-                                            selectedMonth = nvalue;
-                                            updateDaysInMonth(selectedMonth);
-                                          });
-                                        }),
+                              SizedBox(
+                                height: 40,
+                                width: 130,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: const Color(0xffCDD2D2),
                                   ),
+                                  child: DropdownButtonFormField<String>(
+                                      alignment: AlignmentDirectional.center,
+                                      isDense: true,
+                                      icon: const Icon(
+                                          Icons.keyboard_arrow_down_rounded),
+                                      decoration: const InputDecoration(
+                                        hintText: 'Select Month',
+                                        isDense: true,
+                                        // fillColor: const Color(0xffCDD2D2),
+                                        hintStyle: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.textGrey),
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                      ),
+                                      items: myMonthz
+                                          .map<DropdownMenuItem<String>>(
+                                            (entry) => DropdownMenuItem<String>(
+                                              value: entry,
+                                              child: Text(
+                                                entry,
+                                                style: const TextStyle(
+                                                    color: Color(0xff002D36),
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 13),
+                                              ),
+                                            ),
+                                          )
+                                          .toList(),
+                                      value: selectedMonth,
+                                      onChanged: (nvalue) {
+                                        setState(() {
+                                          selectedMonth = nvalue;
+                                          updateDaysInMonth(selectedMonth);
+                                        });
+                                      }),
                                 ),
                               ),
                               IconButton(
