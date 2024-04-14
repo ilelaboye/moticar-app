@@ -138,9 +138,9 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
   // /expenses
   Future<ApiResponse> getExpenses() async {
     try {
-      state = state.copyWith(
-        loading: Loader.loading,
-      );
+      // state = state.copyWith(
+      //   loading: Loader.loading,
+      // );
       final response = await _reader.read(newService).getWithToken(
             // formData: formData,
             path: 'get-expenses',

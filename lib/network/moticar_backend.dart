@@ -13,11 +13,8 @@ import '../services/hivekeys.dart';
 import '../services/localdatabase.dart';
 import 'moticar_network.dart';
 
-
 // //up endpoint
 String baseUrl = 'https://moticar.ttninternational.org/api/v1/';
-
- 
 
 class AgencyBackEnd implements AgencyNetwork {
   late final Dio _dio;
@@ -133,7 +130,7 @@ class AgencyBackEnd implements AgencyNetwork {
       final response = await _dio.post(
         path,
         data: formData,
-         options: Options(headers: {
+        options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           // 'Authorization': "Bearer $token"
@@ -152,19 +149,18 @@ class AgencyBackEnd implements AgencyNetwork {
     }
   }
 
-    
-
-     @override
+  @override
   Future<Response> newpost(
       {required FormData formData, required String path}) async {
+    String? token = HiveStorage.get(HiveKeys.token);
     try {
       final response = await _dio.post(
         path,
         data: formData,
-         options: Options(headers: {
+        options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          // 'Authorization': "Bearer $token"
+          'Authorization': "Bearer $token"
         }),
       );
       return response;
@@ -179,7 +175,6 @@ class AgencyBackEnd implements AgencyNetwork {
       }
     }
   }
-
 
   @override
   Future putMultipart({
@@ -205,7 +200,7 @@ class AgencyBackEnd implements AgencyNetwork {
   }
 
   @override
-   Future postMultipart(
+  Future postMultipart(
       {required Map<String, String> formData,
       required String path,
       required String pathName,
@@ -279,13 +274,13 @@ class AgencyBackEnd implements AgencyNetwork {
     }
   }
 
-   @override
-  Future<Response> postMyToken(
-      {Map<String, dynamic>? formData,
-      Map<String, dynamic>? queryParameters,
-      required String path,
-      required String token,
-      }) async {
+  @override
+  Future<Response> postMyToken({
+    Map<String, dynamic>? formData,
+    Map<String, dynamic>? queryParameters,
+    required String path,
+    required String token,
+  }) async {
     // String? token = HiveStorage.get(HiveKeys.token);
 
     try {

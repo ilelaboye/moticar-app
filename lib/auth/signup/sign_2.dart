@@ -169,8 +169,8 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
 
                     //
                     Positioned(
-                      bottom: 6,
-                      left: MediaQuery.of(context).size.width * 0.525,
+                      bottom: 10,
+                      left: MediaQuery.of(context).size.width * 0.520,
                       child: InkWell(
                         onTap: () {
                           showModalBottomSheet(

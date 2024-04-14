@@ -117,8 +117,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 controller: emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 onTapOutside: (event) {
-                                  FocusScope.of(context)
-                                      .unfocus(); // Close the keyboard
+                                  // FocusScope.of(context)
+                                  //     .unfocus(); // Close the keyboard
                                 },
                                 textInputAction: TextInputAction.next,
                                 style: const TextStyle(

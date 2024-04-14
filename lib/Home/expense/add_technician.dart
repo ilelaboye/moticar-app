@@ -72,7 +72,7 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
       body: SingleChildScrollView(
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 20, left: 8, right: 8.0, bottom: 30),
+              const EdgeInsets.only(top: 20, left: 15, right: 15.0, bottom: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -147,8 +147,8 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
 
                     //
                     Positioned(
-                      bottom: 6,
-                      left: MediaQuery.of(context).size.width * 0.525,
+                      bottom: 10,
+                      left: MediaQuery.of(context).size.width * 0.520,
                       child: InkWell(
                         onTap: () {
                           showModalBottomSheet(
@@ -523,50 +523,48 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 55,
-                        child: IntlPhoneField(
-                          key: const Key('phoneField'),
-                          controller: phoneController,
-                          style: const TextStyle(
-                              fontFamily: "NeulisAlt",
-                              color: AppColors.textColor,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1.2,
-                              fontSize: 16),
-                          // validator: (value) =>
-                          //     PhoneNumberValidator.validatePhoneNumber(value as String),
-                          decoration: InputDecoration(
-                            counterText: '',
-                            border: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            hintText: 'Enter your phone number',
+                      IntlPhoneField(
+                        key: const Key('phoneField'),
+                        controller: phoneController,
+                        style: const TextStyle(
+                            fontFamily: "NeulisAlt",
+                            color: AppColors.textColor,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1.2,
+                            fontSize: 16),
+                        // autovalidateMode: AutovalidateMode.disabled,
+                        // validator: (value) =>
+                        //     PhoneNumberValidator.validatePhoneNumber(value as String),
+                        decoration: InputDecoration(
+                          counterText: '',
+                          border: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          hintText: 'Enter your phone number',
 
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: Color(0xffD0D5DD), width: 1.5)),
-                            focusedBorder: OutlineInputBorder(
+                          enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(
-                                  color: AppColors.appThemeColor),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            // hintText: 'Enter your password',
-                            hintStyle: const TextStyle(
-                                fontFamily: "NeulisAlt",
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xffC1C3C3),
-                                letterSpacing: 1.2,
-                                fontSize: 14),
+                                  color: Color(0xffD0D5DD), width: 1.5)),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                                color: AppColors.appThemeColor),
                           ),
-                          initialCountryCode: 'NG',
-                          onChanged: (phone) {
-                            print(phone.completeNumber);
-                            completePhoneNumber = phone.completeNumber;
-                          },
+                          filled: true,
+                          fillColor: Colors.white,
+                          // hintText: 'Enter your password',
+                          hintStyle: const TextStyle(
+                              fontFamily: "NeulisAlt",
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xffC1C3C3),
+                              letterSpacing: 1.2,
+                              fontSize: 14),
                         ),
+                        initialCountryCode: 'NG',
+                        onChanged: (phone) {
+                          print(phone.completeNumber);
+                          completePhoneNumber = phone.completeNumber;
+                        },
                       ),
 
                       const SizedBox(
@@ -692,18 +690,13 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                   final String lastName =
                                       lastNameController.text;
                                   final String nickname = preferControl.text;
-                                  final String passW = password;
-                                  final String confam = phoneController.text;
                                   final String phonie = completePhoneNumber!
                                       .substring(1)
                                       .toString();
 
                                   if (firstName.isNotEmpty &&
                                       lastName.isNotEmpty &&
-                                      // nickname.isNotEmpty &&
-                                      passW.isNotEmpty &&
-                                      // images.value.path.isNotEmpty &&
-                                      confam.isNotEmpty) {
+                                      selectedCat!.isNotEmpty) {
                                     showDialog(
                                       context: context,
                                       barrierDismissible: true,
@@ -736,14 +729,14 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                                     ),
                                                   ),
 
-                                                  SizedBox(height: 12),
+                                                  // SizedBox(height: 12),
 
-                                                  Text(
-                                                      'You are getting there...',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          color: Colors.white))
+                                                  // Text(
+                                                  //     'You are getting there...',
+                                                  //     textAlign:
+                                                  //         TextAlign.center,
+                                                  //     style: TextStyle(
+                                                  //         color: Colors.white))
                                                 ],
                                               ),
                                             ),
@@ -766,6 +759,7 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                       'preferred_name': nickname,
                                       "phone": phonie,
                                       'email': emailController.text,
+                                      "category": selectedCat.toString(),
                                       'image': await MultipartFile.fromFile(
                                           imagePath,
                                           filename: 'image'),
