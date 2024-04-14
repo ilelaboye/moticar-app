@@ -390,7 +390,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                     MediaQuery.of(context).size.height * 0.3,
                                 child: ListView.builder(
                                   shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
+                                  // physics: const NeverScrollableScrollPhysics(),
                                   itemCount: widget.myEngine.length,
                                   itemBuilder: (context, index) {
                                     final moticar = widget.myEngine[index];
@@ -660,7 +660,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                     MediaQuery.of(context).size.height * 0.3,
                                 child: ListView.builder(
                                   shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
+                                  // physics: const NeverScrollableScrollPhysics(),
                                   itemCount: widget.mygear.length,
                                   itemBuilder: (context, index) {
                                     final moticar = widget.mygear[index];

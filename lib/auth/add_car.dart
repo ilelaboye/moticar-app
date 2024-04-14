@@ -319,8 +319,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                   //     MediaQuery.of(context).size.height * 0.3,
                                   child: ListView.builder(
                                     shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
+                                    // physics:
+                                    //     const NeverScrollableScrollPhysics(),
                                     itemCount: newCarz.length,
                                     itemBuilder: (context, index) {
                                       final moticar = newCarz[index];
