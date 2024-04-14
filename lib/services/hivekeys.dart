@@ -7,6 +7,7 @@ class HiveKeys {
   static const hasEnabledBiometricTransacitons =
       "hasEnabledBiometricTransacitons";
   static const userId = "userId";
+  static var image = "image";
   static const showWallet = "showWallet";
   static const userPassword = "userpassword";
   static const bvn = "bvn";
@@ -23,7 +24,7 @@ class HiveKeys {
 
   static var userBalances = 'balance';
   static var ledgerBalance = 'ledgerBalance';
-  static var accountNo = 'accountNumber';
+  static var referral = 'referral_code';
 
   static var acctType = 'accountType';
 

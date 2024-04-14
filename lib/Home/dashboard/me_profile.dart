@@ -10,6 +10,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../models/menu_items.dart';
 import '../../network/dio_utils.dart';
 import '../../providers/app_providers.dart';
+import '../../services/hivekeys.dart';
+import '../../services/localdatabase.dart';
 import '../../utils/enums.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
@@ -162,9 +164,16 @@ class _MePageState extends ConsumerState<MePage> {
                                           backgroundColor:
                                               const Color(0xffEAEAEA),
                                           child: CircleAvatar(
-                                            backgroundImage: NetworkImage(state
-                                                .getProfile.image
-                                                .toString()),
+                                            backgroundImage: NetworkImage(
+
+                                              "${HiveStorage.get(
+                                                    HiveKeys.image)}"
+                                              
+                                              // state
+                                              //   .getProfile.image
+                                              //   .toString(),
+                                                
+                                                ),
                                             radius: 55,
                                           ),
                                         )
@@ -261,7 +270,8 @@ class _MePageState extends ConsumerState<MePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${state.getProfile.firstName} ${state.getProfile.lastName}',
+                              // '${state.getProfile.firstName} ${state.getProfile.lastName}',
+                              '${HiveStorage.get(HiveKeys.firstname)} ${HiveStorage.get(HiveKeys.lastname)}',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: "NeulisAlt",
@@ -271,7 +281,8 @@ class _MePageState extends ConsumerState<MePage> {
                               ),
                             ),
                             Text(
-                              '${state.getProfile.preferredName}',
+                              // '${state.getProfile.preferredName}',
+                              '${HiveStorage.get(HiveKeys.midname)}',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 fontFamily: "NeulisAlt",
@@ -287,12 +298,13 @@ class _MePageState extends ConsumerState<MePage> {
                                   color: const Color(0xff29D7DE),
                                   borderRadius: BorderRadius.circular(8)),
                               child: Text(
-                                "User ID :\n${state.getProfile.uuid}",
+                                // "User ID :\n${state.getProfile.uuid}",
+                                'User ID: ${HiveStorage.get(HiveKeys.userId)}',
                                 textAlign: TextAlign.left,
                                 style: const TextStyle(
                                   fontFamily: "NeulisAlt",
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 12,
+                                  fontSize: 10,
                                   color: AppColors.appThemeColor,
                                 ),
                               ),

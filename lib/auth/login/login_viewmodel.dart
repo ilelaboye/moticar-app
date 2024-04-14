@@ -31,9 +31,15 @@ class LoginViewModel extends StateNotifier<LoginState> {
         // await HiveStorage.put(HiveKeys.userId, body['data']['_id']);
         await HiveStorage.put(HiveKeys.token, body['data']['token']);
         // await HiveStorage.put(HiveKeys.phonenumber, formData["phonenumber"]);
-        // await HiveStorage.put(HiveKeys.address, body['data']["address"]);
-        // await HiveStorage.put(HiveKeys.name, body['data']["fullname"]);
-        // await HiveStorage.put(HiveKeys.userEmail, formData["email"]);
+        await HiveStorage.put(HiveKeys.firstname, body['data']["first_name"]);
+        await HiveStorage.put(HiveKeys.lastname, body['data']["last_name"]);
+        await HiveStorage.put(HiveKeys.midname, body['data']["preferred_name"]);
+        await HiveStorage.put(HiveKeys.userId, body['data']["uuid"]);
+        await HiveStorage.put(HiveKeys.image, body['data']["image"]);
+
+        //referral
+        await HiveStorage.put(HiveKeys.referral, body['data']["referral_code"]);
+
         await HiveStorage.put(HiveKeys.userPassword, formData["password"]);
         await HiveStorage.put(HiveKeys.hasLoggedIn, true);
 

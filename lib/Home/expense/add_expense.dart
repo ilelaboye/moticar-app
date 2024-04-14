@@ -754,6 +754,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                               SizedBox(
                                 height: 50,
                                 child: GridView.builder(
+                                  // physics: NeverScrollableScrollPhysics(),
                                   gridDelegate:
                                       const SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 3,
