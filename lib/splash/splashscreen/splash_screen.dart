@@ -1,5 +1,6 @@
 // import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 
 // import '../../router/app_router.gr.dart';
 import '../../widgets/app_texts.dart';
@@ -35,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future _nextPage() async {
-    await Future.delayed(const Duration(seconds: 2), () {
+    await Future.delayed(const Duration(seconds: 3), () {
       // context.router.push(const LoginRouteCopy());
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return const OnBoardingScreenPage();
@@ -72,21 +73,29 @@ class _SplashScreenState extends State<SplashScreen>
                 builder: (context, child) {
                   return Transform.scale(
                       scale: _animation.value,
-                      child: Column(
+                      child:   const Column(
                         children: [
-                          Image.asset(
-                            'assets/images/moticar.png',
+                          // Image.asset(
+                          //   'assets/images/moticar.png',
+                          //   height: 150,
+                          //   width: 150,
+                          // ),
+
+                           SizedBox(
                             height: 150,
                             width: 150,
+                            child: RiveAnimation.asset(
+                              'assets/images/splashscreenanim.riv',
+                            ),
                           ),
 
-                             const Padding(
+                             Padding(
                             padding:
-                                EdgeInsets.only(top: 90.0, left: 50, right: 50),
+                                EdgeInsets.only(top: 50.0, left: 50, right: 50),
                             child: MoticarText(
                                 text:
                                     'Every kobo of your car \nexpenses \nis just a tap away!',
-                                fontSize: 16,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w500,
                                 fontColor: AppColors.appThemeColor),
                           ),

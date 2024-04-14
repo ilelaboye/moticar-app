@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:moticar/Home/bottom_bar.dart';
-import 'package:moticar/auth/add_car.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:moticar/widgets/loader.dart';
 import 'package:rive/rive.dart';
-import 'auth/signup/sign_2.dart';
-import 'auth/signup/sign_3.dart';
 import 'services/hivekeys.dart';
-import 'splash/splashscreen/splash_screen.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import 'splash/splashscreen/splash_screen.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -44,9 +40,9 @@ void configLoading() {
     ..indicatorWidget = Container(
       height: 130,
       width: 130,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       // color: Colors.green,
-      child: RiveAnimation.asset(
+      child: const RiveAnimation.asset(
         'assets/images/preloader.riv',
       ),
     );
@@ -73,10 +69,14 @@ class MyApp extends StatelessWidget {
           bodyLarge: TextStyle(fontFamily: 'NeulisAlt'),
         ),
       ),
-      home:
+      home: 
+      
+      // const AddExpensesPage()
 
           // BottomHomePage()
-          // SignUpPage3(token: '',)
+          // JsonPagesScreen( )
+
+          // AllCarsParts4()
 
           const SplashScreen(),
     );

@@ -62,23 +62,24 @@ class _BottomHomePageState extends State<BottomHomePage> {
         onWillPop: () async {
           return false;
         },
-        child: Stack(
-          children: <Widget>[
-            if (!isLoading[currentPageIndex])
-              Positioned.fill(
-                  child: _pages[
-                      currentPageIndex]), // Show the child widget when not loading
-            if (isLoading[currentPageIndex])
-              const Positioned.fill(
-                child: Center(
-                  child: SpinKitPouringHourGlassRefined(
-                    color: AppColors.appThemeColor,
-                    size: 30.0,
-                  ),
-                ),
-              ),
-          ],
-        ),
+        child: Stack(children: [_pages[currentPageIndex]]
+
+            // <Widget>[
+            //   if (!isLoading[currentPageIndex])
+            //     Positioned.fill(
+            //         child: _pages[
+            //             currentPageIndex]), // Show the child widget when not loading
+            //   if (isLoading[currentPageIndex])
+            //     const Positioned.fill(
+            //       child: Center(
+            //         child: SpinKitPouringHourGlassRefined(
+            //           color: AppColors.appThemeColor,
+            //           size: 30.0,
+            //         ),
+            //       ),
+            //     ),
+            // ],
+            ),
       ),
       // floatingActionButton: FloatingActionButton.small(
       //   // shape: const CircularNotchedRectangle(),

@@ -255,6 +255,8 @@ class _MePageState extends ConsumerState<MePage> {
                             ),
                           ],
                         ),
+
+                        // SizedBox(width: 30,),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -268,27 +270,15 @@ class _MePageState extends ConsumerState<MePage> {
                                 color: AppColors.appThemeColor,
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '${state.getProfile.preferredName}',
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 20,
-                                    color: AppColors.appThemeColor,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    color: Color(0xff5E7A7C),
-                                  ),
-                                )
-                              ],
+                            Text(
+                              '${state.getProfile.preferredName}',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontFamily: "NeulisAlt",
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                color: AppColors.appThemeColor,
+                              ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(8),
@@ -309,6 +299,14 @@ class _MePageState extends ConsumerState<MePage> {
                             ),
                           ],
                         ),
+
+                         IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Color(0xff5E7A7C),
+                          ),
+                        )
                       ],
                     ),
                   ),

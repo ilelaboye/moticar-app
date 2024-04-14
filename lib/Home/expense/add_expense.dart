@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +48,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     'Tomorrow',
     'Next Week',
   ];
+
+  String payType = '';
 
   List<CategoryPart> categoryItems = [
     CategoryPart(
@@ -110,9 +112,21 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
   String selectedCategory = "Car Wash"; // Initial value
 
+  final List paymentList = [
+    'Cash',
+    "Bank",
+    "Debit Card",
+  ];
+// List<bool> isSelectedList =
+//       List.generate(paymentList.length, (index) => false);
+
+  late List<bool> isSelectedList;
+
   @override
   void initState() {
     super.initState();
+    isSelectedList = List.generate(paymentList.length, (index) => false);
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // ref.read(registerViewmodelProvider.notifier).fetchAllTrans();
       // ref.read(registerViewmodelProvider.notifier).getMeProfile();
@@ -322,8 +336,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   // width: 140,
                                   // height: 58,
                                   child: SizedBox(
-                                    height: 38,
-                                    width: 110,
+                                    height: 45,
+                                    width: 130,
                                     child: Container(
                                       alignment: Alignment.center,
                                       padding: const EdgeInsets.symmetric(
@@ -737,69 +751,71 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     fontColor: AppColors.textColor),
                               ),
 
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      width: 100,
-                                      height: 50,
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xffCDD2D2),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: const MoticarText(
-                                          text: "Cash",
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          fontColor: AppColors.textColor),
-                                    ),
-                                  ),
+                              SizedBox(
+                                height: 50,
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 10.0,
+                                          mainAxisSpacing: 10.0,
+                                          childAspectRatio: 3),
+                                  itemCount: paymentList.length,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          // selectedIndex = index;
 
-                                  //bank
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      width: 100,
-                                      height: 50,
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xffCDD2D2),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: const MoticarText(
-                                          text: "Bank Transfer",
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          fontColor: AppColors.textColor),
-                                    ),
-                                  ),
+                                          payType = paymentList[index];
 
-                                  //debit Card
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      width: 100,
-                                      height: 50,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xffCDD2D2),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: const MoticarText(
-                                          text: "Debit Card",
+                                          print(payType);
+
+                                          // Toggle the selection // Deselect previously selected item
+                                          for (int i = 0;
+                                              i < isSelectedList.length;
+                                              i++) {
+                                            if (i != index) {
+                                              isSelectedList[i] = false;
+                                            }
+                                          }
+                                          // Toggle the selection state of the tapped item
+                                          isSelectedList[index] =
+                                              !isSelectedList[index];
+                                          // Print the selected payment type
+                                          if (isSelectedList[index]) {
+                                            print(paymentList[index]);
+                                          } else {
+                                            print('No payment type selected');
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        width: 109,
+                                        height: 35,
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: isSelectedList[index]
+                                              ? AppColors.appThemeColor
+                                              : const Color(0xffCDD2D2),
+                                          // color: const Color(0xffCDD2D2),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: MoticarText(
+                                          text: paymentList[index],
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
-                                          fontColor: AppColors.textColor),
-                                    ),
-                                  ),
-                                ],
+                                          fontColor: isSelectedList[index]
+                                              ? Colors.white
+                                              : AppColors.appThemeColor,
+                                          // AppColors.textColor,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
 
                               //
@@ -965,10 +981,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                           myColor: const Color(0xFFFFFFFF),
                                           borderColor: AppColors.indieC,
                                           onTap: () {
-                                            // Navigator.push(context,
-                                            //     MaterialPageRoute(builder: (context) {
-                                            //   return const SignUpPage();
-                                            // }));
+                                            Navigator.pop(context);
                                           },
                                           child: const MoticarText(
                                             fontColor: Color(0xff006C70),
@@ -997,6 +1010,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                             onTap: () async {
                                               if (_formKey.currentState!
                                                   .validate()) {
+
+                                                    //method of pay
                                                 // final String myEmail =
                                                 //     emailController.text;
                                                 // final String myPass =

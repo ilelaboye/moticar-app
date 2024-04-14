@@ -1,0 +1,708 @@
+[
+    {
+        "name": "Oils & Fluids",
+        "image" : "assets/carPartsIcons/engileOil.svg",
+        "category": ["Engine Oil",
+                    "Antifreeze",
+                    "Brake Fluid",
+                    "Gearbox Oil and Transmission Oil",
+                    "Automatic Transmission Fluid"
+        ]
+    },
+    {
+        "name": "Tyres",
+        "image" : "assets/carPartsIcons/tyres.svg",
+        "category":[
+            "Tyres"
+        ]
+    },
+    {
+        "name": "Filters",
+        "image" : "assets/carPartsIcons/filters.svg",
+        "category":[
+            "Oil Filter",
+            "Air Filter",
+            "Automatic Transmission Filter",
+            "Fuel filter",
+            "Cabin filter",
+            "Receiver drier"
+        ]
+    },
+    {
+        "name": "Wipers & Washer System",
+        "image" : "assets/carPartsIcons/wiperWasherSystem.svg",
+        "category":[
+            "Windshield washer pump",
+            "Windscreen washer reservoir",
+            "Windscreen washer jet",
+            "Wiper blades",
+            "Washer fluid jet, headlight cleaning",
+            "Wiper arm",
+            "Steering column switch",
+            "Water pump, headlight cleaning",
+            "Wiper motor"
+        ]
+    },
+    {
+        "name": "Ignition & preheating",
+        "image" : "assets/carPartsIcons/ignitionPreheatingSystem.svg",
+        "category":[
+            "Glow plugs",
+            "Control unit, glow plug system",
+            "Crankshaft sensor",
+            "Camshaft sensor",
+            "Distributor and parts",
+            "Timing case gasket"
+        ]
+
+    },
+    {
+        "name": "Damping",
+        "image" : "assets/carPartsIcons/Damping.svg",
+        "category":[
+            "Shock absorber",
+            "Strut mount and bearing",
+            "Shock absorber dust cover and bump stops",
+            "Springs",
+            "Suspension kit, coil springs",
+            "Suspension kit, coil springs / shock absorbers"
+        ]
+    },
+    {
+        "name": "Belts, Chains & Rollers",
+        "image" : "assets/carPartsIcons/BeltsChainsRollers.svg",
+        "category":[
+            "Poly v-belt",
+            "Poly v-belt kit",
+            "Tensioner pulley, v-ribbed belt",
+            "Water pump",
+            "Timing chain",
+            "Belt tensioner, v-ribbed belt",
+            "Deflection / guide pulley, v-ribbed belt",
+            "Crankshaft pulley",
+            "Timing chain kit",
+            "Drive chain"
+        ]
+
+    },
+    {
+        "name": "Heating & Ventilation",
+        "image" : "assets/carPartsIcons/preheat.svg",
+        "category":[
+            "Blower motor resistor",
+            "Heat exchanger",
+            "Control, blending flap",
+            "Sensor, exterior temperature",
+            "Cabin filter",
+            "Blower motor"
+        ]
+    },
+    {
+        "name": "Gaskets & Sealing Rings",
+        "image" : "assets/carPartsIcons/gasket.svg",
+        "category":[
+            "Rocker cover gasket",
+            "Oil drain plug gasket",
+            "Coolant circuit seals",
+            "Head gasket",
+            "Intake manifold gasket",
+            "Crankshaft seal",
+            "Shaft seal, differential",
+            "Water pump gasket",
+            "Valve stem seals",
+            "Sump gasket",
+            "Exhaust pipe gasket",
+            "Oil cooler gasket",
+            "Crankcase gasket",
+            "Turbo gasket",
+            "Gasket, coolant flange",
+            "Full gasket set, engine",
+            "Exhaust manifold gasket",
+            "Timing case gasket",
+            "Seal / gasket, oil dipstick",
+            "Seal, coolant pipe",
+            "Mounting kit, charger",
+            "Radiator gasket",
+            "Egr valve gasket"
+        ]
+    },
+    {
+        "name": "Exhaust",
+        "image" : "assets/carPartsIcons/exhaust.svg",
+        "category":[
+            "Exhaust silencer",
+            "Mounting kit, exhaust system",
+            "Exhaust pipe gasket",
+            "Turbo",
+            "Turbo gasket",
+            "Exhaust clamp",
+            "Exhaust pipes",
+            "Clamp, exhaust system",
+            "Intercooler",
+            "EGR valve",
+            "Turbocharger hose",
+            "Exhaust pressure sensor",
+            "Egr valve gasket",
+            "Sensor, exhaust gas temperature",
+            "Pressure converter",
+            "Exhaust manifold gasket",
+            "Oil pipe, charger",
+            "Lambda sensor"            
+        ]
+    },
+    {
+        "name": "Interior",
+        "image" : "assets/carPartsIcons/interior.svg",
+        "category":[
+            "Steering column switch",
+            "Parking sensors",
+            "Lighting controls",
+            "Brake light switch",
+            "Boot",
+            "Reverse light switch",
+            "Door lock",
+            "Tailored car mats",
+            "Door handles",
+            "Blower motor resistor",
+            "Interior lights",
+            "Door light",
+            "Central locking system",
+            "Cargo area lights",
+            "Sensor, exterior temperature",
+            "Boot struts",
+            "Window regulator",
+            "Window switch",
+            "Multifunctional relay",
+            "Accelerator pedal position sensor"
+        ]
+    },
+    {
+        "name": "Fuel Supply System",
+        "image" : "assets/carPartsIcons/fuelSupplySystem.svg",
+        "category":[
+            "Lambda sensor",
+            "Fuel pump",
+            "Fuel tank and fuel tank cap",
+            "Fuel lines",
+            "Injectors",
+            "Mass air flow sensor",
+            "Hose, fuel overflow",
+            "Fuel pressure regulator",
+            "High pressure fuel pump",
+            "Fuel filter",
+            "Accelerator pedal position sensor",
+            "Fuel rail",
+            "Heat shield, injection system",
+            "Fuel cap",
+            "In-tank fuel pump"
+        ]
+    },
+    {
+        "name": "Steering",
+        "image" : "assets/carPartsIcons/steering.svg",
+        "category":[
+            "Steering rack",
+            "Tie rod",
+            "Inner tie rod",
+            "Ball joint",
+            "Steering rack boot",
+            "Track rod end"
+        ]
+    },
+    {
+        "name": "Clutch",
+        "image" : "assets/carPartsIcons/clutch.svg",
+        "category":[
+            "Clutch master cylinder",
+            "Clutch kit",
+            "Central slave cylinder",
+            "Clutch release bearing",
+            "Flywheel",
+            "Clutch & brake cleaner"
+        ]
+    },
+    {
+        "name": "Drive Shaft & CV Joint",
+        "image" : "assets/carPartsIcons/driveShaftCVJoint.svg",
+        "category":[
+            "Cv boot",
+            "Cv joint",
+            "Drive shaft"
+        ]
+    },
+    {
+        "name": "Towbar / Parts",
+        "image" : "assets/carPartsIcons/towbarParts.svg",
+        "category":[
+            "Towbar electric kit",
+            "Towbar"
+        ]
+    },
+    {
+        "name":"Transmission",
+        "image" : "assets/carPartsIcons/transmission.svg",
+        "category":[
+            "Gearbox oil and transmission oil",
+            "Automatic transmission filter",
+            "Repair kit, gear lever",
+            "Automatic transmission fluid",
+            "Reverse light switch",
+            "Flywheel",
+            "Gearbox mount",
+            "Cable, manual transmission"
+        ]
+    },
+    {
+        "name": "Air Conditioning",
+        "image" : "assets/carPartsIcons/Air Conditioning.svg",
+        "category": [
+            "Pressure switch",
+            "Sensor, exterior temperature",
+            "Control, blending flap",
+            "Blower motor",
+            "Ac compressor",
+            "Condenser",
+            "Heat exchanger",
+            "Blower motor resistor",
+            "Cabin filter",
+            "Temperature switch, radiator fan",
+            "Evaporator",
+            "Expansion valve",
+            "Receiver drier"
+        ]
+    },
+    {
+        "name": "Bearings",
+        "image" : "assets/carPartsIcons/bearings.svg",
+        "category":[
+            "Wheel bearing",
+            "Clutch release bearing",
+            "Crankshaft bearing",
+            "Central slave cylinder",
+            "Main bearings, crankshaft"
+        ]
+    },
+    {
+        "name": "Propshafts & Differentials",
+        "image" : "assets/carPartsIcons/propsShafts.svg",
+        "category":[
+            "Shaft seal, differential",
+            "Gearbox oil and transmission oil",
+            "Automatic transmission fluid"
+        ]
+    },
+    {
+        "name": "Repair Kits",
+        "image" : "assets/carPartsIcons/repairKit.svg",
+        "category":[
+            "Brake caliper repair kit",
+            "Suspension kit",
+            "Guide sleeve kit, brake caliper",
+            "Anti-roll bar stabiliser kit",
+            "Repair kit, gear lever",
+            "Repair kit, parking brake shaft"
+        ]
+    },
+    {
+        "name": "Pipes & Hoses",
+        "image" : "assets/carPartsIcons/pipesHoses.svg",
+        "category":[
+            "Turbocharger hose",
+            "Brake hose",
+            "Radiator hose",
+            "Fuel lines",
+            "Oil pipe, charger",
+            "Coolant flange",
+            "Hose, fuel overflow"
+        ]
+    },
+    {
+        "name": "Lighting",
+        "image" : "assets/carPartsIcons/lighting.svg",
+        "category":[
+            "Number plate light",
+            "Fog lights",
+            "Interior lights",
+            "Door light",
+            "Cargo area lights",
+            "Headlight bulb",
+            "Fog light bulb",
+            "Park / position light",
+            "Indicator bulb",
+            "Spotlight bulb",
+            "Combination rearlight bulb",
+            "Stop light bulb",
+            "Headlights",
+            "Reverse light bulb",
+            "Lighting controls",
+            "Xenon light"
+        ]
+    },
+    {
+        "name": "Tuning",
+        "image" : "assets/carPartsIcons/tuning.svg",
+        "category":[
+            "Performance clutch",
+            "Sport suspension",
+            "Racing brake pads",
+            "Performance brake discs",
+            "Wheel spacers"
+        ]
+    },
+    {
+        "name": "Fasteners",
+        "image" : "assets/carPartsIcons/fastners.svg",
+        "category":[
+            "Universal hoses/pipes",
+            "Clamps",
+            "Universal gaskets & O-rings",
+            "Rivets",
+            "Nuts",
+            "Screws"
+        ]
+    },
+    {
+        "name": "Brakes",
+        "image" : "assets/carPartsIcons/brakes.svg",
+        "category":[
+            "Abs sensor",
+            "Brake calipers",
+            "Brake hose",
+            "Brake caliper repair kit",
+            "Threadlockers",
+            "Handbrake",
+            "Brake cable",
+            "Brake fluid",
+            "Guide sleeve kit, brake caliper",
+            "Lubricants",
+            "Master cylinder",
+            "Brake pads",
+            "Brake discs",
+            "Handbrake shoes",
+            "Caliper bracket",
+            "Assembly paste",
+            "Brake servo",
+            "Brake kit",
+            "Sensor, longitudinal- / lateral acceleration",
+            "Repair kit, parking brake shaft",
+            "Piston, brake caliper",
+            "Technical sprays",
+            "Brake pad fitting kit",
+            "Brake light switch",
+            "Bolt, Brake Disc",
+            "Brake Disc Back Plate",
+            "Bake Caliper Paint"
+        ]
+    },
+    {
+        "name": "Engine",
+        "image" : "assets/carPartsIcons/engine.svg",
+        "category":[
+            "Engine mount",
+            "Water pump",
+            "Crankshaft seal",
+            "Thermostat",
+            "Rocker cover gasket",
+            "Piston rings",
+            "Head gasket",
+            "Crankshaft bearing",
+            "Drain plug",
+            "Mounting kit, charger",
+            "Radiator",
+            "Crankcase gasket",
+            "Head bolts",
+            "Engine oil",
+            "Mass air flow sensor",
+            "Oil drain plug gasket",
+            "Coolant temperature sensor",
+            "Turbo",
+            "Main bearings, crankshaft",
+            "Cylinder head gasket set",
+            "Full gasket set, engine",
+            "Oil dipstick",
+            "Timing chain kit",
+            "Turbo gasket",
+            "Tappet",
+            "Timing chain",
+            "Expansion tank cap",
+            "Valve stem seals",
+            "Sump gasket",
+            "Turbocharger hose",
+            "Antifreeze",
+            "Flywheel",
+            "Exhaust valve",
+            "Poly v-belt",
+            "Pressure converter",
+            "Coolant circuit seals",
+            "Tensioner pulley, v-ribbed belt",
+            "Coolant flange",
+            "Injectors",
+            "Manifold absolute pressure (MAP) sensor",
+            "Camshaft sensor",
+            "Oil cooler",
+            "High pressure fuel pump",
+            "Poly v-belt kit",
+            "Crankshaft sensor",
+            "Inlet valves",
+            "Fuel pressure regulator",
+            "Intercooler",
+            "Rocker arm",
+            "Deflection / guide pulley, v-ribbed belt",
+            "Sensor, engine oil level",
+            "Glow plugs",
+            "Timing case gasket",
+            "Temperature switch, radiator fan",
+           "Belt tensioner, v-ribbed belt",
+            "Connecting rod",
+            "Drive chain",
+            "Fuel rail",
+            "Oil filter",
+            "Cooling fan",
+            "Valve guide / stem seal / parts",
+            "Oil cooler gasket",
+            "Crankshaft pulley",
+            "Intake manifold gasket",
+            "Fuel lines",
+            "Air filter",
+            "Cylinder head",
+            "Oil pipe, charger",
+            "Radiator cap",
+            "Water pump gasket",
+            "Distributor and parts",
+            "Exhaust manifold gasket",
+            "Fuel filter",
+            "Engine electrics",
+            "Lambda sensor",
+            "Control unit, glow plug system",
+            "Rocker cover",
+            "EGR valve",
+            "Sensor, coolant level",
+            "Accelerator pedal position sensor",
+            "Egr valve gasket",
+            "Engine tools",
+            "Rocker cover gasket kit"
+        ]
+    },
+    {
+        "name": "Suspension",
+        "image" : "assets/carPartsIcons/suspension.svg",
+        "category":[
+            "Sensor/Longitudinal / Lateral Acceleration",
+            "Wheel Spacers",
+            "Strut mount and bearing",
+            "Shock absorber dust cover and bump stops",
+            "Suspension arm",
+            "Arm bushes",
+            "Anti roll bar links",
+            "Wheel hub",
+            "Steering knuckle",
+            "Suspension kit",
+            "Stabilizer bushes",
+            "Track rod end",
+            "Inner tie rod",
+            "Wheel bolt and wheel nuts",
+            "Wheel bearing",
+            "Tyre pressure sensor (TPMS)",
+            "Steering knuckle bushing",
+            "Anti-roll bar stabiliser kit",
+            "Abs sensor",
+            "Steering rack boot",
+            "Engine mount",
+            "Ball joint",
+            "Axle bushes",
+            "Kingpin",
+            "Wheel nuts",
+            "Gearbox mount"
+        ]
+    },
+    {
+        "name": "Electrics",
+        "image" : "assets/carPartsIcons/electrics.svg",
+        "category":[
+            "Headlights",
+            "Number plate light",
+            "Wiring harness",
+            "Fog lights",
+            "Headlight motor",
+            "Brake light switch",
+            "Reverse light switch",
+            "Lighting controls",
+            "Mass air flow sensor",
+            "Lambda sensor",
+            "Window regulator",
+            "Wiper motor",
+            "Pressure converter",
+            "Windshield washer pump",
+            "Interior lights",
+            "Manifold absolute pressure (MAP) sensor",
+            "Exhaust pressure sensor",
+            "Window switch",
+            "Alternator",
+            "Cargo area lights",
+            "Parking sensors",
+            "Starter",
+            "Headlight parts",
+            "Blower motor resistor",
+            "Battery",
+            "Xenon light",
+            "Tyre pressure sensor (TPMS)",
+            "Sensor, exhaust gas temperature",
+            "Headlight bulb",
+            "Central locking system",
+            "Fuse",
+            "Fuel pressure regulator",
+            "Pressure switch",
+            "Spotlight bulb",
+            "Park / position light",
+            "Steering column switch",
+            "Crankshaft sensor",
+            "Fog light bulb",
+            "Camshaft sensor",
+            "Indicator bulb",
+            "Sensor, exterior temperature",
+            "Multifunctional relay",
+            "Control unit, glow plug system",
+            "Coolant temperature sensor",
+            "Combination rearlight bulb",
+            "Accelerator pedal position sensor",
+            "Abs sensor",
+            "Temperature switch, radiator fan",
+            "Reverse Light Bulb",
+            "Sensor Coolant Level",
+            "Fuse box / Fuse Holder",
+            "Stop Light Bulb",
+            "Sensor / Engine Oil Level",
+            "Towbar Electric Kit",
+            "Number plate lightbulb"            
+        ]
+    },
+    {
+        "name": "Engine Cooling System",
+        "image" : "assets/carPartsIcons/EngineCoolingSystem.svg",
+        "category":[
+            "Seal Coolant Pipe",
+            "Radiator",
+            "Expansion tank cap",
+            "Radiator hose",
+            "Radiator cap",
+            "Radiator mounting parts",
+            "Cooling fan",
+            "Temperature switch, radiator fan",
+            "Radiator gasket",
+            "Water pump",
+            "Coolant temperature sensor",
+            "Thermostat",
+            "Oil cooler",
+            "Sensor, coolant level",
+            "Radiator flush & cleaners",
+            "Oil cooler gasket",
+            "Coolant flange",
+            "Poly v-belt kit",
+            "Gasket, coolant flange",
+            "Radiator sealants",
+            "Water pump gasket",
+            "Antifreeze",
+            "Flange sealants",
+            "Intercooler",
+            "Coolant circuit seals",
+            "All Purpose Sealants"            
+        ]
+    },
+    {
+        "name": "Body",
+        "image" : "assets/carPartsIcons/body.svg",
+        "category":[
+            "Headlights",
+            "Fog lights",
+            "Number plate light",
+            "Headlight parts",
+            "Door lock",
+            "Door handles",
+            "Bumper",
+            "Moldings",
+            "Spotlight bulb",
+            "Power drill / -accessories",
+            "Fog light bulb",
+            "Park / position light",
+            "Indicator bulb",
+            "Central locking system",
+            "Headlight bulb",
+            "Side window",
+            "Parking sensors",
+            "Combination rearlight bulb",
+            "Number plate light bulb",
+            "Wing mirror",
+            "Stop light bulb",
+            "Boot struts",
+            "Fuel tank and fuel tank cap",
+            "Xenon light",
+            "Hoods & Parts",
+            "Bonnet Struts",
+            "Cover, Outside Mirror",
+            "Fender Flares",
+            "Tailgate Lock",
+            "Revsere Light Bulb"
+            
+        ]
+    },
+    {
+        "name": "Sensors, Relays & Control Units",
+        "image" : "assets/carPartsIcons/sensors.svg",
+        "category":[
+            "Mass air flow sensor",
+            "Abs sensor",
+            "Manifold absolute pressure (MAP) sensor",
+            "Pressure converter",
+            "Blower motor resistor",
+            "Brake light switch",
+            "Headlight motor",
+            "Pressure switch",
+            "Sensor, pedal travel",
+            "Fuel pressure regulator",
+            "Window regulator",
+            "Crankshaft sensor",
+            "Sensor, longitudinal- / lateral acceleration",
+            "Reverse light switch",
+            "Temperature sensor",
+            "Coolant temperature sensor",
+            "Parking sensors",
+            "Camshaft sensor",
+            "Lambda sensor",
+            "Control unit, glow plug system",
+            "Temperature switch, radiator fan",
+            "Tyre pressure sensor (TPMS)",
+            "Accelerator pedal position sensor",
+            "Exhaust pressure sensor",
+            "Window Switch",
+            "Sensor, Engine oil level",
+            "Sensor, coolant level",
+            "Multifunctional relay",
+            "Sensor Exterior Temperature",
+            "Sensor, Exhaust gas temperature"
+            
+        ]
+    },
+    {
+        "name": "Autodetailing & Car Care",
+        "image" : "assets/carPartsIcons/autodetailingCarCare.svg",
+        "category":[
+            "Autodetailing & Car Care"
+            ]
+    },
+    {
+        "name": "Tools & Equipments",
+        "image" : "assets/carPartsIcons/toolsEquipments.svg",
+        "category":[
+            "Tools & Equipments"
+        ]
+    },
+    {
+        "name": "Car Accessories",
+        "image" : "assets/carPartsIcons/carAccessories.svg",
+        "category":[
+            "Car Accessories"
+            ]
+    }
+    
+
+]

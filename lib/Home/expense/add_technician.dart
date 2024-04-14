@@ -580,7 +580,7 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                             padding:
                                 EdgeInsets.only(top: 8.0, bottom: 8, left: 3),
                             child: MoticarText(
-                                text: "Currency ",
+                                text: "Category ",
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                                 fontColor: AppColors.white),

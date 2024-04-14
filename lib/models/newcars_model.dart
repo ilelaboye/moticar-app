@@ -37,7 +37,7 @@ class NewCarzModel {
         "description": description,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
-        "categories": categories.map((x) => x?.toJson()).toList(),
+        "categories": categories.map((x) => x.toJson()).toList(),
     };
 
 }
@@ -76,7 +76,7 @@ class Category {
         "name": name,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
-        "models": models.map((x) => x?.toJson()).toList(),
+        "models": models.map((x) => x.toJson()).toList(),
     };
 
 }
@@ -122,8 +122,8 @@ class Model {
         "others": others,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
-        "engines": engines.map((x) => x?.toJson()).toList(),
-        "gearboxies": gearboxies.map((x) => x?.toJson()).toList(),
+        "engines": engines.map((x) => x.toJson()).toList(),
+        "gearboxies": gearboxies.map((x) => x.toJson()).toList(),
     };
 
 }

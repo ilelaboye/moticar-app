@@ -445,6 +445,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                     subtitle: signUpResult.errorMessage,
                                     onTap: () {
                                       Navigator.pop(context);
+                                      Navigator.pop(context);
                                     },
                                     buttonColor: AppColors.red,
                                     textColor: AppColors.white,

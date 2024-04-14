@@ -238,9 +238,9 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
   //getCars
   Future<ApiResponse> getMyCars() async {
     try {
-      state = state.copyWith(
-        loading: Loader.loading,
-      );
+      // state = state.copyWith(
+      //   loading: Loader.loading,
+      // );
       final response = await _reader.read(newService).getWithToken(
             // formData: formData,
             path: 'get-my-cars',
