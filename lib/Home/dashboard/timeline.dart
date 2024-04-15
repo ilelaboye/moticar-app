@@ -211,7 +211,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                               BorderRadius.circular(40),
                                         ),
                                         child: Text(
-                                          "exp. $remainingDays dayss",
+                                          "exp. $remainingDays days",
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                             fontFamily: "NeulisAlt",
