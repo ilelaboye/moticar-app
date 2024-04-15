@@ -164,9 +164,7 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                               children: [
                                 // SvgPicture.asset(widget.carName),
 
-                                  getImageWidget(widget.carName.toString()),
-
-
+                                getImageWidget(widget.carName.toString()),
 
                                 const SizedBox(height: 8),
                                 Text(
@@ -575,7 +573,7 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                                 //set car name and model variable here
                                                 selectedCarName =
                                                     widget.carName;
-                                                selectedModeltype = modelz;
+                                                // selectedModeltype = modelz;
                                               });
                                             },
                                             child: isVisible
@@ -650,7 +648,7 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                             selectedEngine = myBox;
                                             selectedGearBox = mygear;
                                             selectedCarName = widget.carName;
-                                            // selectedModel =  ;
+                                            selectedModeltype = modelz;
                                           });
 
                                           //
@@ -711,8 +709,12 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                                           value.toString();
                                                       selectedEngine = myBox;
                                                       selectedGearBox = mygear;
-                                                      selectedCarName =
-                                                          widget.carName.toString();
+                                                      selectedCarName = widget
+                                                          .carName
+                                                          .toString();
+
+                                                      selectedModeltype =
+                                                          modelz;
 
                                                       // modelz
                                                       // moticatz = categoriez;
