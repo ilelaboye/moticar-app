@@ -202,7 +202,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                   color: AppColors.red, width: 1.5),
                             ),
                             hintText: 'Street address line 1',
-                      
+
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(
@@ -296,17 +296,24 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                   //Country
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        bottom: 8, left: 3, right: 3),
+                                      bottom: 8,
+                                    ),
                                     child: SizedBox(
-                                      height: 57,
+                                      height: 50,
                                       child: DropdownButtonFormField<String>(
+                                          isDense: false,
+                                          isExpanded: true,
                                           decoration: const InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 0,
+                                                    horizontal: 10),
                                             hintText: 'Select Country',
                                             hintStyle: TextStyle(
                                                 fontFamily: "NeulisAlt",
                                                 fontWeight: FontWeight.w400,
                                                 color: Color(0xffC1C3C3),
-                                                letterSpacing: 1.2,
+                                                letterSpacing: 1,
                                                 fontSize: 14),
                                             filled: true,
                                             fillColor: Colors.white,
@@ -321,7 +328,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: AppColors.appThemeColor,
+                                                  color:
+                                                      AppColors.appThemeColor,
                                                   width: 1.5),
                                             ),
                                           ),
@@ -329,8 +337,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                               .map<DropdownMenuItem<String>>(
                                                   (country) => DropdownMenuItem<
                                                           String>(
-                                                      value:
-                                                          country.name.toString(),
+                                                      value: country.name
+                                                          .toString(),
                                                       child: Text(
                                                         country.name.toString(),
                                                         style: const TextStyle(
@@ -378,9 +386,16 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                     padding: const EdgeInsets.only(
                                         bottom: 8, left: 3, right: 3),
                                     child: SizedBox(
-                                      height: 57,
+                                      height: 50,
                                       child: DropdownButtonFormField<String>(
+                                          isDense: false,
+                                          isExpanded: true,
+                                          alignment: Alignment.centerLeft,
                                           decoration: const InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 0,
+                                                    horizontal: 10),
                                             hintText: 'Select State',
                                             hintStyle: TextStyle(
                                                 fontFamily: "NeulisAlt",
@@ -401,7 +416,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: AppColors.appThemeColor,
+                                                  color:
+                                                      AppColors.appThemeColor,
                                                   width: 1.5),
                                             ),
                                           ),
@@ -411,13 +427,15 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                       country.name ==
                                                       selectedCountry)
                                                   .states
-                                                  .map<DropdownMenuItem<String>>(
-                                                      (state) => DropdownMenuItem<
-                                                              String>(
+                                                  .map<
+                                                      DropdownMenuItem<
+                                                          String>>((state) =>
+                                                      DropdownMenuItem<String>(
                                                           value: state.name
                                                               .toString(),
                                                           child: Text(
-                                                            state.name.toString(),
+                                                            state.name
+                                                                .toString(),
                                                             style: const TextStyle(
                                                                 fontFamily:
                                                                     "NeulisAlt",
@@ -426,7 +444,6 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
-
                                                                 fontSize: 12),
                                                           )))
                                                   .toList()
@@ -468,10 +485,14 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                             padding: const EdgeInsets.only(
                                 bottom: 8, left: 3, right: 3),
                             child: SizedBox(
-                              height: 57,
+                              height: 50,
                               child: DropdownButtonFormField<String>(
+                                  isDense: false,
+                                  isExpanded: true,
                                   decoration: const InputDecoration(
                                     hintText: 'Select LGA',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 0, horizontal: 10),
                                     hintStyle: TextStyle(
                                         fontFamily: "NeulisAlt",
                                         fontWeight: FontWeight.w400,
@@ -508,7 +529,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                           )
                                           .cities
                                           .map<DropdownMenuItem<String>>(
-                                              (city) => DropdownMenuItem<String>(
+                                              (city) => DropdownMenuItem<
+                                                      String>(
                                                   value: city.name.toString(),
                                                   child: Text(
                                                     city.name.toString(),
@@ -549,7 +571,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                           ),
                           //email
                           SizedBox(
-                            height: 57,
+                            height: 50,
                             child: TextFormField(
                               controller: landmarkControl,
                               keyboardType: TextInputType.streetAddress,
@@ -565,6 +587,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                   letterSpacing: 1.2,
                                   fontSize: 14),
                               decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 10),
                                 border: InputBorder.none,
                                 errorBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -573,7 +597,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                 ),
                                 hintText:
                                     'Enter closest landmark to your address',
-                          
+
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
@@ -619,26 +643,6 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                     height: 40,
                   ),
                   //button
-                  MoticarLoginButton(
-                    myColor: AppColors.fadeWhite,
-                    borderColor: AppColors.skipColor,
-                    onTap: () async {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) {
-                      //   return const LoginPage();
-                      // }));
-                    },
-                    child: const MoticarText(
-                      fontColor: AppColors.skipColor,
-                      text: 'Skip',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-
-                  const SizedBox(
-                    height: 10,
-                  ),
 
                   //create an account
                   MoticarLoginButton(
@@ -697,9 +701,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
 
                           Navigator.pop(context);
 
-                           await HiveStorage.put(
-                                                  HiveKeys.token,
-                                                  widget.token);
+                          await HiveStorage.put(HiveKeys.token, widget.token);
 
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
@@ -739,6 +741,25 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                       text: 'Continue',
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MoticarLoginButton(
+                    myColor: AppColors.fadeWhite,
+                    borderColor: AppColors.skipColor,
+                    onTap: () async {
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //   return const LoginPage();
+                      // }));
+                    },
+                    child: const MoticarText(
+                      fontColor: AppColors.skipColor,
+                      text: 'Skip',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],

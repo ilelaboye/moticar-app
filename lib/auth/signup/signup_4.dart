@@ -90,8 +90,6 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
     setState(() {});
   }
 
-
-
   DateTime? _selectedDate;
   String? gender;
 
@@ -138,7 +136,6 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
     }
   }
 
-
   String _formatDate(DateTime? date) {
     if (date == null) {
       return "Date of Birth"; //YYYY-MM-DD
@@ -146,7 +143,6 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
     return DateFormat('yyyy/dd/MM').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
   }
- 
 
   @override
   void dispose() {
@@ -588,26 +584,6 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                     height: 40,
                   ),
                   //button
-                  MoticarLoginButton(
-                    myColor: AppColors.fadeWhite,
-                    borderColor: AppColors.skipColor,
-                    onTap: () async {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const LoginPage();
-                      }));
-                    },
-                    child: const MoticarText(
-                      fontColor: AppColors.skipColor,
-                      text: 'Skip',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-
-                  const SizedBox(
-                    height: 10,
-                  ),
 
                   //
                   Consumer(builder: (context, ref, child) {
@@ -847,7 +823,25 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                       ),
                     );
                   }),
-
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  MoticarLoginButton(
+                    myColor: AppColors.fadeWhite,
+                    borderColor: AppColors.skipColor,
+                    onTap: () async {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const LoginPage();
+                      }));
+                    },
+                    child: const MoticarText(
+                      fontColor: AppColors.skipColor,
+                      text: 'Skip',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   //create an account
                   // MoticarLoginButton(
                   //   myColor: AppColors.indieC,

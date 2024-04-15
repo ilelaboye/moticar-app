@@ -615,7 +615,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                         decoration: InputDecoration(
                           // border: InputBorder.none,
                           // errorBorder: InputBorder.none,
-                           border: InputBorder.none,
+                          border: InputBorder.none,
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(
@@ -765,7 +765,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                 builder: (context) => MoticarDialog(
                                   buttonColor: AppColors.appThemeColor,
                                   textColor: AppColors.white,
-                                  buttonText: "Continue",
+                                  buttonText: "Continues",
                                   subtitle: signUpResult.successMessage,
                                   onTap: () {
                                     Navigator.push(context,
