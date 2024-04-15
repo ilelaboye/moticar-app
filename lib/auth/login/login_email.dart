@@ -80,6 +80,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Column(
@@ -324,240 +325,247 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
 
                 //
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const MoticarText(
-                          fontColor: AppColors.appThemeColor,
-                          text: "Forgotten Details?",
-                          fontSize: 16,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                        ),
-
-                        //
-                        TextButton(
-                          child: const MoticarText(
-                            fontColor: AppColors.appThemeColor,
-                            text: 'Recover it',
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          onPressed: () {
-                            showMoticarBottomSheet(
-                                context: context,
-                                child: ForgotPassword(),
-                                radius: 0,
-                                isDismissible: true,
-                                background: true);
-                          },
-                        ),
-                      ],
-                    ),
-
-                    const SizedBox(
-                      height: 8,
-                    ),
-
-                    //Login
-                    Consumer(builder: (context, ref, child) {
-                      final model = ref.read(loginViewModelProvider.notifier);
-                      return MoticarLoginButton(
-                        myColor: AppColors.indieC,
-                        borderColor: AppColors.indieC,
-                        onTap: () async {
-                          if (_formKey.currentState!.validate()) {
-                            final String myEmail = emailController.text;
-                            final String myPass = passwordController.text;
-
-                            // if(myEmail.isNotEmpty && myPass.isNotEmpty){
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (context) {
-                                return Center(
-                                  child: AlertDialog(
-                                    backgroundColor: AppColors.appThemeColor,
-                                    shadowColor: AppColors.appThemeColor,
-                                    content: Container(
-                                      padding: const EdgeInsets.all(20),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          SizedBox(
-                                            height: 100,
-                                            width: 100,
-                                            child: RiveAnimation.asset(
-                                              'assets/images/preloader.riv',
-                                            ),
-                                          ),
-                                          SizedBox(height: 8),
-                                          Text('Welcome to Moticar',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white))
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-
-                            await Future.delayed(const Duration(seconds: 3));
-
-                            // All fields are filled, attempt sign-up
-                            final signUpResult = await model.login(
-                              formData: {
-                                'email': emailController.text,
-                                'password': passwordController.text,
-                              },
-                            );
-
-                            if (signUpResult.successMessage.isNotEmpty) {
-                              Navigator.pop(context);
-                              // Sign-up successful, show success dialog
-                              await Future.delayed(
-                                  const Duration(milliseconds: 100), () async {
-                                await HiveStorage.put(
-                                    HiveKeys.userEmail, emailController.text);
-                                await HiveStorage.put(HiveKeys.userPassword,
-                                    passwordController.text);
-                                await HiveStorage.put(
-                                    HiveKeys.hasLoggedIn, true);
-                              });
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return const BottomHomePage();
-                              }));
-                            } else if (signUpResult.errorMessage.isNotEmpty) {
-                              // Sign-up failed, show error dialog
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return MoticarDialog(
-                                    icon: const Icon(Icons.error_outline_sharp,
-                                        color: AppColors.red, size: 50),
-                                    title: '',
-                                    subtitle: signUpResult.errorMessage,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                    },
-                                    buttonColor: AppColors.red,
-                                    textColor: AppColors.white,
-                                    buttonText: "Dismiss",
-                                  );
-                                },
-                              );
-                            }
-                          }
-
-                          // context.router.push(const LoginRouteCopy());
-                        },
-                        child: const MoticarText(
-                          fontColor: AppColors.appThemeColor,
-                          text: 'Login',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      );
-                    }),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    //create an account
-                    MoticarLoginButton(
-                      myColor: AppColors.white,
-                      borderColor: AppColors.white,
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const SignUpPage();
-                        }));
-                        // context.router.push(const LoginRouteCopy());
-                      },
-                      child: const MoticarText(
-                        fontColor: Color(0xff006C70),
-                        text: 'Create an account',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    //using
-                    const Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Row(
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 1.5,
-                              color: AppColors.divider,
+                          const MoticarText(
+                            fontColor: AppColors.appThemeColor,
+                            text: "Forgotten Details?",
+                            fontSize: 16,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400,
+                          ),
+
+                          //
+                          TextButton(
+                            child: const MoticarText(
+                              fontColor: AppColors.appThemeColor,
+                              text: 'Recover it',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "or try using any of your social account",
-                            style: TextStyle(
-                                fontFamily: "NeulisAlt",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.textGrey,
-                                letterSpacing: 1.5,
-                                fontSize: 10),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 1.5,
-                              color: AppColors.divider,
-                            ),
+                            onPressed: () {
+                              showMoticarBottomSheet(
+                                  context: context,
+                                  child: ForgotPassword(),
+                                  radius: 0,
+                                  isDismissible: true,
+                                  background: true);
+                            },
                           ),
                         ],
                       ),
-                    ),
-                    //others
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        //facebook, google and twitter
 
-                        OtherLoginButton(
-                          onTap: () {},
-                          child: SvgPicture.asset(
-                            "assets/svgs/faceB.svg",
-                            height: 31,
+                      const SizedBox(
+                        height: 5,
+                      ),
+
+                      //Login
+                      Consumer(builder: (context, ref, child) {
+                        final model = ref.read(loginViewModelProvider.notifier);
+                        return MoticarLoginButton(
+                          myColor: AppColors.indieC,
+                          borderColor: AppColors.indieC,
+                          onTap: () async {
+                            if (_formKey.currentState!.validate()) {
+                              final String myEmail = emailController.text;
+                              final String myPass = passwordController.text;
+
+                              // if(myEmail.isNotEmpty && myPass.isNotEmpty){
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (context) {
+                                  return Center(
+                                    child: AlertDialog(
+                                      backgroundColor: AppColors.appThemeColor,
+                                      shadowColor: AppColors.appThemeColor,
+                                      content: Container(
+                                        padding: const EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: const Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(
+                                              height: 100,
+                                              width: 100,
+                                              child: RiveAnimation.asset(
+                                                'assets/images/preloader.riv',
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text('Welcome to Moticar',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.white))
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+
+                              await Future.delayed(const Duration(seconds: 3));
+
+                              // All fields are filled, attempt sign-up
+                              final signUpResult = await model.login(
+                                formData: {
+                                  'email': emailController.text,
+                                  'password': passwordController.text,
+                                },
+                              );
+
+                              if (signUpResult.successMessage.isNotEmpty) {
+                                Navigator.pop(context);
+                                // Sign-up successful, show success dialog
+                                await Future.delayed(
+                                    const Duration(milliseconds: 100),
+                                    () async {
+                                  await HiveStorage.put(
+                                      HiveKeys.userEmail, emailController.text);
+                                  await HiveStorage.put(HiveKeys.userPassword,
+                                      passwordController.text);
+                                  await HiveStorage.put(
+                                      HiveKeys.hasLoggedIn, true);
+                                });
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return const BottomHomePage();
+                                }));
+                              } else if (signUpResult.errorMessage.isNotEmpty) {
+                                // Sign-up failed, show error dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return MoticarDialog(
+                                      icon: const Icon(
+                                          Icons.error_outline_sharp,
+                                          color: AppColors.red,
+                                          size: 50),
+                                      title: '',
+                                      subtitle: signUpResult.errorMessage,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      },
+                                      buttonColor: AppColors.red,
+                                      textColor: AppColors.white,
+                                      buttonText: "Dismiss",
+                                    );
+                                  },
+                                );
+                              }
+                            }
+
+                            // context.router.push(const LoginRouteCopy());
+                          },
+                          child: const MoticarText(
+                            fontColor: AppColors.appThemeColor,
+                            text: 'Login',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
                           ),
-                        ),
+                        );
+                      }),
 
-                        OtherLoginButton(
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      //create an account
+                      MoticarLoginButton(
+                        myColor: AppColors.white,
+                        borderColor: AppColors.white,
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const SignUpPage();
+                          }));
+                          // context.router.push(const LoginRouteCopy());
+                        },
+                        child: const MoticarText(
+                          fontColor: Color(0xff006C70),
+                          text: 'Create an account',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      //using
+                      const Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 1.5,
+                                color: AppColors.divider,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              "or try using any of your social account",
+                              style: TextStyle(
+                                  fontFamily: "NeulisAlt",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.textGrey,
+                                  letterSpacing: 1.5,
+                                  fontSize: 10),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              child: Divider(
+                                thickness: 1.5,
+                                color: AppColors.divider,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      //others
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          //facebook, google and twitter
+
+                          OtherLoginButton(
                             onTap: () {},
-                            child: SvgPicture.asset("assets/svgs/Google.svg")),
+                            child: SvgPicture.asset(
+                              "assets/svgs/faceB.svg",
+                              height: 31,
+                            ),
+                          ),
 
-                        OtherLoginButton(
-                          onTap: () {},
-                          child: SvgPicture.asset("assets/svgs/x.svg"),
-                        ),
-                      ],
-                    ),
-                  ],
+                          OtherLoginButton(
+                              onTap: () {},
+                              child:
+                                  SvgPicture.asset("assets/svgs/Google.svg")),
+
+                          OtherLoginButton(
+                            onTap: () {},
+                            child: SvgPicture.asset("assets/svgs/x.svg"),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
