@@ -581,6 +581,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                     ),
                                                     child: Image.network(
                                                       tech.image.toString(),
+                                                      fit: BoxFit.cover,
                                                     )),
 
                                                 const SizedBox(
@@ -670,76 +671,142 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     fontWeight: FontWeight.w700,
                                     fontColor: AppColors.textColor),
                               ),
-                              //email
-                              TextFormField(
-                                controller: amountController,
-                                keyboardType: TextInputType.phone,
-                                onTapOutside: (event) {
-                                  // FocusScope.of(context)
-                                  //     .unfocus(); // Close the keyboard
-                                },
-                                textInputAction: TextInputAction.next,
-                                style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
-                                maxLength: 7,
-                                onChanged: (value) {
-                                  final formattedAmount =
-                                      formatAmountWithThousandSeparator(value);
-                                  if (formattedAmount !=
-                                      amountController.text) {
-                                    amountController.value = TextEditingValue(
-                                      text: formattedAmount,
-                                      selection: TextSelection.collapsed(
-                                          offset: formattedAmount.length),
-                                    );
-                                  }
-                                },
-                                onEditingComplete: () {
-                                  final unformattedAmount =
-                                      removeThousandSeparator(
-                                          amountController.text);
-                                  setState(() {
-                                    amountController.text = unformattedAmount;
-                                  });
-                                },
-                                validator: (value) =>
-                                    FieldValidator.validate(value!),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  hintText: 'Enter amount',
-                                  prefixText: '\u20A6',
-                                  suffixText: '00',
-
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD),
-                                          width: 1.5)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: AppColors.appThemeColor)),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  // hintText: 'Enter your password',
-                                  hintStyle: const TextStyle(
+                              SizedBox(
+                                height: 55,
+                                child: TextFormField(
+                                  controller: amountController,
+                                  keyboardType: TextInputType.number,
+                                  onTapOutside: (event) {
+                                    FocusScope.of(context)
+                                        .unfocus(); // Close the keyboard
+                                  },
+                                  textInputAction: TextInputAction.done,
+                                  style: const TextStyle(
                                       fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
+                                      color: AppColors.textColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
+                                  maxLength: 7,
+                                  onChanged: (value) {
+                                    // final formattedAmount =
+                                    //     formatAmountWithThousandSeparator(value);
+                                    // if (formattedAmount !=
+                                    //     amountController.text) {
+                                    //   amountController.value = TextEditingValue(
+                                    //     text: formattedAmount,
+                                    //     selection: TextSelection.collapsed(
+                                    //         offset: formattedAmount.length),
+                                    //   );
+                                    // }
+                                  },
+                                  onEditingComplete: () {
+                                    // final unformattedAmount =
+                                    //     removeThousandSeparator(
+                                    //         amountController.text);
+                                    // setState(() {
+                                    //   amountController.text = unformattedAmount;
+                                    // });
+                                  },
+                                  validator: (value) =>
+                                      FieldValidator.validate(value!),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    hintText: 'Enter amount',
+                                    prefixText: '\u20A6',
+                                    suffixText: '00',
+                                    counterText: '',
+
+                                    enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D5DD),
+                                            width: 1.5)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: AppColors.appThemeColor)),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    // hintText: 'Enter your password',
+                                    hintStyle: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+                                  ),
                                 ),
                               ),
+                              //email
+                              // TextFormField(
+                              //   controller: amountController,
+                              //   keyboardType: TextInputType.phone,
+                              //   onTapOutside: (event) {
+                              //     // FocusScope.of(context)
+                              //     //     .unfocus(); // Close the keyboard
+                              //   },
+                              //   textInputAction: TextInputAction.next,
+                              //   style: const TextStyle(
+                              //       fontFamily: "NeulisAlt",
+                              //       color: AppColors.textColor,
+                              //       fontWeight: FontWeight.w600,
+                              //       fontSize: 16),
+                              //   maxLength: 7,
+                              //   onChanged: (value) {
+                              //     final formattedAmount =
+                              //         formatAmountWithThousandSeparator(value);
+                              //     if (formattedAmount !=
+                              //         amountController.text) {
+                              //       amountController.value = TextEditingValue(
+                              //         text: formattedAmount,
+                              //         selection: TextSelection.collapsed(
+                              //             offset: formattedAmount.length),
+                              //       );
+                              //     }
+                              //   },
+                              //   onEditingComplete: () {
+                              //     final unformattedAmount =
+                              //         removeThousandSeparator(
+                              //             amountController.text);
+                              //     setState(() {
+                              //       amountController.text = unformattedAmount;
+                              //     });
+                              //   },
+                              //   validator: (value) =>
+                              //       FieldValidator.validate(value!),
+                              //   decoration: InputDecoration(
+                              //     border: InputBorder.none,
+                              //     errorBorder: InputBorder.none,
+                              //     hintText: 'Enter amount',
+                              //     prefixText: '\u20A6',
+                              //     suffixText: '00',
+
+                              //     enabledBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(8),
+                              //         borderSide: const BorderSide(
+                              //             color: Color(0xffD0D5DD),
+                              //             width: 1.5)),
+                              //     focusedBorder: OutlineInputBorder(
+                              //         borderRadius: BorderRadius.circular(8),
+                              //         borderSide: const BorderSide(
+                              //             color: AppColors.appThemeColor)),
+                              //     filled: true,
+                              //     fillColor: Colors.white,
+                              //     // hintText: 'Enter your password',
+                              //     hintStyle: const TextStyle(
+                              //         fontFamily: "NeulisAlt",
+                              //         fontWeight: FontWeight.w400,
+                              //         color: Color(0xffC1C3C3),
+                              //         letterSpacing: 1.2,
+                              //         fontSize: 14),
+                              //   ),
+                              // ),
 
                               //method of payment
 
                               const Padding(
-                                padding: EdgeInsets.only(
-                                    top: 8.0, bottom: 8, left: 3),
+                                padding: EdgeInsets.only(top: 8.0, left: 3),
                                 child: MoticarText(
                                     text: "Method of Payment",
                                     fontSize: 13,
@@ -748,14 +815,14 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                               ),
 
                               SizedBox(
-                                height: 50,
+                                height: 60,
                                 child: GridView.builder(
                                   // physics: NeverScrollableScrollPhysics(),
                                   gridDelegate:
                                       const SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 3,
-                                          crossAxisSpacing: 10.0,
-                                          mainAxisSpacing: 10.0,
+                                          crossAxisSpacing: 6.0,
+                                          mainAxisSpacing: 6.0,
                                           childAspectRatio: 3),
                                   itemCount: paymentList.length,
                                   itemBuilder: (context, index) {

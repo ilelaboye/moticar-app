@@ -495,7 +495,7 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                           children: [
                             // All Cars
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.65,
+                              height: MediaQuery.of(context).size.height * 0.50,
                               child: ListView.builder(
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: filteredCategories.length,
@@ -705,222 +705,220 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
 
                             //A-J
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.6,
-                              child: Expanded(
-                                child: ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: filteredCategories2.length,
-                                  itemBuilder: (context, index) {
-                                    final category = filteredCategories2[index];
-                                    final categoryName = category.name;
-                                    final catImage = category.image;
+                              height: MediaQuery.of(context).size.height * 0.50,
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: filteredCategories2.length,
+                                itemBuilder: (context, index) {
+                                  final category = filteredCategories2[index];
+                                  final categoryName = category.name;
+                                  final catImage = category.image;
 
-                                    final List<SubCategory> subCategories =
-                                        category.subCategories;
+                                  final List<SubCategory> subCategories =
+                                      category.subCategories;
 
-                                    return Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(12.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(catImage),
-                                              Text(
-                                                categoryName,
-                                                style: const TextStyle(
-                                                  fontFamily: "NeulisAlt",
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Color(0xff202A2A),
-                                                  letterSpacing: 1.5,
-                                                  fontSize: 14,
-                                                ),
+                                  return Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(catImage),
+                                            Text(
+                                              categoryName,
+                                              style: const TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w700,
+                                                color: Color(0xff202A2A),
+                                                letterSpacing: 1.5,
+                                                fontSize: 14,
                                               ),
-                                              const SizedBox(
-                                                width: 8,
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            const Expanded(
+                                              child: Divider(
+                                                thickness: 1.5,
+                                                color: Colors
+                                                    .grey, // Change color to your preference
                                               ),
-                                              const Expanded(
-                                                child: Divider(
-                                                  thickness: 1.5,
-                                                  color: Colors
-                                                      .grey, // Change color to your preference
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    itemVisibility2[index] =
-                                                        !itemVisibility2[index];
-                                                  });
-                                                },
-                                                child: itemVisibility2[index]
-                                                    ? const Icon(
-                                                        Icons
-                                                            .keyboard_arrow_up_rounded,
-                                                        color: Colors
-                                                            .grey, // Change color to your preference
-                                                      )
-                                                    : const Icon(
-                                                        Icons
-                                                            .keyboard_arrow_down_sharp,
-                                                        color: Colors
-                                                            .grey, // Change color to your preference
-                                                      ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  itemVisibility2[index] =
+                                                      !itemVisibility2[index];
+                                                });
+                                              },
+                                              child: itemVisibility2[index]
+                                                  ? const Icon(
+                                                      Icons
+                                                          .keyboard_arrow_up_rounded,
+                                                      color: Colors
+                                                          .grey, // Change color to your preference
+                                                    )
+                                                  : const Icon(
+                                                      Icons
+                                                          .keyboard_arrow_down_sharp,
+                                                      color: Colors
+                                                          .grey, // Change color to your preference
+                                                    ),
+                                            ),
+                                          ],
                                         ),
-                                        Visibility(
-                                          visible: itemVisibility2[index],
-                                          child: Column(
-                                            children: subCategories
-                                                .map<Widget>((subCategory) =>
+                                      ),
+                                      Visibility(
+                                        visible: itemVisibility2[index],
+                                        child: Column(
+                                          children: subCategories
+                                              .map<Widget>((subCategory) =>
 
-                                                    // ListTile(
-                                                    //       title: Text(subCategory.name),
-                                                    //     ))
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        toggleSelection(
-                                                            subCategory);
+                                                  // ListTile(
+                                                  //       title: Text(subCategory.name),
+                                                  //     ))
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      toggleSelection(
+                                                          subCategory);
 
-                                                        setState(() {
-                                                          selectedCarPart =
-                                                              subCategory.name;
-                                                          selectedCategory =
-                                                              categoryName;
-                                                        });
+                                                      setState(() {
+                                                        selectedCarPart =
+                                                            subCategory.name;
+                                                        selectedCategory =
+                                                            categoryName;
+                                                      });
 
-                                                        print(subCategory.name);
-                                                      },
-                                                      child: Container(
-                                                        height: 57,
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.85,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                vertical: 3,
-                                                                horizontal: 15),
-                                                        margin: const EdgeInsets
-                                                            .only(bottom: 8),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                          border: Border.all(
-                                                            color:
-                                                                // popular == subCategory.name
-                                                                selectedSubCategory ==
-                                                                        subCategory
-                                                                    ? AppColors
-                                                                        .lightGreen
-                                                                    : const Color(
-                                                                        0xfff0f5f5),
-                                                            width: 2,
-                                                          ),
-                                                          boxShadow: const [
-                                                            BoxShadow(
-                                                              color: Colors
-                                                                  .black45,
-                                                              blurRadius: 0.1,
-                                                            ),
-                                                          ],
+                                                      print(subCategory.name);
+                                                    },
+                                                    child: Container(
+                                                      height: 57,
+                                                      width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width *
+                                                          0.85,
+                                                      padding:
+                                                          const EdgeInsets
+                                                              .symmetric(
+                                                              vertical: 3,
+                                                              horizontal: 15),
+                                                      margin: const EdgeInsets
+                                                          .only(bottom: 8),
+                                                      decoration:
+                                                          BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        border: Border.all(
+                                                          color:
+                                                              // popular == subCategory.name
+                                                              selectedSubCategory ==
+                                                                      subCategory
+                                                                  ? AppColors
+                                                                      .lightGreen
+                                                                  : const Color(
+                                                                      0xfff0f5f5),
+                                                          width: 2,
                                                         ),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              subCategory.name,
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: AppColors
-                                                                    .green,
-                                                              ),
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color: Colors
+                                                                .black45,
+                                                            blurRadius: 0.1,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            subCategory.name,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color: AppColors
+                                                                  .green,
                                                             ),
-                                                            // const SizedBox(
-                                                            //     width:
-                                                            //         10), // Adjust spacing between name and circle
-                                                            Container(
-                                                              width: 24,
-                                                              height: 24,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                color: selectedSubCategory ==
-                                                                        subCategory
-                                                                    ? AppColors
-                                                                        .lightGreen
-                                                                    : Colors
-                                                                        .transparent,
-                                                              ),
-                                                              child: Center(
-                                                                child: selectedSubCategory ==
-                                                                        subCategory
-                                                                    ? Container(
-                                                                        decoration:
-                                                                            BoxDecoration(
+                                                          ),
+                                                          // const SizedBox(
+                                                          //     width:
+                                                          //         10), // Adjust spacing between name and circle
+                                                          Container(
+                                                            width: 24,
+                                                            height: 24,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: selectedSubCategory ==
+                                                                      subCategory
+                                                                  ? AppColors
+                                                                      .lightGreen
+                                                                  : Colors
+                                                                      .transparent,
+                                                            ),
+                                                            child: Center(
+                                                              child: selectedSubCategory ==
+                                                                      subCategory
+                                                                  ? Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color:
+                                                                            AppColors.lightGreen,
+                                                                        shape:
+                                                                            BoxShape.circle,
+                                                                        border:
+                                                                            Border.all(
                                                                           color:
                                                                               AppColors.lightGreen,
-                                                                          shape:
-                                                                              BoxShape.circle,
-                                                                          border:
-                                                                              Border.all(
-                                                                            color:
-                                                                                AppColors.lightGreen,
-                                                                            width:
-                                                                                1,
-                                                                          ),
+                                                                          width:
+                                                                              1,
                                                                         ),
-                                                                        child: const Icon(
-                                                                            Icons
-                                                                                .check,
-                                                                            size:
-                                                                                15,
-                                                                            color:
-                                                                                Colors.white),
-                                                                      )
-                                                                    : Container(
-                                                                        color: Colors
-                                                                            .transparent,
-                                                                      ), // Show check mark only if selected
-                                                              ),
+                                                                      ),
+                                                                      child: const Icon(
+                                                                          Icons
+                                                                              .check,
+                                                                          size:
+                                                                              15,
+                                                                          color:
+                                                                              Colors.white),
+                                                                    )
+                                                                  : Container(
+                                                                      color: Colors
+                                                                          .transparent,
+                                                                    ), // Show check mark only if selected
                                                             ),
-                                                          ],
-                                                        ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ))
-                                                .toList(),
-                                          ),
+                                                    ),
+                                                  ))
+                                              .toList(),
                                         ),
-                                      ],
-                                    );
-                                  },
-                                ),
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
                             ),
 
                             //carparts3
                             //k-u
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.6,
+                              height: MediaQuery.of(context).size.height * 0.50,
                               child: ListView.builder(
                                 physics: const BouncingScrollPhysics(),
                                 itemCount: filteredCategories3.length,
@@ -1131,7 +1129,7 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
 
                             //v-z
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.4,
+                              height: MediaQuery.of(context).size.height * 0.3,
                               child: ListView.builder(
                                 itemCount: filteredCategories4.length,
                                 physics: const BouncingScrollPhysics(),

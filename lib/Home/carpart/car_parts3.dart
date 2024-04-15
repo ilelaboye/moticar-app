@@ -138,48 +138,6 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
 
                         // ${}
                         SizedBox(height: 20),
-
-                        // Center(
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //     children: [
-                        //       Row(
-                        //         children: [
-                        //           //image
-                        //           // SvgPicture.asset(widget.imagePath),
-                        //           const SizedBox(width: 8),
-                        //           Text(
-                        //             widget.carParts,
-                        //             // textAlign: TextAlign.center,
-                        //             style: const TextStyle(
-                        //                 fontFamily: "NeulisAlt",
-                        //                 fontSize: 14,
-                        //                 fontStyle: FontStyle.normal,
-                        //                 fontWeight: FontWeight.w400,
-                        //                 color: Color(0xff00343F)),
-                        //           ),
-                        //         ],
-                        //       ),
-
-                        //       //icon
-
-                        //       const Icon(Icons.arrow_forward_ios_rounded,
-                        //           color: Color(0xff101828)),
-
-                        //       //partCategory
-                        //       Text(
-                        //         widget.partCategory,
-                        //         // textAlign: TextAlign.center,
-                        //         style: const TextStyle(
-                        //             fontFamily: "NeulisAlt",
-                        //             fontSize: 14,
-                        //             fontStyle: FontStyle.normal,
-                        //             fontWeight: FontWeight.w400,
-                        //             color: Color(0xff006C70)),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                       ],
                     ),
 
@@ -198,7 +156,7 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
                             children: [
                               Container(
                                 height: 40,
-                                width: 135,
+                                // width: 135,
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                     color: const Color(0xff7AE6EB),
@@ -209,7 +167,7 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
 
                                     MoticarText(
                                         text: widget.partCategory,
-                                        fontSize: 12,
+                                        fontSize: 10,
                                         fontWeight: FontWeight.w500,
                                         fontColor: AppColors.textColor),
                                   ],
@@ -220,7 +178,7 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
                               ),
                               Container(
                                 height: 40,
-                                width: 135,
+                                // width: 135,
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                     color: const Color(0xffF4E67E),
@@ -228,7 +186,7 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
                                 child: Center(
                                   child: MoticarText(
                                       text: widget.carParts,
-                                      fontSize: 12,
+                                      fontSize: 10,
                                       fontWeight: FontWeight.w500,
                                       fontColor: const Color(0xff006C70)),
                                 ),

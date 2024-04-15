@@ -82,247 +82,248 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const MoticarText(
-                            text: "Enter Your Login Details",
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            fontColor: AppColors.appThemeColor),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 12, bottom: 20),
-                          child: Text("Glad to have you back",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: "NeulisAlt",
-                                  fontSize: 16,
-                                  fontStyle: FontStyle.normal,
-                                  // height: 1.2,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.appThemeColor)),
-                        ),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const MoticarText(
+                          text: "Enter Your Login Details",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          fontColor: AppColors.appThemeColor),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 12, bottom: 20),
+                        child: Text("Glad to have you back",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: "NeulisAlt",
+                                fontSize: 16,
+                                fontStyle: FontStyle.normal,
+                                // height: 1.2,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.appThemeColor)),
+                      ),
 
-                        Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                    top: 8.0, bottom: 4, left: 3),
-                                child: MoticarText(
-                                    text: "Email",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    fontColor: AppColors.textColor),
-                              ),
-                              //email
-                              TextFormField(
-                                controller: emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                onTapOutside: (event) {
-                                  // FocusScope.of(context)
-                                  //     .unfocus(); // Close the keyboard
-                                },
-                                textInputAction: TextInputAction.next,
-                                style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (value) =>
-                                    EmailValidator.validateEmail(value!),
-                                onSaved: (value) {
-                                  password = value!;
-                                },
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  hintText: 'Enter your email address',
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 18, horizontal: 11),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD), width: 1)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: AppColors.appThemeColor)),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  // hintText: 'Enter your password',
-                                  hintStyle: const TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
-                                ),
-                              ),
-
-                              //switch to phone number instead
-                              // TextButton(
-                              //   onPressed: () {
-                              //     Navigator.push(context,
-                              //         MaterialPageRoute(builder: (context) {
-                              //       return const LoginPhonePage();
-                              //     }));
-                              //   },
-                              //   child: const Row(
-                              //     mainAxisAlignment: MainAxisAlignment.end,
-                              //     children: [
-                              //       Icon(
-                              //         Icons.phone_iphone_rounded,
-                              //         size: 20,
-                              //         color: AppColors.lightGreen,
-                              //       ),
-
-                              //       //
-                              //       MoticarText(
-                              //         fontColor: AppColors.lightGreen,
-                              //         text: 'Use phone number instead',
-                              //         fontSize: 13,
-                              //         fontWeight: FontWeight.w500,
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-
-                              const SizedBox(height: 20),
-
-                              //password
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                    top: 8.0, bottom: 4, left: 3),
-                                child: MoticarText(
-                                    text: "Password",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    fontColor: AppColors.textColor),
-                              ),
-                              TextFormField(
-                                controller: passwordController,
-                                obscureText: _isObscure,
-                                keyboardType: TextInputType.text,
-                                textCapitalization: TextCapitalization.words,
-                                onTapOutside: (event) {
-                                  FocusScope.of(context)
-                                      .unfocus(); // Close the keyboard
-                                },
-                                textInputAction: TextInputAction.done,
-                                style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    color: AppColors.textColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                // validator: (value) =>
-                                //     PasswordValidator.validatePassword(value!),
-                                onSaved: (value) {
-                                  password = value!;
-                                },
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  hintText: 'Enter password',
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 18, horizontal: 11),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD),
-                                          width: 1.5)),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: const BorderSide(
-                                          color: AppColors.appThemeColor)),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  // hintText: 'Enter your password',
-                                  hintStyle: const TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xffC1C3C3),
-                                      letterSpacing: 1.2,
-                                      fontSize: 14),
-
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _isObscure = !_isObscure;
-                                      });
-                                    },
-                                    icon: Icon(
-                                        _isObscure
-                                            ? Icons.visibility_off_outlined
-                                            : Icons.visibility_outlined,
-                                        color: _isObscure
-                                            ? AppColors.oldGrey
-                                            : Colors.black.withOpacity(0.55)),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        //stay signed in
-                        Row(
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Transform.scale(
-                              scale: 0.8,
-                              child: CupertinoSwitch(
-                                value: state.stayLoggedIn,
-                                activeColor: AppColors.yellow,
-                                trackColor: AppColors.appThemeColor,
-                                thumbColor: AppColors.white,
-                                onChanged: (value) {
-                                  model.stayLoggedIN(value);
-                                },
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  top: 8.0, bottom: 4, left: 3),
+                              child: MoticarText(
+                                  text: "Email",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  fontColor: AppColors.textColor),
+                            ),
+                            //email
+                            TextFormField(
+                              controller: emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              onTapOutside: (event) {
+                                // FocusScope.of(context)
+                                //     .unfocus(); // Close the keyboard
+                              },
+                              textInputAction: TextInputAction.next,
+                              style: const TextStyle(
+                                  fontFamily: "NeulisAlt",
+                                  color: AppColors.textColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (value) =>
+                                  EmailValidator.validateEmail(value!),
+                              onSaved: (value) {
+                                password = value!;
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                hintText: 'Enter your email address',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 18, horizontal: 11),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                        color: Color(0xffD0D5DD), width: 1)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                        color: AppColors.appThemeColor)),
+                                filled: true,
+                                fillColor: Colors.white,
+                                // hintText: 'Enter your password',
+                                hintStyle: const TextStyle(
+                                    fontFamily: "NeulisAlt",
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xffC1C3C3),
+                                    letterSpacing: 1.2,
+                                    fontSize: 14),
                               ),
                             ),
-                            const Expanded(
-                              child: SizedBox(
-                                height: 60,
-                                // width: double.infinity,
-                                child: ListTile(
-                                  title: Text(
-                                    "Stay signed in",
-                                    style: TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.textColor,
-                                        letterSpacing: 1.2,
-                                        fontSize: 14),
-                                  ),
-                                  subtitle: Text(
-                                    "Save my login details for next time.",
-                                    style: TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.textGrey,
-                                        letterSpacing: 1.2,
-                                        fontSize: 14),
-                                  ),
+
+                            //switch to phone number instead
+                            // TextButton(
+                            //   onPressed: () {
+                            //     Navigator.push(context,
+                            //         MaterialPageRoute(builder: (context) {
+                            //       return const LoginPhonePage();
+                            //     }));
+                            //   },
+                            //   child: const Row(
+                            //     mainAxisAlignment: MainAxisAlignment.end,
+                            //     children: [
+                            //       Icon(
+                            //         Icons.phone_iphone_rounded,
+                            //         size: 20,
+                            //         color: AppColors.lightGreen,
+                            //       ),
+
+                            //       //
+                            //       MoticarText(
+                            //         fontColor: AppColors.lightGreen,
+                            //         text: 'Use phone number instead',
+                            //         fontSize: 13,
+                            //         fontWeight: FontWeight.w500,
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+
+                            const SizedBox(height: 20),
+
+                            //password
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  top: 8.0, bottom: 4, left: 3),
+                              child: MoticarText(
+                                  text: "Password",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  fontColor: AppColors.textColor),
+                            ),
+                            TextFormField(
+                              controller: passwordController,
+                              obscureText: _isObscure,
+                              keyboardType: TextInputType.text,
+                              textCapitalization: TextCapitalization.words,
+                              onTapOutside: (event) {
+                                FocusScope.of(context)
+                                    .unfocus(); // Close the keyboard
+                              },
+                              textInputAction: TextInputAction.done,
+                              style: const TextStyle(
+                                  fontFamily: "NeulisAlt",
+                                  color: AppColors.textColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              // validator: (value) =>
+                              //     PasswordValidator.validatePassword(value!),
+                              onSaved: (value) {
+                                password = value!;
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                hintText: 'Enter password',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 18, horizontal: 11),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                        color: Color(0xffD0D5DD),
+                                        width: 1.5)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                        color: AppColors.appThemeColor)),
+                                filled: true,
+                                fillColor: Colors.white,
+                                // hintText: 'Enter your password',
+                                hintStyle: const TextStyle(
+                                    fontFamily: "NeulisAlt",
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xffC1C3C3),
+                                    letterSpacing: 1.2,
+                                    fontSize: 14),
+
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _isObscure = !_isObscure;
+                                    });
+                                  },
+                                  icon: Icon(
+                                      _isObscure
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                      color: _isObscure
+                                          ? AppColors.oldGrey
+                                          : Colors.black.withOpacity(0.55)),
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
+                      ),
 
-                        //email field
+                      //stay signed in
+                      Row(
+                        children: [
+                          Transform.scale(
+                            scale: 0.8,
+                            child: CupertinoSwitch(
+                              value: state.stayLoggedIn,
+                              activeColor: AppColors.yellow,
+                              trackColor: AppColors.appThemeColor,
+                              thumbColor: AppColors.white,
+                              onChanged: (value) {
+                                model.stayLoggedIN(value);
+                              },
+                            ),
+                          ),
+                          const Expanded(
+                            child: SizedBox(
+                              height: 60,
+                              // width: double.infinity,
+                              child: ListTile(
+                                title: Text(
+                                  "Stay signed in",
+                                  style: TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.textColor,
+                                      letterSpacing: 1.2,
+                                      fontSize: 14),
+                                ),
+                                subtitle: Text(
+                                  "Save my login details for next time.",
+                                  style: TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.textGrey,
+                                      letterSpacing: 1.2,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
 
-                        //password
-                      ]),
-                ),
+                      //email field
+
+                      //password
+                    ]),
+
+
+                    SizedBox(height: 50,),
 
                 //
                 Expanded(

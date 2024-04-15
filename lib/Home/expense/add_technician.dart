@@ -211,62 +211,59 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                         fontColor: AppColors.white),
                                   ),
                                   //email
-                                  SizedBox(
-                                    height: 55,
-                                    child: TextFormField(
-                                      controller: firstController,
-                                      keyboardType: TextInputType.text,
-                                      // onTapOutside: (event) {
-                                      //   FocusScope.of(context)
-                                      //       .unfocus(); // Close the keyboard
-                                      // },
-                                      textInputAction: TextInputAction.next,
-                                      textCapitalization:
-                                          TextCapitalization.words,
-                                      style: const TextStyle(
-                                          fontFamily: "NeulisAlt",
-                                          color: AppColors.textColor,
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 1.2,
-                                          fontSize: 15),
-                                      validator: (value) =>
-                                          FieldValidaor.validateEmptyfield(
-                                              value!),
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          borderSide: const BorderSide(
-                                              color: AppColors.red, width: 1.5),
-                                        ),
-                                        hintText: 'Enter first Name',
-                                        // errorText:
-                                        //     _emailError, // Show the error message here
-
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xffD0D5DD),
-                                              width: 1.5),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            borderSide: const BorderSide(
-                                                color:
-                                                    AppColors.appThemeColor)),
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        // hintText: 'Enter your password',
-                                        hintStyle: const TextStyle(
-                                            fontFamily: "NeulisAlt",
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xffC1C3C3),
-                                            letterSpacing: 1.2,
-                                            fontSize: 14),
+                                  TextFormField(
+                                    controller: firstController,
+                                    keyboardType: TextInputType.text,
+                                    // onTapOutside: (event) {
+                                    //   FocusScope.of(context)
+                                    //       .unfocus(); // Close the keyboard
+                                    // },
+                                    textInputAction: TextInputAction.next,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    style: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        color: AppColors.textColor,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 1.2,
+                                        fontSize: 15),
+                                    validator: (value) =>
+                                        FieldValidaor.validateEmptyfield(
+                                            value!),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      errorBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: AppColors.red, width: 1.5),
                                       ),
+                                      hintText: 'Enter first Name',
+                                      // errorText:
+                                      //     _emailError, // Show the error message here
+
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D5DD),
+                                            width: 1.5),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          borderSide: const BorderSide(
+                                              color:
+                                                  AppColors.appThemeColor)),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      // hintText: 'Enter your password',
+                                      hintStyle: const TextStyle(
+                                          fontFamily: "NeulisAlt",
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xffC1C3C3),
+                                          letterSpacing: 1.2,
+                                          fontSize: 14),
                                     ),
                                   ),
                                 ],
@@ -290,62 +287,59 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                         fontColor: AppColors.white),
                                   ),
                                   //email
-                                  SizedBox(
-                                    height: 55,
-                                    child: TextFormField(
-                                      controller: lastNameController,
-                                      keyboardType: TextInputType.text,
-                                      // onTapOutside: (event) {
-                                      //   FocusScope.of(context)
-                                      //       .unfocus(); // Close the keyboard
-                                      // },
-                                      textCapitalization:
-                                          TextCapitalization.words,
-                                      validator: (value) =>
-                                          FieldValidaor.validateEmptyfield(
-                                              value!),
-                                      textInputAction: TextInputAction.next,
-                                      style: const TextStyle(
-                                          fontFamily: "NeulisAlt",
-                                          color: AppColors.textColor,
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 1.2,
-                                          fontSize: 15),
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          borderSide: const BorderSide(
-                                              color: AppColors.red, width: 1.5),
-                                        ),
-                                        hintText: 'Enter Last Name',
-                                        // errorText:
-                                        //     _emailError, // Show the error message here
-
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          borderSide: const BorderSide(
-                                              color: Color(0xffD0D5DD),
-                                              width: 1.5),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            borderSide: const BorderSide(
-                                                color:
-                                                    AppColors.appThemeColor)),
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        // hintText: 'Enter your password',
-                                        hintStyle: const TextStyle(
-                                            fontFamily: "NeulisAlt",
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xffC1C3C3),
-                                            letterSpacing: 1.2,
-                                            fontSize: 14),
+                                  TextFormField(
+                                    controller: lastNameController,
+                                    keyboardType: TextInputType.text,
+                                    // onTapOutside: (event) {
+                                    //   FocusScope.of(context)
+                                    //       .unfocus(); // Close the keyboard
+                                    // },
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    validator: (value) =>
+                                        FieldValidaor.validateEmptyfield(
+                                            value!),
+                                    textInputAction: TextInputAction.next,
+                                    style: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        color: AppColors.textColor,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 1.2,
+                                        fontSize: 15),
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      errorBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: AppColors.red, width: 0.5),
                                       ),
+                                      hintText: 'Enter Last Name',
+                                      // errorText:
+                                      //     _emailError, // Show the error message here
+
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8),
+                                        borderSide: const BorderSide(
+                                            color: Color(0xffD0D5DD),
+                                            width: 1.5),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          borderSide: const BorderSide(
+                                              color:
+                                                  AppColors.appThemeColor)),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      // hintText: 'Enter your password',
+                                      hintStyle: const TextStyle(
+                                          fontFamily: "NeulisAlt",
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xffC1C3C3),
+                                          letterSpacing: 1.2,
+                                          fontSize: 14),
                                     ),
                                   ),
                                 ],
