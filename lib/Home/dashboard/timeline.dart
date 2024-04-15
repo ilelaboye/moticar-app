@@ -211,7 +211,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                               BorderRadius.circular(40),
                                         ),
                                         child: Text(
-                                          "exp. $remainingDays days",
+                                          "exp. $remainingDays dayss",
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                             fontFamily: "NeulisAlt",
@@ -371,11 +371,10 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                               ),
                             ),
                             onTap: () {
-
-                               Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const AddCarPage();
-          }));
-
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const AddCarPage();
+                              }));
                             },
                           ),
                         ),

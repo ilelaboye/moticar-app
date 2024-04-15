@@ -540,7 +540,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     bottom: 8, left: 3, right: 3),
                                 child: DropdownButtonFormField<String>(
                                     decoration: const InputDecoration(
-                                      hintText: 'Select Country',
+                                      hintText: 'Select Technician',
                                       hintStyle: TextStyle(
                                           fontFamily: "NeulisAlt",
                                           fontWeight: FontWeight.w400,

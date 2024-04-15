@@ -437,7 +437,18 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                                       fontColor:
                                                           AppColors.green,
                                                     )
-                                                  : MoticarText(
+                                                  :
+                                                  // Text(
+                                                  //     categoriez,
+                                                  //     style: TextStyle(
+                                                  //       fontSize: 14,
+                                                  //       fontWeight:
+                                                  //           FontWeight.w400,
+                                                  //       color:
+                                                  //           Color(0xff495353),
+                                                  //     ),
+                                                  //   ),
+                                                  MoticarText(
                                                       text: categoriez,
                                                       fontSize: 14,
                                                       fontWeight:

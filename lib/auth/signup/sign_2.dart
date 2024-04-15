@@ -765,7 +765,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                 builder: (context) => MoticarDialog(
                                   buttonColor: AppColors.appThemeColor,
                                   textColor: AppColors.white,
-                                  buttonText: "Continues",
+                                  buttonText: "Continue",
                                   subtitle: signUpResult.successMessage,
                                   onTap: () {
                                     Navigator.push(context,
