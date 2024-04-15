@@ -88,7 +88,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
               ),
             ),
             Text(
-              "Add your car details",
+              "You can only do this once",
               style: TextStyle(
                 fontFamily: "NeulisAlt",
                 fontSize: 13,

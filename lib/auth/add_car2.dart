@@ -89,7 +89,7 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
               ),
             ),
             Text(
-              "Add your car details",
+              "You can only do this once",
               style: TextStyle(
                 fontFamily: "NeulisAlt",
                 fontSize: 13,
@@ -570,7 +570,6 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                                 //set car name and model variable here
                                                 selectedCarName =
                                                     widget.carName;
-                                                // modelz
                                                 selectedModeltype = modelz;
                                               });
                                             },
@@ -705,10 +704,16 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                                     setState(() {
                                                       popular =
                                                           value.toString();
-                                                      // moticatz = categoriez;
                                                       selectedEngine = myBox;
                                                       selectedGearBox = mygear;
-                                                      selectedCarName = modelz;
+                                                      selectedCarName =
+                                                          widget.carName.toString();
+
+                                                      // modelz
+                                                      // moticatz = categoriez;
+                                                      // selectedEngine = myBox;
+                                                      // selectedGearBox = mygear;
+                                                      // selectedCarName = modelz;
                                                       selectedModelID =
                                                           moticar.id.toString();
                                                     });
@@ -1334,6 +1339,8 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                     myColor: AppColors.indieC,
                     borderColor: AppColors.indieC,
                     onTap: () async {
+                      print(
+                          "{$selectedEngine + $selectedGearBox  + $selectedCarName my carName is ${widget.carName} may model is  $selectedModeltype}");
                       // if (selectedModel.isNotEmpty) {
                       showDialog(
                         context: context,
@@ -1390,7 +1397,8 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                             mygear: selectedGearBox,
                             myEngine: selectedEngine,
                             type: selectedModeltype,
-                            model: selectedModel,
+                            model: selectedCarName,
+                            // selectedModel,
                             imagePath: widget.carName,
                             carName: widget.carName);
                       }));

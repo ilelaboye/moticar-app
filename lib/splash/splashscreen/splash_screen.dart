@@ -25,14 +25,14 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _nextPage();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-    _animation = Tween<double>(begin: 0, end: 1.5).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInQuad),
-    );
-    _controller.forward();
+    // _controller = AnimationController(
+    //   vsync: this,
+    //   duration: const Duration(seconds: 1),
+    // );
+    // _animation = Tween<double>(begin: 0, end: 1.5).animate(
+    //   CurvedAnimation(parent: _controller, curve: Curves.easeInQuad),
+    // );
+    // _controller.forward();
   }
 
   Future _nextPage() async {
@@ -64,46 +64,67 @@ class _SplashScreenState extends State<SplashScreen>
         width: MediaQuery.of(context).size.width,
         alignment: Alignment.center,
         color: AppColors.yellow,
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(),
-            AnimatedBuilder(
-                animation: _animation,
-                builder: (context, child) {
-                  return Transform.scale(
-                      scale: _animation.value,
-                      child:   const Column(
-                        children: [
-                          // Image.asset(
-                          //   'assets/images/moticar.png',
-                          //   height: 150,
-                          //   width: 150,
-                          // ),
 
-                           SizedBox(
-                            height: 150,
-                            width: 150,
-                            child: RiveAnimation.asset(
-                              'assets/images/splashscreenanim.riv',
-                            ),
-                          ),
 
-                             Padding(
-                            padding:
-                                EdgeInsets.only(top: 50.0, left: 50, right: 50),
-                            child: MoticarText(
-                                text:
-                                    'Every kobo of your car \nexpenses \nis just a tap away!',
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                fontColor: AppColors.appThemeColor),
-                          ),
+              SizedBox(
+              height: 150,
+              width: 150,
+              child: RiveAnimation.asset(
+                'assets/images/splashscreenanim.riv',
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(top: 50.0, left: 50, right: 50),
+              child: MoticarText(
+                  text:
+                      'Every kobo of your car \nexpenses \nis just a tap away!',
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  fontColor: AppColors.appThemeColor),
+            ),
+
+            
+            // const SizedBox(),
+            // AnimatedBuilder(
+            //     animation: _animation,
+            //     builder: (context, child) {
+            //       return Transform.scale(
+            //           scale: _animation.value,
+            //           child:   const Column(
+            //             children: [
+            //               // Image.asset(
+            //               //   'assets/images/moticar.png',
+            //               //   height: 150,
+            //               //   width: 150,
+            //               // ),
+
+            //                SizedBox(
+            //                 height: 150,
+            //                 width: 150,
+            //                 child: RiveAnimation.asset(
+            //                   'assets/images/splashscreenanim.riv',
+            //                 ),
+            //               ),
+
+            //                  Padding(
+            //                 padding:
+            //                     EdgeInsets.only(top: 50.0, left: 50, right: 50),
+            //                 child: MoticarText(
+            //                     text:
+            //                         'Every kobo of your car \nexpenses \nis just a tap away!',
+            //                     fontSize: 13,
+            //                     fontWeight: FontWeight.w500,
+            //                     fontColor: AppColors.appThemeColor),
+            //               ),
 
                        
-                        ],
-                      ));
-                }),
+            //             ],
+            //           ));
+            //     }),
 
 
                 

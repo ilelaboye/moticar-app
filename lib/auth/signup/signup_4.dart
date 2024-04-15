@@ -213,7 +213,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
 
                       //dob
                       SizedBox(
-                        height: 55,
+                        height: 57,
                         child: GestureDetector(
                           onTap: () {
                             _selectDate(context);
@@ -245,14 +245,12 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                                             fontFamily: "NeulisAlt",
                                             color: AppColors.textColor,
                                             fontWeight: FontWeight.w500,
-                                            letterSpacing: 1.2,
-                                            fontSize: 14)
+                                            fontSize: 13)
                                         : const TextStyle(
                                             fontFamily: "NeulisAlt",
                                             fontWeight: FontWeight.w400,
                                             color: Color(0xffC1C3C3),
-                                            letterSpacing: 1.2,
-                                            fontSize: 14),
+                                            fontSize: 13),
                                   ),
                                 ]),
                                 Icon(
@@ -289,7 +287,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                                   Padding(
                                     padding: const EdgeInsets.all(3.0),
                                     child: SizedBox(
-                                      height: 55,
+                                      height: 57,
                                       child: Container(
                                         padding: const EdgeInsets.all(10),
                                         decoration: BoxDecoration(
@@ -368,7 +366,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: SizedBox(
-                                      height: 55,
+                                      height: 57,
                                       child: Container(
                                         padding: const EdgeInsets.all(10),
                                         decoration: BoxDecoration(
@@ -450,7 +448,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                             padding: const EdgeInsets.only(
                                 bottom: 8, left: 3, right: 3),
                             child: SizedBox(
-                              height: 55,
+                              height: 57,
                               child: DropdownButtonFormField(
                                   decoration: const InputDecoration(
                                     hintText: '[ N ] Nigerian Naira',
@@ -458,8 +456,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                                         fontFamily: "NeulisAlt",
                                         fontWeight: FontWeight.w400,
                                         color: Color(0xffC1C3C3),
-                                        letterSpacing: 1.2,
-                                        fontSize: 14),
+                                        fontSize: 13),
                                     filled: true,
                                     fillColor: Colors.white,
                                     enabledBorder: OutlineInputBorder(
@@ -518,7 +515,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                             padding: const EdgeInsets.only(
                                 bottom: 8, left: 3, right: 3),
                             child: SizedBox(
-                              height: 55,
+                              height: 57,
                               child: DropdownButtonFormField<String>(
                                   decoration: const InputDecoration(
                                     hintText: 'Select Location',

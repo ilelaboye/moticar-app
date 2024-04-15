@@ -298,7 +298,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                     padding: const EdgeInsets.only(
                                         bottom: 8, left: 3, right: 3),
                                     child: SizedBox(
-                                      height: 55,
+                                      height: 57,
                                       child: DropdownButtonFormField<String>(
                                           decoration: const InputDecoration(
                                             hintText: 'Select Country',
@@ -340,8 +340,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                                 .textColor,
                                                             fontWeight:
                                                                 FontWeight.w500,
-                                                            letterSpacing: 1.2,
-                                                            fontSize: 14),
+                                                            fontSize: 12),
                                                       )))
                                               .toList(),
                                           value: selectedCountry,
@@ -379,7 +378,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                     padding: const EdgeInsets.only(
                                         bottom: 8, left: 3, right: 3),
                                     child: SizedBox(
-                                      height: 55,
+                                      height: 57,
                                       child: DropdownButtonFormField<String>(
                                           decoration: const InputDecoration(
                                             hintText: 'Select State',
@@ -427,9 +426,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
-                                                                letterSpacing:
-                                                                    1.2,
-                                                                fontSize: 14),
+
+                                                                fontSize: 12),
                                                           )))
                                                   .toList()
                                               : null,
@@ -470,7 +468,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                             padding: const EdgeInsets.only(
                                 bottom: 8, left: 3, right: 3),
                             child: SizedBox(
-                              height: 55,
+                              height: 57,
                               child: DropdownButtonFormField<String>(
                                   decoration: const InputDecoration(
                                     hintText: 'Select LGA',
@@ -521,7 +519,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         letterSpacing: 1.2,
-                                                        fontSize: 14),
+                                                        fontSize: 13),
                                                   )))
                                           .toList()
                                       : null,
@@ -551,7 +549,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                           ),
                           //email
                           SizedBox(
-                            height: 55,
+                            height: 57,
                             child: TextFormField(
                               controller: landmarkControl,
                               keyboardType: TextInputType.streetAddress,

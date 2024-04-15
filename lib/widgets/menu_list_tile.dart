@@ -45,7 +45,7 @@ class MenuTile extends StatelessWidget {
               : const Icon(
                   Icons.arrow_forward_ios,
                   color: Color(0xff7BA0A3),
-                  // size: 10,
+                  size: 15,
                 ),
         ),
       ),

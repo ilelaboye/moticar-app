@@ -4,6 +4,8 @@ import 'package:rive/rive.dart';
 
 import '../../auth/add_car.dart';
 import '../../models/menu_items.dart';
+import '../../services/hivekeys.dart';
+import '../../services/localdatabase.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/menu_list_tile.dart';
 
@@ -26,7 +28,7 @@ class _MorePageState extends State<MorePage> {
     List<AppMenuItem> menuItems = [
       AppMenuItem(
           title: 'FAQ',
-          icon: 'assets/misc_moticar/key_me_.svg',
+          icon: 'assets/svgs/faq.svg',
           action: () {
             // Navigator.push(context, MaterialPageRoute(builder: (context) {
             //   return const ChangePassPage();
@@ -35,14 +37,14 @@ class _MorePageState extends State<MorePage> {
           }),
       AppMenuItem(
         title: 'Feedback',
-        icon: 'assets/misc_moticar/compass_me_.svg',
+        icon: 'assets/svgs/feedback.svg',
         action: () {
           // context.router.pushNamed('/home-nav/changePin');
         },
       ),
       AppMenuItem(
         title: 'Community',
-        icon: 'assets/misc_moticar/inbox_me_.svg',
+        icon: 'assets/svgs/community.svg',
         action: () {
           // context.router.pushNamed('/home-nav/changePassword');
         },
@@ -50,42 +52,22 @@ class _MorePageState extends State<MorePage> {
       // if (hasTierSystem)
       AppMenuItem(
         title: 'Rate Us',
-        icon: 'assets/misc_moticar/gift_me_.svg',
+        icon: 'assets/svgs/rate_us.svg',
         action: () {
           // context.router.pushNamed('/home-nav/accountInformation');
         },
       ),
-      // if (hasFp)
-      // AppMenuItem(
-      //   title: 'Biometric Login',
-      //   icon: 'assets/svgs/updates.svg',
-      //   trailing: Row(
-      //     mainAxisAlignment: MainAxisAlignment.end,
-      //     children: [
-      //       Transform.scale(
-      //         scale: 0.6,
-      //         child: CupertinoSwitch(
-      //           value: state.hasEnabledBiometricLogin,
-      //           onChanged: (value) {
-      //             model.enableBiometricLogin(value);
-      //           },
-      //           activeColor: AppColors.appThemeColor,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
 
       AppMenuItem(
           title: 'Notification Settings',
-          icon: 'assets/misc_moticar/users_me_.svg',
+          icon: 'assets/svgs/notification.svg',
           action: () {},
           // trailing: const SizedBox(),
           ),
 
       AppMenuItem(
         title: 'Contact Us',
-        icon: 'assets/misc_moticar/coffee_me_.svg',
+        icon: 'assets/svgs/contact_us.svg',
         action: () {
           // context.router.pushNamed('/home-nav/accountInformation');
         },
@@ -94,7 +76,7 @@ class _MorePageState extends State<MorePage> {
 
       AppMenuItem(
         title: 'Terms & Policies',
-        icon: 'assets/misc_moticar/download_me_.svg',
+        icon: 'assets/svgs/terms.svg',
         // trailing: const SizedBox(),
         action: () {
           // context.router.pushNamed('/home-nav/accountInformation');
@@ -104,11 +86,30 @@ class _MorePageState extends State<MorePage> {
       //
       AppMenuItem(
         title: 'Currency',
-        icon: 'assets/misc_moticar/log-out_me_.svg',
+        icon: 'assets/svgs/currency.svg',
         // trailing: const SizedBox(),
         action: () {
           // context.router.pushNamed('/home-nav/accountInformation');
         },
+          //  trailing: Row(
+          //   children: [
+          //    Text(
+          //      "${HiveStorage.get(HiveKeys.currency)}",
+          //     style: const TextStyle(
+          //       fontFamily: "NeulisAlt",
+          //       fontWeight: FontWeight.w600,
+          //       fontSize: 16,
+          //       color: Color(0xff00AEB5),
+          //     ),
+          //   ),
+
+          //   const Icon(
+          //     Icons.arrow_forward_ios,
+          //     color: Color(0xff7BA0A3),
+          //     // size: 10,
+          //   ),
+          //   ],
+          // ),
       ),
     ];
 
@@ -164,7 +165,7 @@ class _MorePageState extends State<MorePage> {
                   // const SizedBox(height: 10),
                   //other texts
                    Padding(
-                     padding: EdgeInsets.only(right:20.0, bottom: 20),
+                     padding: EdgeInsets.only(right:20.0, bottom: 10),
                      child: Text(
                       "It is so simple that you have to just keep track of all expenses you incur and we can provide you the insights you need for taking money saving decisions.",
                       textAlign: TextAlign.left,

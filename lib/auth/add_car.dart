@@ -98,7 +98,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                 ),
               ),
               Text(
-                "Add your car details",
+                "You can only do this once",
                 style: TextStyle(
                   fontFamily: "NeulisAlt",
                   fontSize: 13,
@@ -350,7 +350,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 2, horizontal: 8),
-                                            margin: EdgeInsets.only(bottom: 8),
+                                            margin: const EdgeInsets.only(bottom: 8),
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               borderRadius:
@@ -424,7 +424,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                         );
                                       } else {
                                         // Handle the case where categoriez is empty or index is out of bounds
-                                        return SizedBox.shrink();
+                                        return const SizedBox.shrink();
                                       }
                                     },
                                   ),
@@ -574,11 +574,11 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                       Container(
                         padding: const EdgeInsets.all(0),
                         height: 50,
-                        decoration: BoxDecoration(),
+                        // decoration: BoxDecoration(),
                         // alignment: Alignment.center,
                         child: DropdownButtonFormField(
                             isDense: true,
-                            padding: EdgeInsets.all(0),
+                            padding: const EdgeInsets.all(0),
                             icon: const Icon(
                               Icons.keyboard_arrow_down_sharp,
                             ),
@@ -622,7 +622,6 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                               fontFamily: "NeulisAlt",
                                               color: AppColors.appThemeColor,
                                               fontWeight: FontWeight.w500,
-                                              letterSpacing: 1.2,
                                               fontSize: 12),
                                         )))
                                 .toList(),

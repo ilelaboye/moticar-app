@@ -327,7 +327,7 @@ class _MePageState extends ConsumerState<MePage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      padding: const EdgeInsets.all(1),
+                      padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
                         color: const Color(0xfff8f6e7),
                         borderRadius: BorderRadius.circular(4),
@@ -335,6 +335,9 @@ class _MePageState extends ConsumerState<MePage> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                             SizedBox(
+                              width: 8,
+                            ),
                             SvgPicture.asset('assets/misc_moticar/package.svg'),
                             const Text(
                               "Current Subscription Plan Free",

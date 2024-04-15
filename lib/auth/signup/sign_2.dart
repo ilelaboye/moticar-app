@@ -191,14 +191,15 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                               color: Colors.white, shape: BoxShape.circle),
                           padding: const EdgeInsets.all(3),
                           child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: const BoxDecoration(
-                                  color: Color(0xff002D36),
-                                  shape: BoxShape.circle),
-                              child: SvgPicture.asset(
-                                'assets/svgs/camera-01.svg',
-                                height: 20,
-                              ),),
+                            padding: const EdgeInsets.all(8),
+                            decoration: const BoxDecoration(
+                                color: Color(0xff002D36),
+                                shape: BoxShape.circle),
+                            child: SvgPicture.asset(
+                              'assets/svgs/camera-01.svg',
+                              height: 20,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -256,16 +257,18 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         errorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           borderSide: const BorderSide(
                                               color: AppColors.red, width: 1.5),
                                         ),
                                         hintText: 'Enter first Name',
                                         // errorText:
                                         //     _emailError, // Show the error message here
-                                  
+
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           borderSide: const BorderSide(
                                               color: Color(0xffD0D5DD),
                                               width: 1.5),
@@ -274,7 +277,8 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                             borderSide: const BorderSide(
-                                                color: AppColors.appThemeColor)),
+                                                color:
+                                                    AppColors.appThemeColor)),
                                         filled: true,
                                         fillColor: Colors.white,
                                         // hintText: 'Enter your password',
@@ -332,16 +336,18 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         errorBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           borderSide: const BorderSide(
                                               color: AppColors.red, width: 1.5),
                                         ),
                                         hintText: 'Enter Last Name',
                                         // errorText:
                                         //     _emailError, // Show the error message here
-                                  
+
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           borderSide: const BorderSide(
                                               color: Color(0xffD0D5DD),
                                               width: 1.5),
@@ -350,7 +356,8 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                             borderSide: const BorderSide(
-                                                color: AppColors.appThemeColor)),
+                                                color:
+                                                    AppColors.appThemeColor)),
                                         filled: true,
                                         fillColor: Colors.white,
                                         // hintText: 'Enter your password',
@@ -418,7 +425,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                 hintText: 'Any alias name would work',
                                 // errorText:
                                 //     _emailError, // Show the error message here
-                          
+
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
@@ -513,11 +520,12 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
                                   hintText: 'Enter your password',
-                            
+
                                   enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: const BorderSide(
-                                          color: Color(0xffD0D5DD), width: 1.5)),
+                                          color: Color(0xffD0D5DD),
+                                          width: 1.5)),
                                   focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       borderSide: const BorderSide(
@@ -531,7 +539,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                       color: Color(0xffC1C3C3),
                                       letterSpacing: 1.2,
                                       fontSize: 14),
-                            
+
                                   suffixIcon: IconButton(
                                     onPressed: () {
                                       setState(() {
@@ -582,64 +590,67 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 55,
-                        child: TextFormField(
-                          controller: confamControl,
-                          obscureText: _isConfirmObscure,
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.words,
-                          // onTapOutside: (event) {
-                          //   FocusScope.of(context).unfocus(); // Close the keyboard
-                          // },
-                          textInputAction: TextInputAction.done,
-                          style: const TextStyle(
+                      TextFormField(
+                        controller: confamControl,
+                        obscureText: _isConfirmObscure,
+                        keyboardType: TextInputType.text,
+                        textCapitalization: TextCapitalization.words,
+                        // onTapOutside: (event) {
+                        //   FocusScope.of(context).unfocus(); // Close the keyboard
+                        // },
+                        textInputAction: TextInputAction.done,
+                        style: const TextStyle(
+                            fontFamily: "NeulisAlt",
+                            color: AppColors.textColor,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 1.2,
+                            fontSize: 15),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) =>
+                            ConfirmPasswordValidator.validateConfirmPassword(
+                                value, passwordController.text),
+                        onSaved: (value) {
+                          // confirmPassword = value!;
+                        },
+                        decoration: InputDecoration(
+                          // border: InputBorder.none,
+                          // errorBorder: InputBorder.none,
+                           border: InputBorder.none,
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                                color: AppColors.red, width: 0.5),
+                          ),
+                          hintText: 'Confirm your password',
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: Color(0xffD0D5DD), width: 1.5)),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: AppColors.appThemeColor)),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintStyle: const TextStyle(
                               fontFamily: "NeulisAlt",
-                              color: AppColors.textColor,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xffC1C3C3),
                               letterSpacing: 1.2,
-                              fontSize: 15),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              ConfirmPasswordValidator.validateConfirmPassword(
-                                  value, passwordController.text),
-                          onSaved: (value) {
-                            // confirmPassword = value!;
-                          },
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            hintText: 'Confirm your password',
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: Color(0xffD0D5DD), width: 1.5)),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: const BorderSide(
-                                    color: AppColors.appThemeColor)),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintStyle: const TextStyle(
-                                fontFamily: "NeulisAlt",
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xffC1C3C3),
-                                letterSpacing: 1.2,
-                                fontSize: 14),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  _isConfirmObscure = !_isConfirmObscure;
-                                });
-                              },
-                              icon: Icon(
-                                  _isConfirmObscure
-                                      ? Icons.visibility_off_outlined
-                                      : Icons.visibility_outlined,
-                                  color: _isConfirmObscure
-                                      ? AppColors.oldGrey
-                                      : Colors.black.withOpacity(0.55)),
-                            ),
+                              fontSize: 14),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _isConfirmObscure = !_isConfirmObscure;
+                              });
+                            },
+                            icon: Icon(
+                                _isConfirmObscure
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                color: _isConfirmObscure
+                                    ? AppColors.oldGrey
+                                    : Colors.black.withOpacity(0.55)),
                           ),
                         ),
                       ),

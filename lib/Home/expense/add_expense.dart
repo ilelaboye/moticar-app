@@ -7,18 +7,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/widgets/bottom_sheet_service.dart';
-import 'package:rive/rive.dart';
 
 import '../../models/expensesmodel.dart';
 import '../../providers/app_providers.dart';
-import '../../services/hivekeys.dart';
-import '../../services/localdatabase.dart';
 import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
-import '../../widgets/eard_dialog.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
 import '../carpart/car_part.dart';
 
@@ -42,7 +37,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
   bool _isObscure = true;
 
   bool isIncur = false;
-  String? selectedDayz, selectTechie;
+  String? selectTechie;
+  String selectedDayz = "Today";
   List myDayz = [
     "Today",
     'Tomorrow',
@@ -381,7 +377,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                           value: selectedDayz,
                                           onChanged: (nvalue) {
                                             setState(() {
-                                              selectedDayz = nvalue;
+                                              selectedDayz = nvalue!;
                                             });
                                           }),
                                     ),
@@ -1011,8 +1007,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                             onTap: () async {
                                               if (_formKey.currentState!
                                                   .validate()) {
-
-                                                    //method of pay
+                                                //method of pay
                                                 // final String myEmail =
                                                 //     emailController.text;
                                                 // final String myPass =

@@ -30,5 +30,5 @@ class HiveKeys {
 
 
   static const phonenumber = 'phone';
-  static const license = 'license';
+  static const currency = 'currency';
 }

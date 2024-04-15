@@ -18,16 +18,26 @@ import '../widgets/eard_dialog.dart';
 import 'first_know.dart';
 
 class AddCarPage4 extends StatefulHookConsumerWidget {
-  const AddCarPage4( 
+  const AddCarPage4(
       {super.key,
       required this.imagePath,
       required this.carName,
       required this.petrol,
       required this.gearbox,
-     required this.carID, required this.modelID,required this.engineID,
+      required this.carID,
+      required this.modelID,
+      required this.engineID,
       required this.gearboxID,
       required this.model});
-  final String imagePath, carName, model, petrol, gearbox, carID, modelID, engineID, gearboxID;
+  final String imagePath,
+      carName,
+      model,
+      petrol,
+      gearbox,
+      carID,
+      modelID,
+      engineID,
+      gearboxID;
 
   @override
   ConsumerState<AddCarPage4> createState() => _AddCarPage4State();
@@ -50,6 +60,13 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   bool isLicense = false;
   bool isThirdParty = false;
   bool isTinted = false;
+  bool ishackney = false;
+  bool isogHut = false;
+  bool isStateCarriage = false;
+  bool isHeavyDuty = false;
+  bool isTrucktrailer = false;
+  bool isLgaPermit = false;
+  bool isMidyear = false;
   // bool
 
   // bool isVisible = false;
@@ -61,7 +78,18 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   DateTime? _selectRenewal;
   DateTime? _selectWorthiness;
   DateTime? _selectThirdParty;
-  DateTime? _selectTinted;
+  DateTime? _selectTinted,
+      hackney,
+      ogHut,
+      stateCarriage,
+      heavyDuty,
+      trucktrailer,
+      lgaPermit,
+      midYear;
+
+  //
+
+  // hackney, ogHut, stateCarriage, heavyDuty, trucktrailer, lgaPermit, midYear
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -152,11 +180,224 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
     }
   }
 
+  //hack
+  Future<void> _selectHackney(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: hackney ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      fieldHintText: "Date of Hackney Permit",
+      fieldLabelText: "Date of Hackney Permit",
+    );
+
+    if (picked != null && picked != hackney) {
+      setState(() {
+        hackney = picked;
+      });
+    }
+  }
+
+  //ogHut
+  Future<void> _selectHut(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: ogHut ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      fieldHintText: "Date of OG HUT Permit",
+      fieldLabelText: "Date of OG HUT Permit",
+    );
+
+    if (picked != null && picked != ogHut) {
+      setState(() {
+        ogHut = picked;
+      });
+    }
+  }
+
+  //stateCarriage
+  Future<void> _selectstateCarriage(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: stateCarriage ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      fieldHintText: "Date of stateCarriage Permit",
+      fieldLabelText: "Date of stateCarriage Permit",
+    );
+
+    if (picked != null && picked != stateCarriage) {
+      setState(() {
+        stateCarriage = picked;
+      });
+    }
+  }
+
+  //duty
+  Future<void> _selectheavyDuty(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: heavyDuty ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      fieldHintText: "Date of heavyDuty Permit",
+      fieldLabelText: "Date of heavyDuty Permit",
+    );
+
+    if (picked != null && picked != heavyDuty) {
+      setState(() {
+        heavyDuty = picked;
+      });
+    }
+  }
+
+  //trucktrail
+  Future<void> _selectTruckTrail(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: trucktrailer ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      fieldHintText: "Date of trucktrailer Permit",
+      fieldLabelText: "Date of trucktrailer Permit",
+    );
+
+    if (picked != null && picked != trucktrailer) {
+      setState(() {
+        trucktrailer = picked;
+      });
+    }
+  }
+
+//lgapermit
+  Future<void> _selectlgaPermit(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: lgaPermit ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      fieldHintText: "Date of lgaPermit Permit",
+      fieldLabelText: "Date of lgaPermit Permit",
+    );
+
+    if (picked != null && picked != lgaPermit) {
+      setState(() {
+        lgaPermit = picked;
+      });
+    }
+  }
+
+  //mideyear
+  Future<void> _selectmidYear(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: midYear ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      fieldHintText: "Date of midYear Permit",
+      fieldLabelText: "Date of midYear Permit",
+    );
+
+    if (picked != null && picked != midYear) {
+      setState(() {
+        midYear = picked;
+      });
+    }
+  }
+
   String _formatDate(DateTime? date) {
     if (date == null) {
-      return "Date of Purchase"; //YYYY-MM-DD
+      return "Date of Renewal"; //YYYY-MM-DD
     }
-    return DateFormat('dd/MM/yyyy').format(date);
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  String _formatDate2(DateTime? date) {
+    if (date == null) {
+      return "Date of Road Worthiness"; //YYYY-MM-DD
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  String _formatDate3(DateTime? date) {
+    if (date == null) {
+      return "Date of Third Party Insurance"; //YYYY-MM-DD
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  String _formatDate4(DateTime? date) {
+    if (date == null) {
+      return "Date of Tinted Permit";
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  // hackney, ogHut, stateCarriage, heavyDuty, trucktrailer, lgaPermit, midYear
+
+  String _formatTruck(DateTime? date) {
+    if (date == null) {
+      return "Date of Truck & Trailer Permit";
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  //
+  String _formatLGA(DateTime? date) {
+    if (date == null) {
+      return "Date of Local Govt.Permit";
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  //mid year
+  String _formatMidYear(DateTime? date) {
+    if (date == null) {
+      return "Date of Mid Year Permit";
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  //
+  String _formatHackney(DateTime? date) {
+    if (date == null) {
+      return "Date of Hackney Permit";
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  String _formatOG(DateTime? date) {
+    if (date == null) {
+      return "Date of OG-HUT Highway";
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  //state
+  String _formatStateCar(DateTime? date) {
+    if (date == null) {
+      return "Date of State Carriage Permit";
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
+  //heavyDuty
+  String _formatDuty(DateTime? date) {
+    if (date == null) {
+      return "Date of Heavy Duty Permit";
+    }
+    return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
   }
 
@@ -237,7 +478,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
               ),
             ),
             Text(
-              "Add your car details",
+              "You can only do this once",
               style: TextStyle(
                 fontFamily: "NeulisAlt",
                 fontSize: 13,
@@ -401,7 +642,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     errorBorder: InputBorder.none,
                                     hintText: 'eg NJM 98 OLM',
                                     counterText: '',
-                              
+
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
                                         borderSide: const BorderSide(
@@ -451,6 +692,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                       color: AppColors.textColor,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16),
+                                  maxLength: 15,
                                   // autovalidateMode:
                                   //     AutovalidateMode.onUserInteraction,
                                   // validator: (value) =>
@@ -460,7 +702,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     border: InputBorder.none,
                                     errorBorder: InputBorder.none,
                                     hintText: 'eg 40000 ',
-                              
+                                    counterText: '',
+
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
                                         borderSide: const BorderSide(
@@ -513,7 +756,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     errorBorder: InputBorder.none,
                                     hintText: 'eg 2TIKR98D23C456159',
                                     counterText: '',
-                              
+
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
                                         borderSide: const BorderSide(
@@ -573,7 +816,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     errorBorder: InputBorder.none,
                                     hintText: 'eg NJM 98 OLM',
                                     counterText: '',
-                              
+
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
                                         borderSide: const BorderSide(
@@ -745,7 +988,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                           border: Border.all(
                                             color: const Color(0xffD0D5DD),
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
@@ -754,8 +998,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                             Row(children: [
                                               Icon(
                                                 Icons.calendar_today_outlined,
-                                                color:
-                                                    Colors.grey.withOpacity(0.8),
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
                                               ),
                                               const SizedBox(
                                                 width: 8,
@@ -775,12 +1019,13 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                                         fontFamily: "NeulisAlt",
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color: Color(0xffC1C3C3),
+                                                        color:
+                                                            Color(0xffC1C3C3),
                                                         letterSpacing: 1.2,
                                                         fontSize: 14),
                                               ),
                                             ]),
-                                  
+
                                             //
                                             GestureDetector(
                                               onTap: () {
@@ -790,8 +1035,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                               },
                                               child: Icon(
                                                 Icons.cancel_sharp,
-                                                color:
-                                                    Colors.grey.withOpacity(0.8),
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
                                               ),
                                             ),
                                           ],
@@ -890,7 +1135,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                           border: Border.all(
                                             color: const Color(0xffD0D5DD),
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
@@ -899,14 +1145,14 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                             Row(children: [
                                               Icon(
                                                 Icons.calendar_today_outlined,
-                                                color:
-                                                    Colors.grey.withOpacity(0.8),
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
                                               ),
                                               const SizedBox(
                                                 width: 8,
                                               ),
                                               Text(
-                                                _formatDate(_selectWorthiness),
+                                                _formatDate2(_selectWorthiness),
                                                 style: _selectWorthiness != null
                                                     ? const TextStyle(
                                                         fontFamily: "NeulisAlt",
@@ -920,12 +1166,13 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                                         fontFamily: "NeulisAlt",
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color: Color(0xffC1C3C3),
+                                                        color:
+                                                            Color(0xffC1C3C3),
                                                         letterSpacing: 1.2,
                                                         fontSize: 14),
                                               ),
                                             ]),
-                                  
+
                                             //
                                             GestureDetector(
                                               onTap: () {
@@ -935,8 +1182,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                               },
                                               child: Icon(
                                                 Icons.cancel_sharp,
-                                                color:
-                                                    Colors.grey.withOpacity(0.8),
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
                                               ),
                                             ),
                                           ],
@@ -1032,7 +1279,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                           border: Border.all(
                                             color: const Color(0xffD0D5DD),
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
@@ -1041,14 +1289,14 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                             Row(children: [
                                               Icon(
                                                 Icons.calendar_today_outlined,
-                                                color:
-                                                    Colors.grey.withOpacity(0.8),
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
                                               ),
                                               const SizedBox(
                                                 width: 8,
                                               ),
                                               Text(
-                                                _formatDate(_selectThirdParty),
+                                                _formatDate3(_selectThirdParty),
                                                 style: _selectThirdParty != null
                                                     ? const TextStyle(
                                                         fontFamily: "NeulisAlt",
@@ -1062,7 +1310,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                                         fontFamily: "NeulisAlt",
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color: Color(0xffC1C3C3),
+                                                        color:
+                                                            Color(0xffC1C3C3),
                                                         letterSpacing: 1.2,
                                                         fontSize: 14),
                                               ),
@@ -1075,8 +1324,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                               },
                                               child: Icon(
                                                 Icons.cancel_sharp,
-                                                color:
-                                                    Colors.grey.withOpacity(0.8),
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
                                               ),
                                             ),
                                           ],
@@ -1094,7 +1343,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
                         const SizedBox(height: 8),
 
-                        //hackney permit
+                        //tinted permit
                         Column(
                           children: [
                             GestureDetector(
@@ -1163,7 +1412,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                           border: Border.all(
                                             color: const Color(0xffD0D5DD),
                                           ),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                         child: Row(
                                           mainAxisAlignment:
@@ -1172,14 +1422,14 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                             Row(children: [
                                               Icon(
                                                 Icons.calendar_today_outlined,
-                                                color:
-                                                    Colors.grey.withOpacity(0.8),
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
                                               ),
                                               const SizedBox(
                                                 width: 8,
                                               ),
                                               Text(
-                                                _formatDate(_selectTinted),
+                                                _formatDate4(_selectTinted),
                                                 style: _selectTinted != null
                                                     ? const TextStyle(
                                                         fontFamily: "NeulisAlt",
@@ -1193,12 +1443,13 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                                         fontFamily: "NeulisAlt",
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        color: Color(0xffC1C3C3),
+                                                        color:
+                                                            Color(0xffC1C3C3),
                                                         letterSpacing: 1.2,
                                                         fontSize: 14),
                                               ),
                                             ]),
-                                  
+
                                             //
                                             GestureDetector(
                                               onTap: () {
@@ -1208,8 +1459,8 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                               },
                                               child: Icon(
                                                 Icons.cancel_sharp,
-                                                color:
-                                                    Colors.grey.withOpacity(0.8),
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
                                               ),
                                             ),
                                           ],
@@ -1225,9 +1476,961 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                           ],
                         ),
 
-                        const SizedBox(height: 18),
+                        const SizedBox(height: 8),
+
+                        //hackneypermit
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  ishackney =
+                                      !ishackney; // Toggle the switch state
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 0.6,
+                                    child: CupertinoSwitch(
+                                      value: ishackney,
+                                      activeColor: AppColors.yellow,
+                                      trackColor: AppColors.appThemeColor,
+                                      thumbColor: AppColors.white,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          ishackney =
+                                              value; // Update the switch state
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const Text(
+                                    "I have done a Hackney Permit",
+                                    style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textGrey,
+                                        letterSpacing: 1.2,
+                                        fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  ishackney, // Show the TextField when the switch is active
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 8.0, bottom: 8, left: 3),
+                                    child: MoticarText(
+                                        text: "Select date of renewal",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        fontColor: AppColors.appThemeColor),
+                                  ),
+
+                                  //dob
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectHackney(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatHackney(hackney),
+                                                style: hackney != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            Color(0xffC1C3C3),
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14),
+                                              ),
+                                            ]),
+
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  hackney = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  //
+                                ],
+                              ),
+                            ),
+                            // Visibility(
+                            //   visible:
+                            //       !isVehicle, // Show the SizedBox when the switch is inactive
+                            //   child: const SizedBox(
+                            //       width: 200), // Adjust the width as needed
+                            // ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
 
                         // //og-hut
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isogHut = !isogHut; // Toggle the switch state
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 0.6,
+                                    child: CupertinoSwitch(
+                                      value: isogHut,
+                                      activeColor: AppColors.yellow,
+                                      trackColor: AppColors.appThemeColor,
+                                      thumbColor: AppColors.white,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isogHut =
+                                              value; // Update the switch state
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const Text(
+                                    "I have done a OG-HUT (Highway Users Tax)",
+                                    style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textGrey,
+                                        letterSpacing: 1.2,
+                                        fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  isogHut, // Show the TextField when the switch is active
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 8.0, bottom: 8, left: 3),
+                                    child: MoticarText(
+                                        text: "Select date of renewal",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        fontColor: AppColors.appThemeColor),
+                                  ),
+
+                                  //dob
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectHut(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatOG(ogHut),
+                                                style: ogHut != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            Color(0xffC1C3C3),
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14),
+                                              ),
+                                            ]),
+
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  ogHut = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  //
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        //stateCarr
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isStateCarriage =
+                                      !isStateCarriage; // Toggle the switch state
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 0.6,
+                                    child: CupertinoSwitch(
+                                      value: isStateCarriage,
+                                      activeColor: AppColors.yellow,
+                                      trackColor: AppColors.appThemeColor,
+                                      thumbColor: AppColors.white,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isStateCarriage =
+                                              value; // Update the switch state
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const Text(
+                                    "I have done a State Carriage Permit",
+                                    style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textGrey,
+                                        letterSpacing: 1.2,
+                                        fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  isStateCarriage, // Show the TextField when the switch is active
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 8.0, bottom: 8, left: 3),
+                                    child: MoticarText(
+                                        text: "Select date of renewal",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        fontColor: AppColors.appThemeColor),
+                                  ),
+
+                                  //dob
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectstateCarriage(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatStateCar(stateCarriage),
+                                                style: stateCarriage != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            Color(0xffC1C3C3),
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14),
+                                              ),
+                                            ]),
+
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  stateCarriage = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  //
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        //heavyDuty
+
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isHeavyDuty =
+                                      !isHeavyDuty; // Toggle the switch state
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 0.6,
+                                    child: CupertinoSwitch(
+                                      value: isHeavyDuty,
+                                      activeColor: AppColors.yellow,
+                                      trackColor: AppColors.appThemeColor,
+                                      thumbColor: AppColors.white,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isHeavyDuty =
+                                              value; // Update the switch state
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const Text(
+                                    "I have done a Heavy Duty Permit",
+                                    style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textGrey,
+                                        letterSpacing: 1.2,
+                                        fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  isHeavyDuty, // Show the TextField when the switch is active
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 8.0, bottom: 8, left: 3),
+                                    child: MoticarText(
+                                        text: "Select date of renewal",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        fontColor: AppColors.appThemeColor),
+                                  ),
+
+                                  //dob
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectheavyDuty(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatDuty(heavyDuty),
+                                                style: heavyDuty != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            Color(0xffC1C3C3),
+                                                        letterSpacing: 1.2,
+                                                        fontSize: 14),
+                                              ),
+                                            ]),
+
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  heavyDuty = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  //
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        //truck
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isTrucktrailer =
+                                      !isTrucktrailer; // Toggle the switch state
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 0.6,
+                                    child: CupertinoSwitch(
+                                      value: isTrucktrailer,
+                                      activeColor: AppColors.yellow,
+                                      trackColor: AppColors.appThemeColor,
+                                      thumbColor: AppColors.white,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isTrucktrailer =
+                                              value; // Update the switch state
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const Text(
+                                    "I have done a Truck & Trailer Permit (TTP)",
+                                    style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textGrey,
+                                        letterSpacing: 1.2,
+                                        fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  isTrucktrailer, // Show the TextField when the switch is active
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 8.0, bottom: 8, left: 3),
+                                    child: MoticarText(
+                                        text: "Select date of renewal",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        fontColor: AppColors.appThemeColor),
+                                  ),
+
+                                  //dob
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectTruckTrail(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatTruck(trucktrailer),
+                                                style: trucktrailer != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 13)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            Color(0xffC1C3C3),
+                                                        fontSize: 13),
+                                              ),
+                                            ]),
+
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  trucktrailer = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  //
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        //lgapermit
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isLgaPermit =
+                                      !isLgaPermit; // Toggle the switch state
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 0.6,
+                                    child: CupertinoSwitch(
+                                      value: isLgaPermit,
+                                      activeColor: AppColors.yellow,
+                                      trackColor: AppColors.appThemeColor,
+                                      thumbColor: AppColors.white,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isLgaPermit =
+                                              value; // Update the switch state
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const Text(
+                                    "I have done a Local Govt. Permit (Nigeria)",
+                                    style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textGrey,
+                                        letterSpacing: 1.2,
+                                        fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  isLgaPermit, // Show the TextField when the switch is active
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 8.0, bottom: 8, left: 3),
+                                    child: MoticarText(
+                                        text: "Select date of renewal",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        fontColor: AppColors.appThemeColor),
+                                  ),
+
+                                  //dob
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectlgaPermit(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatLGA(lgaPermit),
+                                                style: lgaPermit != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 13)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            Color(0xffC1C3C3),
+                                                        fontSize: 13),
+                                              ),
+                                            ]),
+
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  lgaPermit = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  //
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        //midYear
+
+                        Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isMidyear =
+                                      !isMidyear; // Toggle the switch state
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  Transform.scale(
+                                    scale: 0.6,
+                                    child: CupertinoSwitch(
+                                      value: isMidyear,
+                                      activeColor: AppColors.yellow,
+                                      trackColor: AppColors.appThemeColor,
+                                      thumbColor: AppColors.white,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isMidyear =
+                                              value; // Update the switch state
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  const Text(
+                                    "I have done a Mid Year Permit",
+                                    style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textGrey,
+                                        letterSpacing: 1.2,
+                                        fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  isMidyear, // Show the TextField when the switch is active
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 8.0, bottom: 8, left: 3),
+                                    child: MoticarText(
+                                        text: "Select date of renewal",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        fontColor: AppColors.appThemeColor),
+                                  ),
+
+                                  //dob
+                                  SizedBox(
+                                    height: 55,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _selectmidYear(context);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                            color: const Color(0xffD0D5DD),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.calendar_today_outlined,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                _formatMidYear(midYear),
+                                                style: midYear != null
+                                                    ? const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        color:
+                                                            AppColors.textColor,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 13)
+                                                    : const TextStyle(
+                                                        fontFamily: "NeulisAlt",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color:
+                                                            Color(0xffC1C3C3),
+                                                        fontSize: 13),
+                                              ),
+                                            ]),
+
+                                            //
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  midYear = null;
+                                                });
+                                              },
+                                              child: Icon(
+                                                Icons.cancel_sharp,
+                                                color: Colors.grey
+                                                    .withOpacity(0.8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  //
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 8),
+
                         // Row(
                         //   children: [
                         //     Transform.scale(
@@ -1517,24 +2720,36 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     topRight: Radius.circular(30.0),
                                   ),
                                   child: FinishcarPage(
-                                    carID: widget.carID, modelID: widget.modelID,
-                                     engineID : widget.engineID, gearboxID: widget.gearbox,
+                                    hackney: _formatHackney(hackney),
+                                    ogHut: _formatHackney(ogHut),
+                                    stateCarriage:
+                                        _formatHackney(stateCarriage),
+                                    heavyDuty: _formatHackney(heavyDuty),
+                                    trucktrailer: _formatHackney(trucktrailer),
+                                    lgaPermit: _formatHackney(lgaPermit),
+                                    midYear: _formatHackney(midYear),
+                                    carID: widget.carID,
+                                    modelID: widget.modelID,
+                                    engineID: widget.engineID,
+                                    gearboxID: widget.gearboxID,
                                     carName: widget.carName,
                                     imagePath: 'assets/images/car_ai.png',
                                     model: widget.model,
                                     petrol: widget.petrol,
                                     gearbox: widget.gearbox,
-                                    purchaseDate: _newFormatDate(_selectedDate),
-                                    plateController: '',
-                                    mileageControl: '',
+                                    roadWorthy:
+                                        // _newFormatDate
+                                        _formatDuty(_selectWorthiness),
+                                    purchaseDate: _formatDuty(_selectedDate),
+                                    plateController: plateController.text,
+                                    mileageControl: mileageControl.text,
                                     chasisControl: chasisControl.text,
                                     engineNoController: engineNoController.text,
-                                    selectedDate: _newFormatDate(_selectedDate),
-                                    selectRenewal:
-                                        _newFormatDate(_selectRenewal),
+                                    selectedDate: _formatDuty(_selectedDate),
+                                    selectRenewal: _formatDuty(_selectRenewal),
                                     selectThirdParty:
-                                        _newFormatDate(_selectThirdParty),
-                                    selectTinted: _newFormatDate(_selectTinted),
+                                        _formatDuty(_selectThirdParty),
+                                    selectTinted: _formatDuty(_selectTinted),
                                     //  thirdPartyControl: '',
                                     //  vehicleLicense: '',
                                   ),
@@ -1599,12 +2814,23 @@ class FinishcarPage extends StatefulHookConsumerWidget {
     required this.selectTinted,
     required this.purchaseDate,
     required this.model,
-
-    required this.carID, required this.modelID, required this.engineID, required this.gearboxID,
+    required this.roadWorthy,
+    required this.hackney,
+    required this.ogHut,
+    required this.stateCarriage,
+    required this.heavyDuty,
+    required this.trucktrailer,
+    required this.lgaPermit,
+    required this.midYear,
+    required this.carID,
+    required this.modelID,
+    required this.engineID,
+    required this.gearboxID,
   });
   final String imagePath,
       purchaseDate,
       petrol,
+      roadWorthy,
       gearbox,
       carName,
       model,
@@ -1613,7 +2839,17 @@ class FinishcarPage extends StatefulHookConsumerWidget {
       chasisControl,
       engineNoController;
   // vehicleLicense;
-  final String selectedDate, selectRenewal, selectThirdParty, selectTinted;
+  final String selectedDate,
+      selectRenewal,
+      selectThirdParty,
+      selectTinted,
+      hackney,
+      ogHut,
+      stateCarriage,
+      heavyDuty,
+      trucktrailer,
+      lgaPermit,
+      midYear;
   final String carID, modelID, engineID, gearboxID;
 
   @override
@@ -2128,7 +3364,7 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                   );
 
                   await Future.delayed(const Duration(seconds: 4));
-                     // All fields are filled, attempt sign-up
+                  // All fields are filled, attempt sign-up
                   final signUpResult = await model.addNewCar(
                     formData: {
                       'car': widget.carID,
@@ -2136,13 +3372,25 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                       'engine': widget.engineID,
                       'gear_box': widget.gearboxID,
                       'date_of_purchase': widget.purchaseDate,
+                      "vehicle_license": widget.selectRenewal,
+                      "engine_number": widget.engineNoController,
+                      "chasis_number": widget.chasisControl,
+                      "road_worthiness": widget.roadWorthy,
+                      "third_party_insurance": widget.selectThirdParty,
+                      "hackney_permit": widget.hackney,
+                      "og_hut": widget.ogHut,
+                      "state_carriage_permit": widget.stateCarriage,
+                      "heavy_duty_permit": widget.heavyDuty,
+                      "truck_trailer_permit": widget.trucktrailer,
+                      "local_govt_permit": widget.lgaPermit,
+                      "mid_year_permit": widget.midYear,
                     },
                   );
 
                   Navigator.pop(context);
 
-                 if (signUpResult.successMessage.isNotEmpty)  {
-                   showMoticarBottom(
+                  if (signUpResult.successMessage.isNotEmpty) {
+                    showMoticarBottom(
                         context: context,
                         child: const FractionallySizedBox(
                           heightFactor: 0.90,
@@ -2153,31 +3401,27 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                               ),
                               child: FirstKnow()),
                         ));
-
+                  } else if (signUpResult.errorMessage.isNotEmpty) {
+                    // Sign-up failed, show error dialog
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return MoticarDialog(
+                          icon: const Icon(Icons.error_outline_sharp,
+                              color: AppColors.red, size: 50),
+                          title: '',
+                          subtitle: signUpResult.errorMessage,
+                          onTap: () {
+                            Navigator.pop(context);
+                            // Navigator.pop(context);
+                          },
+                          buttonColor: AppColors.red,
+                          textColor: AppColors.white,
+                          buttonText: "Dismiss",
+                        );
+                      },
+                    );
                   }
-                  else if (signUpResult.errorMessage.isNotEmpty) {
-                              // Sign-up failed, show error dialog
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return MoticarDialog(
-                                    icon: const Icon(Icons.error_outline_sharp,
-                                        color: AppColors.red, size: 50),
-                                    title: '',
-                                    subtitle: signUpResult.errorMessage,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      // Navigator.pop(context);
-                                    },
-                                    buttonColor: AppColors.red,
-                                    textColor: AppColors.white,
-                                    buttonText: "Dismiss",
-                                  );
-                                },
-                              );
-                            }
-
-                 
                 },
                 child: const MoticarText(
                   fontColor: AppColors.appThemeColor,
