@@ -33,14 +33,16 @@ void configLoading() {
     ..progressColor = Colors.yellow
     ..backgroundColor = AppColors.appThemeColor
     ..indicatorColor = Colors.yellow
-    ..textColor = Colors.yellow
+    ..textColor = Colors.white
     ..maskColor = Colors.red.withOpacity(0)
     ..userInteractions = false
     ..dismissOnTap = false
+    ..textAlign = TextAlign.start
+    ..textPadding = EdgeInsets.zero
     ..indicatorWidget = Container(
-      height: 130,
+      height: 100,
       width: 130,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(0),
       // color: Colors.green,
       child: const RiveAnimation.asset(
         'assets/images/preloader.riv',
@@ -69,9 +71,9 @@ class MyApp extends StatelessWidget {
           bodyLarge: TextStyle(fontFamily: 'NeulisAlt'),
         ),
       ),
-      home: 
-      
-      // const AddExpensesPage()
+      home:
+
+          // const AddExpensesPage()
 
           // BottomHomePage()
           // JsonPagesScreen( )

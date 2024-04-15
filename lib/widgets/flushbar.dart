@@ -21,7 +21,7 @@ class Alert {
       reverseAnimationCurve: Curves.decelerate,
       forwardAnimationCurve: Curves.elasticOut,
       backgroundColor: notificationType == 0
-          ? AppColors.white
+          ? Color(0xFF64DD17)
           : const Color.fromARGB(255, 142, 19, 11),
       maxWidth: MediaQuery.of(context).size.width * 0.8,
       boxShadows: const [
@@ -36,7 +36,7 @@ class Alert {
       showProgressIndicator: false,
       icon: notificationType == 1
           ? Container(
-            alignment: Alignment.center,
+              alignment: Alignment.center,
               margin: const EdgeInsets.only(left: 10, right: 10),
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
@@ -67,7 +67,7 @@ class Alert {
       messageText: Text(
         message,
         textAlign: TextAlign.center,
-        style:  const TextStyle(
+        style: TextStyle(
           fontFamily: 'NeulisAlt',
           fontSize: 13,
           color: Colors.black,
@@ -110,7 +110,7 @@ class Alert {
                 // context.router.pop();
                 Navigator.pop(context);
               },
-              buttonColor: AppColors.red,
+          buttonColor: AppColors.red,
           buttonText: buttonText ?? 'Dismiss',
         );
       },

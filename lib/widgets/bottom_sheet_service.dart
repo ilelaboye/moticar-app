@@ -22,3 +22,26 @@ void showMoticarBottom(
     ),
   );
 }
+
+void showMoticarBottomSheet(
+    {required Widget child,
+    required BuildContext context,
+    double radius = 50,
+    bool isDismissible = false,
+    bool background = false}) {
+  final BorderRadiusGeometry borderRadius = BorderRadius.circular(radius);
+
+  showModalBottomSheet(
+    backgroundColor: Colors.transparent,
+    enableDrag: false,
+    isDismissible: isDismissible,
+    barrierColor: Colors.black.withOpacity(0.5),
+    context: context,
+    isScrollControlled: true,
+    builder: (context) => Material(
+      borderRadius: borderRadius,
+      color: background ? Colors.transparent : Colors.white,
+      child: child,
+    ),
+  );
+}

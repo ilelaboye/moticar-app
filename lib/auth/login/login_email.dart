@@ -7,11 +7,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/Home/bottom_bar.dart';
+import 'package:moticar/auth/signup/sign_2.dart';
 import 'package:moticar/auth/signup/signup.dart';
+import 'package:moticar/providers/authentication.dart';
 import 'package:moticar/widgets/appBar.dart';
+import 'package:moticar/widgets/auth/verifyResetToken.dart';
 import 'package:moticar/widgets/bottom_sheet_service.dart';
 import 'package:moticar/widgets/eard_loader.dart';
+import 'package:moticar/widgets/flushbar.dart';
 import 'package:moticar/widgets/loader.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
@@ -341,12 +346,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             fontWeight: FontWeight.w600,
                           ),
                           onPressed: () {
-                            showMoticarBottom(
+                            showMoticarBottomSheet(
                                 context: context,
-                                child: const FractionallySizedBox(
-                                  heightFactor: 0.36,
-                                  child: ForgotPassword(),
-                                ),
+                                child: ForgotPassword(),
                                 radius: 0,
                                 isDismissible: true,
                                 background: true);
@@ -577,12 +579,61 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final emailController = TextEditingController();
+  final emailController = TextEditingController(text: 'ilela@gmail.com');
   String email = '';
+
+  void forgotPassword() async {
+    final form = _formKey.currentState!;
+
+    if (form.validate()) {
+      form.save();
+      EasyLoading.show(status: 'Loading');
+      Authentication provider = Authentication();
+
+      print('entered');
+      print(email);
+      final res = await provider.forgotPassword(context, email);
+      if (res['status']) {
+        EasyLoading.dismiss();
+        print('yes true');
+        Alert.showNotification(
+          message: "Reset code sent successfully",
+          notificationType: 0,
+          context: context,
+        );
+        showMoticarBottom(
+            context: context,
+            child: FractionallySizedBox(
+              heightFactor: 0.8,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+                child: ForgotPasswordTokenVerification(
+                  emailController: emailController.text,
+                ),
+              ),
+            ));
+      }
+    } else {
+      Alert.showNotificationError(
+        message: 'Invalid email address',
+        context: context,
+        notificationType: 1,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      // padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          left: 15,
+          right: 15,
+          top: 10),
       decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -591,6 +642,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           )),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
             'Forgot Password',
@@ -630,11 +682,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     email = value!;
                   },
                   decoration: InputDecoration(
-                    border: InputBorder.none,
-                    errorBorder: InputBorder.none,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            const BorderSide(color: AppColors.appThemeColor)),
+                    // errorBorder: InputBorder.none,
                     hintText: 'Enter your email address',
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 18, horizontal: 11),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18, horizontal: 11),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(
@@ -664,9 +719,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             myColor: AppColors.appThemeColor,
             borderColor: AppColors.white,
             onTap: () {
-              Navigator.pop(context);
+              forgotPassword();
               // context.router.push(const LoginRouteCopy());
-              EasyLoading.show();
             },
             child: const MoticarText(
               fontColor: Colors.white,
@@ -675,6 +729,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               fontWeight: FontWeight.w700,
             ),
           ),
+          SizedBox(
+            height: 20,
+          )
         ],
       ),
     );

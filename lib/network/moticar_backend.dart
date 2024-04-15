@@ -1,20 +1,23 @@
 // ignore_for_file: override_on_non_overriding_member
 
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 // import 'package:dio/adapter.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:moticar/utils/constants.dart';
 import '../services/hivekeys.dart';
 import '../services/localdatabase.dart';
 import 'moticar_network.dart';
 
 // //up endpoint
-String baseUrl = 'https://moticar.ttninternational.org/api/v1/';
+String baseUrl = Constant.baseUrl;
 
 class AgencyBackEnd implements AgencyNetwork {
   late final Dio _dio;
@@ -126,6 +129,7 @@ class AgencyBackEnd implements AgencyNetwork {
   @override
   Future<Response> post(
       {required Map<String, dynamic> formData, required String path}) async {
+    print('loogin in');
     try {
       final response = await _dio.post(
         path,
@@ -138,6 +142,11 @@ class AgencyBackEnd implements AgencyNetwork {
       );
       return response;
     } on DioError catch (e) {
+      print('error');
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+
+      print(errorMessage);
+
       if (e.response != null && e.response!.statusCode! >= 500) {
         e.response!.data = {
           'message': 'Problem contacting server. Please try again later'
@@ -338,4 +347,88 @@ class AgencyBackEnd implements AgencyNetwork {
   //     }
   //   }
   // }
+}
+
+class DioExceptions implements Exception {
+  String message = '';
+
+  DioExceptions.fromDioError(DioError dioError) {
+    // print('jfjjf ');
+    // // print(dioError);
+    // print(dioError.type);
+    // print(dioError.response?.statusCode);
+    // print(dioError.response);
+
+    EasyLoading.dismiss();
+    switch (dioError.type) {
+      case DioErrorType.cancel:
+        message = "Request to server was cancelled";
+        break;
+      case DioErrorType.connectTimeout:
+        message = "Connection timeout with server";
+        break;
+      case DioErrorType.receiveTimeout:
+        message = "Receive timeout in connection with server";
+        break;
+      case DioErrorType.response:
+        message = _handleError(
+          dioError.response?.statusCode,
+          dioError.response?.data,
+        );
+        break;
+      case DioErrorType.sendTimeout:
+        message = "Send timeout in connection with server";
+        break;
+      case DioErrorType.other:
+        if (dioError.message!.contains("SocketException")) {
+          message = 'No Internet Connection';
+          break;
+        }
+        message = "Unexpected error occurred";
+        break;
+      default:
+        message = "Something went wrong";
+        break;
+    }
+  }
+
+  String _handleError(int? statusCode, dynamic error) {
+    switch (statusCode) {
+      case 400:
+        if (error["message"].toString().isNotEmpty) {
+          return error["message"];
+        }
+        //display the first error
+        return error['errors'].values.first[0];
+      case 401:
+        return error['message'];
+      case 403:
+        return error['message'];
+      case 404:
+        return error['message'];
+      case 409:
+        return error['message'];
+      case 422:
+        return error["errors"].values.first[0];
+      case 500:
+        // print(jsonDecode(error));
+        print('500 error');
+        print(error);
+        var error2 = jsonDecode(error);
+
+        if (error2.containsKey('message')) {
+          return error2['message'];
+        } else {
+          return "Error, Please try again";
+        }
+
+      case 502:
+        return 'Bad gateway';
+      default:
+        return 'Oops something went wrong';
+    }
+  }
+
+  @override
+  String toString() => message;
 }
