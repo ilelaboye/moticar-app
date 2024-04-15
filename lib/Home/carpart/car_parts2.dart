@@ -50,6 +50,9 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
 
   int quantity = 0; // Track the quantity
 
+  late List<bool> isSelectedList;
+  late List<bool> isSelectedList2;
+
   void incrementQuantity() {
     setState(() {
       quantity++;
@@ -87,6 +90,8 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
   @override
   void initState() {
     super.initState();
+    isSelectedList = List.generate(conditionList.length, (index) => false);
+    isSelectedList2 = List.generate(measurement.length, (index) => false);
   }
 
   @override
@@ -505,6 +510,24 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                                     conditionList[index];
 
                                                 print(conditionz);
+
+                                                // Toggle the selection // Deselect previously selected item
+                                                for (int i = 0;
+                                                    i < isSelectedList.length;
+                                                    i++) {
+                                                  if (i != index) {
+                                                    isSelectedList[i] = false;
+                                                  }
+                                                }
+                                                // Toggle the selection state of the tapped item
+                                                isSelectedList[index] =
+                                                    !isSelectedList[index];
+                                                // Print the selected payment type
+                                                if (isSelectedList[index]) {
+                                                  print(conditionList[index]);
+                                                } else {
+                                                  print('No type selected');
+                                                }
                                               });
                                             },
                                             child: Container(
@@ -513,101 +536,31 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                               alignment: Alignment.center,
                                               padding: const EdgeInsets.all(8),
                                               decoration: BoxDecoration(
-                                                color: const Color(0xffCDD2D2),
+                                                color: isSelectedList[index]
+                                                    ? AppColors.appThemeColor
+                                                    : const Color(0xffCDD2D2),
+                                                // color: const Color(0xffCDD2D2),
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
+                                              // decoration: BoxDecoration(
+                                              //   color: const Color(0xffCDD2D2),
+                                              //   borderRadius:
+                                              //       BorderRadius.circular(8),
+                                              // ),
                                               child: MoticarText(
-                                                  text: conditionList[index],
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontColor:
-                                                      AppColors.textColor),
+                                                text: conditionList[index],
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                fontColor: isSelectedList[index]
+                                                    ? Colors.white
+                                                    : AppColors.appThemeColor,
+                                              ),
                                             ),
                                           );
                                         },
                                       ),
                                     ),
-
-                                    // Row(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.spaceBetween,
-                                    //   children: [
-                                    //     GestureDetector(
-                                    //       onTap: () {
-                                    //         setState(() {
-                                    //           conditionz = "New";
-                                    //         });
-                                    //       },
-                                    //       child: Container(
-                                    //         width: 109,
-                                    //         height: 35,
-                                    //         alignment: Alignment.center,
-                                    //         padding: const EdgeInsets.all(8),
-                                    //         decoration: BoxDecoration(
-                                    //           color: const Color(0xffCDD2D2),
-                                    //           borderRadius:
-                                    //               BorderRadius.circular(8),
-                                    //         ),
-                                    //         child: const MoticarText(
-                                    //             text: "New",
-                                    //             fontSize: 12,
-                                    //             fontWeight: FontWeight.w500,
-                                    //             fontColor: AppColors.textColor),
-                                    //       ),
-                                    //     ),
-
-                                    //     //bank
-                                    //     GestureDetector(
-                                    //       onTap: () {
-                                    //         setState(() {
-                                    //           conditionz = "Refurbished";
-                                    //         });
-                                    //       },
-                                    //       child: Container(
-                                    //         width: 109,
-                                    //         height: 35,
-                                    //         alignment: Alignment.center,
-                                    //         padding: const EdgeInsets.all(8),
-                                    //         decoration: BoxDecoration(
-                                    //           color: const Color(0xffCDD2D2),
-                                    //           borderRadius:
-                                    //               BorderRadius.circular(8),
-                                    //         ),
-                                    //         child: const MoticarText(
-                                    //             text: "Refurbished",
-                                    //             fontSize: 12,
-                                    //             fontWeight: FontWeight.w500,
-                                    //             fontColor: AppColors.textColor),
-                                    //       ),
-                                    //     ),
-
-                                    //     //debit Card
-                                    //     GestureDetector(
-                                    //       onTap: () {
-                                    //         setState(() {
-                                    //           conditionz = "Used";
-                                    //         });
-                                    //       },
-                                    //       child: Container(
-                                    //         padding: const EdgeInsets.all(8),
-                                    //         width: 109,
-                                    //         height: 35,
-                                    //         alignment: Alignment.center,
-                                    //         decoration: BoxDecoration(
-                                    //           color: const Color(0xffCDD2D2),
-                                    //           borderRadius:
-                                    //               BorderRadius.circular(8),
-                                    //         ),
-                                    //         child: const MoticarText(
-                                    //             text: "Used",
-                                    //             fontSize: 12,
-                                    //             fontWeight: FontWeight.w500,
-                                    //             fontColor: AppColors.textColor),
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // ),
                                   ],
                                 ),
                               ),
@@ -649,6 +602,24 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
 
                                                 selectMeasure =
                                                     measurement[index];
+
+                                                // Toggle the selection // Deselect previously selected item
+                                                for (int i = 0;
+                                                    i < isSelectedList2.length;
+                                                    i++) {
+                                                  if (i != index) {
+                                                    isSelectedList2[i] = false;
+                                                  }
+                                                }
+                                                // Toggle the selection state of the tapped item
+                                                isSelectedList2[index] =
+                                                    !isSelectedList2[index];
+                                                // Print the selected payment type
+                                                if (isSelectedList2[index]) {
+                                                  print(measurement[index]);
+                                                } else {
+                                                  print('No measure selected');
+                                                }
                                               });
                                             },
                                             child: Container(
@@ -657,11 +628,9 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                               padding: const EdgeInsets.all(8),
                                               alignment: Alignment.center,
                                               decoration: BoxDecoration(
-                                                color:
-                                                    // selectedIndex == index
-                                                    //     ? Colors.blue
-                                                    //     :
-                                                    const Color(0xffCDD2D2),
+                                                color: isSelectedList2[index]
+                                                    ? AppColors.appThemeColor
+                                                    : const Color(0xffCDD2D2),
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
@@ -670,10 +639,10 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 fontColor:
-                                                    // selectedIndex == index
-                                                    //     ? Colors.white
-                                                    // :
-                                                    AppColors.textColor,
+                                                    isSelectedList2[index]
+                                                        ? Colors.white
+                                                        : AppColors
+                                                            .appThemeColor,
                                               ),
                                             ),
                                           );

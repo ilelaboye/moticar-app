@@ -162,7 +162,12 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SvgPicture.asset(widget.carName),
+                                // SvgPicture.asset(widget.carName),
+
+                                  getImageWidget(widget.carName.toString()),
+
+
+
                                 const SizedBox(height: 8),
                                 Text(
                                   widget.carName,
@@ -1438,5 +1443,66 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
         ],
       ),
     );
+  }
+
+  Widget getImageWidget(String category) {
+    switch (category) {
+      case 'Acura':
+        return SvgPicture.asset('assets/carLogos/acura.svg');
+      case 'Audi':
+        return SvgPicture.asset('assets/carLogos/audi.svg');
+
+      case 'Toyota':
+        return SvgPicture.asset('assets/carLogos/toyota.svg');
+
+      case 'Balancing':
+        return SvgPicture.asset('assets/expenseCatIcons/balancing.svg');
+
+      case 'Car Wash':
+        return SvgPicture.asset('assets/expenseCatIcons/carWash.svg');
+
+      case 'Dues':
+        return SvgPicture.asset('assets/expenseCatIcons/dues.svg');
+
+      case 'Electronics':
+        return SvgPicture.asset('assets/expenseCatIcons/electronics.svg');
+
+      case 'Fuel':
+        return SvgPicture.asset('assets/expenseCatIcons/fuel.svg');
+
+      case 'Hydraulics':
+        return SvgPicture.asset('assets/expenseCatIcons/hydraulic.svg');
+
+      case 'Keywork':
+        return SvgPicture.asset('assets/expenseCatIcons/keywork.svg');
+
+      case 'Mechanical':
+        return SvgPicture.asset('assets/expenseCatIcons/mechanicalWork.svg');
+
+      case 'Misc':
+        return SvgPicture.asset('assets/expenseCatIcons/misc.svg');
+
+      case 'Parking':
+        return SvgPicture.asset('assets/expenseCatIcons/parking.svg');
+
+      case 'Penalty':
+        return SvgPicture.asset('assets/expenseCatIcons/penalty.svg');
+
+      case 'Radiator':
+        return SvgPicture.asset('assets/expenseCatIcons/radiator.svg');
+
+      case 'Servicing':
+        return SvgPicture.asset('assets/expenseCatIcons/servicing.svg');
+
+      case 'Tow':
+        return SvgPicture.asset('assets/expenseCatIcons/tow.svg');
+
+      case 'Tyre guage':
+        return SvgPicture.asset('assets/expenseCatIcons/tyreGuage.svg');
+      // Add more cases for other categories if needed
+      default:
+        // Return a default image or null if no specific image is available
+        return SvgPicture.asset("assets/carLogos/lexus.svg");
+    }
   }
 }
