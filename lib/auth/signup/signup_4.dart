@@ -584,6 +584,26 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                     height: 40,
                   ),
                   //button
+                  MoticarLoginButton(
+                    myColor: AppColors.fadeWhite,
+                    borderColor: AppColors.skipColor,
+                    onTap: () async {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const AddCarPage();
+                      }));
+                    },
+                    child: const MoticarText(
+                      fontColor: AppColors.skipColor,
+                      text: 'Skip',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
 
                   //
                   Consumer(builder: (context, ref, child) {

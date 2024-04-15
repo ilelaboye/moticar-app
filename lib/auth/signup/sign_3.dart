@@ -643,6 +643,33 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                     height: 40,
                   ),
                   //button
+                  MoticarLoginButton(
+                    myColor: AppColors.fadeWhite,
+                    borderColor: AppColors.skipColor,
+                    onTap: () async {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const SignUpPage4(
+                            address1: "",
+                            address2: "",
+                            newCountry: " ",
+                            state: "",
+                            lga: "",
+                            land: " ",
+                            token: " ");
+                      }));
+                    },
+                    child: const MoticarText(
+                      fontColor: AppColors.skipColor,
+                      text: 'Skip',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
 
                   //create an account
                   MoticarLoginButton(
