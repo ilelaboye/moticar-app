@@ -202,7 +202,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                   color: AppColors.red, width: 1.5),
                             ),
                             hintText: 'Street address line 1',
-                      
+
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                               borderSide: const BorderSide(
@@ -321,7 +321,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: AppColors.appThemeColor,
+                                                  color:
+                                                      AppColors.appThemeColor,
                                                   width: 1.5),
                                             ),
                                           ),
@@ -329,8 +330,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                               .map<DropdownMenuItem<String>>(
                                                   (country) => DropdownMenuItem<
                                                           String>(
-                                                      value:
-                                                          country.name.toString(),
+                                                      value: country.name
+                                                          .toString(),
                                                       child: Text(
                                                         country.name.toString(),
                                                         style: const TextStyle(
@@ -401,7 +402,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(8)),
                                               borderSide: BorderSide(
-                                                  color: AppColors.appThemeColor,
+                                                  color:
+                                                      AppColors.appThemeColor,
                                                   width: 1.5),
                                             ),
                                           ),
@@ -411,13 +413,15 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                       country.name ==
                                                       selectedCountry)
                                                   .states
-                                                  .map<DropdownMenuItem<String>>(
-                                                      (state) => DropdownMenuItem<
-                                                              String>(
+                                                  .map<
+                                                      DropdownMenuItem<
+                                                          String>>((state) =>
+                                                      DropdownMenuItem<String>(
                                                           value: state.name
                                                               .toString(),
                                                           child: Text(
-                                                            state.name.toString(),
+                                                            state.name
+                                                                .toString(),
                                                             style: const TextStyle(
                                                                 fontFamily:
                                                                     "NeulisAlt",
@@ -426,7 +430,6 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
-
                                                                 fontSize: 12),
                                                           )))
                                                   .toList()
@@ -508,7 +511,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                           )
                                           .cities
                                           .map<DropdownMenuItem<String>>(
-                                              (city) => DropdownMenuItem<String>(
+                                              (city) => DropdownMenuItem<
+                                                      String>(
                                                   value: city.name.toString(),
                                                   child: Text(
                                                     city.name.toString(),
@@ -573,7 +577,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                 ),
                                 hintText:
                                     'Enter closest landmark to your address',
-                          
+
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: const BorderSide(
@@ -623,10 +627,17 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                     myColor: AppColors.fadeWhite,
                     borderColor: AppColors.skipColor,
                     onTap: () async {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) {
-                      //   return const LoginPage();
-                      // }));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const SignUpPage4(
+                            address1: "",
+                            address2: "",
+                            newCountry: " ",
+                            state: "",
+                            lga: "",
+                            land: " ",
+                            token: " ");
+                      }));
                     },
                     child: const MoticarText(
                       fontColor: AppColors.skipColor,
@@ -697,9 +708,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
 
                           Navigator.pop(context);
 
-                           await HiveStorage.put(
-                                                  HiveKeys.token,
-                                                  widget.token);
+                          await HiveStorage.put(HiveKeys.token, widget.token);
 
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {

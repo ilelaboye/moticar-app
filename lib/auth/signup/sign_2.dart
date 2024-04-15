@@ -615,7 +615,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                         decoration: InputDecoration(
                           // border: InputBorder.none,
                           // errorBorder: InputBorder.none,
-                           border: InputBorder.none,
+                          border: InputBorder.none,
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(
@@ -735,7 +735,9 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
 
                             // Navigator.pop(context);
 
-                            String imagePath = images.value.path;
+                            String imagePath = images.value.path.isEmpty
+                                ? ""
+                                : images.value.path;
 
                             FormData formData = FormData.fromMap({
                               'email': widget.email,
@@ -743,8 +745,10 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                               'last_name': lastName,
                               'preferred_name': nickname,
                               'password': passW,
-                              'image': await MultipartFile.fromFile(imagePath,
-                                  filename: 'image'),
+                              'image': imagePath.isNotEmpty
+                                  ? await MultipartFile.fromFile(imagePath,
+                                      filename: 'image')
+                                  : "", // Use null if imagePath is empty
                             });
 
                             // All fields are filled, attempt sign-up

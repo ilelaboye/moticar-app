@@ -594,7 +594,7 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                     onTap: () async {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return const LoginPage();
+                        return const AddCarPage();
                       }));
                     },
                     child: const MoticarText(
