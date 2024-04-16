@@ -155,7 +155,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
       body: Column(
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.12,
+            height: MediaQuery.of(context).size.height * 0.129,
             width: MediaQuery.of(context).size.width,
             child: Container(
               padding: const EdgeInsets.all(20),
@@ -540,7 +540,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     bottom: 8, left: 3, right: 3),
                                 child: DropdownButtonFormField<String>(
                                     decoration: const InputDecoration(
-                                      hintText: 'Select Country',
+                                      hintText: 'Select Technician',
                                       hintStyle: TextStyle(
                                           fontFamily: "NeulisAlt",
                                           fontWeight: FontWeight.w400,
@@ -814,8 +814,11 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     fontColor: AppColors.textColor),
                               ),
 
-                              SizedBox(
-                                height: 60,
+                              Container(
+                                height: 65,
+                                alignment: Alignment.topLeft,
+                                // decoration: BoxDecoration(
+                                //     border: Border.all(color: Colors.red)),
                                 child: GridView.builder(
                                   // physics: NeverScrollableScrollPhysics(),
                                   gridDelegate:
@@ -856,7 +859,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                       },
                                       child: Container(
                                         width: 109,
-                                        height: 35,
+                                        height: 30,
                                         alignment: Alignment.center,
                                         padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(

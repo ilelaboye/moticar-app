@@ -743,10 +743,8 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                               'last_name': lastName,
                               'preferred_name': nickname,
                               'password': passW,
-                              'image': imagePath.isNotEmpty
-                                  ? await MultipartFile.fromFile(imagePath,
-                                      filename: 'image')
-                                  : "",
+                              'image': await MultipartFile.fromFile(imagePath,
+                                  filename: 'image'),
                             });
 
                             // All fields are filled, attempt sign-up

@@ -22,11 +22,13 @@ class MoticarText extends StatelessWidget {
     return Text(
       text,
       textAlign: TextAlign.center,
+      softWrap: true,
+      overflow: TextOverflow.clip,
       style: TextStyle(
           fontFamily: 'NeulisAlt',
           fontSize: fontSize,
           fontWeight: fontWeight,
-          letterSpacing: 1.2,
+          // letterSpacing: 1.2,
           color: fontColor),
     );
   }

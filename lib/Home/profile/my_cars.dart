@@ -484,7 +484,6 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                 ],
               ),
 
-
               //click button to reveal
               Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8.0),

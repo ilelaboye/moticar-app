@@ -371,11 +371,10 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                               ),
                             ),
                             onTap: () {
-
-                               Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const AddCarPage();
-          }));
-
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const AddCarPage();
+                              }));
                             },
                           ),
                         ),

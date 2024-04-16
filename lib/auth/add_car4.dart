@@ -2664,8 +2664,17 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                       myColor: AppColors.white,
                       borderColor: AppColors.appThemeColor,
                       onTap: () {
-                        //showDialog AI Generator
-                        // _showOTPVerificationPage(context);
+                        showMoticarBottom(
+                            context: context,
+                            child: const FractionallySizedBox(
+                              heightFactor: 0.90,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: Radius.circular(30.0),
+                                  ),
+                                  child: FirstKnow()),
+                            ));
                       },
                       child: const MoticarText(
                         fontColor: AppColors.skipColor,
@@ -2914,8 +2923,8 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                   ),
                   padding: const EdgeInsets.all(8),
                   alignment: Alignment.center,
-                  child:  getImageWidget(widget.carName.toString()),
-                  
+                  child: getImageWidget(widget.carName.toString()),
+
                   // Image.asset(widget.imagePath),
                 ),
               ),

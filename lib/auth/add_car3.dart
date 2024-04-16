@@ -147,7 +147,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            height: 116,
+                            // height: 116,
                             // padding: const EdgeInsets.all(8),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
@@ -166,7 +166,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   const SizedBox(height: 4),
-                                   getImageWidget(widget.carName.toString()),
+                                  getImageWidget(widget.carName.toString()),
                                   // SvgPicture.asset(widget.imagePath),
                                   // const SizedBox(height: 4),
                                   Text(
@@ -437,7 +437,18 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                                       fontColor:
                                                           AppColors.green,
                                                     )
-                                                  : MoticarText(
+                                                  :
+                                                  // Text(
+                                                  //     categoriez,
+                                                  //     style: TextStyle(
+                                                  //       fontSize: 14,
+                                                  //       fontWeight:
+                                                  //           FontWeight.w400,
+                                                  //       color:
+                                                  //           Color(0xff495353),
+                                                  //     ),
+                                                  //   ),
+                                                  MoticarText(
                                                       text: categoriez,
                                                       fontSize: 14,
                                                       fontWeight:
