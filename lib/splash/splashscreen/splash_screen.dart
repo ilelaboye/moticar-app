@@ -70,15 +70,15 @@ class _SplashScreenState extends State<SplashScreen>
 
 
               SizedBox(
-              height: 150,
-              width: 150,
+              height: 250,
+              width: 250,
               child: RiveAnimation.asset(
                 'assets/images/splashscreenanim.riv',
               ),
             ),
 
             Padding(
-              padding: EdgeInsets.only(top: 50.0, left: 50, right: 50),
+              padding: EdgeInsets.only(top: 30.0, left: 50, right: 50),
               child: MoticarText(
                   text:
                       'Every kobo of your car \nexpenses \nis just a tap away!',

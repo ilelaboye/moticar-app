@@ -171,6 +171,9 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../models/expensesmodel.dart';
 import '../../../providers/app_providers.dart';
+import '../../../utils/enums.dart';
+import '../../../widgets/app_texts.dart';
+import '../../../widgets/eard_loader.dart';
 
 class PieChartSample2 extends StatefulHookConsumerWidget {
   const PieChartSample2({super.key});
@@ -195,7 +198,7 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
     _tooltip = TooltipBehavior(enable: true);
     super.initState();
 
-     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ref.read(profileProvider.notifier).getExpenses();
     });
   }
@@ -206,54 +209,85 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
     final model = ref.read(profileProvider.notifier);
     List<GetExpenses> myTechies = state.getexpenses;
 
-    return SfCircularChart(
-      // title: ChartTitle(text: 'Moticar'),
-      // legend: const Legend(position: LegendPosition.bottom),
+    return Column(
+      children: [
+        if (state.loading != Loader.loading && myTechies.isNotEmpty)
+          SfCircularChart(
+            // title: ChartTitle(text: 'Moticar'),
+            // legend: const Legend(position: LegendPosition.bottom),
 
-      // legendPosition: LegendPosition.bottom,
-      tooltipBehavior: _tooltip,
-      annotations: <CircularChartAnnotation>[
-        // CircularChartAnnotation(
-        //     widget: Container(
-        //         child: PhysicalModel(
-        //             child: Container(),
-        //             shape: BoxShape.circle,
-        //             elevation: 10,
-        //             shadowColor: Colors.black,
-        //             color: const Color.fromRGBO(230, 230, 230, 1)))
-        //             ),
-        CircularChartAnnotation(
-            widget: Container(
-                alignment: Alignment.center,
-                child:  Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Total Expense',
-                        style: TextStyle(
-                            color: Color(0xff5E7A7C),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500)),
+            // legendPosition: LegendPosition.bottom,
+            tooltipBehavior: _tooltip,
+            annotations: <CircularChartAnnotation>[
+              // CircularChartAnnotation(
+              //     widget: Container(
+              //         child: PhysicalModel(
+              //             child: Container(),
+              //             shape: BoxShape.circle,
+              //             elevation: 10,
+              //             shadowColor: Colors.black,
+              //             color: const Color.fromRGBO(230, 230, 230, 1)))
+              //             ),
+              CircularChartAnnotation(
+                  widget: Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Total Expense',
+                              style: TextStyle(
+                                  color: Color(0xff5E7A7C),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500)),
 
-                    //
-                    Text(
-                      'N ${calculateTotalExpense(myTechies)}',
-                        style: const TextStyle(
-                            // fontFamily: "NeulisAlt",
-                            color: Color(0xff006C70),
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500)),
-                  ],
-                )))
-      ],
-      series: <CircularSeries<GetExpenses, String>>[
-        DoughnutSeries<GetExpenses, String>(
-          dataSource: myTechies,
-          pointColorMapper: (GetExpenses myTechies, _) => getImageColor(myTechies.category.toString()),
-          xValueMapper: (GetExpenses myTechies, _) => myTechies.category.toString(),
-          yValueMapper: (GetExpenses myTechies, _) => myTechies.amount!.toInt(),
-          // name: 'Gold',
-          innerRadius: '75%',
-        )
+                          //
+                          Text('N ${calculateTotalExpense(myTechies)}',
+                              style: const TextStyle(
+                                  // fontFamily: "NeulisAlt",
+                                  color: Color(0xff006C70),
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w500)),
+                        ],
+                      )))
+            ],
+            series: <CircularSeries<GetExpenses, String>>[
+              DoughnutSeries<GetExpenses, String>(
+                dataSource: myTechies,
+                pointColorMapper: (GetExpenses myTechies, _) =>
+                    getImageColor(myTechies.category.toString()),
+                xValueMapper: (GetExpenses myTechies, _) =>
+                    myTechies.category.toString(),
+                yValueMapper: (GetExpenses myTechies, _) =>
+                    myTechies.amount!.toInt(),
+                // name: 'Gold',
+                innerRadius: '75%',
+              )
+            ],
+          )
+        else if (state.loading == Loader.loading)
+          const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              MoticarLoader(
+                size: 40,
+              )
+            ],
+          )
+        else
+          const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 30),
+                MoticarText(
+                  text: 'No Expenses Available',
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  fontColor: AppColors.textColor,
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }

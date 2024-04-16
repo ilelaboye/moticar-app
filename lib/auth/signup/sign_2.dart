@@ -234,7 +234,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                   ),
                                   //email
                                   SizedBox(
-                                    height: 55,
+                                    height: 58,
                                     child: TextFormField(
                                       controller: firstController,
                                       keyboardType: TextInputType.name,
@@ -256,12 +256,14 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                               value!),
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          borderSide: const BorderSide(
-                                              color: AppColors.red, width: 1.5),
-                                        ),
+                                        errorBorder: InputBorder.none,
+
+                                        // OutlineInputBorder(
+                                        //   borderRadius:
+                                        //       BorderRadius.circular(8),
+                                        //   borderSide: const BorderSide(
+                                        //       color: AppColors.red, width: 1.5),
+                                        // ),
                                         hintText: 'Enter first Name',
                                         // errorText:
                                         //     _emailError, // Show the error message here
@@ -313,7 +315,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                   ),
                                   //email
                                   SizedBox(
-                                    height: 55,
+                                    height: 58,
                                     child: TextFormField(
                                       controller: lastNameController,
                                       keyboardType: TextInputType.name,
@@ -335,12 +337,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                           fontSize: 15),
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          borderSide: const BorderSide(
-                                              color: AppColors.red, width: 1.5),
-                                        ),
+                                        errorBorder: InputBorder.none,
                                         hintText: 'Enter Last Name',
                                         // errorText:
                                         //     _emailError, // Show the error message here
@@ -615,7 +612,7 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                         decoration: InputDecoration(
                           // border: InputBorder.none,
                           // errorBorder: InputBorder.none,
-                           border: InputBorder.none,
+                          border: InputBorder.none,
                           errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(
@@ -731,11 +728,14 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                               },
                             );
 
-                            await Future.delayed(const Duration(seconds: 2));
+                            await Future.delayed(
+                                const Duration(milliseconds: 200));
 
                             // Navigator.pop(context);
 
-                            String imagePath = images.value.path;
+                            String imagePath = images.value.path.isEmpty
+                                ? ""
+                                : images.value.path;
 
                             FormData formData = FormData.fromMap({
                               'email': widget.email,
@@ -743,8 +743,10 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                               'last_name': lastName,
                               'preferred_name': nickname,
                               'password': passW,
-                              'image': await MultipartFile.fromFile(imagePath,
-                                  filename: 'image'),
+                              'image': imagePath.isNotEmpty
+                                  ? await MultipartFile.fromFile(imagePath,
+                                      filename: 'image')
+                                  : "",
                             });
 
                             // All fields are filled, attempt sign-up
@@ -767,7 +769,10 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                   textColor: AppColors.white,
                                   buttonText: "Continue",
                                   subtitle: signUpResult.successMessage,
-                                  onTap: () {
+                                  onTap: () async {
+                                      await HiveStorage.put(
+                                                  HiveKeys.token,
+                                                  newToken);
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return SignUpPage3(

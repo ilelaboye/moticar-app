@@ -358,9 +358,10 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
           surfaceTintColor: Colors.white,
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              flex: 5,
+              flex: 8,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: SingleChildScrollView(
@@ -489,7 +490,7 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                       ),
 
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.7,
+                        height: MediaQuery.of(context).size.height * 0.51,
                         child: TabBarView(
                           controller: _tabController,
                           children: [
@@ -799,20 +800,19 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                                                     },
                                                     child: Container(
                                                       height: 57,
-                                                      width: MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width *
-                                                          0.85,
-                                                      padding:
-                                                          const EdgeInsets
-                                                              .symmetric(
-                                                              vertical: 3,
-                                                              horizontal: 15),
-                                                      margin: const EdgeInsets
-                                                          .only(bottom: 8),
-                                                      decoration:
-                                                          BoxDecoration(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.85,
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 3,
+                                                          horizontal: 15),
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              bottom: 8),
+                                                      decoration: BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
                                                             BorderRadius
@@ -830,8 +830,8 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                                                         ),
                                                         boxShadow: const [
                                                           BoxShadow(
-                                                            color: Colors
-                                                                .black45,
+                                                            color:
+                                                                Colors.black45,
                                                             blurRadius: 0.1,
                                                           ),
                                                         ],
@@ -876,10 +876,10 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                                                                   ? Container(
                                                                       decoration:
                                                                           BoxDecoration(
-                                                                        color:
-                                                                            AppColors.lightGreen,
-                                                                        shape:
-                                                                            BoxShape.circle,
+                                                                        color: AppColors
+                                                                            .lightGreen,
+                                                                        shape: BoxShape
+                                                                            .circle,
                                                                         border:
                                                                             Border.all(
                                                                           color:
@@ -1340,116 +1340,6 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                           ],
                         ),
                       ),
-
-                      //
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.12,
-                        child: Center(
-                          child: Container(
-                            // height: MediaQuery.of(context).size.height * 0.4,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(
-                                color: Color(0xffEEF5F5),
-                                // color: Colors.white,
-                                border: Border(
-                                    top: BorderSide(
-                                        color: Color(0xffEEF5F5), width: 4))),
-                            padding: const EdgeInsets.all(8),
-                            child: MoticarLoginButton(
-                              myColor: AppColors.indieC,
-                              borderColor: AppColors.indieC,
-                              onTap: () async {
-                                if (selectedCarPart.isNotEmpty) {
-                                  showDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    builder: (context) {
-                                      return Center(
-                                        child: AlertDialog(
-                                          backgroundColor:
-                                              AppColors.appThemeColor,
-                                          shadowColor: AppColors.appThemeColor,
-                                          content: Container(
-                                            padding: const EdgeInsets.all(20),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: const Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                // const SpinKitWave(
-                                                //   color: AppColors.appThemeColor,
-                                                //   size: 30.0,
-                                                // ),
-
-                                                SizedBox(
-                                                  height: 100,
-                                                  width: 100,
-                                                  child: RiveAnimation.asset(
-                                                    'assets/images/preloader.riv',
-                                                  ),
-                                                ),
-                                                SizedBox(height: 8),
-                                                Text('Processing, please wait.',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: Colors.white))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-
-                                  await Future.delayed(
-                                      const Duration(seconds: 1));
-
-                                  Navigator.pop(context);
-
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return AddCarPart2(
-                                          imagePath: '',
-                                          partCategory: selectedCategory,
-                                          carParts: selectedCarPart);
-                                    },
-                                  ));
-
-                                  //
-                                } else {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return MoticarDialog(
-                                        icon: const Icon(Icons.info_rounded,
-                                            color: AppColors.appThemeColor,
-                                            size: 50),
-                                        title: '',
-                                        subtitle:
-                                            'Please select your car brand, before proceeding',
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        buttonColor: AppColors.appThemeColor,
-                                        textColor: AppColors.white,
-                                        buttonText: "Dismiss",
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                              child: const MoticarText(
-                                fontColor: AppColors.appThemeColor,
-                                text: 'Continue',
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -1457,6 +1347,99 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
             ),
 
             //bottom
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MoticarLoginButton(
+                    myColor: AppColors.indieC,
+                    borderColor: AppColors.indieC,
+                    onTap: () async {
+                      if (selectedCarPart.isNotEmpty) {
+                        // showDialog(
+                        //   context: context,
+                        //   barrierDismissible: true,
+                        //   builder: (context) {
+                        //     return Center(
+                        //       child: AlertDialog(
+                        //         backgroundColor:
+                        //             AppColors.appThemeColor,
+                        //         shadowColor: AppColors.appThemeColor,
+                        //         content: Container(
+                        //           padding: const EdgeInsets.all(20),
+                        //           decoration: BoxDecoration(
+                        //             borderRadius:
+                        //                 BorderRadius.circular(10),
+                        //           ),
+                        //           child: const Column(
+                        //             mainAxisSize: MainAxisSize.min,
+                        //             children: [
+                        //               // const SpinKitWave(
+                        //               //   color: AppColors.appThemeColor,
+                        //               //   size: 30.0,
+                        //               // ),
+
+                        //               SizedBox(
+                        //                 height: 100,
+                        //                 width: 100,
+                        //                 child: RiveAnimation.asset(
+                        //                   'assets/images/preloader.riv',
+                        //                 ),
+                        //               ),
+
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        // );
+
+                        // await Future.delayed(
+                        //     const Duration(milliseconds: 100));
+
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return AddCarPart2(
+                                imagePath: '',
+                                partCategory: selectedCategory,
+                                carParts: selectedCarPart);
+                          },
+                        ));
+
+                        //
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return MoticarDialog(
+                              icon: const Icon(Icons.info_rounded,
+                                  color: AppColors.appThemeColor, size: 50),
+                              title: '',
+                              subtitle:
+                                  'Please select your car brand, before proceeding',
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              buttonColor: AppColors.appThemeColor,
+                              textColor: AppColors.white,
+                              buttonText: "Dismiss",
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: const MoticarText(
+                      fontColor: AppColors.appThemeColor,
+                      text: 'Continue',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

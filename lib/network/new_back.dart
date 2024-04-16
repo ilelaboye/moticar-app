@@ -94,8 +94,8 @@ class NewAgencyBackEnd implements AgencyNetwork {
     // Map<String, dynamic>? formData,
   }) async {
     String? token = HiveStorage.get(HiveKeys.token);
+    print(token);
     try {
-      
       final response = await _dio.get(
         path,
         // queryParameters: formData,
@@ -104,8 +104,8 @@ class NewAgencyBackEnd implements AgencyNetwork {
             "Accept": "*/*",
             "Content-Type": "application/json",
             "Authorization": "Bearer $token",
-            "Host" : "moticar.ttninternational.org",
-            "Connection" : 'keep-alive'
+            "Host": "moticar.ttninternational.org",
+            "Connection": 'keep-alive'
             // baseUrl.toString()
           },
         ),

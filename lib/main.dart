@@ -4,6 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rive/rive.dart';
+import 'Home/carpart/car_part.dart';
 import 'services/hivekeys.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -78,7 +79,7 @@ class MyApp extends StatelessWidget {
           // BottomHomePage()
           // JsonPagesScreen( )
 
-          // AllCarsParts4()
+          // AddCarPart()
 
           const SplashScreen(),
     );

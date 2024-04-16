@@ -539,9 +539,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                               },
                             );
 
-                            await Future.delayed(const Duration(seconds: 2));
-
-                            // Navigator.pop(context);
+                            await Future.delayed(
+                                const Duration(milliseconds: 300));
 
                             // All fields are filled, attempt sign-up
                             final signUpResult = await model.signUp1(
@@ -1263,7 +1262,7 @@ class _VerificationPageState extends ConsumerState<VerificationPage> {
                           },
                         );
 
-                        await Future.delayed(const Duration(seconds: 2));
+                        await Future.delayed(const Duration(milliseconds: 200));
 
                         Navigator.pop(context);
 

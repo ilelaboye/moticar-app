@@ -744,7 +744,7 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
 
                                     // Navigator.pop(context);
 
-                                    String imagePath = images.value.path;
+                                    String imagePath = images.value.path.isEmpty ? "" : images.value.path;
 
                                     FormData formData = FormData.fromMap({
                                       // 'email': widget.email,
@@ -754,9 +754,11 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                       "phone": phonie,
                                       'email': emailController.text,
                                       "category": selectedCat.toString(),
-                                      'image': await MultipartFile.fromFile(
-                                          imagePath,
-                                          filename: 'image'),
+                                      'image': imagePath.isNotEmpty
+                                          ? await MultipartFile.fromFile(
+                                              imagePath,
+                                              filename: 'image')
+                                          : "", // Use null if imagePath is empty
                                     });
 
                                     // All fields are filled, attempt sign-up
