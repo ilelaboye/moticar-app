@@ -693,12 +693,12 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                     border: InputBorder.none,
                                     errorBorder: InputBorder.none,
                                     hintText: 'Enter amount',
-                                    // prefixText: '\u20A6',
+                                    prefixText: '\u20A6',
                                     suffixText: '00',
                                     counterText: '',
 
-                                    prefix: SvgPicture.asset(
-                                        "assets/svgs/naira.svg"),
+                                    // prefix: SvgPicture.asset(
+                                    //     "assets/svgs/naira.svg"),
 
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),

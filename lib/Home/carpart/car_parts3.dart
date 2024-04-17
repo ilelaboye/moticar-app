@@ -287,7 +287,7 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
                                 child: Center(
                                   child: MoticarText(
                                       text: "x${widget.quantity}",
-                                      fontSize: 13,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.w400,
                                       fontColor: const Color(0xff293536)),
                                 ),
@@ -301,17 +301,19 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
 
                           //measurement
                           Container(
-                            height: 30,
+                            height: 40,
                             width: 90,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                                 color: const Color(0xff425658),
                                 borderRadius: BorderRadius.circular(8)),
-                            child: MoticarText(
-                                text: widget.measurements,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                fontColor: Colors.white),
+                            child: Center(
+                              child: MoticarText(
+                                  text: widget.measurements,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  fontColor: Colors.white),
+                            ),
                           ),
 
                           const SizedBox(
