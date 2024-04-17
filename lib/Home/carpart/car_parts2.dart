@@ -45,7 +45,7 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
   String selectMeasure = '';
   String conditionz = '';
   String? selectedBrand;
-  final List myCategory = ['Total', "Mobil"];
+  final List myBrandList = ['Total', "Mobil"];
   int selectedIndex = -1; // Initially no card is selected
 
   int quantity = 0; // Track the quantity
@@ -196,7 +196,7 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                               Row(
                                 children: [
                                   //image
-                                  // SvgPicture.asset(widget.imagePath),
+                                  SvgPicture.asset(widget.imagePath),
                                   const SizedBox(width: 8),
                                   Text(
                                     widget.carParts,
@@ -214,7 +214,7 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                               //icon
 
                               const Icon(Icons.arrow_forward_ios_rounded,
-                                  color: Color(0xff101828)),
+                                  size: 20, color: Color(0xff101828)),
 
                               //partCategory
                               Text(
@@ -342,8 +342,8 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                         //   FocusScope.of(context)
                                         //       .unfocus(); // Close the keyboard
                                         // },
-                                        textCapitalization:
-                                            TextCapitalization.words,
+                                        // textCapitalization:
+                                        //     TextCapitalization.words,
                                         textInputAction: TextInputAction.next,
                                         style: const TextStyle(
                                             fontFamily: "NeulisAlt",
@@ -403,7 +403,7 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                     padding: EdgeInsets.only(
                                         top: 8.0, bottom: 8, left: 3),
                                     child: MoticarText(
-                                        text: "Category ",
+                                        text: "Brand ",
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         fontColor: AppColors.textColor),
@@ -441,7 +441,7 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                                   width: 1.5),
                                             ),
                                           ),
-                                          items: myCategory
+                                          items: myBrandList
                                               .map<DropdownMenuItem<String>>(
                                                   (value) => DropdownMenuItem<
                                                           String>(
@@ -671,10 +671,13 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                 height: 55,
                                 child: TextFormField(
                                   controller: amountController,
-                                  keyboardType: TextInputType.phone,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    ThousandsFormatter(),
+                                  ],
                                   onTapOutside: (event) {
-                                    FocusScope.of(context)
-                                        .unfocus(); // Close the keyboard
+                                    FocusScope.of(context).unfocus();
                                   },
                                   textInputAction: TextInputAction.done,
                                   style: const TextStyle(
@@ -682,36 +685,20 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                                       color: AppColors.textColor,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16),
-                                  maxLength: 7,
-                                  onChanged: (value) {
-                                    // final formattedAmount =
-                                    //     formatAmountWithThousandSeparator(value);
-                                    // if (formattedAmount !=
-                                    //     amountController.text) {
-                                    //   amountController.value = TextEditingValue(
-                                    //     text: formattedAmount,
-                                    //     selection: TextSelection.collapsed(
-                                    //         offset: formattedAmount.length),
-                                    //   );
-                                    // }
-                                  },
-                                  onEditingComplete: () {
-                                    // final unformattedAmount =
-                                    //     removeThousandSeparator(
-                                    //         amountController.text);
-                                    // setState(() {
-                                    //   amountController.text = unformattedAmount;
-                                    // });
-                                  },
+                                  maxLength: 9,
+                                  onChanged: (value) {},
                                   validator: (value) =>
                                       FieldValidator.validate(value!),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     errorBorder: InputBorder.none,
                                     hintText: 'Enter amount',
-                                    prefixText: '\u20A6',
+                                    // prefixText: '\u20A6',
                                     suffixText: '00',
                                     counterText: '',
+
+                                    prefix: SvgPicture.asset(
+                                        "assets/svgs/naira.svg"),
 
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
@@ -911,54 +898,6 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
                               if (productControl.text.isNotEmpty &&
                                   selectedBrand!.isNotEmpty &&
                                   amountController.text.isNotEmpty) {
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: true,
-                                  builder: (context) {
-                                    return Center(
-                                      child: AlertDialog(
-                                        backgroundColor:
-                                            AppColors.appThemeColor,
-                                        shadowColor: AppColors.appThemeColor,
-                                        content: Container(
-                                          padding: const EdgeInsets.all(20),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: const Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              // const SpinKitWave(
-                                              //   color: AppColors.appThemeColor,
-                                              //   size: 30.0,
-                                              // ),
-
-                                              SizedBox(
-                                                height: 100,
-                                                width: 100,
-                                                child: RiveAnimation.asset(
-                                                  'assets/images/preloader.riv',
-                                                ),
-                                              ),
-                                              SizedBox(height: 8),
-                                              Text('Processing, please wait.',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: Colors.white))
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-
-                                await Future.delayed(
-                                    const Duration(seconds: 1));
-
-                                Navigator.pop(context);
-
                                 print("condition $conditionz & my $quantity");
 
                                 showMoticarBottom(

@@ -137,10 +137,11 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
 
   // /expenses
   Future<ApiResponse> getExpenses() async {
+    state = state.copyWith(
+      loading: Loader.loading,
+    );
     try {
-      // state = state.copyWith(
-      //   loading: Loader.loading,
-      // );
+      
       final response = await _reader.read(newService).getWithToken(
             // formData: formData,
             path: 'get-expenses',
@@ -187,10 +188,11 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
 
   //technicians
   Future<ApiResponse> getTechnicians() async {
+     state = state.copyWith(
+      loading: Loader.loading,
+    );
     try {
-      state = state.copyWith(
-        loading: Loader.loading,
-      );
+     
       final response = await _reader.read(newService).getWithToken(
             // formData: formData,
             path: 'get-technicians',
@@ -236,43 +238,45 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
   }
 
   //getCars
-  Future<ApiResponse> getMyCars() async {
+ Future<ApiResponse> getMyCars() async {
+   state = state.copyWith(
+      loading: Loader.loading, // Set loading state before making the API call
+    );
     try {
-      // state = state.copyWith(
-      //   loading: Loader.loading,
-      // );
+     
       final response = await _reader.read(newService).getWithToken(
-            // formData: formData,
             path: 'get-my-cars',
           );
+
       if (response.statusCode == 200) {
-        final responseData = response.data['data']; // Access the "data" key
-        print(responseData);
-        // Check if responseData is empty
+        final responseData = response.data['data'];
+
         if (responseData.isEmpty) {
-          // Update state with empty list
+          // Update state with empty list if no cars are available
           state = state.copyWith(loading: Loader.loaded, getexpenses: []);
           return ApiResponse(
             successMessage: 'No Cars available',
           );
         }
-        // Map response data to GetExpenses objects
+
         final List<GetCarz> newCarz = (responseData as List<dynamic>)
             .map((json) => GetCarz.fromJson(json))
             .toList();
 
-        // Update state with new expenses
+        // Update state with new cars
         state = state.copyWith(loading: Loader.loaded, getallCarz: newCarz);
         return ApiResponse(
           successMessage: 'Success',
         );
       } else {
+        // Handle non-200 status codes
         state = state.copyWith(loading: Loader.error);
         return ApiResponse(
           errorMessage: response.data['message'] ?? "Error",
         );
       }
     } on DioError catch (e) {
+      // Handle Dio errors
       state = state.copyWith(loading: Loader.error);
       return ApiResponse(
         error: e.response!.data['message'] ??
@@ -280,17 +284,20 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
             "Error",
       );
     } catch (e) {
+      // Handle other exceptions
       state = state.copyWith(loading: Loader.error);
       rethrow;
     }
   }
 
+
   //getAvailablecarz
   Future<ApiResponse> getCars() async {
+    state = state.copyWith(
+      loading: Loader.loading,
+    );
     try {
-      state = state.copyWith(
-        loading: Loader.loading,
-      );
+      
       final response = await _reader.read(newService).getWithToken(
             // formData: formData,
             path: 'get-cars',
