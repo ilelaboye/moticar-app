@@ -1,4 +1,5 @@
 import 'package:clean_calendar/clean_calendar.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -149,7 +150,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                     ? Column(
                         children: [
                           Container(
-                            height: MediaQuery.of(context).size.height * 0.12,
+                            height: MediaQuery.of(context).size.height * 0.15,
                             padding: const EdgeInsets.only(
                                 top: 10, left: 10, right: 10),
                             width: MediaQuery.of(context).size.width,
@@ -472,10 +473,10 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
               ),
               child: SingleChildScrollView(
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(left:8, right:8, top:8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -559,6 +560,10 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                     SizedBox(
                       height: 150,
                       child: ListView(
+
+                        // padding: EdgeInsets.all(1),
+                      
+                        
                         children: [
                           CleanCalendar(
                             datePickerCalendarView:
@@ -608,39 +613,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                       ),
                     ),
 
-                    // // Padding(
-                    // //   padding: const EdgeInsets.all(30.0),
-                    // //   child: Image.asset('assets/images/rocket.png'),
-                    // // ),
-                    // // // const SizedBox(height: 20),
-
-                    // // const Text(
-                    // //   "You are off to a great start!",
-                    // //   style: TextStyle(
-                    // //       fontFamily: "NeulisAlt",
-                    // //       fontStyle: FontStyle.normal,
-                    // //       fontWeight: FontWeight.w600,
-                    // //       color: AppColors.appThemeColor,
-                    // //       letterSpacing: 1.2,
-                    // //       fontSize: 18),
-                    // // ),
-
-                    // const SizedBox(height: 20),
-
-                    // const Center(
-                    //   child: Text(
-                    //     'This is a good sight! \nBut try to remember if there was some expenses you actually made but have forgotten to put in here',
-                    //     textAlign: TextAlign.center,
-                    //     style: TextStyle(
-                    //         fontFamily: "NeulisAlt",
-                    //         fontStyle: FontStyle.normal,
-                    //         fontWeight: FontWeight.w400,
-                    //         color: AppColors.appThemeColor,
-                    //         height: 1.2,
-                    //         fontSize: 12),
-                    //   ),
-                    // ),
-
+                
+                //pie charts
                     const SizedBox(height: 350, child: PieChartSample2()),
 
                     // const SizedBox(height: 10),
@@ -698,16 +672,15 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                       height: MediaQuery.of(context).size.height * 0.5,
                       width: double.infinity,
                       child: ListView.builder(
+                        padding: EdgeInsets.all(1),
                         shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: myTechies.length,
                         itemBuilder: (context, index) {
                           final breakdown = myTechies[index];
                           // final image
-
+                    
                           // final String catImaes = if(breakdown.category == "Body works"){}
                           return ListTile(
-                            // contentPadding: EdgeInsets.all(5),
                             leading: GestureDetector(
                               onTap: () {
                                 showMoticarBottom(
@@ -784,7 +757,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                     ),
                                   ],
                                 ),
-
+                                              
                                 //amount and menu button
                                 Row(
                                   children: [
@@ -796,10 +769,10 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                             fontWeight: FontWeight.w500)),
                                     // GestureDetector(
                                     //   onTap: (){
-
+                                              
                                     //   },
                                     //   child: const Icon(Icons.more_vert))
-
+                                              
                                     PopupMenuButton(
                                       surfaceTintColor: Colors.white,
                                       // color: const Color(0xffC1C3C3),
@@ -962,15 +935,12 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
     );
   }
 
+
+// notifications
   void _showMyNotification(
     BuildContext context,
   ) {
-    // final RenderObject? renderBox = key.currentContext?.findRenderObject();
-    // final componentPosition = renderBox?.constraints.isNormalized;
-    // .localToGlobal(Offset.zero);
-
-    // double sheetHeight =
-    //     MediaQuery.of(context).size.height - 50;
+    
     showModalBottomSheet(
       isScrollControlled: true,
       constraints: BoxConstraints.expand(

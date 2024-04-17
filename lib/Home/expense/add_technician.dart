@@ -43,7 +43,9 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
 
   String? completePhoneNumber;
 
-  final List myCategory = ['Mechanic', "Rewire"];
+  final List myCategory = ['Mechanic',
+  "Panel Beater", "Rewire", "Vulcaniser", "Painter", "Upholster", "Electronics", "Driver", "Towing Motor", "MOT Officer", 
+  "Mirror Fixer", "General Body Works","Vehicle Technician","Rewire"];
   String? selectedCat;
 
   @override

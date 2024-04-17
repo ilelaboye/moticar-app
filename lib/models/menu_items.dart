@@ -24,7 +24,6 @@ class MenuItem {
     this.bottomText,
     this.trailingIconUrl,
     this.showTrailingIcon = true,
-
   });
 }
 
@@ -34,6 +33,7 @@ class AppMenuItem {
   final String icon;
   final String? trailingText;
   final Widget? trailing;
+  final Widget? leading;
   final Widget? child;
   final String? trailingIconUrl;
   final void Function()? action;
@@ -42,7 +42,7 @@ class AppMenuItem {
   final bool showTrailingIcon;
   // final color;
   const AppMenuItem({
-    // required this.color,
+    this.leading,
     required this.title,
     required this.icon,
     this.subTitle,

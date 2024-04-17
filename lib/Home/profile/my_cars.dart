@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:moticar/widgets/app_texts.dart';
@@ -101,12 +102,14 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
+                   GestureDetector(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.close, 
+                        size: 25,
+                        color: Colors.white)),
+                   
                 ],
               ),
 
@@ -159,21 +162,26 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 8, right: 8, top: 4, bottom: 4),
-                        decoration: BoxDecoration(
-                          color: const Color(0xffFF594B),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: const Text(
-                          "new",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: Colors.white,
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(
+                              left: 8, right: 8, top: 4, bottom: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xffFF594B),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: const Text(
+                            "new",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: "NeulisAlt",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

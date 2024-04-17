@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/auth/add_car.dart';
@@ -15,6 +17,7 @@ import 'package:clean_calendar/clean_calendar.dart';
 import '../../widgets/eard_loader.dart';
 import '../expense/add_expense.dart';
 import '../expense/add_technician.dart';
+import '../profile/invite_friend.dart';
 import '../profile/my_cars.dart';
 
 class TimelinePage extends StatefulHookConsumerWidget {
@@ -71,64 +74,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   bool isVisible = false;
 
 
-   List<MotiModel> menuItems = [
-      MotiModel(
-        bckColor: Color(0xffDBFEFF),
-          title: 'Add the names of your trusted mechanics straight from your phone directory',
-          imagePath: 'assets/images/moti_car.png',
-          textButton: "Add a mechanic",
-
-          action: () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //   return const ChangePassPage();
-            // }));
-            // context.router.pushNamed('/home-nav/resetPin');
-          }),
-
-          //
-      MotiModel(
-        bckColor: Color(0xffDBFEFF),
-          title: 'Win some points when you tell a friend about moticar by sharing your refferal code',
-          imagePath: 'assets/images/moti_car.png',
-          textButton: "Invite a friend",
-          action: () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //   return const ChangePassPage();
-            // }));
-            // context.router.pushNamed('/home-nav/resetPin');
-          }),
-
-
-      MotiModel(
-        bckColor: Color(0xffDBFEFF),
-          title: 'Set a reminder for your next appointment with your car technician',
-          imagePath: 'assets/images/moti_car.png',
-          textButton: "Set a reminder",
-          action: () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //   return const ChangePassPage();
-            // }));
-            // context.router.pushNamed('/home-nav/resetPin');
-          }),
-
-
-     MotiModel(
-      bckColor: Color(0xffDBFEFF),
-          title: 'Rub our ego and give us a rating on the playstore! We love to hear it.',
-          imagePath: 'assets/images/moti_car.png',
-          textButton: "Rate us",
-          action: () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //   return const ChangePassPage();
-            // }));
-            // context.router.pushNamed('/home-nav/resetPin');
-          }),
-      
-
-      
-
-     
-    ];
+  
 
 
   @override
@@ -153,6 +99,75 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
     final model = ref.read(profileProvider.notifier);
 
     List<GetCarz> myCarz = state.getallCarz;
+
+     List<MotiModel> menuItems = [
+      MotiModel(
+        checkColor: Color(0xffD7E2E4),
+        textColor: const Color(0xff002D36),
+        buttonColor: Colors.white,
+        bckColor: const Color(0xffDBFEFF),
+          title: 'Add the names of your trusted mechanics straight from your phone directory',
+          imagePath: 'assets/images/mech.svg',
+          textButton: "Add a mechanic",
+
+          action: () {
+
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const AddNewTechie();
+            }));
+            // context.router.pushNamed('/home-nav/resetPin');
+          }
+          ),
+
+          //
+      MotiModel(
+        checkColor: AppColors.lightGreen,
+        textColor: Colors.white,// const Color(0xff002D36),
+        buttonColor: AppColors.appThemeColor,
+        bckColor: const Color(0xffFDF8C5), //0xffDBFEFF
+          title: 'Win some points when you tell a friend about moticar by sharing your refferal code',
+          imagePath: 'assets/images/fwend.svg',
+          textButton: "Invite an extra friend",
+          action: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const InviteFriend();
+            }));
+            // context.router.pushNamed('/home-nav/resetPin');
+          }),
+
+
+      MotiModel(
+        checkColor:Color(0xffD7E2E4),
+        textColor: const Color(0xff002D36),
+        buttonColor: Colors.white,
+        bckColor: const Color(0xffDBFEFF),
+          title: 'Set a reminder for your next appointment with your car technician',
+          imagePath: 'assets/images/reminder.svg',
+          textButton: "Set a reminder",
+          action: () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return const ChangePassPage();
+            // }));
+            // context.router.pushNamed('/home-nav/resetPin');
+          }),
+
+
+     MotiModel(
+      checkColor: Color(0xffD7E2E4),
+      textColor: const Color(0xff002D36),
+        buttonColor: Colors.white,
+      bckColor: const Color(0xffDBFEFF),
+          title: 'Rub our ego and give us a rating on the playstore! We love to hear it.',
+          imagePath: 'assets/images/rated.svg',
+          textButton: "Rate us",
+          action: () {
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return const ChangePassPage();
+            // }));
+            // context.router.pushNamed('/home-nav/resetPin');
+          }),
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.teal,
       floatingActionButton: FloatingActionButton(
@@ -187,7 +202,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                     children: [
                       myCarz.isNotEmpty
                           ? Container(
-                              height: MediaQuery.of(context).size.height * 0.12,
+                              height: MediaQuery.of(context).size.height * 0.15,
                               padding: const EdgeInsets.only(
                                   top: 10, left: 10, right: 10),
                               width: MediaQuery.of(context).size.width,
@@ -989,29 +1004,45 @@ class MoticarCards extends StatelessWidget {
       child: Container(
         // height: 165,
         padding: const EdgeInsets.only(
-            left: 8, right: 8, top: 8, bottom: 8),
+            left: 10, right: 8, top: 8, bottom: 8),
         decoration: BoxDecoration(
             color: items.bckColor  ,
             // ?? const Color(0xffFDF8C5),
             borderRadius: BorderRadius.circular(8)),
         child: Row(
             mainAxisAlignment:
-                MainAxisAlignment.spaceAround,
+                MainAxisAlignment.spaceBetween,
             children: [
               //picture
               Column(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
+                // mainAxisAlignment:
+                //     MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.asset(
+
+                  //check mark
+                  Container(height: 25, width: 25, 
+                  alignment: Alignment.center,
+                  decoration:   BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: items.checkColor,
+
+                  ),
+                  child: const Icon(Icons.check, 
+                  size: 20,
+                  color: Colors.white ,),
+                  ),
+                  SvgPicture.asset(
                     items.imagePath,
-                    height: 100,
-                    width: 100,
+                    // height: 100,
+                    // width: 100,
                   ),
                   // const SizedBox(height: 12),
                   const Text(''),
                 ],
               ),
+
+              const SizedBox(width: 8,),
 
               //text & car tech button
               Column(
@@ -1036,10 +1067,9 @@ class MoticarCards extends StatelessWidget {
                             Text(
                             items.title,
                             textAlign: TextAlign.left,
-                            style: const TextStyle(
+                            style:   const TextStyle(
                               fontFamily: 'NeulisAlt',
-                              color:
-                                  AppColors.appThemeColor,
+                              color: AppColors.textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),
@@ -1074,10 +1104,13 @@ class MoticarCards extends StatelessWidget {
                             //   );
                             // },
                             child: Container(
+                              height: 40, 
+                              width: 150,
+                              alignment: Alignment.center,
                               padding:
                                   const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: items.buttonColor,
                                 borderRadius:
                                     BorderRadius.circular(
                                         8),
@@ -1086,12 +1119,13 @@ class MoticarCards extends StatelessWidget {
                                   items.textButton,
                                   textAlign:
                                       TextAlign.center,
-                                  style: const TextStyle(
+                                  style:  TextStyle(
                                     fontFamily:
                                         'NeulisAlt',
-                                    color: AppColors
-                                        .appThemeColor,
-                                    fontSize: 13,
+                                        color: items.textColor,
+                                    // color: AppColors
+                                    //     .appThemeColor,
+                                    fontSize: 12,
                                     fontWeight:
                                         FontWeight.w600,
                                   )),
@@ -1113,7 +1147,11 @@ class MoticarCards extends StatelessWidget {
 class MotiModel {
   final String imagePath, title, textButton;
   final void Function()? action;
-  final Color bckColor;
+  final Color bckColor, buttonColor, textColor, checkColor;
 
-  MotiModel( {required this.imagePath, required this.title, required this.textButton, required this.action, required this.bckColor,});
+
+  MotiModel({
+    required this.buttonColor, required this.textColor,  
+    required this.checkColor,
+    required this.imagePath, required this.title, required this.textButton, this.action, required this.bckColor,});
 }

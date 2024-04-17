@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clean_calendar/clean_calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:moticar/Home/profile/invite_friend.dart';
+import 'package:moticar/auth/login/login_email.dart';
 import 'package:moticar/widgets/eard_dialog.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../models/menu_items.dart';
@@ -17,6 +21,7 @@ import '../../widgets/colors.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
 import '../../widgets/menu_list_tile.dart';
 import '../profile/change_pass.dart';
+import '../profile/email_sub.dart';
 
 class MePage extends StatefulHookConsumerWidget {
   const MePage({super.key});
@@ -56,6 +61,9 @@ class _MePageState extends ConsumerState<MePage> {
         icon: 'assets/misc_moticar/inbox_me_.svg',
         action: () {
           // context.router.pushNamed('/home-nav/changePassword');
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const EmailSubPage();
+          }));
         },
       ),
       // if (hasTierSystem)
@@ -97,7 +105,9 @@ class _MePageState extends ConsumerState<MePage> {
         title: 'Invite a friend',
         icon: 'assets/misc_moticar/coffee_me_.svg',
         action: () {
-          // context.router.pushNamed('/home-nav/accountInformation');
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const InviteFriend();
+          }));
         },
         trailing: const SizedBox(),
       ),
@@ -116,8 +126,128 @@ class _MePageState extends ConsumerState<MePage> {
         title: 'Logout',
         icon: 'assets/misc_moticar/log-out_me_.svg',
         trailing: const SizedBox(),
-        action: () {
+        action: () async {
           // context.router.pushNamed('/home-nav/accountInformation');
+          if (Platform.isIOS) {
+            // Show Cupertino dialog for iOS users
+            await showCupertinoDialog(
+              context: context,
+              builder: (context) {
+                return CupertinoAlertDialog(
+                  title: const Text(
+                    "Are you sure?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 19,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  // content: const Text(
+                  //   'Notifications may include alerts, sounds and icon badges. These can be configured in Settings.',
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //     fontFamily: 'Arial',
+                  //     fontSize: 14,
+                  //     color: Color(0xff929292),
+                  //     fontWeight: FontWeight.w400,
+                  //   ),
+                  // ),
+                  actions: [
+                    CupertinoButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const LoginPage();
+                        }));
+                      },
+                      child: const Text(
+                        'Yes',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.red),
+                      ),
+                    ),
+                    CupertinoButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'No',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.lightGreen,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            // Show Material dialog for Android users
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  backgroundColor:
+                      Colors.black, // Set background color to black
+                  title: const Text(
+                    "Are you sure?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 19,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  // content: const Text(
+                  //   'Notifications may include alerts, sounds and icon badges. These can be configured in Settings.',
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //     fontFamily: 'Arial',
+                  //     color: Color(0xff929292),
+                  //     fontSize: 14,
+                  //     fontWeight: FontWeight.w400,
+                  //   ),
+                  // ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const LoginPage();
+                        }));
+                      },
+                      child: const Text(
+                        'Yes',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.red,
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'No',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.lightGreen,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         },
       ),
     ];
@@ -165,14 +295,12 @@ class _MePageState extends ConsumerState<MePage> {
                                               const Color(0xffEAEAEA),
                                           child: CircleAvatar(
                                             backgroundImage: NetworkImage(
+                                                "${HiveStorage.get(HiveKeys.image)}"
 
-                                              "${HiveStorage.get(
-                                                    HiveKeys.image)}"
-                                              
-                                              // state
-                                              //   .getProfile.image
-                                              //   .toString(),
-                                                
+                                                // state
+                                                //   .getProfile.image
+                                                //   .toString(),
+
                                                 ),
                                             radius: 55,
                                           ),
@@ -312,7 +440,7 @@ class _MePageState extends ConsumerState<MePage> {
                           ],
                         ),
 
-                         IconButton(
+                        IconButton(
                           onPressed: () {},
                           icon: const Icon(
                             Icons.arrow_forward_ios_rounded,
@@ -335,7 +463,7 @@ class _MePageState extends ConsumerState<MePage> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                             SizedBox(
+                            SizedBox(
                               width: 8,
                             ),
                             SvgPicture.asset('assets/misc_moticar/package.svg'),

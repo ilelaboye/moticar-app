@@ -1246,8 +1246,6 @@ class _AddExpensesFinalPageState extends ConsumerState<AddExpensesFinalPage> {
                                                                 ',', ''),
                                                         "quantity":
                                                             widget.quantity,
-                                                        "image": ""
-                                                        // widget.imagePath
                                                       },
                                                     ];
 
@@ -1363,26 +1361,11 @@ class _AddExpensesFinalPageState extends ConsumerState<AddExpensesFinalPage> {
     return value.replaceAll(',', '');
   }
 
-// Function to format the amount with thousand separators
-  String formatAmountWithThousandSeparator(String value) {
-    final numberFormat = NumberFormat('#,##0', 'en_US');
-    try {
-      return numberFormat.format(double.parse(value));
-    } catch (e) {
-      return '';
-    }
-  }
-
   // verify otp modal
   void _showExpenseCategory(
     BuildContext context,
   ) {
-    // final RenderObject? renderBox = key.currentContext?.findRenderObject();
-    // final componentPosition = renderBox?.constraints.isNormalized;
-    // .localToGlobal(Offset.zero);
-
-    // double sheetHeight =
-    //     MediaQuery.of(context).size.height - 50;
+     
     showModalBottomSheet(
       isScrollControlled: true,
       constraints: BoxConstraints.expand(

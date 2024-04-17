@@ -211,8 +211,21 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
 
     return Column(
       children: [
-        if (state.loading != Loader.loading && myTechies.isNotEmpty)
+        if (state.loading == Loader.loading)
+    const Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        MoticarLoader(
+          size: 40,
+        )
+      ],
+    ),
+  )
+  else if (myTechies.isNotEmpty)
           SfCircularChart(
+             margin : EdgeInsets.all(1),
+             
             // title: ChartTitle(text: 'Moticar'),
             // legend: const Legend(position: LegendPosition.bottom),
 
@@ -229,6 +242,7 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
               //             color: const Color.fromRGBO(230, 230, 230, 1)))
               //             ),
               CircularChartAnnotation(
+
                   widget: Container(
                       alignment: Alignment.center,
                       child: Column(
@@ -264,30 +278,22 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
               )
             ],
           )
-        else if (state.loading == Loader.loading)
-          const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              MoticarLoader(
-                size: 40,
-              )
-            ],
-          )
-        else
-          const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 30),
-                MoticarText(
-                  text: 'No Expenses Available',
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  fontColor: AppColors.textColor,
-                ),
-              ],
-            ),
-          ),
+          else
+    const Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(height: 30),
+        MoticarText(
+          text: 'No Expenses Available',
+          fontSize: 13,
+          fontWeight: FontWeight.w500,
+          fontColor: AppColors.textColor,
+        ),
+      ],
+    ),
+  )
+        
       ],
     );
   }
