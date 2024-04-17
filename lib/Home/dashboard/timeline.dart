@@ -73,10 +73,6 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
 
   bool isVisible = false;
 
-
-  
-
-
   @override
   void initState() {
     super.initState();
@@ -100,32 +96,31 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
 
     List<GetCarz> myCarz = state.getallCarz;
 
-     List<MotiModel> menuItems = [
+    List<MotiModel> menuItems = [
       MotiModel(
-        checkColor: Color(0xffD7E2E4),
-        textColor: const Color(0xff002D36),
-        buttonColor: Colors.white,
-        bckColor: const Color(0xffDBFEFF),
-          title: 'Add the names of your trusted mechanics straight from your phone directory',
+          checkColor: Color(0xffD7E2E4),
+          textColor: const Color(0xff002D36),
+          buttonColor: Colors.white,
+          bckColor: const Color(0xffDBFEFF),
+          title:
+              'Add the names of your trusted mechanics straight from your phone directory',
           imagePath: 'assets/images/mech.svg',
           textButton: "Add a mechanic",
-
           action: () {
-
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return const AddNewTechie();
             }));
             // context.router.pushNamed('/home-nav/resetPin');
-          }
-          ),
+          }),
 
-          //
+      //
       MotiModel(
-        checkColor: AppColors.lightGreen,
-        textColor: Colors.white,// const Color(0xff002D36),
-        buttonColor: AppColors.appThemeColor,
-        bckColor: const Color(0xffFDF8C5), //0xffDBFEFF
-          title: 'Win some points when you tell a friend about moticar by sharing your refferal code',
+          checkColor: AppColors.lightGreen,
+          textColor: Colors.white, // const Color(0xff002D36),
+          buttonColor: AppColors.appThemeColor,
+          bckColor: const Color(0xffFDF8C5), //0xffDBFEFF
+          title:
+              'Win some points when you tell a friend about moticar by sharing your refferal code',
           imagePath: 'assets/images/fwend.svg',
           textButton: "Invite an extra friend",
           action: () {
@@ -135,13 +130,13 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
             // context.router.pushNamed('/home-nav/resetPin');
           }),
 
-
       MotiModel(
-        checkColor:Color(0xffD7E2E4),
-        textColor: const Color(0xff002D36),
-        buttonColor: Colors.white,
-        bckColor: const Color(0xffDBFEFF),
-          title: 'Set a reminder for your next appointment with your car technician',
+          checkColor: Color(0xffD7E2E4),
+          textColor: const Color(0xff002D36),
+          buttonColor: Colors.white,
+          bckColor: const Color(0xffDBFEFF),
+          title:
+              'Set a reminder for your next appointment with your car technician',
           imagePath: 'assets/images/reminder.svg',
           textButton: "Set a reminder",
           action: () {
@@ -151,13 +146,13 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
             // context.router.pushNamed('/home-nav/resetPin');
           }),
 
-
-     MotiModel(
-      checkColor: Color(0xffD7E2E4),
-      textColor: const Color(0xff002D36),
-        buttonColor: Colors.white,
-      bckColor: const Color(0xffDBFEFF),
-          title: 'Rub our ego and give us a rating on the playstore! We love to hear it.',
+      MotiModel(
+          checkColor: Color(0xffD7E2E4),
+          textColor: const Color(0xff002D36),
+          buttonColor: Colors.white,
+          bckColor: const Color(0xffDBFEFF),
+          title:
+              'Rub our ego and give us a rating on the playstore! We love to hear it.',
           imagePath: 'assets/images/rated.svg',
           textButton: "Rate us",
           action: () {
@@ -173,7 +168,16 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const AddExpensesPage();
+            return const AddExpensesPage(
+                imagePath: "",
+                quantity: "",
+                isDone: false,
+                productName: "",
+                carParts: "",
+                amountz: "",
+                conditionz: '',
+                measure: '',
+                brand: '');
           }));
         },
         child: const Icon(
@@ -733,7 +737,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                     ),
 
                     //
-                    
+
                     SizedBox(
                       height: 194,
                       child: ListView.builder(
@@ -992,7 +996,8 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
 
 class MoticarCards extends StatelessWidget {
   const MoticarCards({
-    super.key, required this.items,
+    super.key,
+    required this.items,
   });
 
   final MotiModel items;
@@ -1003,155 +1008,148 @@ class MoticarCards extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         // height: 165,
-        padding: const EdgeInsets.only(
-            left: 10, right: 8, top: 8, bottom: 8),
+        padding: const EdgeInsets.only(left: 10, right: 8, top: 8, bottom: 8),
         decoration: BoxDecoration(
-            color: items.bckColor  ,
+            color: items.bckColor,
             // ?? const Color(0xffFDF8C5),
             borderRadius: BorderRadius.circular(8)),
-        child: Row(
-            mainAxisAlignment:
-                MainAxisAlignment.spaceBetween,
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          //picture
+          Column(
+            // mainAxisAlignment:
+            //     MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //picture
-              Column(
-                // mainAxisAlignment:
-                //     MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  //check mark
-                  Container(height: 25, width: 25, 
-                  alignment: Alignment.center,
-                  decoration:   BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: items.checkColor,
-
-                  ),
-                  child: const Icon(Icons.check, 
+              //check mark
+              Container(
+                height: 25,
+                width: 25,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: items.checkColor,
+                ),
+                child: const Icon(
+                  Icons.check,
                   size: 20,
-                  color: Colors.white ,),
-                  ),
-                  SvgPicture.asset(
-                    items.imagePath,
-                    // height: 100,
-                    // width: 100,
-                  ),
-                  // const SizedBox(height: 12),
-                  const Text(''),
-                ],
+                  color: Colors.white,
+                ),
               ),
+              SvgPicture.asset(
+                items.imagePath,
+                // height: 100,
+                // width: 100,
+              ),
+              // const SizedBox(height: 12),
+              const Text(''),
+            ],
+          ),
 
-              const SizedBox(width: 8,),
+          const SizedBox(
+            width: 8,
+          ),
 
-              //text & car tech button
-              Column(
-                children: [
-                  Container(
-                    height: 160,
-                    width: MediaQuery.of(context)
-                            .size
-                            .width *
-                        0.62,
-                    // color: Colors.red,
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 8.0, right: 8, bottom: 8),
-                      child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                        mainAxisAlignment:
-                            MainAxisAlignment.spaceEvenly,
-                        children: [
-                            Text(
-                            items.title,
-                            textAlign: TextAlign.left,
-                            style:   const TextStyle(
-                              fontFamily: 'NeulisAlt',
-                              color: AppColors.textColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-
-                          const SizedBox(height: 8),
-
-                          //
-                          GestureDetector(
-                            onTap: items.action,
-                            
-                            // () {
-                            //   showMoticarBottom(
-                            //     context: context,
-                            //     child:
-                            //         const FractionallySizedBox(
-                            //       heightFactor: 0.89,
-                            //       child: ClipRRect(
-                            //           borderRadius:
-                            //               BorderRadius
-                            //                   .only(
-                            //             topLeft: Radius
-                            //                 .circular(
-                            //                     20.0),
-                            //             topRight: Radius
-                            //                 .circular(
-                            //                     20.0),
-                            //           ),
-                            //           child:
-                            //               AddNewTechie()),
-                            //     ),
-                            //   );
-                            // },
-                            child: Container(
-                              height: 40, 
-                              width: 150,
-                              alignment: Alignment.center,
-                              padding:
-                                  const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: items.buttonColor,
-                                borderRadius:
-                                    BorderRadius.circular(
-                                        8),
-                              ),
-                              child:   Text(
-                                  items.textButton,
-                                  textAlign:
-                                      TextAlign.center,
-                                  style:  TextStyle(
-                                    fontFamily:
-                                        'NeulisAlt',
-                                        color: items.textColor,
-                                    // color: AppColors
-                                    //     .appThemeColor,
-                                    fontSize: 12,
-                                    fontWeight:
-                                        FontWeight.w600,
-                                  )),
-                            ),
-                          ),
-                        ],
+          //text & car tech button
+          Column(
+            children: [
+              Container(
+                height: 160,
+                width: MediaQuery.of(context).size.width * 0.62,
+                // color: Colors.red,
+                alignment: Alignment.center,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 8.0, right: 8, bottom: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        items.title,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          fontFamily: 'NeulisAlt',
+                          color: AppColors.textColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
-                    ),
+
+                      const SizedBox(height: 8),
+
+                      //
+                      GestureDetector(
+                        onTap: items.action,
+
+                        // () {
+                        //   showMoticarBottom(
+                        //     context: context,
+                        //     child:
+                        //         const FractionallySizedBox(
+                        //       heightFactor: 0.89,
+                        //       child: ClipRRect(
+                        //           borderRadius:
+                        //               BorderRadius
+                        //                   .only(
+                        //             topLeft: Radius
+                        //                 .circular(
+                        //                     20.0),
+                        //             topRight: Radius
+                        //                 .circular(
+                        //                     20.0),
+                        //           ),
+                        //           child:
+                        //               AddNewTechie()),
+                        //     ),
+                        //   );
+                        // },
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: items.buttonColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(items.textButton,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'NeulisAlt',
+                                color: items.textColor,
+                                // color: AppColors
+                                //     .appThemeColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              )),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              )
-            ]),
+                ),
+              ),
+            ],
+          )
+        ]),
       ),
     );
   }
 }
-
 
 class MotiModel {
   final String imagePath, title, textButton;
   final void Function()? action;
   final Color bckColor, buttonColor, textColor, checkColor;
 
-
   MotiModel({
-    required this.buttonColor, required this.textColor,  
+    required this.buttonColor,
+    required this.textColor,
     required this.checkColor,
-    required this.imagePath, required this.title, required this.textButton, this.action, required this.bckColor,});
+    required this.imagePath,
+    required this.title,
+    required this.textButton,
+    this.action,
+    required this.bckColor,
+  });
 }

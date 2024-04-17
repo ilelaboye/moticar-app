@@ -113,7 +113,16 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const AddExpensesPage();
+            return const AddExpensesPage(
+                imagePath: "",
+                quantity: "",
+                isDone: false,
+                productName: "",
+                carParts: "",
+                amountz: "",
+                conditionz: '',
+                measure: '',
+                brand: '');
           }));
         },
         child: const Icon(
@@ -476,7 +485,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left:8, right:8, top:8.0),
+                      padding:
+                          const EdgeInsets.only(left: 8, right: 8, top: 8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -560,10 +570,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                     SizedBox(
                       height: 150,
                       child: ListView(
-
                         // padding: EdgeInsets.all(1),
-                      
-                        
+
                         children: [
                           CleanCalendar(
                             datePickerCalendarView:
@@ -613,8 +621,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                       ),
                     ),
 
-                
-                //pie charts
+                    //pie charts
                     const SizedBox(height: 350, child: PieChartSample2()),
 
                     // const SizedBox(height: 10),
@@ -678,7 +685,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                         itemBuilder: (context, index) {
                           final breakdown = myTechies[index];
                           // final image
-                    
+
                           // final String catImaes = if(breakdown.category == "Body works"){}
                           return ListTile(
                             leading: GestureDetector(
@@ -696,8 +703,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                         imagePath:
                                             breakdown.category.toString(),
                                         category: breakdown.category.toString(),
-                                        amount:
-                                            nairaFormat.format(breakdown.amount),
+                                        amount: nairaFormat
+                                            .format(breakdown.amount),
                                         paymode: breakdown.methodOfPayment
                                             .toString(),
                                         title: breakdown.title.toString(),
@@ -757,7 +764,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                     ),
                                   ],
                                 ),
-                                              
+
                                 //amount and menu button
                                 Row(
                                   children: [
@@ -769,10 +776,10 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                             fontWeight: FontWeight.w500)),
                                     // GestureDetector(
                                     //   onTap: (){
-                                              
+
                                     //   },
                                     //   child: const Icon(Icons.more_vert))
-                                              
+
                                     PopupMenuButton(
                                       surfaceTintColor: Colors.white,
                                       // color: const Color(0xffC1C3C3),
@@ -935,12 +942,10 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
     );
   }
 
-
 // notifications
   void _showMyNotification(
     BuildContext context,
   ) {
-    
     showModalBottomSheet(
       isScrollControlled: true,
       constraints: BoxConstraints.expand(

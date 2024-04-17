@@ -504,7 +504,8 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
                         onTap: () async {
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return AddExpensesFinalPage(
+                              return AddExpensesPage(
+                                  isDone: true,
                                   imagePath: widget.partImage,
                                   quantity: widget.quantity.toString(),
                                   measure: widget.measurements,

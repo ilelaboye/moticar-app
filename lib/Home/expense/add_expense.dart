@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:moticar/widgets/bottom_sheet_service.dart';
 import 'package:moticar/widgets/eard_loader.dart';
+import 'package:rive/rive.dart';
 
 import '../../models/expensesmodel.dart';
 import '../../providers/app_providers.dart';
@@ -20,10 +21,30 @@ import '../../widgets/colors.dart';
 import '../../widgets/eard_dialog.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
 import '../bottom_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../carpart/car_part.dart';
 
 class AddExpensesPage extends StatefulHookConsumerWidget {
-  const AddExpensesPage({super.key});
+  const AddExpensesPage(
+      {super.key,
+      required this.conditionz,
+      required this.isDone,
+      required this.measure,
+      required this.imagePath,
+      required this.brand,
+      required this.quantity,
+      required this.productName,
+      required this.carParts,
+      required this.amountz});
+  final String imagePath,
+      quantity,
+      productName,
+      carParts,
+      amountz,
+      conditionz,
+      measure,
+      brand;
+  final bool isDone;
 
   @override
   ConsumerState<AddExpensesPage> createState() => _AddExpensesPageState();
@@ -33,17 +54,22 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
   final GlobalKey secondComponentKey = GlobalKey();
 
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final titleController = TextEditingController();
+  late TextEditingController titleController;
+  late TextEditingController descriptionController;
+  late TextEditingController amountController;
+
   final searchController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final amountController = TextEditingController();
-  String? title, descript, carTech, amountz, mode2Pay;
+  // late descriptionController = TextEditingController();
+  // late amountController = TextEditingController();
+  late SharedPreferences _prefs;
+
+  // String? title, descript, carTech, amountz, mode2Pay;
 
   bool _isObscure = true;
 
   bool isIncur = false;
   DateTime? _selectedDate;
-  String? selectTechie;
+  String? _selectTechie;
   String selectedDayz = "Today";
   List myDayz = [
     "Today",
@@ -149,12 +175,13 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
   @override
   void initState() {
+    _loadSavedText();
     super.initState();
     isSelectedList = List.generate(paymentList.length, (index) => false);
-    titleController.text = title ?? '';
-    descriptionController.text = descript ?? '';
-    amountController.text = amountz ?? '';
-    // selectTechie.toString() = carTech ?? '';
+
+    titleController = TextEditingController();
+    descriptionController = TextEditingController();
+    amountController = TextEditingController();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // ref.read(registerViewmodelProvider.notifier).fetchAllTrans();
@@ -163,12 +190,45 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   titleController.dispose();
-  //   descriptionController.dispose();
-  //   super.dispose();
-  // }
+  Future<void> _loadSavedText() async {
+    _prefs = await SharedPreferences.getInstance();
+    final savedDate = _prefs.getString('selectedDate');
+    _selectedDate = savedDate != null ? DateTime.tryParse(savedDate) : null;
+    _selectTechie = _prefs.getString('selectedTechie');
+    selectedCategory = _prefs.getString('selectedCategory')!;
+    final titlez = _prefs.getString('titlez') ?? '';
+    final descript = _prefs.getString('descript') ?? '';
+    final amountzz = _prefs.getString('amountzz') ?? '';
+    setState(() {
+      titleController.text = titlez;
+      descriptionController.text = descript;
+      amountController.text = amountzz;
+    });
+  }
+
+  Future<void> _saveState() async {
+    if (_selectedDate != null) {
+      await _prefs.setString('selectedDate', _selectedDate!.toIso8601String());
+    }
+    if (_selectTechie != null) {
+      await _prefs.setString('selectedTechie', _selectTechie!);
+    }
+
+    if (selectedCategory != null) {
+      await _prefs.setString("selectedCategory", selectedCategory);
+    }
+    await _prefs.setString('titlez', titleController.text);
+    await _prefs.setString('descript', descriptionController.text);
+    await _prefs.setString('amountzz', amountController.text);
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -342,6 +402,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     GestureDetector(
                                       onTap: () async {
                                         _showExpenseCategory(context);
+                                        _saveState();
                                       },
                                       child: Text(
                                         selectedCategory,
@@ -360,64 +421,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                             ),
                             Row(
                               children: [
-                                // Container(
-                                //   // alignment: Alignment.center,
-                                //   // width: 140,
-                                //   // height: 58,
-                                //   child: SizedBox(
-                                //     height: 45,
-                                //     width: 130,
-                                //     child: Container(
-                                //       alignment: Alignment.center,
-                                //       padding: const EdgeInsets.symmetric(
-                                //           horizontal: 7.0),
-                                //       decoration: BoxDecoration(
-                                //         borderRadius: BorderRadius.circular(8),
-                                //         color: const Color(0xffCDD2D2),
-                                //       ),
-                                //       child: DropdownButtonFormField<String>(
-                                //           alignment:
-                                //               AlignmentDirectional.center,
-                                //           icon: const Icon(Icons
-                                //               .keyboard_arrow_down_rounded),
-                                //           decoration: const InputDecoration(
-                                //             hintText: 'Today',
-                                //             // fillColor: const Color(0xffCDD2D2),
-                                //             hintStyle: TextStyle(
-                                //                 fontSize: 13,
-                                //                 fontWeight: FontWeight.w400,
-                                //                 color: AppColors.textGrey),
-                                //             enabledBorder: InputBorder.none,
-                                //             focusedBorder: InputBorder.none,
-                                //           ),
-                                //           items: myDayz
-                                //               .map<DropdownMenuItem<String>>(
-                                //                 (entry) =>
-                                //                     DropdownMenuItem<String>(
-                                //                   value: entry,
-                                //                   child: Text(
-                                //                     entry,
-                                //                     style: const TextStyle(
-                                //                         color:
-                                //                             Color(0xff002D36),
-                                //                         fontWeight:
-                                //                             FontWeight.w600,
-                                //                         fontSize: 13),
-                                //                   ),
-                                //                 ),
-                                //               )
-                                //               .toList(),
-                                //           value: selectedDayz,
-                                //           onChanged: (nvalue) {
-                                //             setState(() {
-                                //               selectedDayz = nvalue!;
-                                //             });
-                                //           }),
-                                //     ),
-
-                                //   ),
-                                // ),
-
                                 //
                                 SizedBox(
                                   height: 45,
@@ -425,6 +428,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   child: GestureDetector(
                                     onTap: () {
                                       _selectDate(context);
+                                      _saveState();
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
@@ -514,18 +518,17 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) =>
                                     FieldValidator.validate(value!),
-                                onChanged: (value) {
-                                  // Update the email variable as the user types
-                                  setState(() {
-                                    title = value;
-                                  });
+                                onEditingComplete: () {
+                                  _saveState();
                                 },
-                                onSaved: (value) {
-                                  // Update the email variable as the user types
-                                  setState(() {
-                                    title = value;
-                                  });
-                                },
+                                // onChanged: (value) {
+                                //   // Update the email variable as the user types
+
+                                // },
+                                // onSaved: (value) {
+                                //   // Update the email variable as the user types
+                                //   _saveState();
+                                // },
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
@@ -579,18 +582,15 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     fontSize: 16),
                                 validator: (value) =>
                                     FieldValidaor.validateEmptyfield(value!),
-                                onChanged: (value) {
-                                  // Update the email variable as the user types
-                                  setState(() {
-                                    descript = value;
-                                  });
+                                onEditingComplete: () {
+                                  _saveState();
                                 },
-                                onSaved: (value) {
-                                  // Update the email variable as the user types
-                                  setState(() {
-                                    descript = value;
-                                  });
-                                },
+                                // onChanged: (value) {
+                                //   _saveState();
+                                // },
+                                // onSaved: (value) {
+                                //   _saveState();
+                                // },
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   errorBorder: InputBorder.none,
@@ -725,17 +725,17 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                         ),
                                       )
                                       .toList(),
-                                  value: selectTechie,
+                                  value: _selectTechie,
                                   onChanged: (value) {
                                     setState(() {
-                                      selectTechie = value!;
-                                      carTech = value!;
+                                      _selectTechie = value!;
+                                      _saveState();
                                     });
                                   },
                                 ),
                               ),
 
-                              if (selectTechie ==
+                              if (_selectTechie ==
                                   null) // Display the button only when no technician is selected
                                 GestureDetector(
                                   onTap: () {
@@ -795,11 +795,12 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16),
                                   maxLength: 9,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      amountz = value;
-                                    });
+                                  onEditingComplete: () {
+                                    _saveState();
                                   },
+                                  // onChanged: (value) {
+                                  //   _saveState();
+                                  // },
                                   validator: (value) =>
                                       FieldValidator.validate(value!),
                                   decoration: InputDecoration(
@@ -834,70 +835,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   ),
                                 ),
                               ),
-                              //email
-                              // TextFormField(
-                              //   controller: amountController,
-                              //   keyboardType: TextInputType.phone,
-                              //   onTapOutside: (event) {
-                              //     // FocusScope.of(context)
-                              //     //     .unfocus(); // Close the keyboard
-                              //   },
-                              //   textInputAction: TextInputAction.next,
-                              //   style: const TextStyle(
-                              //       fontFamily: "NeulisAlt",
-                              //       color: AppColors.textColor,
-                              //       fontWeight: FontWeight.w600,
-                              //       fontSize: 16),
-                              //   maxLength: 7,
-                              //   onChanged: (value) {
-                              //     final formattedAmount =
-                              //         formatAmountWithThousandSeparator(value);
-                              //     if (formattedAmount !=
-                              //         amountController.text) {
-                              //       amountController.value = TextEditingValue(
-                              //         text: formattedAmount,
-                              //         selection: TextSelection.collapsed(
-                              //             offset: formattedAmount.length),
-                              //       );
-                              //     }
-                              //   },
-                              //   onEditingComplete: () {
-                              //     final unformattedAmount =
-                              //         removeThousandSeparator(
-                              //             amountController.text);
-                              //     setState(() {
-                              //       amountController.text = unformattedAmount;
-                              //     });
-                              //   },
-                              //   validator: (value) =>
-                              //       FieldValidator.validate(value!),
-                              //   decoration: InputDecoration(
-                              //     border: InputBorder.none,
-                              //     errorBorder: InputBorder.none,
-                              //     hintText: 'Enter amount',
-                              //     prefixText: '\u20A6',
-                              //     suffixText: '00',
-
-                              //     enabledBorder: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(8),
-                              //         borderSide: const BorderSide(
-                              //             color: Color(0xffD0D5DD),
-                              //             width: 1.5)),
-                              //     focusedBorder: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(8),
-                              //         borderSide: const BorderSide(
-                              //             color: AppColors.appThemeColor)),
-                              //     filled: true,
-                              //     fillColor: Colors.white,
-                              //     // hintText: 'Enter your password',
-                              //     hintStyle: const TextStyle(
-                              //         fontFamily: "NeulisAlt",
-                              //         fontWeight: FontWeight.w400,
-                              //         color: Color(0xffC1C3C3),
-                              //         letterSpacing: 1.2,
-                              //         fontSize: 14),
-                              //   ),
-                              // ),
 
                               //method of payment
 
@@ -918,14 +855,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   SizedBox(
                                     height: 40,
                                     child: ListView.builder(
-                                      // physics: NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
-                                      // gridDelegate:
-                                      //     const SliverGridDelegateWithFixedCrossAxisCount(
-                                      //         crossAxisCount: 3,
-                                      //         crossAxisSpacing: 6.0,
-                                      //         mainAxisSpacing: 6.0,
-                                      //         childAspectRatio: 3),
                                       itemCount: paymentList.length,
                                       itemBuilder: (context, index) {
                                         return GestureDetector(
@@ -1091,6 +1023,151 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                         ),
                       ),
 
+                      widget.isDone == false
+                          ? const SizedBox()
+                          : Column(
+                              children: [
+                                const SizedBox(height: 30),
+
+                                //first divider
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Divider(
+                                    thickness: 1.2,
+                                    color: Color(0xffCDD2D2),
+                                  ),
+                                ),
+
+                                //
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(widget.imagePath),
+                                          const SizedBox(width: 12),
+                                          Container(
+                                            padding: const EdgeInsets.only(
+                                                left: 6,
+                                                top: 2,
+                                                bottom: 2,
+                                                right: 6),
+                                            decoration: BoxDecoration(
+                                                color: AppColors.yellow,
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            child: Text(
+                                              widget.quantity,
+                                              style: const TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                // color: Color(0xff002D36),
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.appThemeColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      //
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(widget.productName.toString(),
+                                              style: const TextStyle(
+                                                  fontFamily: "NeulisAlt",
+                                                  color: Color(0xff002D36),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500)),
+                                          //
+                                          Text(
+                                            widget.carParts.toString(),
+                                            style: const TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                color: Color(0xffC1C3C3),
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+
+                                      //
+                                      Row(
+                                        children: [
+                                          Text(
+                                            // nairaFormat.format(
+                                            "N ${widget.amountz}",
+                                            style: const TextStyle(
+                                                fontFamily: "Neulis",
+                                                color: Color(0xff006C70),
+                                                fontSize: 15.5,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          PopupMenuButton(
+                                            surfaceTintColor: Colors.white,
+                                            shadowColor:
+                                                const Color(0xffC1C3C3),
+                                            // color: const Color(0xffC1C3C3),
+                                            itemBuilder:
+                                                (BuildContext context) => [
+                                              PopupMenuItem(
+                                                value: 'edit',
+                                                child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                        'assets/svgs/edit.svg'),
+                                                    const SizedBox(
+                                                      width: 12,
+                                                    ),
+                                                    const Text('Edit'),
+                                                  ],
+                                                ),
+                                              ),
+                                              PopupMenuItem(
+                                                value: 'strike_off',
+                                                child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                        'assets/svgs/strike.svg'),
+                                                    const SizedBox(
+                                                      width: 12,
+                                                    ),
+                                                    const Text('Strike off'),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                            onSelected: (String value) {
+                                              if (value == 'edit') {
+                                                // Handle edit action
+                                              } else if (value ==
+                                                  'strike_off') {
+                                                // Handle strike off action
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                //divider
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Divider(
+                                    thickness: 1.2,
+                                    color: Color(0xffCDD2D2),
+                                  ),
+                                ),
+                              ],
+                            ),
+
                       //if incur any cost
                       Visibility(
                         visible: isIncur,
@@ -1171,209 +1248,157 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                         width: 10,
                                       ),
 
-                                      //
-                                      Expanded(
-                                        child: Consumer(
-                                            builder: (context, ref, child) {
-                                          final model = ref
-                                              .read(profileProvider.notifier);
-                                          final state =
-                                              ref.watch(profileProvider);
+                                      widget.isDone == false
+                                          ? const SizedBox()
+                                          : Expanded(
+                                              child: Consumer(builder:
+                                                  (context, ref, child) {
+                                                final model = ref.read(
+                                                    profileProvider.notifier);
+                                                final state =
+                                                    ref.watch(profileProvider);
 
-                                          return state.loading == Loader.loading
-                                              ? const MoticarLoader(
-                                                  size: 30,
-                                                  color:
-                                                      AppColors.appThemeColor,
-                                                )
-                                              : MoticarLoginButton(
-                                                  myColor: AppColors.indieC,
-                                                  borderColor: AppColors.indieC,
-                                                  onTap: () async {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return MoticarDialog(
-                                                          icon: const Icon(
-                                                              Icons
-                                                                  .error_outline_sharp,
-                                                              color:
-                                                                  AppColors.red,
-                                                              size: 50),
-                                                          title: '',
-                                                          subtitle:
-                                                              "add car parts before proceeding",
-                                                          onTap: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          buttonColor:
-                                                              AppColors.red,
-                                                          textColor:
-                                                              AppColors.white,
-                                                          buttonText: "Dismiss",
-                                                        );
-                                                      },
-                                                    );
+                                                return state.loading ==
+                                                        Loader.loading
+                                                    ?
+                                                    // const MoticarLoader(
+                                                    //     size: 30,
+                                                    //     color:
+                                                    //         AppColors.appThemeColor,
+                                                    //   )
 
-                                                    // // if(myEmail.isNotEmpty && myPass.isNotEmpty){
-                                                    // // showDialog(
-                                                    // //   context: context,
-                                                    // //   barrierDismissible: true,
-                                                    // //   builder: (context) {
-                                                    // //     return Center(
-                                                    // //       child: AlertDialog(
-                                                    // //         backgroundColor:
-                                                    // //             AppColors
-                                                    // //                 .appThemeColor,
-                                                    // //         shadowColor: AppColors
-                                                    // //             .appThemeColor,
-                                                    // //         content: Container(
-                                                    // //           padding:
-                                                    // //               const EdgeInsets
-                                                    // //                   .all(20),
-                                                    // //           decoration:
-                                                    // //               BoxDecoration(
-                                                    // //             borderRadius:
-                                                    // //                 BorderRadius
-                                                    // //                     .circular(
-                                                    // //                         10),
-                                                    // //           ),
-                                                    // //           child: const Column(
-                                                    // //             mainAxisSize:
-                                                    // //                 MainAxisSize
-                                                    // //                     .min,
-                                                    // //             children: [
-                                                    // //               SizedBox(
-                                                    // //                 height: 100,
-                                                    // //                 width: 100,
-                                                    // //                 child:
-                                                    // //                     RiveAnimation
-                                                    // //                         .asset(
-                                                    // //                   'assets/images/preloader.riv',
-                                                    // //                 ),
-                                                    // //               ),
-                                                    // //               SizedBox(
-                                                    // //                   height: 8),
-                                                    // //               Text(
-                                                    // //                   'Welcome to Moticar',
-                                                    // //                   textAlign:
-                                                    // //                       TextAlign
-                                                    // //                           .center,
-                                                    // //                   style: TextStyle(
-                                                    // //                       color: Colors
-                                                    // //                           .white))
-                                                    // //             ],
-                                                    // //           ),
-                                                    // //         ),
-                                                    // //       ),
-                                                    // //     );
-                                                    // //   },
-                                                    // // );
+                                                    const SizedBox(
+                                                        height: 100,
+                                                        width: 100,
+                                                        child:
+                                                            RiveAnimation.asset(
+                                                          'assets/images/preloader.riv',
+                                                        ),
+                                                      )
+                                                    : MoticarLoginButton(
+                                                        myColor:
+                                                            AppColors.indieC,
+                                                        borderColor:
+                                                            AppColors.indieC,
+                                                        onTap: () async {
+                                                          List<
+                                                                  Map<String,
+                                                                      dynamic>>
+                                                              carPartsList = [
+                                                            {
+                                                              "category": widget
+                                                                  .carParts,
+                                                              "product_name":
+                                                                  widget
+                                                                      .productName,
+                                                              "brand":
+                                                                  widget.brand,
+                                                              "condition": widget
+                                                                  .conditionz,
+                                                              "unit_of_measurement":
+                                                                  widget
+                                                                      .measure,
+                                                              "price": widget
+                                                                  .amountz
+                                                                  .replaceAll(
+                                                                      ',', ''),
+                                                              "quantity": widget
+                                                                  .quantity,
+                                                            },
+                                                          ];
 
-                                                    // // await Future.delayed(
-                                                    // //     const Duration(seconds: 3));
+                                                          final signUpResult =
+                                                              await model
+                                                                  .addNewExpenses(
+                                                            formData: {
+                                                              "category":
+                                                                  selectedCategory
+                                                                      .toString(),
+                                                              "title":
+                                                                  titleController
+                                                                      .text,
+                                                              "description":
+                                                                  descriptionController
+                                                                      .text,
+                                                              "technician":
+                                                                  _selectTechie
+                                                                      .toString(),
+                                                              "amount":
+                                                                  amountController
+                                                                      .text
+                                                                      .replaceAll(
+                                                                          ',',
+                                                                          ''),
+                                                              "method_of_payment":
+                                                                  payType,
+                                                              "date": _formatDate(
+                                                                  _selectedDate),
+                                                              "carparts":
+                                                                  carPartsList
+                                                            },
+                                                          );
 
-                                                    // // All fields are filled, attempt sign-up
-                                                    // final signUpResult =
-                                                    //     await model.addNewExpenses(
-                                                    //   formData: {
+                                                          if (signUpResult
+                                                              .successMessage
+                                                              .isNotEmpty) {
+                                                            // Navigator.pop(context);
 
-                                                    //           "category": selectedCategory.toString(),
-                                                    //         "title":
-                                                    //             titleController.text,
-                                                    //         "description":
-                                                    //             descriptionController
-                                                    //                 .text,
-                                                    //         "technician": selectTechie.toString(),
-                                                    //         "amount": amountController.text,
-                                                    //         "method_of_payment":
-                                                    //             payType,
-                                                    //         "date": "2024-01-25",
-                                                    //         "carparts": [
-                                                    //           {
-                                                    //             "category": "Tyre",
-                                                    //             "product_name":
-                                                    //                 "Sanao",
-                                                    //             "brand":
-                                                    //                 "Sano tyre",
-                                                    //             "condition": "New",
-                                                    //             "unit_of_measurement":
-                                                    //                 "rubber",
-                                                    //             "price": 45000,
-                                                    //             "quantity": 2,
-                                                    //             "image": null
-                                                    //           },
-                                                    //           {
-                                                    //             "category":
-                                                    //                 "Brake pad",
-                                                    //             "product_name":
-                                                    //                 "BR 1250",
-                                                    //             "brand":
-                                                    //                 "Black rock",
-                                                    //             "condition": "Used",
-                                                    //             "unit_of_measurement":
-                                                    //                 "1",
-                                                    //             "price": 2000,
-                                                    //             "quantity": 3
-                                                    //           }
-                                                    //         ]
-                                                    //   },
-                                                    // );
-
-                                                    // if (signUpResult.successMessage
-                                                    //     .isNotEmpty) {
-                                                    //   // Navigator.pop(context);
-
-                                                    //   Navigator.push(context,
-                                                    //       MaterialPageRoute(
-                                                    //           builder: (context) {
-                                                    //     return const BottomHomePage();
-                                                    //   }));
-                                                    // } else if (signUpResult
-                                                    //     .errorMessage.isNotEmpty) {
-                                                    //   // Sign-up failed, show error dialog
-                                                    //   showDialog(
-                                                    //     context: context,
-                                                    //     builder:
-                                                    //         (BuildContext context) {
-                                                    //       return MoticarDialog(
-                                                    //         icon: const Icon(
-                                                    //             Icons
-                                                    //                 .error_outline_sharp,
-                                                    //             color:
-                                                    //                 AppColors.red,
-                                                    //             size: 50),
-                                                    //         title: '',
-                                                    //         subtitle: signUpResult
-                                                    //             .errorMessage,
-                                                    //         onTap: () {
-                                                    //           Navigator.pop(
-                                                    //               context);
-                                                    //         },
-                                                    //         buttonColor:
-                                                    //             AppColors.red,
-                                                    //         textColor:
-                                                    //             AppColors.white,
-                                                    //         buttonText: "Dismiss",
-                                                    //       );
-                                                    //     },
-                                                    //   );
-                                                    // }
-
-                                                    // context.router.push(const LoginRouteCopy());
-                                                  },
-                                                  child: const MoticarText(
-                                                    fontColor:
-                                                        AppColors.appThemeColor,
-                                                    text: 'Save',
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w700,
-                                                  ),
-                                                );
-                                        }),
-                                      ),
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) {
+                                                              return const BottomHomePage();
+                                                            }));
+                                                          } else if (signUpResult
+                                                              .errorMessage
+                                                              .isNotEmpty) {
+                                                            // Sign-up failed, show error dialog
+                                                            showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return MoticarDialog(
+                                                                  icon: const Icon(
+                                                                      Icons
+                                                                          .error_outline_sharp,
+                                                                      color: AppColors
+                                                                          .red,
+                                                                      size: 50),
+                                                                  title: '',
+                                                                  subtitle:
+                                                                      signUpResult
+                                                                          .errorMessage,
+                                                                  onTap: () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  buttonColor:
+                                                                      AppColors
+                                                                          .red,
+                                                                  textColor:
+                                                                      AppColors
+                                                                          .white,
+                                                                  buttonText:
+                                                                      "Dismiss",
+                                                                );
+                                                              },
+                                                            );
+                                                          }
+                                                        },
+                                                        child:
+                                                            const MoticarText(
+                                                          fontColor: AppColors
+                                                              .appThemeColor,
+                                                          text: 'Save',
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                        ),
+                                                      );
+                                              }),
+                                            ),
                                     ],
                                   ),
 
