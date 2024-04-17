@@ -1068,7 +1068,7 @@ class _AddExpensesFinalPageState extends ConsumerState<AddExpensesFinalPage> {
                                   style: const TextStyle(
                                       fontFamily: "Neulis",
                                       color: Color(0xff006C70),
-                                      fontSize: 16,
+                                      fontSize: 15.5,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 PopupMenuButton(
