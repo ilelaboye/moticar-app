@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:rive/rive.dart';
@@ -164,6 +165,8 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
                                 child: Row(
                                   children: [
                                     //add image
+                                    SvgPicture.asset(widget.partImage),
+                                    const SizedBox(width: 8),
 
                                     MoticarText(
                                         text: widget.partCategory,

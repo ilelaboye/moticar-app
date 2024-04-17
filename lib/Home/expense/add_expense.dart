@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -28,11 +29,11 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
   final GlobalKey secondComponentKey = GlobalKey();
 
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final emailController = TextEditingController();
+  final titleController = TextEditingController();
   final searchController = TextEditingController();
-  final passwordController = TextEditingController();
+  final descriptionController = TextEditingController();
   final amountController = TextEditingController();
-  String email = '', password = '';
+  String? title, descript, carTech, amountz, mode2Pay;
 
   bool _isObscure = true;
 
@@ -113,8 +114,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     "Bank",
     "Debit Card",
   ];
-// List<bool> isSelectedList =
-//       List.generate(paymentList.length, (index) => false);
 
   late List<bool> isSelectedList;
 
@@ -122,6 +121,10 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
   void initState() {
     super.initState();
     isSelectedList = List.generate(paymentList.length, (index) => false);
+    titleController.text = title ?? '';
+    descriptionController.text = descript ?? '';
+    amountController.text = amountz ?? '';
+    // selectTechie.toString() = carTech ?? '';
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // ref.read(registerViewmodelProvider.notifier).fetchAllTrans();
@@ -132,8 +135,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    titleController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -409,8 +412,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                               ),
                               //email
                               TextFormField(
-                                controller: emailController,
-                                keyboardType: TextInputType.emailAddress,
+                                controller: titleController,
+                                keyboardType: TextInputType.text,
                                 onTapOutside: (event) {
                                   // FocusScope.of(context)
                                   //     .unfocus(); // Close the keyboard
@@ -425,8 +428,17 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) =>
                                     FieldValidator.validate(value!),
+                                onChanged: (value) {
+                                  // Update the email variable as the user types
+                                  setState(() {
+                                    title = value;
+                                  });
+                                },
                                 onSaved: (value) {
-                                  password = value!;
+                                  // Update the email variable as the user types
+                                  setState(() {
+                                    title = value;
+                                  });
                                 },
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -466,9 +478,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     fontColor: AppColors.textColor),
                               ),
                               TextFormField(
-                                controller: passwordController,
+                                controller: descriptionController,
                                 keyboardType: TextInputType.text,
-                                textCapitalization: TextCapitalization.words,
+                                // textCapitalization: TextCapitalization.words,
                                 onTapOutside: (event) {
                                   FocusScope.of(context)
                                       .unfocus(); // Close the keyboard
@@ -481,8 +493,17 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     fontSize: 16),
                                 validator: (value) =>
                                     FieldValidaor.validateEmptyfield(value!),
+                                onChanged: (value) {
+                                  // Update the email variable as the user types
+                                  setState(() {
+                                    descript = value;
+                                  });
+                                },
                                 onSaved: (value) {
-                                  password = value!;
+                                  // Update the email variable as the user types
+                                  setState(() {
+                                    descript = value;
+                                  });
                                 },
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -539,95 +560,93 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                 padding: const EdgeInsets.only(
                                     bottom: 8, left: 3, right: 3),
                                 child: DropdownButtonFormField<String>(
-                                    decoration: const InputDecoration(
-                                      hintText: 'Select Technician',
-                                      hintStyle: TextStyle(
-                                          fontFamily: "NeulisAlt",
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xffC1C3C3),
-                                          letterSpacing: 1.2,
-                                          fontSize: 14),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8)),
-                                        borderSide: BorderSide(
-                                            color: Color(0xffD0D5DD),
-                                            width: 1.5),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8)),
-                                        borderSide: BorderSide(
-                                            color: AppColors.appThemeColor,
-                                            width: 1.5),
-                                      ),
+                                  decoration: const InputDecoration(
+                                    hintText: 'Select Technician',
+                                    hintStyle: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xffC1C3C3),
+                                        letterSpacing: 1.2,
+                                        fontSize: 14),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffD0D5DD), width: 1.5),
                                     ),
-                                    items: myTechies
-                                        .map<DropdownMenuItem<String>>(
-                                          (tech) => DropdownMenuItem<String>(
-                                            value: tech.id.toString(),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    padding:
-                                                        const EdgeInsets.all(8),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Image.network(
-                                                      tech.image.toString(),
-                                                      fit: BoxFit.cover,
-                                                    )),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
+                                      borderSide: BorderSide(
+                                          color: AppColors.appThemeColor,
+                                          width: 1.5),
+                                    ),
+                                  ),
+                                  items: myTechies
+                                      .map<DropdownMenuItem<String>>(
+                                        (tech) => DropdownMenuItem<String>(
+                                          value: tech.id.toString(),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  height: 50,
+                                                  width: 50,
+                                                  padding:
+                                                      const EdgeInsets.all(8),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Image.network(
+                                                    tech.image.toString(),
+                                                    fit: BoxFit.cover,
+                                                  )),
 
-                                                const SizedBox(
-                                                  width: 8,
-                                                ),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
 
-                                                //
-                                                Text(
-                                                  // tech.preferredName.toString(),
-                                                  '${tech.firstName} ${tech.lastName}',
-                                                  style: const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      color:
-                                                          AppColors.textColor,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      letterSpacing: 1.2,
-                                                      fontSize: 14),
-                                                ),
+                                              //
+                                              Text(
+                                                // tech.preferredName.toString(),
+                                                '${tech.firstName} ${tech.lastName}',
+                                                style: const TextStyle(
+                                                    fontFamily: "NeulisAlt",
+                                                    color: AppColors.textColor,
+                                                    fontWeight: FontWeight.w500,
+                                                    letterSpacing: 1.2,
+                                                    fontSize: 14),
+                                              ),
 
-                                                const SizedBox(
-                                                  width: 12,
-                                                ),
+                                              const SizedBox(
+                                                width: 12,
+                                              ),
 
-                                                //phone number
-                                                Text(
-                                                  // tech.preferredName.toString(),
-                                                  '${tech.phone}',
-                                                  style: const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      color: Color(0xff00AEB5),
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 14),
-                                                ),
-                                              ],
-                                            ),
+                                              //phone number
+                                              Text(
+                                                // tech.preferredName.toString(),
+                                                '${tech.phone}',
+                                                style: const TextStyle(
+                                                    fontFamily: "NeulisAlt",
+                                                    color: Color(0xff00AEB5),
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14),
+                                              ),
+                                            ],
                                           ),
-                                        )
-                                        .toList(),
-                                    value: selectTechie,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectTechie = value!;
-                                      });
-                                    }),
+                                        ),
+                                      )
+                                      .toList(),
+                                  value: selectTechie,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectTechie = value!;
+                                      carTech = value!;
+                                    });
+                                  },
+                                ),
                               ),
 
                               if (selectTechie ==
@@ -676,9 +695,12 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                 child: TextFormField(
                                   controller: amountController,
                                   keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    ThousandsFormatter(),
+                                  ],
                                   onTapOutside: (event) {
-                                    FocusScope.of(context)
-                                        .unfocus(); // Close the keyboard
+                                    FocusScope.of(context).unfocus();
                                   },
                                   textInputAction: TextInputAction.done,
                                   style: const TextStyle(
@@ -686,26 +708,11 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                       color: AppColors.textColor,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16),
-                                  maxLength: 7,
+                                  maxLength: 9,
                                   onChanged: (value) {
-                                    // final formattedAmount =
-                                    //     formatAmountWithThousandSeparator(value);
-                                    // if (formattedAmount !=
-                                    //     amountController.text) {
-                                    //   amountController.value = TextEditingValue(
-                                    //     text: formattedAmount,
-                                    //     selection: TextSelection.collapsed(
-                                    //         offset: formattedAmount.length),
-                                    //   );
-                                    // }
-                                  },
-                                  onEditingComplete: () {
-                                    // final unformattedAmount =
-                                    //     removeThousandSeparator(
-                                    //         amountController.text);
-                                    // setState(() {
-                                    //   amountController.text = unformattedAmount;
-                                    // });
+                                    setState(() {
+                                      amountz = value;
+                                    });
                                   },
                                   validator: (value) =>
                                       FieldValidator.validate(value!),
@@ -713,9 +720,12 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     border: InputBorder.none,
                                     errorBorder: InputBorder.none,
                                     hintText: 'Enter amount',
-                                    prefixText: '\u20A6',
+                                    // prefixText: '\u20A6',
                                     suffixText: '00',
                                     counterText: '',
+
+                                    prefix: SvgPicture.asset(
+                                        "assets/svgs/naira.svg"),
 
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(8),
@@ -805,84 +815,94 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
                               //method of payment
 
-                              const Padding(
-                                padding: EdgeInsets.only(top: 8.0, left: 3),
-                                child: MoticarText(
-                                    text: "Method of Payment",
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700,
-                                    fontColor: AppColors.textColor),
-                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(top: 8.0, left: 3),
+                                    child: MoticarText(
+                                        text: "Method of Payment",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
+                                        fontColor: AppColors.textColor),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    child: ListView.builder(
+                                      // physics: NeverScrollableScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      // gridDelegate:
+                                      //     const SliverGridDelegateWithFixedCrossAxisCount(
+                                      //         crossAxisCount: 3,
+                                      //         crossAxisSpacing: 6.0,
+                                      //         mainAxisSpacing: 6.0,
+                                      //         childAspectRatio: 3),
+                                      itemCount: paymentList.length,
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              // selectedIndex = index;
 
-                              Container(
-                                height: 65,
-                                alignment: Alignment.topLeft,
-                                // decoration: BoxDecoration(
-                                //     border: Border.all(color: Colors.red)),
-                                child: GridView.builder(
-                                  // physics: NeverScrollableScrollPhysics(),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                          crossAxisSpacing: 6.0,
-                                          mainAxisSpacing: 6.0,
-                                          childAspectRatio: 3),
-                                  itemCount: paymentList.length,
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          // selectedIndex = index;
+                                              payType = paymentList[index];
 
-                                          payType = paymentList[index];
+                                              print(payType);
 
-                                          print(payType);
-
-                                          // Toggle the selection // Deselect previously selected item
-                                          for (int i = 0;
-                                              i < isSelectedList.length;
-                                              i++) {
-                                            if (i != index) {
-                                              isSelectedList[i] = false;
-                                            }
-                                          }
-                                          // Toggle the selection state of the tapped item
-                                          isSelectedList[index] =
-                                              !isSelectedList[index];
-                                          // Print the selected payment type
-                                          if (isSelectedList[index]) {
-                                            print(paymentList[index]);
-                                          } else {
-                                            print('No payment type selected');
-                                          }
-                                        });
+                                              // Toggle the selection // Deselect previously selected item
+                                              for (int i = 0;
+                                                  i < isSelectedList.length;
+                                                  i++) {
+                                                if (i != index) {
+                                                  isSelectedList[i] = false;
+                                                }
+                                              }
+                                              // Toggle the selection state of the tapped item
+                                              isSelectedList[index] =
+                                                  !isSelectedList[index];
+                                              // Print the selected payment type
+                                              if (isSelectedList[index]) {
+                                                print(paymentList[index]);
+                                              } else {
+                                                print(
+                                                    'No payment type selected');
+                                              }
+                                            });
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 15.0),
+                                            child: Container(
+                                              width: 109,
+                                              height: 35,
+                                              alignment: Alignment.center,
+                                              padding: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                color: isSelectedList[index]
+                                                    ? AppColors.appThemeColor
+                                                    : const Color(0xffCDD2D2),
+                                                // color: const Color(0xffCDD2D2),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: MoticarText(
+                                                text: paymentList[index],
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                fontColor: isSelectedList[index]
+                                                    ? Colors.white
+                                                    : AppColors.appThemeColor,
+                                                // AppColors.textColor,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                       },
-                                      child: Container(
-                                        width: 109,
-                                        height: 30,
-                                        alignment: Alignment.center,
-                                        padding: const EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          color: isSelectedList[index]
-                                              ? AppColors.appThemeColor
-                                              : const Color(0xffCDD2D2),
-                                          // color: const Color(0xffCDD2D2),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: MoticarText(
-                                          text: paymentList[index],
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          fontColor: isSelectedList[index]
-                                              ? Colors.white
-                                              : AppColors.appThemeColor,
-                                          // AppColors.textColor,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  ),
+                                ],
                               ),
 
                               //
@@ -955,7 +975,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                             ),
                             const Expanded(
                               child: SizedBox(
-                                height: 60,
+                                height: 70,
                                 // width: double.infinity,
                                 child: ListTile(
                                   title: Text(
@@ -1079,9 +1099,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                   .validate()) {
                                                 //method of pay
                                                 // final String myEmail =
-                                                //     emailController.text;
+                                                //     titleController.text;
                                                 // final String myPass =
-                                                //     passwordController.text;
+                                                //     descriptionController.text;
 
                                                 // // if(myEmail.isNotEmpty && myPass.isNotEmpty){
                                                 // showDialog(
@@ -1146,9 +1166,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                 //     await model.login(
                                                 //   formData: {
                                                 //     'email':
-                                                //         emailController.text,
+                                                //         titleController.text,
                                                 //     'password':
-                                                //         passwordController.text,
+                                                //         descriptionController.text,
                                                 //   },
                                                 // );
 
@@ -1162,10 +1182,10 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                 //       () async {
                                                 //     await HiveStorage.put(
                                                 //         HiveKeys.userEmail,
-                                                //         emailController.text);
+                                                //         titleController.text);
                                                 //     await HiveStorage.put(
                                                 //         HiveKeys.userPassword,
-                                                //         passwordController
+                                                //         descriptionController
                                                 //             .text);
                                                 //     await HiveStorage.put(
                                                 //         HiveKeys.hasLoggedIn,
@@ -1312,7 +1332,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                         fontWeight: FontWeight.w600,
                         fontSize: 16),
                     onSaved: (value) {
-                      password = value!;
+                      // password = value!;
                     },
                     decoration: InputDecoration(
                       border: InputBorder.none,

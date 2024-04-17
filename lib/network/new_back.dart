@@ -101,12 +101,10 @@ class NewAgencyBackEnd implements AgencyNetwork {
         // queryParameters: formData,
         options: Options(
           headers: {
-            "Accept": "*/*",
+            "Accept": "application/json",
             "Content-Type": "application/json",
             "Authorization": "Bearer $token",
-            "Host": "moticar.ttninternational.org",
-            "Connection": 'keep-alive'
-            // baseUrl.toString()
+            // "Host": "moticar.ttninternational.org",
           },
         ),
       );

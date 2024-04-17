@@ -45,6 +45,7 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
   late String searchQuery;
   String selectedCarPart = '';
   String selectedCategory = '';
+  String selectedImagePath = '';
 
   @override
   void initState() {
@@ -583,6 +584,9 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                                                             subCategory.name;
                                                         selectedCategory =
                                                             categoryName;
+
+                                                        selectedImagePath =
+                                                            catImage;
                                                       });
 
                                                       print(subCategory.name);
@@ -794,6 +798,8 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                                                             subCategory.name;
                                                         selectedCategory =
                                                             categoryName;
+                                                            selectedImagePath =
+                                                            catImage;
                                                       });
 
                                                       print(subCategory.name);
@@ -1006,6 +1012,9 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
 
                                                         selectedCategory =
                                                             categoryName;
+
+                                                            selectedImagePath =
+                                                            catImage;
                                                       });
 
                                                       print(subCategory.name);
@@ -1217,6 +1226,9 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
 
                                                         selectedCategory =
                                                             categoryName;
+
+                                                            selectedImagePath =
+                                                            catImage;
                                                       });
 
                                                       print(subCategory.name);
@@ -1402,7 +1414,7 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
                             return AddCarPart2(
-                                imagePath: '',
+                                imagePath: selectedImagePath,
                                 partCategory: selectedCategory,
                                 carParts: selectedCarPart);
                           },
