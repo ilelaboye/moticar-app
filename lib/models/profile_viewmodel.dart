@@ -291,6 +291,56 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
   }
 
 
+  //addExpense
+  Future<ApiResponse> addNewExpenses(
+    {required Map<String, dynamic> formData,}
+  ) async {
+
+    state = state.copyWith(
+      loading: Loader.loading,
+    );
+    try {
+      final response = await _reader.read(serviceProvider).postWithToken(
+            formData: formData,
+            path: "add-expense",
+          );
+      // var body = json.decode(response.body);
+      // if (body != null) {
+      if (response.statusCode == 200) {
+        state = state.copyWith(
+          loading: Loader.loaded,
+        );
+        return ApiResponse(
+          successMessage: response.data["message"] ?? "Success",
+        );
+      } else {
+        state = state.copyWith(
+          loading: Loader.error,
+        );
+        return ApiResponse(
+          errorMessage: response.data["message"] ?? "Unknown error",
+        );
+      }
+    } on DioError catch (e) {
+      state = state.copyWith(
+        loading: Loader.error,
+      );
+      if (e.response != null && e.response!.data != null) {
+        return ApiResponse(
+          errorMessage: e.response!.data['message'] ?? "Unknown error",
+        );
+      } else {
+        return ApiResponse(errorMessage: "Connection error, please try again.");
+      }
+    } catch (e) {
+      state = state.copyWith(
+        loading: Loader.error,
+      );
+      return ApiResponse(errorMessage: "Connection error, please try again.");
+    }
+  }
+
+
   //getAvailablecarz
   Future<ApiResponse> getCars() async {
     state = state.copyWith(

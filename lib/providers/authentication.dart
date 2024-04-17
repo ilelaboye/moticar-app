@@ -33,4 +33,16 @@ class Authentication with ChangeNotifier {
         data: {"email": email, "token": token});
     return {'status': true, 'data': res.data};
   }
+
+  //add expense
+
+  Future<Map<String, dynamic>> addNewExpense(
+      BuildContext context, String email, String token) async {
+    print('adding expense click');
+    print(email);
+    print(token);
+    Response res = await req.post(context, "auth/verify-forgot-password-token",
+        data: {"email": email, "token": token});
+    return {'status': true, 'data': res.data};
+  }
 }

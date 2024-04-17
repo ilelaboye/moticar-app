@@ -10,6 +10,8 @@ import 'package:rive/rive.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/eard_dialog.dart';
+import '../expense/add_expense.dart';
+import '../expense/add_expense_final.dart';
 
 class AddCarPart3 extends StatefulHookConsumerWidget {
   const AddCarPart3({
@@ -287,7 +289,7 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
                                 child: Center(
                                   child: MoticarText(
                                       text: "x${widget.quantity}",
-                                      fontSize: 13,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.w400,
                                       fontColor: const Color(0xff293536)),
                                 ),
@@ -301,17 +303,19 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
 
                           //measurement
                           Container(
-                            height: 30,
+                            height: 40,
                             width: 90,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                                 color: const Color(0xff425658),
                                 borderRadius: BorderRadius.circular(8)),
-                            child: MoticarText(
-                                text: widget.measurements,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                fontColor: Colors.white),
+                            child: Center(
+                              child: MoticarText(
+                                  text: widget.measurements,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  fontColor: Colors.white),
+                            ),
                           ),
 
                           const SizedBox(
@@ -498,70 +502,19 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
                         myColor: AppColors.indieC,
                         borderColor: AppColors.indieC,
                         onTap: () async {
-                          // if (productControl.text.isNotEmpty &&
-                          //     selectedBrand!.isNotEmpty &&
-                          //     amountController.text.isNotEmpty) {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: true,
+                          Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
-                              return Center(
-                                child: AlertDialog(
-                                  backgroundColor: AppColors.appThemeColor,
-                                  shadowColor: AppColors.appThemeColor,
-                                  content: Container(
-                                    padding: const EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: const Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        // const SpinKitWave(
-                                        //   color: AppColors.appThemeColor,
-                                        //   size: 30.0,
-                                        // ),
-
-                                        SizedBox(
-                                          height: 100,
-                                          width: 100,
-                                          child: RiveAnimation.asset(
-                                            'assets/images/preloader.riv',
-                                          ),
-                                        ),
-                                        SizedBox(height: 8),
-                                        Text('Processing, please wait.',
-                                            textAlign: TextAlign.center,
-                                            style:
-                                                TextStyle(color: Colors.white))
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
+                              return AddExpensesFinalPage(
+                                  imagePath: widget.partImage,
+                                  quantity: widget.quantity.toString(),
+                                  measure: widget.measurements,
+                                  conditionz: widget.condition,
+                                  brand: widget.brand,
+                                  productName: widget.productName,
+                                  carParts: widget.carParts,
+                                  amountz: widget.amount);
                             },
-                          );
-
-                          await Future.delayed(const Duration(seconds: 3));
-
-                          Navigator.pop(context);
-
-                          // Navigator.push(context, MaterialPageRoute(
-                          //   builder: (context) {
-                          //     return AddCarPart3(
-                          //       carParts: widget.carParts,
-                          //       partImage: widget.imagePath,
-                          //       partCategory: widget.partCategory,
-                          //       productName: productControl.text,
-                          //       brand: selectedBrand.toString(),
-                          //       condition: '',
-                          //       quantity: quantity.toString(),
-                          //       description: descriptControl.text,
-                          //       amount: amountController.text,
-                          //       measurements: selectedIndex.toString(),
-                          //     );
-                          //   },
-                          // ));
+                          ));
                         },
                         child: const MoticarText(
                           fontColor: AppColors.appThemeColor,

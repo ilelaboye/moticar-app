@@ -9,7 +9,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:moticar/widgets/bottom_sheet_service.dart';
-import 'package:moticar/widgets/eard_loader.dart';
 
 import '../../models/expensesmodel.dart';
 import '../../providers/app_providers.dart';
@@ -18,18 +17,39 @@ import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/eard_dialog.dart';
+import '../../widgets/eard_loader.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
 import '../bottom_bar.dart';
 import '../carpart/car_part.dart';
+import 'add_expense.dart';
 
-class AddExpensesPage extends StatefulHookConsumerWidget {
-  const AddExpensesPage({super.key});
+class AddExpensesFinalPage extends StatefulHookConsumerWidget {
+  const AddExpensesFinalPage(
+      {super.key,
+      required this.conditionz,
+      required this.measure,
+      required this.imagePath,
+      required this.brand,
+      required this.quantity,
+      required this.productName,
+      required this.carParts,
+      required this.amountz});
+
+  final String imagePath,
+      quantity,
+      productName,
+      carParts,
+      amountz,
+      conditionz,
+      measure,
+      brand;
 
   @override
-  ConsumerState<AddExpensesPage> createState() => _AddExpensesPageState();
+  ConsumerState<AddExpensesFinalPage> createState() =>
+      _AddExpensesFinalPageState();
 }
 
-class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
+class _AddExpensesFinalPageState extends ConsumerState<AddExpensesFinalPage> {
   final GlobalKey secondComponentKey = GlobalKey();
 
   final GlobalKey<FormState> _formKey = GlobalKey();
@@ -41,40 +61,15 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
   bool _isObscure = true;
 
-  bool isIncur = false;
-  DateTime? _selectedDate;
+  bool isIncur = true;
   String? selectTechie;
   String selectedDayz = "Today";
+  DateTime? _selectedDate;
   List myDayz = [
     "Today",
     'Tomorrow',
     'Next Week',
   ];
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      fieldHintText: "Select Date",
-      fieldLabelText: "Select Date",
-    );
-
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
-
-  String _formatDate(DateTime? date) {
-    if (date == null) {
-      return "Today"; //YYYY-MM-DD
-    }
-    return DateFormat('yyyy-MM-dd').format(date);
-    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
-  }
 
   String payType = '';
 
@@ -147,6 +142,31 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
   late List<bool> isSelectedList;
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      fieldHintText: "Select Date",
+      fieldLabelText: "Select Date",
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) {
+      return "Today"; //YYYY-MM-DD
+    }
+    return DateFormat('yyyy-MM-dd').format(date);
+    // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
+  }
+
   @override
   void initState() {
     super.initState();
@@ -163,12 +183,12 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     });
   }
 
-  // @override
-  // void dispose() {
-  //   titleController.dispose();
-  //   descriptionController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +203,13 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     DateTime now = DateTime.now();
     DateTime endOfYear = DateTime(now.year + 1, 1, 1);
     int remainingDays = endOfYear.difference(now).inDays;
+
+    // final NumberFormat nairaFormat = NumberFormat.currency(
+    //   symbol: 'N ', //₦
+    //   decimalDigits: 0,
+    //   locale: 'en_NG',
+    // );
+
     return Scaffold(
       backgroundColor: AppColors.teal,
       body: Column(
@@ -360,64 +387,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                             ),
                             Row(
                               children: [
-                                // Container(
-                                //   // alignment: Alignment.center,
-                                //   // width: 140,
-                                //   // height: 58,
-                                //   child: SizedBox(
-                                //     height: 45,
-                                //     width: 130,
-                                //     child: Container(
-                                //       alignment: Alignment.center,
-                                //       padding: const EdgeInsets.symmetric(
-                                //           horizontal: 7.0),
-                                //       decoration: BoxDecoration(
-                                //         borderRadius: BorderRadius.circular(8),
-                                //         color: const Color(0xffCDD2D2),
-                                //       ),
-                                //       child: DropdownButtonFormField<String>(
-                                //           alignment:
-                                //               AlignmentDirectional.center,
-                                //           icon: const Icon(Icons
-                                //               .keyboard_arrow_down_rounded),
-                                //           decoration: const InputDecoration(
-                                //             hintText: 'Today',
-                                //             // fillColor: const Color(0xffCDD2D2),
-                                //             hintStyle: TextStyle(
-                                //                 fontSize: 13,
-                                //                 fontWeight: FontWeight.w400,
-                                //                 color: AppColors.textGrey),
-                                //             enabledBorder: InputBorder.none,
-                                //             focusedBorder: InputBorder.none,
-                                //           ),
-                                //           items: myDayz
-                                //               .map<DropdownMenuItem<String>>(
-                                //                 (entry) =>
-                                //                     DropdownMenuItem<String>(
-                                //                   value: entry,
-                                //                   child: Text(
-                                //                     entry,
-                                //                     style: const TextStyle(
-                                //                         color:
-                                //                             Color(0xff002D36),
-                                //                         fontWeight:
-                                //                             FontWeight.w600,
-                                //                         fontSize: 13),
-                                //                   ),
-                                //                 ),
-                                //               )
-                                //               .toList(),
-                                //           value: selectedDayz,
-                                //           onChanged: (nvalue) {
-                                //             setState(() {
-                                //               selectedDayz = nvalue!;
-                                //             });
-                                //           }),
-                                //     ),
-
-                                //   ),
-                                // ),
-
                                 //
                                 SizedBox(
                                   height: 45,
@@ -473,7 +442,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -729,7 +698,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   onChanged: (value) {
                                     setState(() {
                                       selectTechie = value!;
-                                      carTech = value!;
+                                      carTech = value;
                                     });
                                   },
                                 ),
@@ -834,70 +803,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   ),
                                 ),
                               ),
-                              //email
-                              // TextFormField(
-                              //   controller: amountController,
-                              //   keyboardType: TextInputType.phone,
-                              //   onTapOutside: (event) {
-                              //     // FocusScope.of(context)
-                              //     //     .unfocus(); // Close the keyboard
-                              //   },
-                              //   textInputAction: TextInputAction.next,
-                              //   style: const TextStyle(
-                              //       fontFamily: "NeulisAlt",
-                              //       color: AppColors.textColor,
-                              //       fontWeight: FontWeight.w600,
-                              //       fontSize: 16),
-                              //   maxLength: 7,
-                              //   onChanged: (value) {
-                              //     final formattedAmount =
-                              //         formatAmountWithThousandSeparator(value);
-                              //     if (formattedAmount !=
-                              //         amountController.text) {
-                              //       amountController.value = TextEditingValue(
-                              //         text: formattedAmount,
-                              //         selection: TextSelection.collapsed(
-                              //             offset: formattedAmount.length),
-                              //       );
-                              //     }
-                              //   },
-                              //   onEditingComplete: () {
-                              //     final unformattedAmount =
-                              //         removeThousandSeparator(
-                              //             amountController.text);
-                              //     setState(() {
-                              //       amountController.text = unformattedAmount;
-                              //     });
-                              //   },
-                              //   validator: (value) =>
-                              //       FieldValidator.validate(value!),
-                              //   decoration: InputDecoration(
-                              //     border: InputBorder.none,
-                              //     errorBorder: InputBorder.none,
-                              //     hintText: 'Enter amount',
-                              //     prefixText: '\u20A6',
-                              //     suffixText: '00',
-
-                              //     enabledBorder: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(8),
-                              //         borderSide: const BorderSide(
-                              //             color: Color(0xffD0D5DD),
-                              //             width: 1.5)),
-                              //     focusedBorder: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(8),
-                              //         borderSide: const BorderSide(
-                              //             color: AppColors.appThemeColor)),
-                              //     filled: true,
-                              //     fillColor: Colors.white,
-                              //     // hintText: 'Enter your password',
-                              //     hintStyle: const TextStyle(
-                              //         fontFamily: "NeulisAlt",
-                              //         fontWeight: FontWeight.w400,
-                              //         color: Color(0xffC1C3C3),
-                              //         letterSpacing: 1.2,
-                              //         fontSize: 14),
-                              //   ),
-                              // ),
 
                               //method of payment
 
@@ -1091,6 +996,136 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                         ),
                       ),
 
+                      const SizedBox(height: 30),
+
+                      //divider
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Divider(
+                          thickness: 1.2,
+                          color: Color(0xffCDD2D2),
+                        ),
+                      ),
+
+                      //list for added parts
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(widget.imagePath),
+                                const SizedBox(width: 12),
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 6, top: 2, bottom: 2, right: 6),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.yellow,
+                                      borderRadius: BorderRadius.circular(4)),
+                                  child: Text(
+                                    widget.quantity,
+                                    style: const TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      // color: Color(0xff002D36),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.appThemeColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            //
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(widget.productName.toString(),
+                                    style: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        color: Color(0xff002D36),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500)),
+                                //
+                                Text(
+                                  widget.carParts.toString(),
+                                  style: const TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      color: Color(0xffC1C3C3),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+
+                            //
+                            Row(
+                              children: [
+                                Text(
+                                  // nairaFormat.format(
+                                  "N ${widget.amountz}",
+                                  style: const TextStyle(
+                                      fontFamily: "Neulis",
+                                      color: Color(0xff006C70),
+                                      fontSize: 15.5,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                PopupMenuButton(
+                                  surfaceTintColor: Colors.white,
+                                  shadowColor: const Color(0xffC1C3C3),
+                                  // color: const Color(0xffC1C3C3),
+                                  itemBuilder: (BuildContext context) => [
+                                    PopupMenuItem(
+                                      value: 'edit',
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/svgs/edit.svg'),
+                                          const SizedBox(
+                                            width: 12,
+                                          ),
+                                          const Text('Edit'),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 'strike_off',
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/svgs/strike.svg'),
+                                          const SizedBox(
+                                            width: 12,
+                                          ),
+                                          const Text('Strike off'),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                  onSelected: (String value) {
+                                    if (value == 'edit') {
+                                      // Handle edit action
+                                    } else if (value == 'strike_off') {
+                                      // Handle strike off action
+                                    }
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+
+                      //divider
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Divider(
+                          thickness: 1.2,
+                          color: Color(0xffCDD2D2),
+                        ),
+                      ),
+
                       //if incur any cost
                       Visibility(
                         visible: isIncur,
@@ -1128,7 +1163,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                         ),
                       ),
 
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 10),
 
                       //
                       Column(
@@ -1154,7 +1189,11 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                           myColor: const Color(0xFFFFFFFF),
                                           borderColor: AppColors.indieC,
                                           onTap: () {
-                                            Navigator.pop(context);
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return const BottomHomePage();
+                                            }));
                                           },
                                           child: const MoticarText(
                                             fontColor: Color(0xff006C70),
@@ -1190,177 +1229,99 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                   myColor: AppColors.indieC,
                                                   borderColor: AppColors.indieC,
                                                   onTap: () async {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return MoticarDialog(
-                                                          icon: const Icon(
-                                                              Icons
-                                                                  .error_outline_sharp,
-                                                              color:
-                                                                  AppColors.red,
-                                                              size: 50),
-                                                          title: '',
-                                                          subtitle:
-                                                              "add car parts before proceeding",
-                                                          onTap: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          buttonColor:
-                                                              AppColors.red,
-                                                          textColor:
-                                                              AppColors.white,
-                                                          buttonText: "Dismiss",
-                                                        );
+                                                    List<Map<String, dynamic>>
+                                                        carPartsList = [
+                                                      {
+                                                        "category":
+                                                            widget.carParts,
+                                                        "product_name":
+                                                            widget.productName,
+                                                        "brand": widget.brand,
+                                                        "condition":
+                                                            widget.conditionz,
+                                                        "unit_of_measurement":
+                                                            widget.measure,
+                                                        "price": widget.amountz
+                                                            .replaceAll(
+                                                                ',', ''),
+                                                        "quantity":
+                                                            widget.quantity,
+                                                        "image": ""
+                                                        // widget.imagePath
+                                                      },
+                                                    ];
+
+                                                    final signUpResult =
+                                                        await model
+                                                            .addNewExpenses(
+                                                      formData: {
+                                                        "category":
+                                                            selectedCategory
+                                                                .toString(),
+                                                        "title": titleController
+                                                            .text,
+                                                        "description":
+                                                            descriptionController
+                                                                .text,
+                                                        "technician":
+                                                            selectTechie
+                                                                .toString(),
+                                                        "amount":
+                                                            amountController
+                                                                .text
+                                                                .replaceAll(
+                                                                    ',', ''),
+                                                        "method_of_payment":
+                                                            payType,
+                                                        "date": _formatDate(
+                                                            _selectedDate),
+                                                        "carparts": carPartsList
                                                       },
                                                     );
 
-                                                    // // if(myEmail.isNotEmpty && myPass.isNotEmpty){
-                                                    // // showDialog(
-                                                    // //   context: context,
-                                                    // //   barrierDismissible: true,
-                                                    // //   builder: (context) {
-                                                    // //     return Center(
-                                                    // //       child: AlertDialog(
-                                                    // //         backgroundColor:
-                                                    // //             AppColors
-                                                    // //                 .appThemeColor,
-                                                    // //         shadowColor: AppColors
-                                                    // //             .appThemeColor,
-                                                    // //         content: Container(
-                                                    // //           padding:
-                                                    // //               const EdgeInsets
-                                                    // //                   .all(20),
-                                                    // //           decoration:
-                                                    // //               BoxDecoration(
-                                                    // //             borderRadius:
-                                                    // //                 BorderRadius
-                                                    // //                     .circular(
-                                                    // //                         10),
-                                                    // //           ),
-                                                    // //           child: const Column(
-                                                    // //             mainAxisSize:
-                                                    // //                 MainAxisSize
-                                                    // //                     .min,
-                                                    // //             children: [
-                                                    // //               SizedBox(
-                                                    // //                 height: 100,
-                                                    // //                 width: 100,
-                                                    // //                 child:
-                                                    // //                     RiveAnimation
-                                                    // //                         .asset(
-                                                    // //                   'assets/images/preloader.riv',
-                                                    // //                 ),
-                                                    // //               ),
-                                                    // //               SizedBox(
-                                                    // //                   height: 8),
-                                                    // //               Text(
-                                                    // //                   'Welcome to Moticar',
-                                                    // //                   textAlign:
-                                                    // //                       TextAlign
-                                                    // //                           .center,
-                                                    // //                   style: TextStyle(
-                                                    // //                       color: Colors
-                                                    // //                           .white))
-                                                    // //             ],
-                                                    // //           ),
-                                                    // //         ),
-                                                    // //       ),
-                                                    // //     );
-                                                    // //   },
-                                                    // // );
+                                                    if (signUpResult
+                                                        .successMessage
+                                                        .isNotEmpty) {
+                                                      // Navigator.pop(context);
 
-                                                    // // await Future.delayed(
-                                                    // //     const Duration(seconds: 3));
-
-                                                    // // All fields are filled, attempt sign-up
-                                                    // final signUpResult =
-                                                    //     await model.addNewExpenses(
-                                                    //   formData: {
-
-                                                    //           "category": selectedCategory.toString(),
-                                                    //         "title":
-                                                    //             titleController.text,
-                                                    //         "description":
-                                                    //             descriptionController
-                                                    //                 .text,
-                                                    //         "technician": selectTechie.toString(),
-                                                    //         "amount": amountController.text,
-                                                    //         "method_of_payment":
-                                                    //             payType,
-                                                    //         "date": "2024-01-25",
-                                                    //         "carparts": [
-                                                    //           {
-                                                    //             "category": "Tyre",
-                                                    //             "product_name":
-                                                    //                 "Sanao",
-                                                    //             "brand":
-                                                    //                 "Sano tyre",
-                                                    //             "condition": "New",
-                                                    //             "unit_of_measurement":
-                                                    //                 "rubber",
-                                                    //             "price": 45000,
-                                                    //             "quantity": 2,
-                                                    //             "image": null
-                                                    //           },
-                                                    //           {
-                                                    //             "category":
-                                                    //                 "Brake pad",
-                                                    //             "product_name":
-                                                    //                 "BR 1250",
-                                                    //             "brand":
-                                                    //                 "Black rock",
-                                                    //             "condition": "Used",
-                                                    //             "unit_of_measurement":
-                                                    //                 "1",
-                                                    //             "price": 2000,
-                                                    //             "quantity": 3
-                                                    //           }
-                                                    //         ]
-                                                    //   },
-                                                    // );
-
-                                                    // if (signUpResult.successMessage
-                                                    //     .isNotEmpty) {
-                                                    //   // Navigator.pop(context);
-
-                                                    //   Navigator.push(context,
-                                                    //       MaterialPageRoute(
-                                                    //           builder: (context) {
-                                                    //     return const BottomHomePage();
-                                                    //   }));
-                                                    // } else if (signUpResult
-                                                    //     .errorMessage.isNotEmpty) {
-                                                    //   // Sign-up failed, show error dialog
-                                                    //   showDialog(
-                                                    //     context: context,
-                                                    //     builder:
-                                                    //         (BuildContext context) {
-                                                    //       return MoticarDialog(
-                                                    //         icon: const Icon(
-                                                    //             Icons
-                                                    //                 .error_outline_sharp,
-                                                    //             color:
-                                                    //                 AppColors.red,
-                                                    //             size: 50),
-                                                    //         title: '',
-                                                    //         subtitle: signUpResult
-                                                    //             .errorMessage,
-                                                    //         onTap: () {
-                                                    //           Navigator.pop(
-                                                    //               context);
-                                                    //         },
-                                                    //         buttonColor:
-                                                    //             AppColors.red,
-                                                    //         textColor:
-                                                    //             AppColors.white,
-                                                    //         buttonText: "Dismiss",
-                                                    //       );
-                                                    //     },
-                                                    //   );
-                                                    // }
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) {
+                                                        return const BottomHomePage();
+                                                      }));
+                                                    } else if (signUpResult
+                                                        .errorMessage
+                                                        .isNotEmpty) {
+                                                      // Sign-up failed, show error dialog
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return MoticarDialog(
+                                                            icon: const Icon(
+                                                                Icons
+                                                                    .error_outline_sharp,
+                                                                color: AppColors
+                                                                    .red,
+                                                                size: 50),
+                                                            title: '',
+                                                            subtitle: signUpResult
+                                                                .errorMessage,
+                                                            onTap: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            buttonColor:
+                                                                AppColors.red,
+                                                            textColor:
+                                                                AppColors.white,
+                                                            buttonText:
+                                                                "Dismiss",
+                                                          );
+                                                        },
+                                                      );
+                                                    }
 
                                                     // context.router.push(const LoginRouteCopy());
                                                   },
@@ -1635,48 +1596,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
           ),
         );
       },
-    );
-  }
-}
-
-class CategoryPart {
-  final String imagePath, text;
-
-  CategoryPart({required this.imagePath, required this.text});
-}
-
-class CatergoryMenu extends StatelessWidget {
-  const CatergoryMenu({super.key, required this.item, this.height = 60});
-
-  final CategoryPart item;
-  final double? height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(15),
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.yellow,
-          ),
-          child: SvgPicture.asset(
-            item.imagePath,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          item.text,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontFamily: "NeulisAlt",
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-            color: AppColors.white,
-          ),
-        ),
-      ],
     );
   }
 }
