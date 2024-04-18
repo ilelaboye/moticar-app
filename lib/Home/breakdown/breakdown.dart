@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -88,21 +89,30 @@ class _BreakDownPageState extends State<BreakDownPage> {
                         ),
                       ),
 
+                      const SizedBox(
+                        width: 8,
+                      ),
+
                       //
-                      Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                          // shape: BoxShape.circle,
-                          color: AppColors.appThemeColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          widget.paymode,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "NeulisAlt",
-                            fontSize: 12,
-                            color: AppColors.white,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            // shape: BoxShape.circle,
+                            color: AppColors.appThemeColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            widget.paymode,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "NeulisAlt",
+                              fontSize: 12,
+                              color: AppColors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -380,7 +390,7 @@ class _BreakDownPageState extends State<BreakDownPage> {
               ),
 
               //divider
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Divider(
                   thickness: 0.8,

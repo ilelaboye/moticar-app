@@ -85,3 +85,44 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+//  return FutureBuilder<bool>(
+//           future: checkUserLoggedIn(),
+//           builder: (context, snapshot) {
+//             if (snapshot.connectionState == ConnectionState.waiting) {
+//               // Show a loading indicator while checking the user's login status.
+//               return const CircularProgressIndicator();
+//             } else if (snapshot.hasError) {
+//               // Handle any errors that occurred during the check.
+//               return const Center(
+//                 child: Text('Error occurred'),
+//               );
+//             } else {
+//               final bool userLoggedIn = snapshot.data ?? false;
+//               // Determine the initial route based on the user's login status.
+//               final List<PageRouteInfo> initialRoute = userLoggedIn
+//                   ? [const PageRouteInfo('WelcomeRoute')]
+//                   : [const PageRouteInfo('OnBoardingScreen')];
+
+//               return ChangeNotifierProvider(
+//                 create: (context) => Themprovider(),
+//                 builder: (context, child) {
+//                   final themeProvider =
+//                       Provider.of<Themprovider>(context).themeData;
+//                   return MaterialApp.router(
+//                     debugShowCheckedModeBanner: false,
+//                     title: 'Party Time',
+//                     theme: themeProvider,
+//                     // darkTheme: darkTheme,
+//                     // themeMode: themeProvider,
+//                     routerDelegate: _appRouter.delegate(
+//                         initialRoutes: initialRoute,
+//                         ),
+//                     routeInformationParser: _appRouter.defaultRouteParser(),
+//                   );
+//                 },
+//               );
+//             }
+//           },
+//         );

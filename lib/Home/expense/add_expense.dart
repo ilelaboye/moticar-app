@@ -195,6 +195,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     final savedDate = _prefs.getString('selectedDate');
     _selectedDate = savedDate != null ? DateTime.tryParse(savedDate) : null;
     _selectTechie = _prefs.getString('selectedTechie');
+    payType = _prefs.getString("payType")!;
     selectedCategory = _prefs.getString('selectedCategory')!;
     final titlez = _prefs.getString('titlez') ?? '';
     final descript = _prefs.getString('descript') ?? '';
@@ -208,10 +209,14 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
   Future<void> _saveState() async {
     if (_selectedDate != null) {
-      await _prefs.setString('selectedDate', _selectedDate!.toIso8601String());
+      await _prefs.setString('selectedDate', _selectedDate!.toString());
     }
     if (_selectTechie != null) {
       await _prefs.setString('selectedTechie', _selectTechie!);
+    }
+
+    if (payType != null) {
+      await _prefs.setString("payType", payType);
     }
 
     if (selectedCategory != null) {
@@ -798,9 +803,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   onEditingComplete: () {
                                     _saveState();
                                   },
-                                  // onChanged: (value) {
-                                  //   _saveState();
-                                  // },
+                                  onChanged: (value) {
+                                    _saveState();
+                                  },
                                   validator: (value) =>
                                       FieldValidator.validate(value!),
                                   decoration: InputDecoration(
@@ -863,6 +868,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                         return GestureDetector(
                                           onTap: () {
                                             setState(() {
+                                              _saveState();
                                               // selectedIndex = index;
 
                                               payType = paymentList[index];
