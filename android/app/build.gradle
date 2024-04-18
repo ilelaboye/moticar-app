@@ -28,6 +28,8 @@ android {
     // flutter.compileSdkVersion
     //34
     ndkVersion "25.1.8937393"
+//    flutter.ndkVersion
+//    "25.1.8937393"
     // flutter.ndkVersion
 
     compileOptions {

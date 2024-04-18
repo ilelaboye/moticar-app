@@ -1180,6 +1180,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                 myColor: const Color(0xFFFFFFFF),
                                 borderColor: AppColors.white,
                                 onTap: () {
+                                  _loadSavedText();
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return const AddCarPart();
