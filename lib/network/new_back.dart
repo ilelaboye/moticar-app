@@ -9,12 +9,13 @@ import 'package:dio/dio.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:moticar/utils/constants.dart';
 import '../services/hivekeys.dart';
 import '../services/localdatabase.dart';
 import 'moticar_network.dart';
 
 // //up endpoint
-String baseUrl = 'https://moticar.ttninternational.org/api/v1/';
+String baseUrl = Constant.baseUrl;
 
 class NewAgencyBackEnd implements AgencyNetwork {
   late final Dio _dio;

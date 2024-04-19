@@ -541,7 +541,8 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
                             await Future.delayed(
                                 const Duration(milliseconds: 300));
-
+                            print('jfjfj');
+                            print(emailz);
                             // All fields are filled, attempt sign-up
                             final signUpResult = await model.signUp1(
                               formData: {
