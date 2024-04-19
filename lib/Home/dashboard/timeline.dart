@@ -422,13 +422,71 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                 },
                               ),
                             )
-                          : const SizedBox(
-                              height: 150,
-                              width: 150,
-                              child: RiveAnimation.asset(
-                                'assets/images/splashscreenanim.riv',
+                          : Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const SizedBox(height: 30),
+                                  const MoticarText(
+                                    text: 'No Cars Available',
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500,
+                                    fontColor: AppColors.white,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: MoticarLoginButton(
+                                      borderColor: const Color(0xff29D7DE),
+                                      myColor: const Color(0xff29D7DE),
+                                      child: const Center(
+                                        child: Text(
+                                          'Add new Car',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'NeulisAlt',
+                                            color: AppColors.appThemeColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const AddCarPage(
+                                            isHome: true,
+                                          );
+                                        }));
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+
+                      // TextButton(
+                      //     onPressed: () {
+                      //       Navigator.push(context,
+                      //           MaterialPageRoute(builder: (context) {
+                      //         return const AddCarPage(isHome: true);
+                      //       }));
+                      //     },
+                      //     child: const Row(
+                      //       children: [
+                      //         Text("No cars Available, Add New Car")
+                      //       ],
+                      //     ),
+                      //   ),
+
+                      // const SizedBox(
+                      //     height: 150,
+                      //     width: 150,
+                      //     child: RiveAnimation.asset(
+                      //       'assets/images/splashscreenanim.riv',
+                      //     ),
+                      //   ),
                       Visibility(
                         visible: isVisible,
                         child: Column(
@@ -825,7 +883,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                           Text(breakdown.category.toString()),
                                           const SizedBox(width: 8),
                                           breakdown.carpart == 0
-                                              ? SizedBox()
+                                              ? const SizedBox()
                                               : Container(
                                                   padding:
                                                       const EdgeInsets.only(

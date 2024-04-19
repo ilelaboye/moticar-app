@@ -455,16 +455,44 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                       )
                     :
                     //add no Expense empty Widget...
-                    const Center(
+                    Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(height: 30),
-                            MoticarText(
+                            const SizedBox(height: 30),
+                            const MoticarText(
                               text: 'No Cars Available',
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
-                              fontColor: AppColors.textColor,
+                              fontColor: AppColors.white,
+                            ),
+                            const SizedBox(height: 8),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: MoticarLoginButton(
+                                borderColor: const Color(0xff29D7DE),
+                                myColor: const Color(0xff29D7DE),
+                                child: const Center(
+                                  child: Text(
+                                    'Add new Car',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'NeulisAlt',
+                                      color: AppColors.appThemeColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const AddCarPage(
+                                      isHome: true,
+                                    );
+                                  }));
+                                },
+                              ),
                             ),
                           ],
                         ),
