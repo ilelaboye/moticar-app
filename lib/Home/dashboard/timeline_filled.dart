@@ -140,8 +140,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
             width: MediaQuery.of(context).size.width,
             child: state.loading == Loader.loading
                 ? const SizedBox(
-                    height: 250,
-                    width: 250,
+                    height: 150,
+                    width: 150,
                     child: RiveAnimation.asset(
                       'assets/images/splashscreenanim.riv',
                     ),
@@ -441,7 +441,9 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                     onTap: () {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                        return const AddCarPage();
+                                        return const AddCarPage(
+                                          isHome: true,
+                                        );
                                       }));
                                     },
                                   ),
@@ -451,7 +453,9 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                           )
                         ],
                       )
-                    : const Center(
+                    :
+                    //add no Expense empty Widget...
+                    const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -679,7 +683,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                       height: MediaQuery.of(context).size.height * 0.5,
                       width: double.infinity,
                       child: ListView.builder(
-                        padding: EdgeInsets.all(1),
+                        padding: const EdgeInsets.all(1),
                         shrinkWrap: true,
                         itemCount: myTechies.length,
                         itemBuilder: (context, index) {
@@ -750,19 +754,25 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                   children: [
                                     Text(breakdown.category.toString()),
                                     const SizedBox(width: 8),
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 8, top: 4, bottom: 4, right: 8),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.anotherYellow,
-                                          borderRadius:
-                                              BorderRadius.circular(32)),
-                                      child: Text(
-                                        'x${breakdown.carpart}',
-                                        style: const TextStyle(
-                                            color: Color(0xff293536)),
-                                      ),
-                                    ),
+                                    //remove part for zero ...
+                                    breakdown.carpart == 0
+                                        ? const SizedBox()
+                                        : Container(
+                                            padding: const EdgeInsets.only(
+                                                left: 8,
+                                                top: 4,
+                                                bottom: 4,
+                                                right: 8),
+                                            decoration: BoxDecoration(
+                                                color: AppColors.anotherYellow,
+                                                borderRadius:
+                                                    BorderRadius.circular(32)),
+                                            child: Text(
+                                              'x${breakdown.carpart}',
+                                              style: const TextStyle(
+                                                  color: Color(0xff293536)),
+                                            ),
+                                          ),
                                   ],
                                 ),
 

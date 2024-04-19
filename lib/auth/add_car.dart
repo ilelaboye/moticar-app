@@ -20,7 +20,9 @@ import '../utils/enums.dart';
 import 'car_list_all.dart';
 
 class AddCarPage extends StatefulHookConsumerWidget {
-  const AddCarPage({super.key});
+  const AddCarPage({super.key, required this.isHome});
+
+  final bool isHome;
 
   @override
   ConsumerState<AddCarPage> createState() => _AddCarPageState();
@@ -715,13 +717,15 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                               },
                             );
 
-                            await Future.delayed(const Duration(seconds: 3));
+                            await Future.delayed(
+                                const Duration(milliseconds: 100));
 
                             Navigator.pop(context);
 
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return AddCarPage2(
+                                    isHome: widget.isHome,
                                     carID: selectedID,
                                     // imagePath: selectedImage,
                                     carmodelz: carmodelz,

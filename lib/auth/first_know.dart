@@ -226,125 +226,66 @@ class _FirstKnowState extends State<FirstKnow> {
                   myColor: AppColors.appThemeColor,
                   borderColor: AppColors.diaColor,
                   onTap: () async {
-                    if (Platform.isIOS) {
-                      // Show Cupertino dialog for iOS users
-                      await showCupertinoDialog(
-                        context: context,
-                        builder: (context) {
-                          return CupertinoAlertDialog(
-                            title: const Text(
-                              '“moticar” would like to send you notifications',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 19,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          backgroundColor: const Color(
+                              0xff222222E5), // Set background color to black
+                          title: const Text(
+                            '“moticar” would like to send you notifications',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 19,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
                             ),
-                            content: const Text(
-                              'Notifications may include alerts, sounds and icon badges. These can be configured in Settings.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Arial',
-                                fontSize: 14,
-                                color: Color(0xff929292),
-                                fontWeight: FontWeight.w400,
-                              ),
+                          ),
+                          content: const Text(
+                            'Notifications may include alerts, sounds and icon badges. These can be configured in Settings.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Arial',
+                              color: Color(0xff929292),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
                             ),
-                            actions: [
-                              CupertinoButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text(
-                                  'Do not allow',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff1154CC),
-                                  ),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                'Do not allow',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xff1154CC),
                                 ),
                               ),
-                              CupertinoButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text(
-                                  'Allow',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff1154CC),
-                                  ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // Navigator.pop(context);
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return const BottomHomePage();
+                                }));
+                              },
+                              child: const Text(
+                                'Allow',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0xff1154CC),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    } else {
-                      // Show Material dialog for Android users
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            backgroundColor:
-                                Colors.black, // Set background color to black
-                            title: const Text(
-                              '“moticar” would like to send you notifications',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 19,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
                               ),
                             ),
-                            content: const Text(
-                              'Notifications may include alerts, sounds and icon badges. These can be configured in Settings.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Arial',
-                                color: Color(0xff929292),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text(
-                                  'Do not allow',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff1154CC),
-                                  ),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  // Navigator.pop(context);
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return const BottomHomePage();
-                                  }));
-                                },
-                                child: const Text(
-                                  'Allow',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff1154CC),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
+                          ],
+                        );
+                      },
+                    );
                   },
                   child: const MoticarText(
                     fontColor: AppColors.white,

@@ -20,6 +20,7 @@ import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/eard_dialog.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
+import '../../widgets/total_widget.dart';
 import '../bottom_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../carpart/car_part.dart';
@@ -176,6 +177,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
   @override
   void initState() {
     _loadSavedText();
+    // _clearState();
+
     super.initState();
     isSelectedList = List.generate(paymentList.length, (index) => false);
 
@@ -227,6 +230,16 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     await _prefs.setString('amountzz', amountController.text);
   }
 
+  Future<void> _clearState() async {
+    await _prefs.remove('selectedDate');
+    await _prefs.remove('selectedTechie');
+    await _prefs.remove('payType');
+    await _prefs.remove('selectedCategory');
+    await _prefs.remove('titlez');
+    await _prefs.remove('descript');
+    await _prefs.remove('amountzz');
+  }
+
   @override
   void dispose() {
     titleController.dispose();
@@ -248,6 +261,13 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     DateTime now = DateTime.now();
     DateTime endOfYear = DateTime(now.year + 1, 1, 1);
     int remainingDays = endOfYear.difference(now).inDays;
+
+    String widgetAmountz = widget.amountz;
+    String amountControllerText = amountController.text;
+
+    int totalSum = calculateTotal(widgetAmountz, amountControllerText);
+    print("Total sum: $totalSum");
+
     return Scaffold(
       backgroundColor: AppColors.teal,
       body: Column(
@@ -647,97 +667,110 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     fontColor: AppColors.appThemeColor),
                               ),
                               //Country
+
                               Padding(
                                 padding: const EdgeInsets.only(
                                     bottom: 8, left: 3, right: 3),
-                                child: DropdownButtonFormField<String>(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Select Technician',
-                                    hintStyle: TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xffC1C3C3),
-                                        letterSpacing: 1.2,
-                                        fontSize: 14),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                      borderSide: BorderSide(
-                                          color: Color(0xffD0D5DD), width: 1.5),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                      borderSide: BorderSide(
-                                          color: AppColors.appThemeColor,
-                                          width: 1.5),
-                                    ),
-                                  ),
-                                  items: myTechies
-                                      .map<DropdownMenuItem<String>>(
-                                        (tech) => DropdownMenuItem<String>(
-                                          value: tech.id.toString(),
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                  height: 50,
-                                                  width: 50,
-                                                  padding:
-                                                      const EdgeInsets.all(8),
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: Image.network(
-                                                    tech.image.toString(),
-                                                    fit: BoxFit.cover,
-                                                  )),
-
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-
-                                              //
-                                              Text(
-                                                // tech.preferredName.toString(),
-                                                '${tech.firstName} ${tech.lastName}',
-                                                style: const TextStyle(
-                                                    fontFamily: "NeulisAlt",
-                                                    color: AppColors.textColor,
-                                                    fontWeight: FontWeight.w500,
-                                                    letterSpacing: 1.2,
-                                                    fontSize: 14),
-                                              ),
-
-                                              const SizedBox(
-                                                width: 12,
-                                              ),
-
-                                              //phone number
-                                              Text(
-                                                // tech.preferredName.toString(),
-                                                '${tech.phone}',
-                                                style: const TextStyle(
-                                                    fontFamily: "NeulisAlt",
-                                                    color: Color(0xff00AEB5),
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14),
-                                              ),
-                                            ],
+                                child: myTechies.isEmpty
+                                    ? SizedBox() // Render SizedBox if myTechies list is empty
+                                    : DropdownButtonFormField<String>(
+                                        decoration: const InputDecoration(
+                                          hintText: 'Select Technician',
+                                          hintStyle: TextStyle(
+                                              fontFamily: "NeulisAlt",
+                                              fontWeight: FontWeight.w400,
+                                              color: Color(0xffC1C3C3),
+                                              letterSpacing: 1.2,
+                                              fontSize: 14),
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                            borderSide: BorderSide(
+                                                color: Color(0xffD0D5DD),
+                                                width: 1.5),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(8)),
+                                            borderSide: BorderSide(
+                                                color: AppColors.appThemeColor,
+                                                width: 1.5),
                                           ),
                                         ),
-                                      )
-                                      .toList(),
-                                  value: _selectTechie,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectTechie = value!;
-                                      _saveState();
-                                    });
-                                  },
-                                ),
+                                        items: myTechies
+                                            .map<DropdownMenuItem<String>>(
+                                              (tech) =>
+                                                  DropdownMenuItem<String>(
+                                                value: tech.id.toString(),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                        height: 50,
+                                                        width: 50,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8),
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        child: Image.network(
+                                                          tech.image.toString(),
+                                                          fit: BoxFit.cover,
+                                                        )),
+
+                                                    const SizedBox(
+                                                      width: 8,
+                                                    ),
+
+                                                    //
+                                                    Text(
+                                                      // tech.preferredName.toString(),
+                                                      '${tech.firstName} ${tech.lastName}',
+                                                      style: const TextStyle(
+                                                          fontFamily:
+                                                              "NeulisAlt",
+                                                          color: AppColors
+                                                              .textColor,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          letterSpacing: 1.2,
+                                                          fontSize: 14),
+                                                    ),
+
+                                                    const SizedBox(
+                                                      width: 12,
+                                                    ),
+
+                                                    //phone number
+                                                    Text(
+                                                      // tech.preferredName.toString(),
+                                                      '${tech.phone}',
+                                                      style: const TextStyle(
+                                                          fontFamily:
+                                                              "NeulisAlt",
+                                                          color:
+                                                              Color(0xff00AEB5),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 14),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                            .toList(),
+                                        value: _selectTechie,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _selectTechie = value!;
+                                            // _saveState();
+                                          });
+                                        },
+                                      ),
                               ),
 
                               if (_selectTechie ==
@@ -1163,6 +1196,11 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   ),
                                 ),
 
+                                MyTotalWidget(
+                                  totalAmount: totalSum.toString(),
+                                  partAmount: widget.amountz,
+                                ),
+
                                 //divider
                                 const Padding(
                                   padding: EdgeInsets.all(8.0),
@@ -1239,6 +1277,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                           borderColor: AppColors.indieC,
                                           onTap: () {
                                             Navigator.pop(context);
+                                            _clearState();
                                           },
                                           child: const MoticarText(
                                             fontColor: Color(0xff006C70),
@@ -1357,6 +1396,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                                         (context) {
                                                               return const BottomHomePage();
                                                             }));
+
+                                                            _clearState();
                                                           } else if (signUpResult
                                                               .errorMessage
                                                               .isNotEmpty) {
@@ -1392,6 +1433,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                                 );
                                                               },
                                                             );
+
+                                                            _clearState();
                                                           }
                                                         },
                                                         child:
@@ -1429,6 +1472,17 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     );
   }
 
+  int calculateTotal(String str1, String str2) {
+    // Parse strings to integers
+    int int1 = int.tryParse(str1) ?? 0; // Use 0 if parsing fails
+    int int2 = int.tryParse(str2) ?? 0; // Use 0 if parsing fails
+
+    // Calculate the total
+    int total = int1 + int2;
+
+    return total;
+  }
+
   // Function to remove thousand separators from formatted text
   String removeThousandSeparator(String value) {
     return value.replaceAll(',', '');
@@ -1444,7 +1498,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     }
   }
 
-  // verify otp modal
+  // show expense Category
   void _showExpenseCategory(
     BuildContext context,
   ) {

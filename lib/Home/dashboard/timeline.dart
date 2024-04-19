@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/auth/add_car.dart';
@@ -15,10 +13,13 @@ import 'package:intl/intl.dart';
 import 'package:clean_calendar/clean_calendar.dart';
 
 import '../../widgets/eard_loader.dart';
+import '../breakdown/breakdown.dart';
 import '../expense/add_expense.dart';
 import '../expense/add_technician.dart';
 import '../profile/invite_friend.dart';
 import '../profile/my_cars.dart';
+import '../profile/set_reminder.dart';
+import 'pie_chart/pie.dart';
 
 class TimelinePage extends StatefulHookConsumerWidget {
   const TimelinePage({super.key});
@@ -28,6 +29,12 @@ class TimelinePage extends StatefulHookConsumerWidget {
 }
 
 class _TimelinePageState extends ConsumerState<TimelinePage> {
+  final NumberFormat nairaFormat = NumberFormat.currency(
+    symbol: 'N ', //₦
+    // decimalDigits: 0,
+    locale: 'en_NG',
+  );
+
   List myMonthz = [
     "January",
     'Febraury',
@@ -95,34 +102,54 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
     final model = ref.read(profileProvider.notifier);
 
     List<GetCarz> myCarz = state.getallCarz;
+    List<GetExpenses> myExpensez = state.getexpenses;
+    List<GetTechies> myTechiez = state.techies;
 
     List<MotiModel> menuItems = [
+      myTechiez.isEmpty
+          ? MotiModel(
+              checkColor: const Color(0xffD7E2E4),
+              textColor: const Color(0xff002D36),
+              buttonColor: Colors.white,
+              bckColor: const Color(0xffDBFEFF),
+              title:
+                  'Add the names of your trusted mechanics straight from your phone directory',
+              imagePath: 'assets/images/mechnic.png',
+              textButton: "Add a mechanic",
+              action: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const AddNewTechie();
+                }));
+                // context.router.pushNamed('/home-nav/resetPin');
+              })
+          :
+          //if u have one technicians added
+          MotiModel(
+              checkColor: const Color(0xff00AEB5),
+              textColor: Colors.white,
+              buttonColor: AppColors.appThemeColor,
+              bckColor: const Color(0xffFDF8C5),
+              title:
+                  'Add the names of your trusted mechanics straight from your phone directory',
+              imagePath: 'assets/images/mechnic.png',
+              textButton: "Add another mechanic",
+              action: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const AddNewTechie();
+                }));
+                // context.router.pushNamed('/home-nav/resetPin');
+              }),
+
+      //
       MotiModel(
-          checkColor: Color(0xffD7E2E4),
+          checkColor: const Color(0xffD7E2E4),
           textColor: const Color(0xff002D36),
           buttonColor: Colors.white,
           bckColor: const Color(0xffDBFEFF),
           title:
-              'Add the names of your trusted mechanics straight from your phone directory',
-          imagePath: 'assets/images/mech.svg',
-          textButton: "Add a mechanic",
-          action: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const AddNewTechie();
-            }));
-            // context.router.pushNamed('/home-nav/resetPin');
-          }),
-
-      //
-      MotiModel(
-          checkColor: AppColors.lightGreen,
-          textColor: Colors.white, // const Color(0xff002D36),
-          buttonColor: AppColors.appThemeColor,
-          bckColor: const Color(0xffFDF8C5), //0xffDBFEFF
-          title:
               'Win some points when you tell a friend about moticar by sharing your refferal code',
-          imagePath: 'assets/images/fwend.svg',
-          textButton: "Invite an extra friend",
+          imagePath: 'assets/images/frendzy.png',
+          textButton: "Invite a friend",
           action: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return const InviteFriend();
@@ -131,29 +158,29 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
           }),
 
       MotiModel(
-          checkColor: Color(0xffD7E2E4),
+          checkColor: const Color(0xffD7E2E4),
           textColor: const Color(0xff002D36),
           buttonColor: Colors.white,
           bckColor: const Color(0xffDBFEFF),
           title:
               'Set a reminder for your next appointment with your car technician',
-          imagePath: 'assets/images/reminder.svg',
+          imagePath: 'assets/images/remind_me.png',
           textButton: "Set a reminder",
           action: () {
-            // Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //   return const ChangePassPage();
-            // }));
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const AddReminderPage();
+            }));
             // context.router.pushNamed('/home-nav/resetPin');
           }),
 
       MotiModel(
-          checkColor: Color(0xffD7E2E4),
+          checkColor: const Color(0xffD7E2E4),
           textColor: const Color(0xff002D36),
           buttonColor: Colors.white,
           bckColor: const Color(0xffDBFEFF),
           title:
               'Rub our ego and give us a rating on the playstore! We love to hear it.',
-          imagePath: 'assets/images/rated.svg',
+          imagePath: 'assets/images/next_R.png',
           textButton: "Rate us",
           action: () {
             // Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -488,7 +515,9 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                 onTap: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return const AddCarPage();
+                                    return const AddCarPage(
+                                      isHome: true,
+                                    );
                                   }));
                                 },
                               ),
@@ -595,7 +624,6 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                     ),
 
                     //new calendar
-
                     SizedBox(
                       height: 150,
                       child: ListView(
@@ -641,6 +669,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                     ),
 
                     //
+                    //
 
                     const Padding(
                       padding: EdgeInsets.all(8.0),
@@ -650,105 +679,457 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                       ),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2, bottom: 10.0),
-                      child:
-                          Image.asset('assets/images/rocket.png', height: 180),
-                    ),
-                    // const SizedBox(height: 20),
-
-                    const Text(
-                      "You are off to a great start!",
-                      style: TextStyle(
-                          fontFamily: "NeulisAlt",
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.appThemeColor,
-                          letterSpacing: 1.2,
-                          fontSize: 18),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    const Center(
-                      child: Text(
-                        'This is a good sight! \nBut try to remember if there was some expenses you actually made but have forgotten to put in here',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.appThemeColor,
-                            height: 1.2,
-                            fontSize: 12),
-                      ),
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    const Padding(
-                      padding: EdgeInsets.only(
-                          left: 30, right: 30, top: 15, bottom: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    // if no activity or no data
+                    if (state.loading == Loader.loading)
+                      const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            MoticarLoader(
+                              size: 40,
+                            )
+                          ],
+                        ),
+                      )
+                    else if (myExpensez.isNotEmpty)
+                      Column(
                         children: [
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              // height: 10,
-                              width: 50,
-                              child: Divider(
-                                thickness: 1.5,
-                                color: Color(0xff5E7A7C),
-                                // indent: 20,
-                              ),
+                          const SizedBox(height: 350, child: PieChartSample2()),
+
+                          const Padding(
+                            padding:
+                                EdgeInsets.only(left: 30, right: 30, bottom: 2),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    // height: 10,
+                                    width: 80,
+                                    child: Divider(
+                                      thickness: 1.5,
+                                      color: Color(0xff5E7A7C),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Breakdown",
+                                  style: TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xff202A2A),
+                                      // letterSpacing: 1.2,
+                                      fontSize: 13),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    // height: 10,
+                                    width: 80,
+                                    child: Divider(
+                                      thickness: 1.5,
+                                      color: Color(0xff5E7A7C),
+                                      // indent: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
+
+                          //breakdowns
                           SizedBox(
-                            width: 3,
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            width: double.infinity,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.all(1),
+                              shrinkWrap: true,
+                              itemCount: myExpensez.length,
+                              itemBuilder: (context, index) {
+                                final breakdown = myExpensez[index];
+                                // final image
+                                // final String mechName = breakdown.carparts.
+
+                                // final String catImaes = if(breakdown.category == "Body works"){}
+                                return ListTile(
+                                  leading: GestureDetector(
+                                    onTap: () {
+                                      showMoticarBottom(
+                                        context: context,
+                                        child: FractionallySizedBox(
+                                          heightFactor: 0.89,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(30.0),
+                                              topRight: Radius.circular(30.0),
+                                            ),
+                                            child: BreakDownPage(
+                                              imagePath:
+                                                  breakdown.category.toString(),
+                                              category:
+                                                  breakdown.category.toString(),
+                                              amount: nairaFormat
+                                                  .format(breakdown.amount),
+                                              paymode: breakdown.methodOfPayment
+                                                  .toString(),
+                                              title: breakdown.title.toString(),
+                                              description: breakdown.description
+                                                  .toString(),
+                                              carparts: breakdown.carparts,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: getImageColor(
+                                                breakdown.category.toString()),
+                                            // breakdown.imageColor,
+                                          ),
+                                          child: getImageWidget(
+                                              breakdown.category.toString()),
+                                        ),
+                                        const SizedBox(
+                                          height: 3,
+                                        ),
+                                        Text(
+                                          DateFormat.Hm().format(
+                                              breakdown.date!.toLocal()),
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                              color: Color(0xff293536)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  title: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(breakdown.category.toString()),
+                                          const SizedBox(width: 8),
+                                          breakdown.carpart == 0
+                                              ? SizedBox()
+                                              : Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8,
+                                                          top: 4,
+                                                          bottom: 4,
+                                                          right: 8),
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors
+                                                          .anotherYellow,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              32)),
+                                                  child: Text(
+                                                    'x${breakdown.carpart}',
+                                                    style: const TextStyle(
+                                                        color:
+                                                            Color(0xff293536)),
+                                                  ),
+                                                )
+                                        ],
+                                      ),
+
+                                      //amount and menu button
+                                      Row(
+                                        children: [
+                                          Text(
+                                              nairaFormat
+                                                  .format(breakdown.amount),
+                                              style: const TextStyle(
+                                                  fontFamily: "Neulis",
+                                                  color: Color(0xff006C70),
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500)),
+                                          // GestureDetector(
+                                          //   onTap: (){
+
+                                          //   },
+                                          //   child: const Icon(Icons.more_vert))
+
+                                          PopupMenuButton(
+                                            surfaceTintColor: Colors.white,
+                                            // color: const Color(0xffC1C3C3),
+                                            itemBuilder:
+                                                (BuildContext context) => [
+                                              PopupMenuItem(
+                                                value: 'edit',
+                                                child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                        'assets/svgs/edit.svg'),
+                                                    const SizedBox(
+                                                      width: 12,
+                                                    ),
+                                                    const Text('Edit'),
+                                                  ],
+                                                ),
+                                              ),
+                                              PopupMenuItem(
+                                                value: 'strike_off',
+                                                child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                        'assets/svgs/strike.svg'),
+                                                    const SizedBox(
+                                                      width: 12,
+                                                    ),
+                                                    const Text('Strike off'),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                            onSelected: (String value) {
+                                              if (value == 'edit') {
+                                                // Handle edit action
+                                              } else if (value ==
+                                                  'strike_off') {
+                                                // Handle strike off action
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        breakdown.title.toString(),
+                                        style: const TextStyle(
+                                            fontFamily: "NeulisAlt",
+                                            color: Color(0xff425658),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        breakdown.description.toString() ?? '',
+                                        style: const TextStyle(
+                                            fontFamily: "NeulisAlt",
+                                            color: Color(0xff7BA0A3),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ],
+                                  ),
+                                  // trailing: Column(
+                                  //   mainAxisAlignment: MainAxisAlignment.center,
+                                  //   children: [
+                                  //     Text(breakdown.amount),
+                                  //   ],
+                                  // ),
+                                );
+                              },
+                            ),
                           ),
-                          Text(
-                            "Meanwhile, you could...",
+                          const SizedBox(height: 20),
+
+                          //
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    border: Border.all(
+                                        width: 1,
+                                        color: const Color(0xff00343F)),
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Export',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: 'NeulisAlt',
+                                          color: AppColors.appThemeColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      SvgPicture.asset('assets/svgs/export.svg')
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(
+                                width: 12,
+                              ),
+
+                              //share
+                              Expanded(
+                                child: Container(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    border: Border.all(
+                                        width: 1,
+                                        color: const Color(0xff00343F)),
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Share',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: 'NeulisAlt',
+                                          color: AppColors.appThemeColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      SvgPicture.asset('assets/svgs/share.svg')
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    else
+                      Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 2, bottom: 10.0),
+                            child: Image.asset('assets/images/rocket.png',
+                                height: 180),
+                          ),
+                          // const SizedBox(height: 20),
+
+                          const Text(
+                            "You are off to a great start!",
                             style: TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.w600,
-                                color: Color(0xff202A2A),
-                                // letterSpacing: 1.2,
-                                fontSize: 13),
+                                color: AppColors.appThemeColor,
+                                letterSpacing: 1.2,
+                                fontSize: 18),
                           ),
+
+                          const SizedBox(height: 20),
+
+                          const Center(
+                            child: Text(
+                              'This is a good sight! \nBut try to remember if there was some expenses you actually made but have forgotten to put in here',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: "NeulisAlt",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.appThemeColor,
+                                  height: 1.2,
+                                  fontSize: 12),
+                            ),
+                          ),
+
+                          const SizedBox(height: 10),
+
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                left: 30, right: 30, top: 15, bottom: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    // height: 10,
+                                    width: 50,
+                                    child: Divider(
+                                      thickness: 1.5,
+                                      color: Color(0xff5E7A7C),
+                                      // indent: 20,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  "Meanwhile, you could...",
+                                  style: TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xff202A2A),
+                                      // letterSpacing: 1.2,
+                                      fontSize: 13),
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    // height: 10,
+                                    width: 50,
+                                    child: Divider(
+                                      thickness: 1.5,
+                                      color: Color(0xff5E7A7C),
+                                      // indent: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          //
+
                           SizedBox(
-                            width: 3,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              // height: 10,
-                              width: 50,
-                              child: Divider(
-                                thickness: 1.5,
-                                color: Color(0xff5E7A7C),
-                                // indent: 20,
-                              ),
+                            height: 194,
+                            child: ListView.builder(
+                              itemCount: menuItems.length,
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                return MoticarCards(items: menuItems[index]);
+                              },
                             ),
                           ),
                         ],
-                      ),
-                    ),
-
-                    //
-
-                    SizedBox(
-                      height: 194,
-                      child: ListView.builder(
-                        itemCount: menuItems.length,
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return MoticarCards(items: menuItems[index]);
-                        },
-                      ),
-                    ),
+                      )
                   ],
                 ),
               ),
@@ -785,6 +1166,102 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
     setState(() {
       daysInMonth = List<int>.generate(days, (index) => index + 1);
     });
+  }
+
+  //color for categories
+  Color getImageColor(String category) {
+    switch (category) {
+      case 'Body works':
+        return AppColors.anotherYellow; // Set color for bodywork category
+      case 'Engine':
+        return AppColors.diaColor; // Set color for engine category
+      case 'Servicing':
+        return const Color(0xff006C70);
+      case 'Keywork':
+        return AppColors.yellow;
+      case 'Balancing':
+      case 'Car Wash':
+        return const Color(0xff00AEB5);
+      case 'Dues':
+        return const Color(0xff00AEB5);
+
+      case 'Electronics':
+        return const Color(0xff00AEB5);
+      case 'Fuel':
+        return const Color(0xffB8F2F4);
+      case 'Hydraulics':
+        return const Color(0xff00AEB5);
+      case 'Alignment':
+        return const Color(0xff29D7DE);
+
+      case 'Tyre':
+        return AppColors.textGrey;
+      default:
+        return AppColors
+            .skipColor; // Default color if no specific color is available
+    }
+  }
+
+  //images based on category
+  Widget getImageWidget(String category) {
+    switch (category) {
+      case 'Body works':
+        return SvgPicture.asset('assets/expenseCatIcons/bodywork.svg');
+      case 'Engine':
+        return SvgPicture.asset('assets/expenseCatIcons/engine.svg');
+
+      case 'Tyre Guage':
+        return SvgPicture.asset('assets/expenseCatIcons/tyreGuage.svg');
+
+      case 'Balancing':
+        return SvgPicture.asset('assets/expenseCatIcons/balancing.svg');
+
+      case 'Car Wash':
+        return SvgPicture.asset('assets/expenseCatIcons/carWash.svg');
+
+      case 'Dues':
+        return SvgPicture.asset('assets/expenseCatIcons/dues.svg');
+
+      case 'Electronics':
+        return SvgPicture.asset('assets/expenseCatIcons/electronics.svg');
+
+      case 'Fuel':
+        return SvgPicture.asset('assets/expenseCatIcons/fuel.svg');
+
+      case 'Hydraulics':
+        return SvgPicture.asset('assets/expenseCatIcons/hydraulic.svg');
+
+      case 'Keywork':
+        return SvgPicture.asset('assets/expenseCatIcons/keywork.svg');
+
+      case 'Mechanical':
+        return SvgPicture.asset('assets/expenseCatIcons/mechanicalWork.svg');
+
+      case 'Misc':
+        return SvgPicture.asset('assets/expenseCatIcons/misc.svg');
+
+      case 'Parking':
+        return SvgPicture.asset('assets/expenseCatIcons/parking.svg');
+
+      case 'Penalty':
+        return SvgPicture.asset('assets/expenseCatIcons/penalty.svg');
+
+      case 'Radiator':
+        return SvgPicture.asset('assets/expenseCatIcons/radiator.svg');
+
+      case 'Servicing':
+        return SvgPicture.asset('assets/expenseCatIcons/servicing.svg');
+
+      case 'Tow':
+        return SvgPicture.asset('assets/expenseCatIcons/tow.svg');
+
+      case 'Tyre guage':
+        return SvgPicture.asset('assets/expenseCatIcons/tyreGuage.svg');
+      // Add more cases for other categories if needed
+      default:
+        // Return a default image or null if no specific image is available
+        return SvgPicture.asset("assets/expenseCatIcons/alignment.svg");
+    }
   }
 
   //notification
@@ -992,6 +1469,8 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
       },
     );
   }
+
+  // add here Jay
 }
 
 class MoticarCards extends StatelessWidget {
@@ -1036,10 +1515,10 @@ class MoticarCards extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              SvgPicture.asset(
+              Image.asset(
                 items.imagePath,
-                // height: 100,
-                // width: 100,
+                height: 110,
+                // color: Colors.red,
               ),
               // const SizedBox(height: 12),
               const Text(''),
@@ -1105,8 +1584,8 @@ class MoticarCards extends StatelessWidget {
                         //   );
                         // },
                         child: Container(
-                          height: 40,
-                          width: 150,
+                          height: 50,
+                          width: 170,
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(

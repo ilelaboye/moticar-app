@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:moticar/auth/add_car4.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:rive/rive.dart';
@@ -26,10 +27,12 @@ class AddCarPage3 extends StatefulHookConsumerWidget {
       required this.type,
       required this.mygear,
       required this.carID,
+      required this.isHome,
       required this.modelID,
       required this.model});
   final String imagePath, carName, type, model;
   final String carID, modelID;
+  final bool isHome;
 
   final List<Engine> myEngine, mygear;
 
@@ -43,6 +46,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
 
   String? popular;
   String? gear;
+  String? selectedYear;
   bool isClicked = false;
 
   bool isVisible = true;
@@ -54,6 +58,34 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
   String selectedGearBox = '';
   String selectedGearBoxID = '';
   String selectedPetrolID = '';
+
+  List manufactureList = [
+    "2012",
+    "2013",
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024"
+  ];
+
+  // String formattedDate = "04 May, 2024";
+
+  // String _reverseFormatDate(String formattedDate) {
+  //   // Parse the formatted date string into a DateTime object
+  //   DateTime parsedDate = DateFormat('dd MMMM, yyyy').parse(formattedDate);
+
+  //   // Format the DateTime object into the desired format "yyyy-MM-dd"
+  //   String reversedDate = DateFormat('yyyy-MM-dd').format(parsedDate);
+
+  //   return reversedDate;
+  // }
 
   @override
   void initState() {
@@ -213,571 +245,710 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                           height: 20,
                         ),
 
-                        const Center(
-                          child: Text(
-                            "Select Engine",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: "NeulisAlt",
-                                fontSize: 18,
-                                fontStyle: FontStyle.normal,
-                                height: 1.2,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.appThemeColor),
+                        //select year of manufacture
+
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 8,
+                          ),
+                          child: SizedBox(
+                            height: 55,
+                            child: DropdownButtonFormField<String>(
+                                isDense: false,
+                                isExpanded: true,
+                                icon: Icon(Icons.keyboard_arrow_down_rounded),
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 10),
+                                  hintText: 'Select Year of Manufacture',
+                                  hintStyle: TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xffC1C3C3),
+                                      letterSpacing: 1,
+                                      fontSize: 14),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                    borderSide: BorderSide(
+                                        color: Color(0xffD0D5DD), width: 1.5),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8)),
+                                    borderSide: BorderSide(
+                                        color: AppColors.appThemeColor,
+                                        width: 1.5),
+                                  ),
+                                ),
+                                items: manufactureList
+                                    .map<DropdownMenuItem<String>>(
+                                        (value) => DropdownMenuItem<String>(
+                                            value: value.toString(),
+                                            child: Text(
+                                              value.toString(),
+                                              style: const TextStyle(
+                                                  fontFamily: "NeulisAlt",
+                                                  color: AppColors.textColor,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 14),
+                                            )))
+                                    .toList(),
+                                value: selectedYear,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedYear = value!;
+                                  });
+                                }),
                           ),
                         ),
 
-                        const SizedBox(
-                          height: 20,
-                        ),
-
                         //
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Petrol/Fuel",
-                                style: TextStyle(
-                                  fontFamily: "NeulisAlt",
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xff202A2A),
-                                  letterSpacing: 1.5,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
 
-                              //showDialog here
-                              GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        backgroundColor: Colors
-                                            .transparent, // Make the background transparent
-                                        contentPadding: EdgeInsets
-                                            .zero, // Remove any default padding
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                        ),
-                                        content: ClipRRect(
-                                          // Clip content to match the dialog's shape
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                          child: Container(
-                                            color: Colors.white,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    IconButton(
-                                                      icon: const Icon(Icons
-                                                          .close), // Close icon
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop(); // Close the dialog
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                                Image.asset(
-                                                    'assets/images/car_diagram.png'),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 15,
-                                                          bottom: 15,
-                                                          left: 8,
-                                                          right: 8),
-                                                  color:
-                                                      const Color(0xffece6b7),
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                      vertical: 8,
-                                                    ),
-                                                    child: Text(
-                                                      "2.0L 6MT FWD (175 HP)",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        fontFamily: "NeulisAlt",
-                                                        fontSize: 14,
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        height: 1.2,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: AppColors
-                                                            .appThemeColor,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    context: context,
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(3),
-                                  // height: 20,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border:
-                                        Border.all(color: AppColors.lightGreen),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: const Icon(Icons.question_mark_rounded,
-                                      size: 13, color: AppColors.lightGreen),
+                        Visibility(
+                          visible: selectedYear != null,
+                          child: Column(
+                            children: [
+                              const Center(
+                                child: Text(
+                                  "Select Engine",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      fontSize: 18,
+                                      fontStyle: FontStyle.normal,
+                                      height: 1.2,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.appThemeColor),
                                 ),
                               ),
 
                               //
                               const SizedBox(
-                                width: 8,
+                                height: 20,
                               ),
-                              const Expanded(
-                                child: Divider(
-                                  thickness: 1.5,
-                                  color: AppColors.divider,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     setState(() {
-                              //       isVisible = !isVisible;
-                              //     });
-                              //   },
-                              //   child: isVisible
-                              //       ? const Icon(
-                              //           Icons.keyboard_arrow_up_rounded,
-                              //           color: AppColors.textGrey)
-                              //       : const Icon(
-                              //           Icons.keyboard_arrow_down_sharp,
-                              //           color: AppColors.textGrey),
-                              // ),
-                            ],
-                          ),
-                        ),
 
-                        //
-                        Column(
-                          children: [
-                            if (state.loading != Loader.loading &&
-                                widget.myEngine.isNotEmpty)
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.3,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  // physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: widget.myEngine.length,
-                                  itemBuilder: (context, index) {
-                                    final moticar = widget.myEngine[index];
-                                    final categoriez = moticar.name;
-
-                                    // Check if categoriez is not empty and if index is within bounds
-                                    if (categoriez.isNotEmpty &&
-                                        index < categoriez.length) {
-                                      // final carModelz =
-                                      //     categoriez[index].models;
-                                      // final carname = moticar.name;
-
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            border: Border.all(
-                                              color: popular == categoriez
-                                                  ? AppColors.lightGreen
-                                                  : const Color(0xfff0f5f5),
-                                              width: 1,
-                                            ),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  color: Colors.black45,
-                                                  blurRadius: 0.1),
-                                            ],
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              popular == categoriez
-                                                  ? MoticarText(
-                                                      text: categoriez,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontColor:
-                                                          AppColors.green,
-                                                    )
-                                                  :
-                                                  // Text(
-                                                  //     categoriez,
-                                                  //     style: TextStyle(
-                                                  //       fontSize: 14,
-                                                  //       fontWeight:
-                                                  //           FontWeight.w400,
-                                                  //       color:
-                                                  //           Color(0xff495353),
-                                                  //     ),
-                                                  //   ),
-                                                  MoticarText(
-                                                      text: categoriez,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontColor: const Color(
-                                                          0xff495353),
-                                                    ),
-                                              Radio(
-                                                toggleable: true,
-                                                value: categoriez,
-                                                activeColor:
-                                                    AppColors.lightGreen,
-                                                groupValue: popular,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    popular = value.toString();
-                                                    selectedPetrol =
-                                                        'Petrol $categoriez';
-                                                    selectedPetrolID =
-                                                        moticar.id.toString();
-                                                  });
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      // Handle the case where categoriez is empty or index is out of bounds
-                                      return const SizedBox.shrink();
-                                    }
-                                  },
-                                ),
-                              )
-                            else if (state.loading == Loader.loading)
-                              const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  MoticarLoader(
-                                    size: 40,
-                                  )
-                                ],
-                              )
-                            else
-                              const Center(
-                                child: Column(
+                              //
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(height: 30),
-                                    MoticarText(
-                                      text: 'No Engines Available',
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      fontColor: AppColors.textColor,
+                                    const Text(
+                                      "Petrol/Fuel",
+                                      style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xff202A2A),
+                                        letterSpacing: 1.5,
+                                        fontSize: 14,
+                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                          ],
-                        ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
 
-                        //
-
-                        //
-                        //GearBox
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Gearbox",
-                                style: TextStyle(
-                                  fontFamily: "NeulisAlt",
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xff202A2A),
-                                  letterSpacing: 1.5,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-
-                              //showDialog here
-                              GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        backgroundColor: Colors
-                                            .transparent, // Make the background transparent
-                                        contentPadding: EdgeInsets
-                                            .zero, // Remove any default padding
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                        ),
-                                        content: ClipRRect(
-                                          // Clip content to match the dialog's shape
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(10),
-                                            bottomRight: Radius.circular(10),
-                                          ),
-                                          child: Container(
-                                            color: Colors.white,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    IconButton(
-                                                      icon: const Icon(Icons
-                                                          .close), // Close icon
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop(); // Close the dialog
-                                                      },
-                                                    ),
-                                                  ],
+                                    //showDialog here
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor: Colors
+                                                  .transparent, // Make the background transparent
+                                              contentPadding: EdgeInsets
+                                                  .zero, // Remove any default padding
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
                                                 ),
-                                                Image.asset(
-                                                    'assets/images/car_diagram.png'),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 15,
-                                                          bottom: 15,
-                                                          left: 8,
-                                                          right: 8),
-                                                  color:
-                                                      const Color(0xffece6b7),
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 8),
-                                                    child: Text(
-                                                      "Gear Box",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        fontFamily: "NeulisAlt",
-                                                        fontSize: 14,
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        height: 1.2,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color: AppColors
-                                                            .appThemeColor,
+                                              ),
+                                              content: ClipRRect(
+                                                // Clip content to match the dialog's shape
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
+                                                child: Container(
+                                                  color: Colors.white,
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          IconButton(
+                                                            icon: const Icon(Icons
+                                                                .close), // Close icon
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(); // Close the dialog
+                                                            },
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ),
+                                                      Image.asset(
+                                                          'assets/images/car_diagram.png'),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 15,
+                                                                bottom: 15,
+                                                                left: 8,
+                                                                right: 8),
+                                                        color: const Color(
+                                                            0xffece6b7),
+                                                        child: const Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                            vertical: 8,
+                                                          ),
+                                                          child: Text(
+                                                            "2.0L 6MT FWD (175 HP)",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  "NeulisAlt",
+                                                              fontSize: 14,
+                                                              fontStyle:
+                                                                  FontStyle
+                                                                      .normal,
+                                                              height: 1.2,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: AppColors
+                                                                  .appThemeColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ],
-                                            ),
-                                          ),
+                                              ),
+                                            );
+                                          },
+                                          context: context,
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(3),
+                                        // height: 20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                              color: AppColors.lightGreen),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
                                         ),
-                                      );
-                                    },
-                                    context: context,
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(3),
-                                  // height: 20,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border:
-                                        Border.all(color: AppColors.lightGreen),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: const Icon(Icons.question_mark_rounded,
-                                      size: 13, color: AppColors.lightGreen),
+                                        child: const Icon(
+                                            Icons.question_mark_rounded,
+                                            size: 13,
+                                            color: AppColors.lightGreen),
+                                      ),
+                                    ),
+
+                                    //
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    const Expanded(
+                                      child: Divider(
+                                        thickness: 1.5,
+                                        color: AppColors.divider,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          isVisible = !isVisible;
+                                        });
+                                      },
+                                      child: isVisible
+                                          ? const Icon(
+                                              Icons.keyboard_arrow_up_rounded,
+                                              color: AppColors.textGrey)
+                                          : const Icon(
+                                              Icons.keyboard_arrow_down_sharp,
+                                              color: AppColors.textGrey),
+                                    ),
+                                  ],
                                 ),
                               ),
 
                               //
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              const Expanded(
-                                child: Divider(
-                                  thickness: 1.5,
-                                  color: AppColors.divider,
-                                ),
-                              ),
-                              // const SizedBox(
-                              //   width: 8,
-                              // ),
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     setState(() {
-                              //       isVisible2 = !isVisible2;
-                              //     });
-                              //   },
-                              //   child: isVisible2
-                              //       ? const Icon(
-                              //           Icons.keyboard_arrow_up_rounded,
-                              //           color: AppColors.textGrey)
-                              //       : const Icon(
-                              //           Icons.keyboard_arrow_down_sharp,
-                              //           color: AppColors.textGrey),
-                              // ),
-                            ],
-                          ),
-                        ),
-
-                        //visible gearbox
-                        Column(
-                          children: [
-                            if (state.loading != Loader.loading &&
-                                widget.mygear.isNotEmpty)
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.3,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  // physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: widget.mygear.length,
-                                  itemBuilder: (context, index) {
-                                    final moticar = widget.mygear[index];
-                                    final categoriez = moticar.name;
-
-                                    // Check if categoriez is not empty and if index is within bounds
-                                    if (categoriez.isNotEmpty &&
-                                        index < categoriez.length) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            border: Border.all(
-                                              color: gear == categoriez
-                                                  ? AppColors.lightGreen
-                                                  : const Color(0xfff0f5f5),
-                                              width: 1,
-                                            ),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  color: Colors.black45,
-                                                  blurRadius: 0.1),
-                                            ],
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              gear == categoriez
-                                                  ? MoticarText(
-                                                      text: categoriez,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontColor:
-                                                          AppColors.green,
-                                                    )
-                                                  : MoticarText(
-                                                      text: categoriez,
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontColor: const Color(
-                                                          0xff495353),
-                                                    ),
-                                              Radio(
-                                                toggleable: true,
-                                                value: categoriez,
-                                                activeColor:
-                                                    AppColors.lightGreen,
-                                                groupValue: gear,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    gear = value.toString();
-                                                    selectedGearBox =
-                                                        categoriez;
-                                                    selectedGearBoxID =
-                                                        moticar.id.toString();
-                                                  });
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      // Handle the case where categoriez is empty or index is out of bounds
-                                      return const SizedBox.shrink();
-                                    }
-                                  },
-                                ),
-                              )
-                            else if (state.loading == Loader.loading)
-                              const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  MoticarLoader(
-                                    size: 40,
-                                  )
-                                ],
-                              )
-                            else
-                              const Center(
+                              Visibility(
+                                visible: isVisible,
                                 child: Column(
+                                  children: [
+                                    if (state.loading != Loader.loading &&
+                                        widget.myEngine.isNotEmpty)
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.3,
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          // physics: const NeverScrollableScrollPhysics(),
+                                          itemCount: widget.myEngine.length,
+                                          itemBuilder: (context, index) {
+                                            final moticar =
+                                                widget.myEngine[index];
+                                            final categoriez = moticar.name;
+
+                                            // Check if categoriez is not empty and if index is within bounds
+                                            if (categoriez.isNotEmpty &&
+                                                index < categoriez.length) {
+                                              // final carModelz =
+                                              //     categoriez[index].models;
+                                              // final carname = moticar.name;
+
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(8),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    border: Border.all(
+                                                      color: popular ==
+                                                              categoriez
+                                                          ? AppColors.lightGreen
+                                                          : const Color(
+                                                              0xfff0f5f5),
+                                                      width: 1,
+                                                    ),
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                          color: Colors.black45,
+                                                          blurRadius: 0.1),
+                                                    ],
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      popular == categoriez
+                                                          ? MoticarText(
+                                                              text: categoriez,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontColor:
+                                                                  AppColors
+                                                                      .green,
+                                                            )
+                                                          :
+                                                          // Text(
+                                                          //     categoriez,
+                                                          //     style: TextStyle(
+                                                          //       fontSize: 14,
+                                                          //       fontWeight:
+                                                          //           FontWeight.w400,
+                                                          //       color:
+                                                          //           Color(0xff495353),
+                                                          //     ),
+                                                          //   ),
+                                                          MoticarText(
+                                                              text: categoriez,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontColor:
+                                                                  const Color(
+                                                                      0xff495353),
+                                                            ),
+                                                      Radio(
+                                                        toggleable: true,
+                                                        value: categoriez,
+                                                        activeColor: AppColors
+                                                            .lightGreen,
+                                                        groupValue: popular,
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            popular = value
+                                                                .toString();
+                                                            selectedPetrol =
+                                                                'Petrol $categoriez';
+                                                            selectedPetrolID =
+                                                                moticar.id
+                                                                    .toString();
+                                                          });
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              // Handle the case where categoriez is empty or index is out of bounds
+                                              return const SizedBox.shrink();
+                                            }
+                                          },
+                                        ),
+                                      )
+                                    else if (state.loading == Loader.loading)
+                                      const Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          MoticarLoader(
+                                            size: 40,
+                                          )
+                                        ],
+                                      )
+                                    else
+                                      const Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height: 30),
+                                            MoticarText(
+                                              text: 'No Engines Available',
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                              fontColor: AppColors.textColor,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+
+                              //
+
+                              //
+                              //GearBox
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(height: 30),
-                                    MoticarText(
-                                      text: 'No GearBox Available',
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      fontColor: AppColors.textColor,
+                                    const Text(
+                                      "Gearbox",
+                                      style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color(0xff202A2A),
+                                        letterSpacing: 1.5,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+
+                                    //showDialog here
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor: Colors
+                                                  .transparent, // Make the background transparent
+                                              contentPadding: EdgeInsets
+                                                  .zero, // Remove any default padding
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
+                                              ),
+                                              content: ClipRRect(
+                                                // Clip content to match the dialog's shape
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(10),
+                                                  bottomRight:
+                                                      Radius.circular(10),
+                                                ),
+                                                child: Container(
+                                                  color: Colors.white,
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          IconButton(
+                                                            icon: const Icon(Icons
+                                                                .close), // Close icon
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop(); // Close the dialog
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Image.asset(
+                                                          'assets/images/car_diagram.png'),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 15,
+                                                                bottom: 15,
+                                                                left: 8,
+                                                                right: 8),
+                                                        color: const Color(
+                                                            0xffece6b7),
+                                                        child: const Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical: 8),
+                                                          child: Text(
+                                                            "Gear Box",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  "NeulisAlt",
+                                                              fontSize: 14,
+                                                              fontStyle:
+                                                                  FontStyle
+                                                                      .normal,
+                                                              height: 1.2,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: AppColors
+                                                                  .appThemeColor,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          context: context,
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(3),
+                                        // height: 20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                              color: AppColors.lightGreen),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: const Icon(
+                                            Icons.question_mark_rounded,
+                                            size: 13,
+                                            color: AppColors.lightGreen),
+                                      ),
+                                    ),
+
+                                    //
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    const Expanded(
+                                      child: Divider(
+                                        thickness: 1.5,
+                                        color: AppColors.divider,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          isVisible2 = !isVisible2;
+                                        });
+                                      },
+                                      child: isVisible2
+                                          ? const Icon(
+                                              Icons.keyboard_arrow_up_rounded,
+                                              color: AppColors.textGrey)
+                                          : const Icon(
+                                              Icons.keyboard_arrow_down_sharp,
+                                              color: AppColors.textGrey),
                                     ),
                                   ],
                                 ),
                               ),
-                          ],
-                        ),
 
-                        const SizedBox(
-                          height: 8,
+                              //visible gearbox
+                              Visibility(
+                                visible: isVisible2,
+                                child: Column(
+                                  children: [
+                                    if (state.loading != Loader.loading &&
+                                        widget.mygear.isNotEmpty)
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.3,
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          // physics: const NeverScrollableScrollPhysics(),
+                                          itemCount: widget.mygear.length,
+                                          itemBuilder: (context, index) {
+                                            final moticar =
+                                                widget.mygear[index];
+                                            final categoriez = moticar.name;
+
+                                            // Check if categoriez is not empty and if index is within bounds
+                                            if (categoriez.isNotEmpty &&
+                                                index < categoriez.length) {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(8),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    border: Border.all(
+                                                      color: gear == categoriez
+                                                          ? AppColors.lightGreen
+                                                          : const Color(
+                                                              0xfff0f5f5),
+                                                      width: 1,
+                                                    ),
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                          color: Colors.black45,
+                                                          blurRadius: 0.1),
+                                                    ],
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      gear == categoriez
+                                                          ? MoticarText(
+                                                              text: categoriez,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontColor:
+                                                                  AppColors
+                                                                      .green,
+                                                            )
+                                                          : MoticarText(
+                                                              text: categoriez,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontColor:
+                                                                  const Color(
+                                                                      0xff495353),
+                                                            ),
+                                                      Radio(
+                                                        toggleable: true,
+                                                        value: categoriez,
+                                                        activeColor: AppColors
+                                                            .lightGreen,
+                                                        groupValue: gear,
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            gear = value
+                                                                .toString();
+                                                            selectedGearBox =
+                                                                categoriez;
+                                                            selectedGearBoxID =
+                                                                moticar.id
+                                                                    .toString();
+                                                          });
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              // Handle the case where categoriez is empty or index is out of bounds
+                                              return const SizedBox.shrink();
+                                            }
+                                          },
+                                        ),
+                                      )
+                                    else if (state.loading == Loader.loading)
+                                      const Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          MoticarLoader(
+                                            size: 40,
+                                          )
+                                        ],
+                                      )
+                                    else
+                                      const Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height: 30),
+                                            MoticarText(
+                                              text: 'No GearBox Available',
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                              fontColor: AppColors.textColor,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+
+                              const SizedBox(
+                                height: 8,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -809,6 +980,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                     myColor: AppColors.indieC,
                     borderColor: AppColors.indieC,
                     onTap: () async {
+                      // print(_reverseFormatDate(formattedDate));
                       if (selectedGearBox.isNotEmpty &&
                           selectedPetrol.isNotEmpty) {
                         // _showOTPVerificationPage(context);
@@ -866,6 +1038,8 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                   topRight: Radius.circular(30.0),
                                 ),
                                 child: ImageAI(
+                                  isHome: widget.isHome,
+                                  carYear: selectedYear.toString(),
                                   carID: widget.carID,
                                   modelID: widget.modelID,
                                   gearboxID: selectedGearBoxID,
@@ -873,6 +1047,7 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
                                   carName: widget.carName,
                                   imagePath: 'assets/images/car_ai.png',
                                   model: widget.model,
+                                  type: widget.type,
                                   petrol: selectedPetrol,
                                   gearbox: selectedGearBox,
                                 ),
@@ -981,16 +1156,20 @@ class _AddCarPage3State extends ConsumerState<AddCarPage3> {
 class ImageAI extends StatefulWidget {
   const ImageAI(
       {super.key,
+      required this.isHome,
       required this.imagePath,
       required this.carName,
       required this.petrol,
       required this.gearbox,
       required this.carID,
       required this.modelID,
+      required this.carYear,
       required this.gearboxID,
       required this.petrolID,
+      required this.type,
       required this.model});
-  final String imagePath, carName, model, petrol, gearbox;
+  final bool isHome;
+  final String imagePath, carName, carYear, model, type, petrol, gearbox;
   final String carID, modelID, gearboxID, petrolID;
 
   @override
@@ -1002,6 +1181,7 @@ class _ImageAIState extends State<ImageAI> {
   // String selectedGearBox = '';
   // String? popular;
   // String? gear;
+
   bool isClicked = false;
 
   bool isVisible = false;
@@ -1218,13 +1398,15 @@ class _ImageAIState extends State<ImageAI> {
                       },
                     );
 
-                    await Future.delayed(const Duration(seconds: 5));
+                    await Future.delayed(const Duration(milliseconds: 100));
 
                     Navigator.pop(context);
 
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return AddCarPage4(
+                        isHome: widget.isHome,
+                        carYear: widget.carYear,
                         carID: widget.carID,
                         gearboxID: widget.gearboxID,
                         imagePath: 'assets/images/car_ai.png',
@@ -1232,6 +1414,7 @@ class _ImageAIState extends State<ImageAI> {
                         petrol: widget.petrol,
                         gearbox: widget.gearbox,
                         model: widget.model,
+                        type: widget.type,
                         modelID: widget.modelID,
                         engineID: widget.petrolID,
                       );

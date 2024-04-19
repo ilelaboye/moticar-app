@@ -902,6 +902,7 @@ class _AddCarPart2State extends ConsumerState<AddCarPart2> {
 
                                 showMoticarBottom(
                                   context: context,
+                                  isDismissible: true,
                                   child: FractionallySizedBox(
                                     heightFactor: 0.75,
                                     child: ClipRRect(

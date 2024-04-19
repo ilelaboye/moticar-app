@@ -733,19 +733,45 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
 
                             // Navigator.pop(context);
 
-                            String imagePath = images.value.path.isEmpty
-                                ? ""
-                                : images.value.path;
+                            // String imagePath = images.value.path.isEmpty
+                            //     ? ""
+                            //     : images.value.path;
 
-                            FormData formData = FormData.fromMap({
-                              'email': widget.email,
-                              'first_name': firstName,
-                              'last_name': lastName,
-                              'preferred_name': nickname,
-                              'password': passW,
-                              'image': await MultipartFile.fromFile(imagePath,
-                                  filename: 'image'),
-                            });
+                            // FormData formData = FormData.fromMap({
+                            //   'email': widget.email,
+                            //   'first_name': firstName,
+                            //   'last_name': lastName,
+                            //   'preferred_name': nickname,
+                            //   'password': passW,
+                            //   'image': await MultipartFile.fromFile(
+                            //     imagePath,
+                            //     filename: 'image',
+                            //   ),
+                            // });
+
+                            FormData formData;
+
+                            if (images.value.path.isNotEmpty) {
+                              formData = FormData.fromMap({
+                                'email': widget.email,
+                                'first_name': firstName,
+                                'last_name': lastName,
+                                'preferred_name': nickname,
+                                'password': passW,
+                                'image': await MultipartFile.fromFile(
+                                  images.value.path,
+                                  filename: 'image',
+                                ),
+                              });
+                            } else {
+                              formData = FormData.fromMap({
+                                'email': widget.email,
+                                'first_name': firstName,
+                                'last_name': lastName,
+                                'preferred_name': nickname,
+                                'password': passW,
+                              });
+                            }
 
                             // All fields are filled, attempt sign-up
                             final signUpResult = await model.signUp(
@@ -768,9 +794,8 @@ class _SignUpPage2State extends ConsumerState<SignUpPage2> {
                                   buttonText: "Continue",
                                   subtitle: signUpResult.successMessage,
                                   onTap: () async {
-                                      await HiveStorage.put(
-                                                  HiveKeys.token,
-                                                  newToken);
+                                    await HiveStorage.put(
+                                        HiveKeys.token, newToken);
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return SignUpPage3(

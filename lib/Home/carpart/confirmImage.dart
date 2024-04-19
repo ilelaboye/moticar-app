@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:moticar/widgets/app_texts.dart';
@@ -72,16 +73,21 @@ class _ConfirmImageState extends State<ConfirmImage> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 15.0, right: 15),
-                    child: Text(
-                      "Please confirm this is what the car part looks like",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "NeulisAlt",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        color: AppColors.textColor,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "Please confirm this is what the car part looks like",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          color: AppColors.textColor,
+                        ),
                       ),
                     ),
                   ),

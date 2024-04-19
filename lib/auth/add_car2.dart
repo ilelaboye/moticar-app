@@ -24,7 +24,9 @@ class AddCarPage2 extends StatefulHookConsumerWidget {
     required this.carmodelz,
     required this.carName,
     required this.carID,
+    required this.isHome,
   });
+  final bool isHome;
   final String carName, carID;
   final List<Category> moticatz;
   final List<Model> carmodelz;
@@ -35,7 +37,7 @@ class AddCarPage2 extends StatefulHookConsumerWidget {
 
 class _AddCarPage2State extends ConsumerState<AddCarPage2> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final carController = TextEditingController();
+  TextEditingController carController = TextEditingController();
 
   String? popular;
   bool isClicked = false;
@@ -210,6 +212,7 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              //fix Controller
                               SizedBox(
                                 height: 50,
                                 child: TextFormField(
@@ -230,6 +233,9 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                       FieldValidaor.validateEmptyfield(value!),
                                   onSaved: (value) {
                                     // email = value!;
+                                  },
+                                  onChanged: (value) {
+                                    setState(() {});
                                   },
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -405,7 +411,7 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                     final myBox =
                                         widget.carmodelz[index].engines;
                                     final modelz = moticar.name;
-                                    final carname = moticar.name;
+                                    // final carname = moticar.name;
 
                                     return Padding(
                                       padding: const EdgeInsets.all(12.0),
@@ -573,6 +579,8 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                                 //set car name and model variable here
                                                 selectedCarName =
                                                     widget.carName;
+
+                                                print(selectedCarName);
                                                 // selectedModeltype = modelz;
                                               });
                                             },
@@ -1397,6 +1405,7 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return AddCarPage3(
+                            isHome: widget.isHome,
                             carID: widget.carID,
                             modelID: selectedModelID,
                             //  selectedEngine = ;

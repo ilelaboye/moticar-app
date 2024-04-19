@@ -14,6 +14,7 @@ class HiveKeys {
   static var userEmail = "email";
   static var hasLoggedIn = "hasLoggedIn";
   static var transactionPin = "transactionpin";
+  static var mileage = "mileage";
   static var userAccounts = "userAccounts";
   static var address = "address";
   static var user = "user";
@@ -27,7 +28,6 @@ class HiveKeys {
   static var referral = 'referral_code';
 
   static var acctType = 'accountType';
-
 
   static const phonenumber = 'phone';
   static const currency = 'currency';

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -57,7 +59,7 @@ class _BottomHomePageState extends State<BottomHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xffEEF5F5),
       body: WillPopScope(
         onWillPop: () async {
           return false;
@@ -94,14 +96,14 @@ class _BottomHomePageState extends State<BottomHomePage> {
       // floatingActionButtonLocation:
       //     FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xffEEF5F5),
         currentIndex: currentPageIndex,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: AppColors.appThemeColor,
         unselectedItemColor: const Color(0xff7BA0A3),
         selectedFontSize: 13,
         unselectedFontSize: 13,
-        elevation: 0,
+        elevation: 4,
         selectedLabelStyle: const TextStyle(
             fontFamily: "NeulisAlt", fontWeight: FontWeight.w600),
         unselectedLabelStyle: const TextStyle(
@@ -160,7 +162,7 @@ class _BottomHomePageState extends State<BottomHomePage> {
             icon: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 SvgPicture.asset(
                   'assets/navbar/menu_middle.svg',
                 ),

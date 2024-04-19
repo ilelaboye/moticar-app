@@ -769,7 +769,8 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) {
-                                                          return const AddCarPage();
+                                                          return const AddCarPage(
+                                                              isHome: false);
                                                         }));
                                                       },
                                                       child: const MoticarText(
@@ -844,121 +845,6 @@ class _SignUpPage4State extends ConsumerState<SignUpPage4> {
                       ),
                     );
                   }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  MoticarLoginButton(
-                    myColor: AppColors.fadeWhite,
-                    borderColor: AppColors.skipColor,
-                    onTap: () async {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const LoginPage();
-                      }));
-                    },
-                    child: const MoticarText(
-                      fontColor: AppColors.skipColor,
-                      text: 'Skip',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  //create an account
-                  // MoticarLoginButton(
-                  //   myColor: AppColors.indieC,
-                  //   borderColor: AppColors.indieC,
-                  //   onTap: () {
-                  //     showModalBottomSheet(
-                  //       context: context,
-                  //       backgroundColor: AppColors.white,
-                  //       isScrollControlled: true,
-                  //       builder: (context) {
-                  //         return SingleChildScrollView(
-                  //           child: Container(
-                  //             padding: const EdgeInsets.all(20),
-                  //             child: Center(
-                  //               // Wrap the content with Center widget
-                  //               child: Column(
-                  //                 mainAxisSize: MainAxisSize.min,
-                  //                 crossAxisAlignment:
-                  //                     CrossAxisAlignment.stretch,
-                  //                 children: [
-                  //                   Padding(
-                  //                     padding: const EdgeInsets.only(
-                  //                       top: 10.0,
-                  //                       left: 20,
-                  //                       right: 20,
-                  //                       bottom: 20,
-                  //                     ),
-                  //                     child: Image.asset(
-                  //                         "assets/images/personal.png"),
-                  //                   ),
-                  //                   const Text(
-                  //                     "Add your first personal car",
-                  //                     textAlign: TextAlign.center,
-                  //                     style: TextStyle(
-                  //                       fontFamily: "NeulisAlt",
-                  //                       fontWeight: FontWeight.bold,
-                  //                       fontSize: 18,
-                  //                       color: AppColors.textColor,
-                  //                     ),
-                  //                   ),
-                  //                   const Padding(
-                  //                     padding: EdgeInsets.only(
-                  //                       left: 30,
-                  //                       right: 30,
-                  //                       top: 15,
-                  //                       bottom: 10,
-                  //                     ),
-                  //                     child: Text(
-                  //                       'Start by adding the details of your personal car for a rich user experience',
-                  //                       textAlign: TextAlign.center,
-                  //                       style: TextStyle(
-                  //                         fontFamily: "NeulisAlt",
-                  //                         fontWeight: FontWeight.w400,
-                  //                         fontSize: 16,
-                  //                         color: AppColors.textColor,
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   const SizedBox(
-                  //                     height: 30,
-                  //                   ),
-                  //                   Padding(
-                  //                     padding: const EdgeInsets.all(8.0),
-                  //                     child: MoticarLoginButton(
-                  //                       myColor: AppColors.appThemeColor,
-                  //                       borderColor: AppColors.white,
-                  //                       onTap: () async {
-                  //                         Navigator.push(context,
-                  //                             MaterialPageRoute(
-                  //                                 builder: (context) {
-                  //                           return const AddCarPage();
-                  //                         }));
-                  //                       },
-                  //                       child: const MoticarText(
-                  //                         fontColor: AppColors.white,
-                  //                         text: 'Continue',
-                  //                         fontSize: 14,
-                  //                         fontWeight: FontWeight.w700,
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         );
-                  //       },
-                  //     );
-                  //   },
-                  //   child: const MoticarText(
-                  //     fontColor: AppColors.appThemeColor,
-                  //     text: 'Continue',
-                  //     fontSize: 16,
-                  //     fontWeight: FontWeight.w700,
-                  //   ),
-                  // ),
                 ],
               ),
             ],

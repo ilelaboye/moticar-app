@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,6 +22,7 @@ import 'first_know.dart';
 class AddCarPage4 extends StatefulHookConsumerWidget {
   const AddCarPage4(
       {super.key,
+      required this.isHome,
       required this.imagePath,
       required this.carName,
       required this.petrol,
@@ -28,11 +30,16 @@ class AddCarPage4 extends StatefulHookConsumerWidget {
       required this.carID,
       required this.modelID,
       required this.engineID,
+      required this.carYear,
       required this.gearboxID,
+      required this.type,
       required this.model});
+  final bool isHome;
   final String imagePath,
       carName,
+      carYear,
       model,
+      type,
       petrol,
       gearbox,
       carID,
@@ -51,7 +58,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   final chasisControl = TextEditingController();
   final engineNoController = TextEditingController();
   final thirdPartyControl = TextEditingController();
-  final vehicleLicense = TextEditingController();
+  // final vehicleLicense = TextEditingController();
 
   bool isClicked = false;
   bool isVehicle = false;
@@ -2700,7 +2707,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                           final String chasis = chasisControl.toString();
                           final String engine = engineNoController.text;
                           // final String third = thirdPartyControl.text;
-                          final String licensez = vehicleLicense.text;
+                          // final String licensez = vehicleLicense.text;
 
                           //dates
                           final String purchase = _newFormatDate(_selectedDate);
@@ -2713,11 +2720,17 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                               _newFormatDate(_selectTinted);
 
                           if (
+                              // hackney.toString().isNotEmpty &&
+                              //   ogHut.toString().isNotEmpty &&
+                              //   stateCarriage.toString().isNotEmpty &&
+                              //   heavyDuty.toString().isNotEmpty &&
+                              //   trucktrailer.toString().isNotEmpty &&
+                              //   lgaPermit.toString().isNotEmpty &&
+                              //   midYear.toString().isNotEmpty &&
                               // licensez.isNotEmpty &&
-                              // third.isNotEmpty &&
-                              // purchase.isNotEmpty &&
-                              // select.isNotEmpty &&
-                              selectTinted.isNotEmpty &&
+                              purchase.isNotEmpty &&
+                                  select.isNotEmpty &&
+                                  selectTinted.isNotEmpty &&
                                   selectRenewal.isNotEmpty &&
                                   selectThirdParty.isNotEmpty) {
                             showMoticarBottom(
@@ -2730,14 +2743,15 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     topRight: Radius.circular(30.0),
                                   ),
                                   child: FinishcarPage(
-                                    hackney: _formatHackney(hackney),
-                                    ogHut: _formatHackney(ogHut),
-                                    stateCarriage:
-                                        _formatHackney(stateCarriage),
-                                    heavyDuty: _formatHackney(heavyDuty),
-                                    trucktrailer: _formatHackney(trucktrailer),
-                                    lgaPermit: _formatHackney(lgaPermit),
-                                    midYear: _formatHackney(midYear),
+                                    isHome: widget.isHome,
+                                    carYear: widget.carYear,
+                                    hackney: _formatDuty(hackney),
+                                    ogHut: _formatDuty(ogHut),
+                                    stateCarriage: _formatDuty(stateCarriage),
+                                    heavyDuty: _formatDuty(heavyDuty),
+                                    trucktrailer: _formatDuty(trucktrailer),
+                                    lgaPermit: _formatDuty(lgaPermit),
+                                    midYear: _formatDuty(midYear),
                                     carID: widget.carID,
                                     modelID: widget.modelID,
                                     engineID: widget.engineID,
@@ -2745,6 +2759,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     carName: widget.carName,
                                     imagePath: 'assets/images/car_ai.png',
                                     model: widget.model,
+                                    type: widget.type,
                                     petrol: widget.petrol,
                                     gearbox: widget.gearbox,
                                     roadWorthy:
@@ -2810,6 +2825,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 class FinishcarPage extends StatefulHookConsumerWidget {
   const FinishcarPage({
     super.key,
+    required this.carYear,
     required this.plateController,
     required this.mileageControl,
     required this.chasisControl,
@@ -2836,14 +2852,20 @@ class FinishcarPage extends StatefulHookConsumerWidget {
     required this.modelID,
     required this.engineID,
     required this.gearboxID,
+    required this.isHome,
+    required this.type,
+    this.myselectRenewal,
   });
+  final bool isHome;
   final String imagePath,
       purchaseDate,
       petrol,
       roadWorthy,
       gearbox,
       carName,
+      carYear,
       model,
+      type,
       plateController,
       mileageControl,
       chasisControl,
@@ -2862,6 +2884,8 @@ class FinishcarPage extends StatefulHookConsumerWidget {
       midYear;
   final String carID, modelID, engineID, gearboxID;
 
+  final DateTime? myselectRenewal;
+
   @override
   ConsumerState<FinishcarPage> createState() => _FinishcarPageState();
 }
@@ -2869,9 +2893,22 @@ class FinishcarPage extends StatefulHookConsumerWidget {
 class _FinishcarPageState extends ConsumerState<FinishcarPage> {
   @override
   Widget build(BuildContext context) {
+    String myRenewal = widget.selectRenewal;
+    //   DateTime renewalDate = DateTime.parse(selectRenewal);
+
+    // // Add one year to the renewal date to get the expiration date
+    // DateTime expirationDate = renewalDate.add(Duration(days: 365));
+
+    // // Format the expiration date using the _formatDate function
+    // // String formattedExpirationDate = _formatDate(expirationDate);
+
+    // // Print the formatted expiration date
+    // print("Expiration Date: $expirationDate");
+
+    //
     DateTime now = DateTime.now();
-    DateTime endOfYear = DateTime(now.year + 1, 1, 1);
-    int remainingDays = endOfYear.difference(now).inDays;
+    // DateTime endOfYear = DateTime(now.year + 1, 1, 1);
+    int remainingDays = widget.myselectRenewal!.difference(now).inDays;
     final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
     return Scaffold(
@@ -2895,16 +2932,21 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                 ],
               ),
 
-              const Padding(
-                padding: EdgeInsets.only(left: 15.0, right: 15),
-                child: Text(
-                  "This is all the information we got from you",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "NeulisAlt",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                    color: AppColors.white,
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0, right: 15),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "This is all the information we got from you",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: "NeulisAlt",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      color: AppColors.white,
+                    ),
                   ),
                 ),
               ),
@@ -2933,7 +2975,7 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
               Column(
                 children: [
                   Text(
-                    '${widget.carName} ${widget.model}',
+                    '${widget.model} ${widget.type} ${widget.carYear}',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontFamily: "NeulisAlt",
@@ -3402,17 +3444,26 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                   Navigator.pop(context);
 
                   if (signUpResult.successMessage.isNotEmpty) {
-                    showMoticarBottom(
-                        context: context,
-                        child: const FractionallySizedBox(
-                          heightFactor: 0.90,
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30.0),
-                                topRight: Radius.circular(30.0),
-                              ),
-                              child: FirstKnow()),
-                        ));
+                    widget.isHome == false
+                        ? showMoticarBottom(
+                            context: context,
+                            child: const FractionallySizedBox(
+                              heightFactor: 0.90,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: Radius.circular(30.0),
+                                  ),
+                                  child: FirstKnow()),
+                            ))
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const BottomHomePage();
+                              },
+                            ),
+                          );
                   } else if (signUpResult.errorMessage.isNotEmpty) {
                     // Sign-up failed, show error dialog
                     showDialog(

@@ -647,8 +647,8 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                     myColor: AppColors.fadeWhite,
                     borderColor: AppColors.skipColor,
                     onTap: () async {
-                        await HiveStorage.put(HiveKeys.token, widget.token);
-                     Navigator.push(context,
+                      await HiveStorage.put(HiveKeys.token, widget.token);
+                      Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return SignUpPage4(
                             address1: "",
@@ -769,25 +769,6 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                       text: 'Continue',
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  MoticarLoginButton(
-                    myColor: AppColors.fadeWhite,
-                    borderColor: AppColors.skipColor,
-                    onTap: () async {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) {
-                      //   return const LoginPage();
-                      // }));
-                    },
-                    child: const MoticarText(
-                      fontColor: AppColors.skipColor,
-                      text: 'Skip',
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],

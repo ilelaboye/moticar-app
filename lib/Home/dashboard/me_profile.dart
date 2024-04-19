@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:clean_calendar/clean_calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -127,127 +128,79 @@ class _MePageState extends ConsumerState<MePage> {
         icon: 'assets/misc_moticar/log-out_me_.svg',
         trailing: const SizedBox(),
         action: () async {
-          // context.router.pushNamed('/home-nav/accountInformation');
-          if (Platform.isIOS) {
-            // Show Cupertino dialog for iOS users
-            await showCupertinoDialog(
-              context: context,
-              builder: (context) {
-                return CupertinoAlertDialog(
-                  title: const Text(
-                    "Are you sure?",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 19,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
+          await showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                backgroundColor: const Color(0xff002D36),
+                title: const Text(
+                  "Are you sure?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 19,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                content: const Text(
+                  'This action would remove all the information you had previously entered',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xff7AE6EB),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                actionsAlignment: MainAxisAlignment.spaceEvenly,
+                actions: [
+                  TextButton(
+                    style: ButtonStyle(
+                      padding: const MaterialStatePropertyAll(EdgeInsets.only(
+                          left: 50, right: 50, top: 10, bottom: 10)),
+                      backgroundColor:
+                          MaterialStateProperty.all(AppColors.appThemeColor),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const LoginPage();
+                      }));
+                    },
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
-                  // content: const Text(
-                  //   'Notifications may include alerts, sounds and icon badges. These can be configured in Settings.',
-                  //   textAlign: TextAlign.center,
-                  //   style: TextStyle(
-                  //     fontFamily: 'Arial',
-                  //     fontSize: 14,
-                  //     color: Color(0xff929292),
-                  //     fontWeight: FontWeight.w400,
-                  //   ),
-                  // ),
-                  actions: [
-                    CupertinoButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const LoginPage();
-                        }));
-                      },
-                      child: const Text(
-                        'Yes',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.red),
-                      ),
+
+                  //no
+
+                  TextButton(
+                    style: ButtonStyle(
+                      padding: const MaterialStatePropertyAll(EdgeInsets.only(
+                          left: 50, right: 50, top: 10, bottom: 10)),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent),
                     ),
-                    CupertinoButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'No',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.lightGreen,
-                        ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'No',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.lightGreen,
                       ),
-                    ),
-                  ],
-                );
-              },
-            );
-          } else {
-            // Show Material dialog for Android users
-            await showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  backgroundColor:
-                      Colors.black, // Set background color to black
-                  title: const Text(
-                    "Are you sure?",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 19,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  // content: const Text(
-                  //   'Notifications may include alerts, sounds and icon badges. These can be configured in Settings.',
-                  //   textAlign: TextAlign.center,
-                  //   style: TextStyle(
-                  //     fontFamily: 'Arial',
-                  //     color: Color(0xff929292),
-                  //     fontSize: 14,
-                  //     fontWeight: FontWeight.w400,
-                  //   ),
-                  // ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return const LoginPage();
-                        }));
-                      },
-                      child: const Text(
-                        'Yes',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.red,
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'No',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.lightGreen,
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            );
-          }
+                ],
+              );
+            },
+          );
         },
       ),
     ];
@@ -463,7 +416,7 @@ class _MePageState extends ConsumerState<MePage> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
                             SvgPicture.asset('assets/misc_moticar/package.svg'),
