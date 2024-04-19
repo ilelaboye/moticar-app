@@ -2719,20 +2719,18 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                           final String selectTinted =
                               _newFormatDate(_selectTinted);
 
-                          if (
-                              // hackney.toString().isNotEmpty &&
-                              //   ogHut.toString().isNotEmpty &&
-                              //   stateCarriage.toString().isNotEmpty &&
-                              //   heavyDuty.toString().isNotEmpty &&
-                              //   trucktrailer.toString().isNotEmpty &&
-                              //   lgaPermit.toString().isNotEmpty &&
-                              //   midYear.toString().isNotEmpty &&
-                              // licensez.isNotEmpty &&
+                          if (hackney.toString().isNotEmpty &&
+                              ogHut.toString().isNotEmpty &&
+                              stateCarriage.toString().isNotEmpty &&
+                              heavyDuty.toString().isNotEmpty &&
+                              trucktrailer.toString().isNotEmpty &&
+                              lgaPermit.toString().isNotEmpty &&
+                              midYear.toString().isNotEmpty &&
                               purchase.isNotEmpty &&
-                                  select.isNotEmpty &&
-                                  selectTinted.isNotEmpty &&
-                                  selectRenewal.isNotEmpty &&
-                                  selectThirdParty.isNotEmpty) {
+                              select.isNotEmpty &&
+                              selectTinted.isNotEmpty &&
+                              selectRenewal.isNotEmpty &&
+                              selectThirdParty.isNotEmpty) {
                             showMoticarBottom(
                               context: context,
                               child: FractionallySizedBox(

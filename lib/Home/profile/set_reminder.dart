@@ -731,7 +731,7 @@ class _AddReminderPageState extends ConsumerState<AddReminderPage> {
                       ),
 
                       const Text(
-                        "Keep an eye on how much distance your car has covered over time.",
+                        "Never be late to attend to issues or concerns surrounding your car. Schedule reminders and keep revisions, maintenance and payments up to date.",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: "NeulisAlt",
