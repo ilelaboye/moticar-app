@@ -11,12 +11,12 @@ class AppColors {
 
   static const Color oldGrey = Color(0xFFC1C3C3);
 
-  static const Color yellow = Color(0xffFBE74C); 
-  static const Color otheryell = Color(0xffECE6B7); 
+  static const Color yellow = Color(0xffFBE74C);
+  static const Color otheryell = Color(0xffECE6B7);
   static const Color greyColor = Color(0xFF29D7DE);
   static const Color black = Color(0xFF000000);
   static const Color green = Color(0xFF00343F);
-  static const Color red = Color(0xFFB42318);
+  static const Color red = Color(0xFFFF0000);
   // #495353
 
   static const Color textColor = Color(0xFF293536);

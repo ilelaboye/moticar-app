@@ -3,17 +3,20 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/Home/profile/my_cars.dart';
 import 'package:moticar/widgets/app_texts.dart';
 import 'package:rive/rive.dart';
 import '../../auth/add_car.dart';
 import '../../models/expensesmodel.dart';
+import '../../network/dio_utils.dart';
 import '../../providers/app_providers.dart';
 import '../../utils/enums.dart';
 import '../../widgets/bottom_sheet_service.dart';
 import '../../widgets/colors.dart';
 import 'package:intl/intl.dart';
 
+import '../../widgets/eard_dialog.dart';
 import '../../widgets/eard_loader.dart';
 import '../breakdown/breakdown.dart';
 import '../expense/add_expense.dart';
@@ -57,6 +60,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
   List<DateTime> selectedDates = [];
 
   bool isVisible = false;
+  String selectedCarID = "";
 
   // Function to get the days of the week
   // List<String> _getDaysOfWeek() {
@@ -107,7 +111,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
     String formattedTime =
         DateFormat.Hm().format(dateTime); // Hm for 24-hour format
 
-    print(formattedTime); // Output: 10:15
+    print(formattedTime);
     return Scaffold(
       backgroundColor: AppColors.teal,
       floatingActionButton: FloatingActionButton(
@@ -191,29 +195,49 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                                       Radius.circular(20.0),
                                                 ),
                                                 child: MyCarInfoPage(
-                                                    plateNumber:
-                                                        carz.plateNumber,
-                                                    chasisNumber:
-                                                        carz.chasisNumber,
-                                                    engineNumber:
-                                                        carz.engineNumber,
-                                                    dateOfPurchase:
-                                                        carz.dateOfPurchase,
-                                                    vehicleLicense:
-                                                        carz.vehicleLicense,
-                                                    roadWorthiness:
-                                                        carz.roadWorthiness,
-                                                    thirdPartyInsurance: carz
-                                                        .thirdPartyInsurance,
-                                                    engine:
-                                                        carz.engine.toString(),
-                                                    gearbox:
-                                                        carz.gearbox.toString(),
-                                                    car: carz.car.toString(),
-                                                    model:
-                                                        carz.model.toString(),
-                                                    category: carz.category
-                                                        .toString()),
+                                                  bodyStyle:
+                                                      carz.category!.name,
+                                                  cylinder:
+                                                      carz.details!.cylinder,
+                                                  segment:
+                                                      carz.details!.segment,
+                                                  fuelCapacity: carz
+                                                      .details!.fuelCapacity,
+                                                  driveType:
+                                                      carz.details!.driveType,
+                                                  acceleration: carz
+                                                      .details!.acceleration,
+                                                  topSpeed:
+                                                      carz.details!.topSpeed,
+                                                  tyreSize:
+                                                      carz.details!.tyreSize,
+                                                  id: carz.id,
+                                                  plateNumber: carz.plateNumber,
+                                                  chasisNumber:
+                                                      carz.chasisNumber,
+                                                  engineNumber:
+                                                      carz.engineNumber,
+                                                  dateOfPurchase:
+                                                      carz.dateOfPurchase,
+                                                  vehicleLicense:
+                                                      carz.vehicleLicense,
+                                                  roadWorthiness:
+                                                      carz.roadWorthiness,
+                                                  thirdPartyInsurance:
+                                                      carz.thirdPartyInsurance,
+                                                  engine: carz.details!.engine
+                                                      .toString(),
+                                                  gearbox: carz.details!.gearbox
+                                                      .toString(),
+                                                  car:
+                                                      carz.car!.name.toString(),
+                                                  model: carz.model!.name
+                                                      .toString(),
+                                                  category:
+                                                      carz.category.toString(),
+                                                  year: carz.details!.year
+                                                      .toString(),
+                                                ),
                                               ),
                                             ),
                                           );
@@ -247,7 +271,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                           Row(
                                             children: [
                                               Text(
-                                                "${carz.car} ${carz.model}",
+                                                "${carz.car!.name} ${carz.model!.name} ${carz.details!.year}",
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
                                                   fontFamily: "NeulisAlt",
@@ -292,7 +316,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                                     .width *
                                                 0.6,
                                             child: Text(
-                                              "${carz.engine} . ${carz.category} . ${carz.gearbox}",
+                                              "${carz.details!.engine} . ${carz.category!.name} . ${carz.details!.gearbox}",
                                               textAlign: TextAlign.left,
                                               style: const TextStyle(
                                                 fontFamily: "NeulisAlt",
@@ -311,6 +335,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                           onTap: () {
                                             setState(() {
                                               isVisible = !isVisible;
+                                              selectedCarID =
+                                                  carz.id.toString();
                                             });
                                           },
                                           child: isVisible
@@ -407,45 +433,216 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
+                                              const SizedBox(width: 8),
                                               SvgPicture.asset(
                                                   'assets/svgs/delete.svg'),
                                             ],
                                           ),
-                                          onTap: () {},
+                                          onTap: () async {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  backgroundColor:
+                                                      const Color(0xff002D36),
+                                                  title: const Text(
+                                                    "Are you sure?",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontSize: 19,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                  content: const Text(
+                                                    'This action would remove all the information you had previously entered',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: Color(0xff7AE6EB),
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                  actionsAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  actions: [
+                                                    TextButton(
+                                                      style: ButtonStyle(
+                                                        //i want a borderside of color red
+                                                        shape:
+                                                            MaterialStateProperty
+                                                                .all(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        32),
+                                                            side:
+                                                                const BorderSide(
+                                                              color: AppColors
+                                                                  .appThemeColor,
+                                                              width: 1,
+                                                            ),
+                                                          ),
+                                                        ),
+
+                                                        padding:
+                                                            const MaterialStatePropertyAll(
+                                                                EdgeInsets.only(
+                                                                    left: 50,
+                                                                    right: 50,
+                                                                    top: 10,
+                                                                    bottom:
+                                                                        10)),
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all(AppColors
+                                                                    .appThemeColor),
+                                                      ),
+                                                      onPressed: () {
+                                                        model.deleteCar(
+                                                            formData: {
+                                                              "id":
+                                                                  selectedCarID
+                                                            }).then(
+                                                            (value) async {
+                                                          if (value
+                                                              .successMessage
+                                                              .isNotEmpty) {
+                                                            await showDialog(
+                                                                context:
+                                                                    context,
+                                                                barrierDismissible:
+                                                                    false,
+                                                                builder:
+                                                                    (context) {
+                                                                  return MoticarDialog(
+                                                                    subtitle: value
+                                                                        .successMessage,
+                                                                    onTap: () {
+                                                                      Navigator.push(
+                                                                          context,
+                                                                          MaterialPageRoute(builder:
+                                                                              (context) {
+                                                                        return BottomHomePage();
+                                                                      }));
+                                                                      // context.router.push(const HomeRoute());
+                                                                    },
+                                                                  );
+                                                                });
+                                                          } else {
+                                                            handleError(
+                                                              e: value.error ??
+                                                                  value
+                                                                      .errorMessage,
+                                                              context: context,
+                                                            );
+                                                          }
+                                                        });
+                                                      },
+                                                      child: const Text(
+                                                        'Yes',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: AppColors.red,
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                                    //no
+
+                                                    TextButton(
+                                                      style: ButtonStyle(
+                                                        //i want a borderside of color red
+                                                        shape:
+                                                            MaterialStateProperty
+                                                                .all(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        32),
+                                                            side:
+                                                                const BorderSide(
+                                                              color: Color(
+                                                                  0xff00AEB5),
+                                                              width: 1,
+                                                            ),
+                                                          ),
+                                                        ),
+
+                                                        padding:
+                                                            const MaterialStatePropertyAll(
+                                                                EdgeInsets.only(
+                                                                    left: 50,
+                                                                    right: 50,
+                                                                    top: 10,
+                                                                    bottom:
+                                                                        10)),
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all(Colors
+                                                                    .transparent),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text(
+                                                        'No',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: AppColors
+                                                              .lightGreen,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                                 // const SizedBox(height: 10),
                                 Padding(
                                   padding: const EdgeInsets.all(12.0),
-                                  child: MoticarLoginButton(
-                                    borderColor: const Color(0xff29D7DE),
-                                    myColor: const Color(0xff29D7DE),
-                                    child: const Center(
-                                      child: Text(
-                                        'Add new Car',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'NeulisAlt',
-                                          color: AppColors.appThemeColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
+                                  child: SizedBox(
+                                    width: 200,
+                                    child: MoticarLoginButton(
+                                      borderColor: const Color(0xff29D7DE),
+                                      myColor: const Color(0xff29D7DE),
+                                      child: const Center(
+                                        child: Text(
+                                          'Add new Car',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'NeulisAlt',
+                                            color: AppColors.appThemeColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const AddCarPage(
+                                            isHome: true,
+                                          );
+                                        }));
+                                      },
                                     ),
-                                    onTap: () {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return const AddCarPage(
-                                          isHome: true,
-                                        );
-                                      }));
-                                    },
                                   ),
                                 ),
                               ],

@@ -34,7 +34,7 @@ class AddCarPage3 extends StatefulHookConsumerWidget {
   final String carID, modelID;
   final bool isHome;
 
-  final List<Engine> myEngine, mygear;
+  final List<Model> myEngine, mygear;
 
   @override
   ConsumerState<AddCarPage3> createState() => _AddCarPage3State();
@@ -1390,6 +1390,8 @@ class _ImageAIState extends State<ImageAI> {
                                       'assets/images/preloader.riv',
                                     ),
                                   ),
+
+                                  //
                                 ],
                               ),
                             ),

@@ -4,6 +4,10 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rive/rive.dart';
+import 'Home/profile/company_info.dart';
+import 'Home/profile/mileage_set_reminder.dart';
+import 'Home/profile/new_mileage.dart';
+import 'Home/profile/notification_sett.dart';
 import 'services/hivekeys.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -71,7 +75,10 @@ class MyApp extends StatelessWidget {
           bodyLarge: TextStyle(fontFamily: 'NeulisAlt'),
         ),
       ),
-      home: const SplashScreen(),
+      home:
+          // const NotifyMotPage()
+
+          const SplashScreen(),
     );
   }
 }

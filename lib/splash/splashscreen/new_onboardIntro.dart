@@ -3,9 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../auth/login/login_email.dart';
 import '../../auth/signup/signup.dart';
+import '../../services/auth_services.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
-import '../../widgets/eard_dialog.dart';
 
 class OnBoardingScreenPage extends StatefulWidget {
   const OnBoardingScreenPage({super.key});
@@ -101,25 +101,6 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
                             MaterialPageRoute(builder: (context) {
                           return const SignUpPage();
                         }));
-
-                        // showDialog(
-                        //   context: context,
-                        //   builder: (BuildContext context) {
-                        //     return MoticarDialog(
-                        //       // icon: const Icon(Icons.info_rounded,
-                        //       //     color: AppColors.appThemeColor, size: 50),
-                        //       title: '',
-                        //       subtitle: 'All Fields are required to proceed',
-                        //       onTap: () {
-                        //         Navigator.pop(context);
-                        //       },
-                        //       buttonColor: AppColors.appThemeColor,
-                        //       textColor: AppColors.white,
-                        //       buttonText: "Dismiss",
-                        //     );
-                        //   },
-                        // );
-                        // context.router.push(const LoginRouteCopy());
                       },
                       child: const MoticarText(
                         fontColor: AppColors.appThemeColor,
@@ -141,7 +122,9 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
                         //facebook, google and twitter
 
                         OtherLoginButton(
-                          onTap: () {},
+                          onTap: () {
+                            AuthService().signInwithGoogle();
+                          },
                           child: SvgPicture.asset(
                             "assets/svgs/faceB.svg",
                             height: 32,
@@ -149,11 +132,15 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
                         ),
 
                         OtherLoginButton(
-                            onTap: () {},
+                            onTap: () {
+                              AuthService().signInwithGoogle();
+                            },
                             child: SvgPicture.asset("assets/svgs/Google.svg")),
 
                         OtherLoginButton(
-                          onTap: () {},
+                          onTap: () {
+                            AuthService().signInwithGoogle();
+                          },
                           child: SvgPicture.asset("assets/svgs/x.svg"),
                         ),
                       ],

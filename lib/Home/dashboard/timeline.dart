@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/auth/add_car.dart';
+import 'package:moticar/widgets/eard_dialog.dart';
 import 'package:rive/rive.dart';
 import '../../models/expensesmodel.dart';
+import '../../network/dio_utils.dart';
 import '../../providers/app_providers.dart';
 import '../../utils/enums.dart';
 import '../../widgets/app_texts.dart';
@@ -18,7 +21,7 @@ import '../expense/add_expense.dart';
 import '../expense/add_technician.dart';
 import '../profile/invite_friend.dart';
 import '../profile/my_cars.dart';
-import '../profile/set_reminder.dart';
+import '../profile/mileage_set_reminder.dart';
 import 'pie_chart/pie.dart';
 
 class TimelinePage extends StatefulHookConsumerWidget {
@@ -57,6 +60,8 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   int currentMonthIndex = DateTime.now().month - 1;
 
   late DateTime _selectedDate;
+
+  String selectedCarID = "";
 
   List<DateTime> selectedDates = [];
 
@@ -231,240 +236,248 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                   )
                 : Column(
                     children: [
-                      myCarz.isNotEmpty
-                          ? Container(
-                              height: MediaQuery.of(context).size.height * 0.15,
-                              padding: const EdgeInsets.only(
-                                  top: 10, left: 10, right: 10),
-                              width: MediaQuery.of(context).size.width,
-                              decoration: const BoxDecoration(
-                                color: AppColors.teal,
-                              ),
-                              child: ListView.builder(
-                                itemCount: myCarz.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  final carz = myCarz[index];
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 10.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            showMoticarBottom(
-                                              context: context,
-                                              child: FractionallySizedBox(
-                                                heightFactor: 0.89,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(20.0),
-                                                    topRight:
-                                                        Radius.circular(20.0),
-                                                  ),
-                                                  child: MyCarInfoPage(
-                                                    plateNumber:
-                                                        carz.plateNumber,
-                                                    chasisNumber:
-                                                        carz.chasisNumber,
-                                                    engineNumber:
-                                                        carz.engineNumber,
-                                                    dateOfPurchase:
-                                                        carz.dateOfPurchase,
-                                                    vehicleLicense:
-                                                        carz.vehicleLicense,
-                                                    roadWorthiness:
-                                                        carz.roadWorthiness,
-                                                    thirdPartyInsurance: carz
-                                                        .thirdPartyInsurance,
-                                                    engine:
-                                                        carz.engine.toString(),
-                                                    gearbox:
-                                                        carz.gearbox.toString(),
-                                                    car: carz.car.toString(),
-                                                    model:
-                                                        carz.model.toString(),
-                                                    category: carz.category
-                                                        .toString(),
-                                                  ),
-                                                ),
+                      if (myCarz.isNotEmpty)
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 10, right: 10),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: const BoxDecoration(
+                            color: AppColors.teal,
+                          ),
+                          child: ListView.builder(
+                            itemCount: myCarz.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final carz = myCarz[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        showMoticarBottom(
+                                          context: context,
+                                          child: FractionallySizedBox(
+                                            heightFactor: 0.89,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(20.0),
+                                                topRight: Radius.circular(20.0),
                                               ),
-                                            );
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(3),
-                                            decoration: const BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(4),
-                                                topRight: Radius.circular(4),
-                                                bottomLeft: Radius.circular(4),
-                                                bottomRight: Radius.circular(4),
+                                              child: MyCarInfoPage(
+                                                bodyStyle: carz.category!.name,
+                                                cylinder:
+                                                    carz.details!.cylinder,
+                                                segment: carz.details!.segment,
+                                                fuelCapacity:
+                                                    carz.details!.fuelCapacity,
+                                                driveType:
+                                                    carz.details!.driveType,
+                                                acceleration:
+                                                    carz.details!.acceleration,
+                                                topSpeed:
+                                                    carz.details!.topSpeed,
+                                                tyreSize:
+                                                    carz.details!.tyreSize,
+                                                id: carz.id,
+                                                plateNumber: carz.plateNumber,
+                                                chasisNumber: carz.chasisNumber,
+                                                engineNumber: carz.engineNumber,
+                                                dateOfPurchase:
+                                                    carz.dateOfPurchase,
+                                                vehicleLicense:
+                                                    carz.vehicleLicense,
+                                                roadWorthiness:
+                                                    carz.roadWorthiness,
+                                                thirdPartyInsurance:
+                                                    carz.thirdPartyInsurance,
+                                                engine: carz.details!.engine
+                                                    .toString(),
+                                                gearbox: carz.details!.gearbox
+                                                    .toString(),
+                                                car: carz.car!.name.toString(),
+                                                model:
+                                                    carz.model!.name.toString(),
+                                                category:
+                                                    carz.category.toString(),
+                                                year: carz.details!.year
+                                                    .toString(),
                                               ),
-                                            ),
-                                            child: Image.asset(
-                                              'assets/images/car_ai.png',
-                                              height: 45,
                                             ),
                                           ),
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(3),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(4),
+                                            topRight: Radius.circular(4),
+                                            bottomLeft: Radius.circular(4),
+                                            bottomRight: Radius.circular(4),
+                                          ),
                                         ),
-                                        const SizedBox(width: 8),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                        child: Image.asset(
+                                          'assets/images/car_ai.png',
+                                          height: 45,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Row(
                                           children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "${carz.car} ${carz.model}",
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                    fontFamily: "NeulisAlt",
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 14,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    left: 8,
-                                                    right: 8,
-                                                    top: 4,
-                                                    bottom: 4,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0xff00343f),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            40),
-                                                  ),
-                                                  child: Text(
-                                                    "exp. $remainingDays days",
-                                                    textAlign: TextAlign.center,
-                                                    style: const TextStyle(
-                                                      fontFamily: "NeulisAlt",
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 13,
-                                                      color: Color(0xff92BEC1),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                            Text(
+                                              "${carz.car!.name} ${carz.model!.name} ${carz.details!.year}",
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: Colors.white,
+                                              ),
                                             ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.6,
+                                            const SizedBox(width: 8),
+                                            Container(
+                                              padding: const EdgeInsets.only(
+                                                left: 8,
+                                                right: 8,
+                                                top: 4,
+                                                bottom: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xff00343f),
+                                                borderRadius:
+                                                    BorderRadius.circular(40),
+                                              ),
                                               child: Text(
-                                                "${carz.engine} . ${carz.category} . ${carz.gearbox}",
-                                                textAlign: TextAlign.left,
+                                                "exp. $remainingDays days",
+                                                textAlign: TextAlign.center,
                                                 style: const TextStyle(
                                                   fontFamily: "NeulisAlt",
                                                   fontWeight: FontWeight.w400,
-                                                  fontSize: 12,
-                                                  color: Color(0xff7AE6EB),
+                                                  fontSize: 13,
+                                                  color: Color(0xff92BEC1),
                                                 ),
                                               ),
                                             ),
                                           ],
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 8, bottom: 8.0),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                isVisible = !isVisible;
-                                              });
-                                            },
-                                            child: isVisible
-                                                ? const Icon(
-                                                    Icons
-                                                        .keyboard_arrow_up_rounded,
-                                                    color: AppColors.textGrey,
-                                                  )
-                                                : const Icon(
-                                                    Icons
-                                                        .keyboard_arrow_down_sharp,
-                                                    color: AppColors.textGrey,
-                                                  ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 8, bottom: 8.0),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              _showMyNotification(context);
-                                            },
-                                            child: isVisible
-                                                ? const SizedBox()
-                                                : const Icon(
-                                                    Icons
-                                                        .notifications_none_sharp,
-                                                    color: AppColors.white,
-                                                  ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.6,
+                                          child: Text(
+                                            "${carz.details!.engine} . ${carz.category!.name} . ${carz.details!.gearbox}",
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                              fontFamily: "NeulisAlt",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12,
+                                              color: Color(0xff7AE6EB),
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                  );
-                                },
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, bottom: 8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            isVisible = !isVisible;
+                                            selectedCarID = carz.id.toString();
+                                          });
+                                        },
+                                        child: isVisible
+                                            ? const Icon(
+                                                Icons.keyboard_arrow_up_rounded,
+                                                color: AppColors.textGrey,
+                                              )
+                                            : const Icon(
+                                                Icons.keyboard_arrow_down_sharp,
+                                                color: AppColors.textGrey,
+                                              ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, bottom: 8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          _showMyNotification(context);
+                                        },
+                                        child: isVisible
+                                            ? const SizedBox()
+                                            : const Icon(
+                                                Icons.notifications_none_sharp,
+                                                color: AppColors.white,
+                                              ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      else
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 30),
+                              const MoticarText(
+                                text: 'No Cars Available',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                                fontColor: AppColors.white,
                               ),
-                            )
-                          : Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(height: 30),
-                                  const MoticarText(
-                                    text: 'No Cars Available',
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    fontColor: AppColors.white,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: MoticarLoginButton(
-                                      borderColor: const Color(0xff29D7DE),
-                                      myColor: const Color(0xff29D7DE),
-                                      child: const Center(
-                                        child: Text(
-                                          'Add new Car',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily: 'NeulisAlt',
-                                            color: AppColors.appThemeColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                              const SizedBox(height: 8),
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: SizedBox(
+                                  width: 150,
+                                  child: MoticarLoginButton(
+                                    borderColor: const Color(0xff29D7DE),
+                                    myColor: const Color(0xff29D7DE),
+                                    child: const Center(
+                                      child: Text(
+                                        'Add new Car',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: 'NeulisAlt',
+                                          color: AppColors.appThemeColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return const AddCarPage(
-                                            isHome: true,
-                                          );
-                                        }));
-                                      },
                                     ),
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return const AddCarPage(
+                                          isHome: true,
+                                        );
+                                      }));
+                                    },
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
+                            ],
+                          ),
+                        ),
 
                       // TextButton(
                       //     onPressed: () {
@@ -547,7 +560,160 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                               'assets/svgs/delete.svg'),
                                         ],
                                       ),
-                                      onTap: () {},
+                                      onTap: () async {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor:
+                                                  const Color(0xff002D36),
+                                              title: const Text(
+                                                "Are you sure?",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 19,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                              content: const Text(
+                                                'This action would remove all the information you had previously entered',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Color(0xff7AE6EB),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                              actionsAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              actions: [
+                                                TextButton(
+                                                  style: ButtonStyle(
+                                                    //i want a borderside of color red
+                                                    shape: MaterialStateProperty
+                                                        .all(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(32),
+                                                        side: const BorderSide(
+                                                          color: AppColors
+                                                              .appThemeColor,
+                                                          width: 1,
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                                    padding:
+                                                        const MaterialStatePropertyAll(
+                                                            EdgeInsets.only(
+                                                                left: 50,
+                                                                right: 50,
+                                                                top: 10,
+                                                                bottom: 10)),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all(AppColors
+                                                                .appThemeColor),
+                                                  ),
+                                                  onPressed: () {
+                                                    model.deleteCar(formData: {
+                                                      "id": selectedCarID
+                                                    }).then((value) async {
+                                                      if (value.successMessage
+                                                          .isNotEmpty) {
+                                                        await showDialog(
+                                                            context: context,
+                                                            barrierDismissible:
+                                                                false,
+                                                            builder: (context) {
+                                                              return MoticarDialog(
+                                                                subtitle: value
+                                                                    .successMessage,
+                                                                onTap: () {
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder:
+                                                                              (context) {
+                                                                    return BottomHomePage();
+                                                                  }));
+                                                                  // context.router.push(const HomeRoute());
+                                                                },
+                                                              );
+                                                            });
+                                                      } else {
+                                                        handleError(
+                                                          e: value.error ??
+                                                              value
+                                                                  .errorMessage,
+                                                          context: context,
+                                                        );
+                                                      }
+                                                    });
+                                                  },
+                                                  child: const Text(
+                                                    'Yes',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: AppColors.red,
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                //no
+
+                                                TextButton(
+                                                  style: ButtonStyle(
+                                                    //i want a borderside of color red
+                                                    shape: MaterialStateProperty
+                                                        .all(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(32),
+                                                        side: const BorderSide(
+                                                          color:
+                                                              Color(0xff00AEB5),
+                                                          width: 1,
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                                    padding:
+                                                        const MaterialStatePropertyAll(
+                                                            EdgeInsets.only(
+                                                                left: 50,
+                                                                right: 50,
+                                                                top: 10,
+                                                                bottom: 10)),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all(Colors
+                                                                .transparent),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text(
+                                                    'No',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color:
+                                                          AppColors.lightGreen,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
                                   ),
                                 ),
@@ -555,29 +721,32 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(12.0),
-                              child: MoticarLoginButton(
-                                borderColor: const Color(0xff29D7DE),
-                                myColor: const Color(0xff29D7DE),
-                                child: const Center(
-                                  child: Text(
-                                    'Add new Car',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'NeulisAlt',
-                                      color: AppColors.appThemeColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
+                              child: SizedBox(
+                                width: 200,
+                                child: MoticarLoginButton(
+                                  borderColor: const Color(0xff29D7DE),
+                                  myColor: const Color(0xff29D7DE),
+                                  child: const Center(
+                                    child: Text(
+                                      'Add new Car',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'NeulisAlt',
+                                        color: AppColors.appThemeColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return const AddCarPage(
+                                        isHome: true,
+                                      );
+                                    }));
+                                  },
                                 ),
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return const AddCarPage(
-                                      isHome: true,
-                                    );
-                                  }));
-                                },
                               ),
                             ),
                           ],

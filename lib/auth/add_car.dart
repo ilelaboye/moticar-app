@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -11,11 +13,14 @@ import 'package:moticar/widgets/eard_dialog.dart';
 import 'package:moticar/widgets/eard_loader.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:rive/rive.dart';
+import 'package:http/http.dart' as http;
 
 // import '../../providers/app_providers.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 import '../providers/app_providers.dart';
+import '../services/hivekeys.dart';
+import '../services/localdatabase.dart';
 import '../utils/enums.dart';
 import 'car_list_all.dart';
 
@@ -48,21 +53,55 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
 
   String selectedCarName = '';
   String selectedID = '';
-  List<Category> moticatz = [];
-  List<Model> carmodelz = [];
+  // List<Category> moticatz = [];
+  // List<Model> carmodelz = [];
+
+  Map<String, dynamic>? selectedCar;
 
   // String? withdraw;
 
   String searchQuery = '';
   // String selectedAcctCode = '';
 
+  //new
+  List<Map<String, dynamic>> carsData = [];
+  List<bool> selectedStates = [];
+
   @override
   void initState() {
     super.initState();
+    fetchData();
     _tabController = TabController(length: 4, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ref.read(profileProvider.notifier).getCars();
     });
+  }
+
+  Future<void> fetchData() async {
+    final String token = HiveStorage.get(HiveKeys.token);
+    String apiUrl = 'https://moticar.ngvoices.ng/api/v1/get-cars';
+
+    final response = await http.get(
+      Uri.parse(apiUrl),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json', // Adjust content type if needed
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final parsedResponse = json.decode(response.body);
+      final List<dynamic> data = parsedResponse['data'];
+      final List<Map<String, dynamic>> carDataList =
+          data.cast<Map<String, dynamic>>();
+
+      setState(() {
+        carsData = carDataList;
+        selectedStates = List<bool>.filled(carsData.length, false);
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 
   @override
@@ -277,8 +316,9 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                             ),
                           ),
 
-                          //
-
+                          const SizedBox(
+                            height: 20,
+                          ),
                           const Padding(
                             padding: EdgeInsets.all(12.0),
                             child: Row(
@@ -315,171 +355,274 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                               ],
                             ),
                           ),
+                          if (carsData.isNotEmpty)
+                            SizedBox(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: carsData.length,
+                                itemBuilder: (context, index) {
+                                  final car = carsData[index];
+                                  final carName = car["name"];
+                                  final carIcon = car["icon"];
+                                  final carId = car['id'];
 
-                          //most popular cars
-                          Column(
-                            children: [
-                              if (state.loading != Loader.loading &&
-                                  newCarz.isNotEmpty)
-                                SizedBox(
-                                  // height:
-                                  //     MediaQuery.of(context).size.height * 0.30,
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: newCarz.length,
-                                    itemBuilder: (context, index) {
-                                      final moticar = newCarz[index];
-                                      final categoriez = moticar.categories;
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        // Toggle the selected state of the car
+                                        selectedStates[index] =
+                                            !selectedStates[index];
 
-                                      // Check if categoriez is not empty and if index is within bounds
-                                      if (categoriez.isNotEmpty &&
-                                          index < categoriez.length) {
-                                        final carModelz =
-                                            categoriez[index].models;
-                                        final carname = moticar.name;
-                                        final carId = moticar.id;
+                                        selectedCarName = carName;
+                                        selectedID = carId.toString();
 
-                                        if (moticar.name.toLowerCase().contains(
-                                            searchQuery.toLowerCase())) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                moticatz = categoriez;
-                                                carmodelz = carModelz;
-                                                selectedCarName = carname;
-                                              });
-
-                                              print(
-                                                  'my $moticatz $selectedCarName');
-                                              print(
-                                                  'Length of categoriez: ${categoriez.length}');
-                                            },
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 2,
-                                                      horizontal: 8),
-                                              margin: const EdgeInsets.only(
-                                                  bottom: 8),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                border: Border.all(
-                                                  color: popular == moticar.name
-                                                      ? AppColors.lightGreen
-                                                      : const Color(0xfff0f5f5),
-                                                  width: 1,
-                                                ),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    color: Colors.black45,
-                                                    blurRadius: 0.1,
-                                                  ),
-                                                ],
+                                        selectedCar = car;
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 57,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.85,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 3, horizontal: 15),
+                                      margin: const EdgeInsets.only(bottom: 8),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: selectedStates[index]
+                                              ? AppColors.lightGreen
+                                              : Colors.black12,
+                                          width: 1,
+                                        ),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black45,
+                                            blurRadius: 0.1,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Image.network(
+                                                carIcon,
+                                                width: 50,
+                                                height: 50,
                                               ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      getImageWidget(moticar
-                                                          .name
-                                                          .toString()),
-                                                      // SvgPicture.asset(
-                                                      //   "assets/carLogos/toyota.svg",
-                                                      // ),
-                                                      const SizedBox(width: 8),
-                                                      popular == moticar.name
-                                                          ? MoticarText(
-                                                              text:
-                                                                  moticar.name,
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                              fontColor:
-                                                                  AppColors
-                                                                      .green,
-                                                            )
-                                                          : MoticarText(
-                                                              text:
-                                                                  moticar.name,
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              fontColor:
-                                                                  const Color(
-                                                                      0xff495353),
-                                                            ),
-                                                    ],
-                                                  ),
-                                                  Radio(
-                                                    toggleable: true,
-                                                    value: moticar.name,
-                                                    activeColor:
-                                                        AppColors.lightGreen,
-                                                    groupValue: popular,
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        popular =
-                                                            value.toString();
-                                                        moticatz = categoriez;
-                                                        carmodelz = carModelz;
-                                                        selectedCarName =
-                                                            carname;
-
-                                                        selectedID = moticar.id
-                                                            .toString();
-                                                      });
-                                                    },
-                                                  ),
-                                                ],
+                                              const SizedBox(width: 12),
+                                              Text(
+                                                carName,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                            width: 24,
+                                            height: 24,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: selectedStates[index]
+                                                  ? AppColors.lightGreen
+                                                  : Colors.transparent,
+                                              border: Border.all(
+                                                color: selectedStates[index]
+                                                    ? AppColors.lightGreen
+                                                    : Colors.black,
+                                                width: 1,
                                               ),
                                             ),
-                                          );
-                                        } else {
-                                          // Return an empty container if item does not match search query
-                                          return const SizedBox.shrink();
-                                        }
-                                      } else {
-                                        // Handle the case where categoriez is empty or index is out of bounds
-                                        return const SizedBox.shrink();
-                                      }
-
-                                      //
-                                    },
-                                  ),
-                                )
-                              else if (state.loading == Loader.loading)
-                                const Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    MoticarLoader(
-                                      size: 40,
-                                    )
-                                  ],
-                                )
-                              else
-                                const Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(height: 30),
-                                      MoticarText(
-                                        text: 'No Cars Available',
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500,
-                                        fontColor: AppColors.textColor,
+                                            child: selectedStates[index]
+                                                ? const Icon(Icons.check,
+                                                    size: 15,
+                                                    color: Colors.white)
+                                                : null, // Display check mark only if selected
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                            ],
-                          ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          else
+                            // Display a loading indicator or error message if carsData is empty
+                            const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+
+                          //
+
+                          //most popular cars
+                          // Column(
+                          //   children: [
+                          //     if (state.loading != Loader.loading &&
+                          //         newCarz.isNotEmpty)
+                          //       SizedBox(
+                          //         // height:
+                          //         //     MediaQuery.of(context).size.height * 0.30,
+                          //         child: ListView.builder(
+                          //           shrinkWrap: true,
+                          //           itemCount: newCarz.length,
+                          //           itemBuilder: (context, index) {
+                          //             final moticar = newCarz[index];
+                          //             final categoriez = moticar.categories;
+
+                          //             // Check if categoriez is not empty and if index is within bounds
+                          //             if (categoriez.isNotEmpty &&
+                          //                 index < categoriez.length) {
+                          //               final carModelz =
+                          //                   categoriez[index].models;
+                          //               final carname = moticar.name;
+                          //               // final carId = moticar.id;
+
+                          //               if (moticar.name.toLowerCase().contains(
+                          //                   searchQuery.toLowerCase())) {
+                          //                 return GestureDetector(
+                          //                   onTap: () {
+                          //                     setState(() {
+                          //                       moticatz = categoriez;
+                          //                       carmodelz = carModelz;
+                          //                       selectedCarName = carname;
+                          //                     });
+
+                          //                     print(
+                          //                         'my $moticatz $selectedCarName');
+                          //                     print(
+                          //                         'Length of categoriez: ${categoriez.length}');
+                          //                   },
+                          //                   child: Container(
+                          //                     padding:
+                          //                         const EdgeInsets.symmetric(
+                          //                             vertical: 2,
+                          //                             horizontal: 8),
+                          //                     margin: const EdgeInsets.only(
+                          //                         bottom: 8),
+                          //                     decoration: BoxDecoration(
+                          //                       color: Colors.white,
+                          //                       borderRadius:
+                          //                           BorderRadius.circular(8),
+                          //                       border: Border.all(
+                          //                         color: popular == moticar.name
+                          //                             ? AppColors.lightGreen
+                          //                             : const Color(0xfff0f5f5),
+                          //                         width: 1,
+                          //                       ),
+                          //                       boxShadow: const [
+                          //                         BoxShadow(
+                          //                           color: Colors.black45,
+                          //                           blurRadius: 0.1,
+                          //                         ),
+                          //                       ],
+                          //                     ),
+                          //                     child: Row(
+                          //                       mainAxisAlignment:
+                          //                           MainAxisAlignment
+                          //                               .spaceBetween,
+                          //                       children: [
+                          //                         Row(
+                          //                           children: [
+                          //                             getImageWidget(moticar
+                          //                                 .name
+                          //                                 .toString()),
+                          //                             // SvgPicture.asset(
+                          //                             //   "assets/carLogos/toyota.svg",
+                          //                             // ),
+                          //                             const SizedBox(width: 8),
+                          //                             popular == moticar.name
+                          //                                 ? MoticarText(
+                          //                                     text:
+                          //                                         moticar.name,
+                          //                                     fontSize: 14,
+                          //                                     fontWeight:
+                          //                                         FontWeight
+                          //                                             .w700,
+                          //                                     fontColor:
+                          //                                         AppColors
+                          //                                             .green,
+                          //                                   )
+                          //                                 : MoticarText(
+                          //                                     text:
+                          //                                         moticar.name,
+                          //                                     fontSize: 14,
+                          //                                     fontWeight:
+                          //                                         FontWeight
+                          //                                             .w400,
+                          //                                     fontColor:
+                          //                                         const Color(
+                          //                                             0xff495353),
+                          //                                   ),
+                          //                           ],
+                          //                         ),
+                          //                         Radio(
+                          //                           toggleable: true,
+                          //                           value: moticar.name,
+                          //                           activeColor:
+                          //                               AppColors.lightGreen,
+                          //                           groupValue: popular,
+                          //                           onChanged: (value) {
+                          //                             setState(() {
+                          //                               popular =
+                          //                                   value.toString();
+                          //                               moticatz = categoriez;
+                          //                               carmodelz = carModelz;
+                          //                               selectedCarName =
+                          //                                   carname;
+
+                          //                               selectedID = moticar.id
+                          //                                   .toString();
+                          //                             });
+                          //                           },
+                          //                         ),
+                          //                       ],
+                          //                     ),
+                          //                   ),
+                          //                 );
+                          //               } else {
+                          //                 // Return an empty container if item does not match search query
+                          //                 return const SizedBox.shrink();
+                          //               }
+                          //             } else {
+                          //               // Handle the case where categoriez is empty or index is out of bounds
+                          //               return const SizedBox.shrink();
+                          //             }
+
+                          //             //
+                          //           },
+                          //         ),
+                          //       )
+                          //     else if (state.loading == Loader.loading)
+                          //       const Column(
+                          //         mainAxisAlignment: MainAxisAlignment.center,
+                          //         children: [
+                          //           MoticarLoader(
+                          //             size: 40,
+                          //           )
+                          //         ],
+                          //       )
+                          //     else
+                          //       const Center(
+                          //         child: Column(
+                          //           mainAxisAlignment: MainAxisAlignment.center,
+                          //           children: [
+                          //             SizedBox(height: 30),
+                          //             MoticarText(
+                          //               text: 'No Cars Available',
+                          //               fontSize: 13,
+                          //               fontWeight: FontWeight.w500,
+                          //               fontColor: AppColors.textColor,
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //   ],
+                          // ),
                         ],
                       ),
 
@@ -727,9 +870,10 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                 return AddCarPage2(
                                     isHome: widget.isHome,
                                     carID: selectedID,
+                                    selectedCar: selectedCar!,
                                     // imagePath: selectedImage,
-                                    carmodelz: carmodelz,
-                                    moticatz: moticatz,
+                                    // carmodelz: carmodelz,
+                                    // moticatz: moticatz,
                                     carName: selectedCarName);
                               },
                             ));
@@ -785,8 +929,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
       case 'Toyota':
         return SvgPicture.asset('assets/carLogos/toyota.svg');
 
-      case 'Balancing':
-        return SvgPicture.asset('assets/expenseCatIcons/balancing.svg');
+      case 'Honda':
+        return SvgPicture.asset('assets/carLogos/honda.svg');
 
       case 'Car Wash':
         return SvgPicture.asset('assets/expenseCatIcons/carWash.svg');

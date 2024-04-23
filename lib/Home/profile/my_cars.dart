@@ -4,17 +4,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:moticar/widgets/app_texts.dart';
 
 import '../../models/expensesmodel.dart';
+import '../../network/dio_utils.dart';
 import '../../providers/app_providers.dart';
 import '../../widgets/colors.dart';
+import '../../widgets/eard_dialog.dart';
+import '../bottom_bar.dart';
 
-class MyCarInfoPage extends StatefulWidget {
+class MyCarInfoPage extends ConsumerStatefulWidget {
   const MyCarInfoPage({
     super.key,
-    //    required this.id,
+    required this.id,
+    required this.cylinder,
+    required this.segment,
+    required this.fuelCapacity,
+    required this.driveType,
+    required this.acceleration,
+    required this.topSpeed,
+    required this.tyreSize,
     // required this.userId,
     // required this.carId,
     // required this.carModelId,
@@ -36,14 +47,15 @@ class MyCarInfoPage extends StatefulWidget {
     // required this.localGovtPermit,
     // required this.midYearPermit,
     // required this.createdAt,
-    // required this.updatedAt,
+    required this.bodyStyle,
+    required this.year,
     required this.engine,
     required this.gearbox,
     required this.car,
     required this.model,
     required this.category,
   });
-  //   final int? id;
+  final int? id;
   // final int? userId;
   // final int? carId;
   // final int? carModelId;
@@ -66,17 +78,26 @@ class MyCarInfoPage extends StatefulWidget {
   // final dynamic midYearPermit;
   // final DateTime? createdAt;
   // final DateTime? updatedAt;
-  final String engine;
+  final String engine,
+      year,
+      bodyStyle,
+      cylinder,
+      segment,
+      fuelCapacity,
+      driveType,
+      acceleration,
+      topSpeed,
+      tyreSize;
   final String gearbox;
   final String car;
   final String model;
   final String category;
 
   @override
-  State<MyCarInfoPage> createState() => _MyCarInfoPageState();
+  ConsumerState<MyCarInfoPage> createState() => _MyCarInfoPageState();
 }
 
-class _MyCarInfoPageState extends State<MyCarInfoPage> {
+class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
   final NumberFormat nairaFormat = NumberFormat.currency(
     symbol: 'N ', //₦
     // decimalDigits: 0,
@@ -88,8 +109,8 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
     DateTime now = DateTime.now();
     DateTime endOfYear = DateTime(now.year + 1, 1, 1);
     int remainingDays = endOfYear.difference(now).inDays;
-    // final state = ref.watch(profileProvider);
-    // final model = ref.read(profileProvider.notifier);
+    final state = ref.read(profileProvider);
+    final model = ref.read(profileProvider.notifier);
     return Scaffold(
       backgroundColor: const Color(0xff001A1F),
       body: SingleChildScrollView(
@@ -102,14 +123,12 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                   GestureDetector(
-                        onTap: (){
-                          Navigator.pop(context);
-                        },
-                        child: Icon(Icons.close, 
-                        size: 25,
-                        color: Colors.white)),
-                   
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(Icons.close,
+                          size: 25, color: Colors.white)),
                 ],
               ),
 
@@ -152,7 +171,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${widget.car} ${widget.model}',
+                        '${widget.car} ${widget.model} ${widget.year}',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: "NeulisAlt",
@@ -163,7 +182,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                       ),
                       const SizedBox(width: 8),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -354,137 +373,148 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'NeulisAlt',
-                                color: AppColors.appThemeColor,
+                                color: Color(0xff00AEB5),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            SvgPicture.asset(
-                              'assets/svgs/delete.svg',
-                              color: AppColors.appThemeColor,
-                            ),
+                            const SizedBox(width: 8),
+                            SvgPicture.asset('assets/svgs/delete.svg'),
                           ],
                         ),
                         onTap: () async {
-                          //
-                          if (Platform.isIOS) {
-                            // Show Cupertino dialog for iOS users
-                            await showCupertinoDialog(
-                              context: context,
-                              builder: (context) {
-                                return CupertinoAlertDialog(
-                                  title: const Text(
-                                    'Are you sure?',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 19,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                          await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                backgroundColor: const Color(0xff002D36),
+                                title: const Text(
+                                  "Are you sure?",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 19,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
                                   ),
-                                  content: const Text(
-                                    'This action would remove all the information you had previously entered',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'NeulisAlt',
-                                      fontSize: 14,
-                                      color: Color(0xff7AE6EB),
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                                ),
+                                content: const Text(
+                                  'This action would remove all the information you had previously entered',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Color(0xff7AE6EB),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
                                   ),
-                                  actions: [
-                                    CupertinoButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'Yes',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xffFFFFFF),
+                                ),
+                                actionsAlignment: MainAxisAlignment.spaceEvenly,
+                                actions: [
+                                  TextButton(
+                                    style: ButtonStyle(
+                                      //i want a borderside of color red
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(32),
+                                          side: const BorderSide(
+                                            color: AppColors.appThemeColor,
+                                            width: 1,
+                                          ),
                                         ),
                                       ),
+
+                                      padding: const MaterialStatePropertyAll(
+                                          EdgeInsets.only(
+                                              left: 50,
+                                              right: 50,
+                                              top: 10,
+                                              bottom: 10)),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              AppColors.appThemeColor),
                                     ),
-                                    CupertinoButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'No',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xff00AEB5),
-                                        ),
+                                    onPressed: () {
+                                      model.deleteCar(formData: {
+                                        "id": widget.id
+                                      }).then((value) async {
+                                        if (value.successMessage.isNotEmpty) {
+                                          await showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (context) {
+                                                return MoticarDialog(
+                                                  subtitle:
+                                                      value.successMessage,
+                                                  onTap: () {
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) {
+                                                      return const BottomHomePage();
+                                                    }));
+                                                    // context.router.push(const HomeRoute());
+                                                  },
+                                                );
+                                              });
+                                        } else {
+                                          handleError(
+                                            e: value.error ??
+                                                value.errorMessage,
+                                            context: context,
+                                          );
+                                        }
+                                      });
+                                    },
+                                    child: const Text(
+                                      'Yes',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.red,
                                       ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          } else {
-                            // Show Material dialog for Android users
-                            await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  backgroundColor: Colors
-                                      .black, // Set background color to black
-                                  title: const Text(
-                                    'Are you sure?',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 19,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                  content: const Text(
-                                    'This action would remove all the information you had previously entered',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'NeulisAlt',
-                                      color: Color(0xff7AE6EB),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
+
+                                  //no
+
+                                  TextButton(
+                                    style: ButtonStyle(
+                                      //i want a borderside of color red
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(32),
+                                          side: const BorderSide(
+                                            color: Color(0xff00AEB5),
+                                            width: 1,
+                                          ),
+                                        ),
+                                      ),
+
+                                      padding: const MaterialStatePropertyAll(
+                                          EdgeInsets.only(
+                                              left: 50,
+                                              right: 50,
+                                              top: 10,
+                                              bottom: 10)),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.transparent),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text(
+                                      'No',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.lightGreen,
+                                      ),
                                     ),
                                   ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'Yes',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        // Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'No',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
-                                          color: Color(0xff00AEB5),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
+                                ],
+                              );
+                            },
+                          );
                         },
                       ),
                     ),
@@ -862,7 +892,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.gearbox,
+                            widget.cylinder,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
@@ -886,7 +916,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.category,
+                            widget.bodyStyle,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
@@ -911,7 +941,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.category,
+                            widget.segment,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
@@ -935,7 +965,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.category,
+                            widget.driveType,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
@@ -959,7 +989,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.engine,
+                            widget.fuelCapacity,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
@@ -983,7 +1013,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.category,
+                            widget.tyreSize,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
@@ -995,8 +1025,8 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                         ),
 
                         //production years
-                        const ListTile(
-                          title: Text(
+                        ListTile(
+                          title: const Text(
                             "Segment",
                             style: TextStyle(
                                 fontFamily: "NeulisAlt",
@@ -1007,9 +1037,8 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            // widget.category,
-                            "",
-                            style: TextStyle(
+                            widget.segment,
+                            style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.w400,
@@ -1032,7 +1061,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.engine,
+                            widget.topSpeed,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
@@ -1056,7 +1085,7 @@ class _MyCarInfoPageState extends State<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.engine,
+                            widget.acceleration,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,

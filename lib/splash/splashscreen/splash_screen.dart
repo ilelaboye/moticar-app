@@ -19,20 +19,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _animation;
+  // late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
     _nextPage();
-    // _controller = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(seconds: 1),
-    // );
-    // _animation = Tween<double>(begin: 0, end: 1.5).animate(
-    //   CurvedAnimation(parent: _controller, curve: Curves.easeInQuad),
-    // );
-    // _controller.forward();
   }
 
   Future _nextPage() async {
@@ -67,9 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-
-              SizedBox(
+            SizedBox(
               height: 250,
               width: 250,
               child: RiveAnimation.asset(
@@ -87,7 +77,6 @@ class _SplashScreenState extends State<SplashScreen>
                   fontColor: AppColors.appThemeColor),
             ),
 
-            
             // const SizedBox(),
             // AnimatedBuilder(
             //     animation: _animation,
@@ -121,14 +110,9 @@ class _SplashScreenState extends State<SplashScreen>
             //                     fontColor: AppColors.appThemeColor),
             //               ),
 
-                       
             //             ],
             //           ));
             //     }),
-
-
-                
-            
           ],
         ),
       ),

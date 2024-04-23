@@ -38,12 +38,10 @@ dependencies:
   flutter_svg: ^1.1.6
   flutter_spinkit: ^5.2.0
   intl: ^0.18.0
-  # flutter_facebook_auth: ^6.1.1
-  # google_sign_in: ^6.1.6
+  google_sign_in: ^6.2.1
   local_auth: ^2.1.6
   hive_flutter: ^1.1.0
   hooks_riverpod: ^2.4.10
-  # dio: ^5.4.1
   http: ^1.1.0
   dio: 4.0.6
   another_flushbar: ^1.12.30
@@ -60,8 +58,7 @@ dependencies:
   flutter_hooks: ^0.20.5
   flutter_easyloading: ^3.0.5
   shared_preferences: ^2.2.3
-  # fl_chart: ^0.65.0
-  # pinput: ^4.0.0
+  firebase_auth: ^4.19.2
 
 dev_dependencies:
   flutter_test:

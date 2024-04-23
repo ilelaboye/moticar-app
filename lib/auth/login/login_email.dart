@@ -435,6 +435,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 return const BottomHomePage();
                               }));
                             } else if (signUpResult.errorMessage.isNotEmpty) {
+                              Navigator.pop(context);
                               // Sign-up failed, show error dialog
                               showDialog(
                                 context: context,
@@ -445,7 +446,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                     title: '',
                                     subtitle: signUpResult.errorMessage,
                                     onTap: () {
-                                      Navigator.pop(context);
                                       Navigator.pop(context);
                                     },
                                     buttonColor: AppColors.red,

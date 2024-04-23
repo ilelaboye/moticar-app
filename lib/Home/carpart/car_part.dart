@@ -573,7 +573,7 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
 
                                                   // ListTile(
                                                   //       title: Text(subCategory.name),
-                                                  //     ))
+                                                  //     ),),
                                                   GestureDetector(
                                                     onTap: () {
                                                       toggleSelection(
@@ -798,7 +798,7 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                                                             subCategory.name;
                                                         selectedCategory =
                                                             categoryName;
-                                                            selectedImagePath =
+                                                        selectedImagePath =
                                                             catImage;
                                                       });
 
@@ -1013,7 +1013,7 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                                                         selectedCategory =
                                                             categoryName;
 
-                                                            selectedImagePath =
+                                                        selectedImagePath =
                                                             catImage;
                                                       });
 
@@ -1227,7 +1227,7 @@ class _AddCarPartState extends ConsumerState<AddCarPart>
                                                         selectedCategory =
                                                             categoryName;
 
-                                                            selectedImagePath =
+                                                        selectedImagePath =
                                                             catImage;
                                                       });
 

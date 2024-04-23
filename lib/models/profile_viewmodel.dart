@@ -33,7 +33,6 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
 
   final Ref _reader;
 
-
   //addnewCars
   Future<ApiResponse> addNewCar({
     required Map<String, dynamic> formData,
@@ -45,7 +44,62 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
       final response = await _reader.read(serviceProvider).postWithToken(
             formData: formData,
             path: "add-car",
+          );
+      // var body = json.decode(response.body);
+      // if (body != null) {
+      if (response.statusCode == 200) {
+        state = state.copyWith(
+          loading: Loader.loaded,
+          // token: response.data['data']['token']
+        );
+        return ApiResponse(
+          successMessage: response.data["message"] ?? "Success",
+        );
+      } else {
+        state = state.copyWith(
+          loading: Loader.error,
+        );
+        return ApiResponse(
+          errorMessage: response.data["message"] ?? "Unknown error",
+        );
+      }
+      // }
+      // else {
+      //   state = state.copyWith(
+      //     loading: Loader.error,
+      //   );
+      //   return ApiResponse(errorMessage: "Response body is null");
+      // }
+    } on DioError catch (e) {
+      state = state.copyWith(
+        loading: Loader.error,
+      );
+      if (e.response != null && e.response!.data != null) {
+        return ApiResponse(
+          errorMessage: e.response!.data['message'] ?? "Unknown error",
+        );
+      } else {
+        return ApiResponse(errorMessage: "Connection error, please try again.");
+      }
+    } catch (e) {
+      state = state.copyWith(
+        loading: Loader.error,
+      );
+      return ApiResponse(errorMessage: "Connection error, please try again.");
+    }
+  }
 
+  //delete car
+  Future<ApiResponse> deleteCar({
+    required Map<String, dynamic> formData,
+  }) async {
+    // state = state.copyWith(
+    //   loadStatus: Loader.loading,
+    // );
+    try {
+      final response = await _reader.read(serviceProvider).postWithToken(
+            formData: formData,
+            path: "/delete-car",
           );
       // var body = json.decode(response.body);
       // if (body != null) {
@@ -141,7 +195,6 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
       loading: Loader.loading,
     );
     try {
-      
       final response = await _reader.read(newService).getWithToken(
             // formData: formData,
             path: 'get-expenses',
@@ -188,11 +241,10 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
 
   //technicians
   Future<ApiResponse> getTechnicians() async {
-     state = state.copyWith(
+    state = state.copyWith(
       loading: Loader.loading,
     );
     try {
-     
       final response = await _reader.read(newService).getWithToken(
             // formData: formData,
             path: 'get-technicians',
@@ -238,12 +290,11 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
   }
 
   //getCars
- Future<ApiResponse> getMyCars() async {
-   state = state.copyWith(
+  Future<ApiResponse> getMyCars() async {
+    state = state.copyWith(
       loading: Loader.loading, // Set loading state before making the API call
     );
     try {
-     
       final response = await _reader.read(newService).getWithToken(
             path: 'get-my-cars',
           );
@@ -290,12 +341,10 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
     }
   }
 
-
   //addExpense
-  Future<ApiResponse> addNewExpenses(
-    {required Map<String, dynamic> formData,}
-  ) async {
-
+  Future<ApiResponse> addNewExpenses({
+    required Map<String, dynamic> formData,
+  }) async {
     state = state.copyWith(
       loading: Loader.loading,
     );
@@ -340,39 +389,23 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
     }
   }
 
-
   //getAvailablecarz
   Future<ApiResponse> getCars() async {
     state = state.copyWith(
       loading: Loader.loading,
     );
     try {
-      
       final response = await _reader.read(newService).getWithToken(
             // formData: formData,
             path: 'get-cars',
           );
       if (response.statusCode == 200) {
         final responseData = response.data['data'];
-        // final responseData2 =
-        //     response.data['data']['categories']; // Access the "categories" key
-        print(responseData);
-        // Check if responseData is empty
-        if (responseData.isEmpty) {
-          // Update state with empty list
-          state = state.copyWith(loading: Loader.loaded, getexpenses: []);
-          return ApiResponse(
-            successMessage: 'No Cars available',
-          );
-        }
-        // Map response data to GetExpenses objects
+
+        // Map response data to NewCarzModel objects
         final List<NewCarzModel> getCars = (responseData as List<dynamic>)
             .map((json) => NewCarzModel.fromJson(json))
             .toList();
-
-        // final List<Category> getCategoriz = (responseData2 as List<dynamic>)
-        //     .map((json) => Category.fromJson(json))
-        //     .toList();
 
         // Update state with new expenses
         state = state.copyWith(

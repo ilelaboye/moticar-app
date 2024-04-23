@@ -23,43 +23,24 @@ import '../../widgets/eard_dialog.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
 import '../../widgets/picked_image_display.dart';
 
-class AddNewTechie extends StatefulHookConsumerWidget {
-  const AddNewTechie({
+class EditProfilePage extends StatefulHookConsumerWidget {
+  const EditProfilePage({
     super.key,
   });
 
   @override
-  ConsumerState<AddNewTechie> createState() => _AddNewTechieState();
+  ConsumerState<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _AddNewTechieState extends ConsumerState<AddNewTechie> {
+class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final firstController = TextEditingController();
   final lastNameController = TextEditingController();
   final preferControl = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
-  String email = '', password = '';
 
   String? completePhoneNumber;
-
-  final List myCategory = [
-    'Mechanic',
-    "Panel Beater",
-    "Rewire",
-    "Vulcaniser",
-    "Painter",
-    "Upholster",
-    "Electronics",
-    "Driver",
-    "Towing Motor",
-    "MOT Officer",
-    "Mirror Fixer",
-    "General Body Works",
-    "Vehicle Technician",
-    "Rewire"
-  ];
-  String? selectedCat;
 
   @override
   void initState() {
@@ -83,7 +64,35 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
     var images = useState(XFile(''));
     final _imagePicker = ref.read(imagePickerService);
     return Scaffold(
-      backgroundColor: const Color(0xff002D36),
+      backgroundColor: const Color(0xffEEF5F5),
+      appBar: AppBar(
+        title: const Text(
+          "Edit Personal Information",
+          style: TextStyle(
+            fontFamily: "NeulisAlt",
+            fontSize: 16,
+            fontStyle: FontStyle.normal,
+            color: AppColors.white,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        elevation: 1,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 20,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: AppColors.appThemeColor,
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding:
@@ -93,13 +102,6 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
             children: [
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 //
-                const Center(
-                  child: MoticarText(
-                      text: "Add Motor Technician",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      fontColor: AppColors.white),
-                ),
 
                 const SizedBox(
                   height: 15,
@@ -223,7 +225,7 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                         text: "First Name",
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
-                                        fontColor: AppColors.white),
+                                        fontColor: AppColors.appThemeColor),
                                   ),
                                   //email
                                   TextFormField(
@@ -296,7 +298,7 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                         text: "Last Name",
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
-                                        fontColor: AppColors.white),
+                                        fontColor: AppColors.appThemeColor),
                                   ),
                                   //email
                                   TextFormField(
@@ -375,7 +377,7 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                 text: "Preferred Name (optional)",
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
-                                fontColor: AppColors.white),
+                                fontColor: AppColors.appThemeColor),
                           ),
                           //email
                           SizedBox(
@@ -460,7 +462,7 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                 text: "Email",
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
-                                fontColor: AppColors.white),
+                                fontColor: AppColors.appThemeColor),
                           ],
                         ),
                       ),
@@ -522,7 +524,7 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                                 text: "Phone number",
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
-                                fontColor: AppColors.white),
+                                fontColor: AppColors.appThemeColor),
                           ],
                         ),
                       ),
@@ -573,73 +575,6 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                       const SizedBox(
                         height: 10,
                       ),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding:
-                                EdgeInsets.only(top: 8.0, bottom: 8, left: 3),
-                            child: MoticarText(
-                                text: "Category ",
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                fontColor: AppColors.white),
-                          ),
-                          //lga drop down
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 8, left: 3, right: 3),
-                            child: SizedBox(
-                              height: 55,
-                              child: DropdownButtonFormField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Category',
-                                    hintStyle: TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xffC1C3C3),
-                                        letterSpacing: 1.2,
-                                        fontSize: 14),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                      borderSide: BorderSide(
-                                          color: Color(0xffD0D5DD), width: 1.5),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                      borderSide: BorderSide(
-                                          color: AppColors.appThemeColor,
-                                          width: 1.5),
-                                    ),
-                                  ),
-                                  items: myCategory
-                                      .map<DropdownMenuItem<String>>(
-                                          (value) => DropdownMenuItem<String>(
-                                              value: value.toString(),
-                                              child: Text(
-                                                value.toString(),
-                                                style: const TextStyle(
-                                                    fontFamily: "NeulisAlt",
-                                                    color: AppColors.textColor,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 13),
-                                              )))
-                                      .toList(),
-                                  value: selectedCat,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedCat = value!;
-                                    });
-                                  }),
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
@@ -652,215 +587,192 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                     height: 30,
                   ),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                          child: SizedBox(
-                        height: 55,
-                        child: MoticarLoginButton(
-                            borderColor: const Color(0xff00AEB5),
-                            myColor: Colors.transparent,
-                            child: const MoticarText(
-                              fontColor: Color(0xff00AEB5),
-                              text: 'Cancel',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            }),
-                      )),
+                  //save
+                  SizedBox(
+                    height: 55,
+                    child: Consumer(builder: (context, ref, child) {
+                      final model =
+                          ref.read(registerViewmodelProvider.notifier);
 
-                      const SizedBox(
-                        width: 12,
-                      ),
+                      return MoticarLoginButton(
+                        myColor: const Color(0xff29D7DE),
+                        borderColor: const Color(0xff29D7DE),
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            final String firstName = firstController.text;
+                            final String lastName = lastNameController.text;
+                            final String nickname = preferControl.text;
+                            final String phonie =
+                                completePhoneNumber!.substring(1).toString();
 
-                      //share
-                      Expanded(
-                        child: SizedBox(
-                          height: 55,
-                          child: Consumer(builder: (context, ref, child) {
-                            final model =
-                                ref.read(registerViewmodelProvider.notifier);
+                            if (firstName.isNotEmpty && lastName.isNotEmpty) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (context) {
+                                  return Center(
+                                    child: AlertDialog(
+                                      backgroundColor: AppColors.appThemeColor,
+                                      shadowColor: AppColors.appThemeColor,
+                                      content: Container(
+                                        padding: const EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: const Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            // const SpinKitWave(
+                                            //   color: AppColors.appThemeColor,
+                                            //   size: 30.0,
+                                            // ),
 
-                            return MoticarLoginButton(
-                              myColor: const Color(0xff29D7DE),
-                              borderColor: const Color(0xff29D7DE),
-                              onTap: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  final String firstName = firstController.text;
-                                  final String lastName =
-                                      lastNameController.text;
-                                  final String nickname = preferControl.text;
-                                  final String phonie = completePhoneNumber!
-                                      .substring(1)
-                                      .toString();
-
-                                  if (firstName.isNotEmpty &&
-                                      lastName.isNotEmpty &&
-                                      selectedCat!.isNotEmpty) {
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: true,
-                                      builder: (context) {
-                                        return Center(
-                                          child: AlertDialog(
-                                            backgroundColor:
-                                                AppColors.appThemeColor,
-                                            shadowColor:
-                                                AppColors.appThemeColor,
-                                            content: Container(
-                                              padding: const EdgeInsets.all(20),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: const Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  // const SpinKitWave(
-                                                  //   color: AppColors.appThemeColor,
-                                                  //   size: 30.0,
-                                                  // ),
-
-                                                  SizedBox(
-                                                    height: 100,
-                                                    width: 100,
-                                                    child: RiveAnimation.asset(
-                                                      'assets/images/preloader.riv',
-                                                    ),
-                                                  ),
-
-                                                  // SizedBox(height: 12),
-
-                                                  // Text(
-                                                  //     'You are getting there...',
-                                                  //     textAlign:
-                                                  //         TextAlign.center,
-                                                  //     style: TextStyle(
-                                                  //         color: Colors.white))
-                                                ],
+                                            SizedBox(
+                                              height: 100,
+                                              width: 100,
+                                              child: RiveAnimation.asset(
+                                                'assets/images/preloader.riv',
                                               ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    );
 
-                                    await Future.delayed(
-                                        const Duration(seconds: 2));
+                                            // SizedBox(height: 12),
 
-                                    // Navigator.pop(context);
-
-                                    String imagePath = images.value.path.isEmpty
-                                        ? ""
-                                        : images.value.path;
-
-                                    FormData formData = FormData.fromMap({
-                                      // 'email': widget.email,
-                                      'first_name': firstName,
-                                      'last_name': lastName,
-                                      'preferred_name': nickname,
-                                      "phone": phonie,
-                                      'email': emailController.text,
-                                      "category": selectedCat.toString(),
-                                      'image': imagePath.isNotEmpty
-                                          ? await MultipartFile.fromFile(
-                                              imagePath,
-                                              filename: 'image')
-                                          : "", // Use null if imagePath is empty
-                                    });
-
-                                    // All fields are filled, attempt sign-up
-                                    final signUpResult =
-                                        await model.addNewTechnician(
-                                      formData: formData,
-                                    );
-
-                                    // Check the result of sign-up
-                                    if (signUpResult
-                                        .successMessage.isNotEmpty) {
-                                      // Sign-up successful, show success dialog
-                                      showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (context) => MoticarDialog(
-                                          buttonColor: AppColors.appThemeColor,
-                                          textColor: AppColors.white,
-                                          buttonText: "Continue",
-                                          subtitle: signUpResult.successMessage,
-                                          onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return const BottomHomePage();
-                                            }));
-                                          },
+                                            // Text(
+                                            //     'You are getting there...',
+                                            //     textAlign:
+                                            //         TextAlign.center,
+                                            //     style: TextStyle(
+                                            //         color: Colors.white))
+                                          ],
                                         ),
-                                      );
-                                    } else if (signUpResult
-                                        .errorMessage.isNotEmpty) {
-                                      // Sign-up failed, show error dialog
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return MoticarDialog(
-                                            icon: const Icon(
-                                                Icons.error_outline_sharp,
-                                                color: AppColors.red,
-                                                size: 50),
-                                            title: '',
-                                            subtitle: signUpResult.errorMessage,
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                              Navigator.pop(context);
-                                            },
-                                            buttonColor: AppColors.red,
-                                            textColor: AppColors.white,
-                                            buttonText: "Dismiss",
-                                          );
-                                        },
-                                      );
-                                    }
-                                  } else {
-                                    // Show dialog if any required fields are empty
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return MoticarDialog(
-                                          icon: const Icon(Icons.info_rounded,
-                                              color: AppColors.appThemeColor,
-                                              size: 50),
-                                          title: '',
-                                          subtitle:
-                                              'All Fields are required to proceed',
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                          },
-                                          buttonColor: AppColors.appThemeColor,
-                                          textColor: AppColors.white,
-                                          buttonText: "Dismiss",
-                                        );
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+
+                              await Future.delayed(const Duration(seconds: 2));
+
+                              // Navigator.pop(context);
+
+                              String imagePath = images.value.path.isEmpty
+                                  ? ""
+                                  : images.value.path;
+
+                              FormData formData = FormData.fromMap({
+                                // 'email': widget.email,
+                                'first_name': firstName,
+                                'last_name': lastName,
+                                'preferred_name': nickname,
+                                "phone": phonie,
+                                'email': emailController.text,
+                                'image': imagePath.isNotEmpty
+                                    ? await MultipartFile.fromFile(imagePath,
+                                        filename: 'image')
+                                    : "", // Use null if imagePath is empty
+                              });
+
+                              // All fields are filled, attempt sign-up
+                              final signUpResult = await model.addNewTechnician(
+                                formData: formData,
+                              );
+
+                              // Check the result of sign-up
+                              if (signUpResult.successMessage.isNotEmpty) {
+                                // Sign-up successful, show success dialog
+                                showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) => MoticarDialog(
+                                    buttonColor: AppColors.appThemeColor,
+                                    textColor: AppColors.white,
+                                    buttonText: "Continue",
+                                    subtitle: signUpResult.successMessage,
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return const BottomHomePage();
+                                      }));
+                                    },
+                                  ),
+                                );
+                              } else if (signUpResult.errorMessage.isNotEmpty) {
+                                // Sign-up failed, show error dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return MoticarDialog(
+                                      icon: const Icon(
+                                          Icons.error_outline_sharp,
+                                          color: AppColors.red,
+                                          size: 50),
+                                      title: '',
+                                      subtitle: signUpResult.errorMessage,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
                                       },
+                                      buttonColor: AppColors.red,
+                                      textColor: AppColors.white,
+                                      buttonText: "Dismiss",
                                     );
-                                  }
-                                }
-                              },
-                              child: const MoticarText(
-                                fontColor: AppColors.appThemeColor,
-                                text: 'Save',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            );
-                          }),
+                                  },
+                                );
+                              }
+                            } else {
+                              // Show dialog if any required fields are empty
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return MoticarDialog(
+                                    icon: const Icon(Icons.info_rounded,
+                                        color: AppColors.appThemeColor,
+                                        size: 50),
+                                    title: '',
+                                    subtitle:
+                                        'All Fields are required to proceed',
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    buttonColor: AppColors.appThemeColor,
+                                    textColor: AppColors.white,
+                                    buttonText: "Dismiss",
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        },
+                        child: const MoticarText(
+                          fontColor: AppColors.appThemeColor,
+                          text: 'Save',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
                         ),
-                      ),
-                    ],
+                      );
+                    }),
                   ),
 
-                  //button
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //delete acct
+                  SizedBox(
+                    height: 55,
+                    child: MoticarLoginButton(
+                        borderColor: const Color(0xff00AEB5),
+                        myColor: Colors.transparent,
+                        child: const MoticarText(
+                          fontColor: Color(0xff00AEB5),
+                          text: 'Delete Account',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        onTap: () {
+                          Navigator.pop(context);
+                        }),
+                  ),
                 ],
               ),
             ],

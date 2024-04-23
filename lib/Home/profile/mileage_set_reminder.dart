@@ -15,7 +15,9 @@ import '../../widgets/app_texts.dart';
 import '../../widgets/bottom_sheet_service.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/eard_loader.dart';
+import '../dashboard/timeline.dart';
 import 'my_cars.dart';
+import 'new_mileage.dart';
 
 class AddReminderPage extends StatefulHookConsumerWidget {
   const AddReminderPage({
@@ -106,6 +108,25 @@ class _AddReminderPageState extends ConsumerState<AddReminderPage> {
                                                         Radius.circular(20.0),
                                                   ),
                                                   child: MyCarInfoPage(
+                                                    bodyStyle:
+                                                        carz.category!.name,
+                                                    cylinder:
+                                                        carz.details!.cylinder,
+                                                    segment:
+                                                        carz.details!.segment,
+                                                    fuelCapacity: carz
+                                                        .details!.fuelCapacity,
+                                                    driveType:
+                                                        carz.details!.driveType,
+                                                    acceleration: carz
+                                                        .details!.acceleration,
+                                                    topSpeed:
+                                                        carz.details!.topSpeed,
+                                                    tyreSize:
+                                                        carz.details!.tyreSize,
+                                                    id: carz.id,
+                                                    year: carz.details!.year
+                                                        .toString(),
                                                     plateNumber:
                                                         carz.plateNumber,
                                                     chasisNumber:
@@ -120,10 +141,11 @@ class _AddReminderPageState extends ConsumerState<AddReminderPage> {
                                                         carz.roadWorthiness,
                                                     thirdPartyInsurance: carz
                                                         .thirdPartyInsurance,
-                                                    engine:
-                                                        carz.engine.toString(),
-                                                    gearbox:
-                                                        carz.gearbox.toString(),
+                                                    engine: carz.details!.engine
+                                                        .toString(),
+                                                    gearbox: carz
+                                                        .details!.gearbox
+                                                        .toString(),
                                                     car: carz.car.toString(),
                                                     model:
                                                         carz.model.toString(),
@@ -206,7 +228,7 @@ class _AddReminderPageState extends ConsumerState<AddReminderPage> {
                                                       .width *
                                                   0.6,
                                               child: Text(
-                                                "${carz.engine} . ${carz.category} . ${carz.gearbox}",
+                                                "${carz.details!.engine} . ${carz.category} . ${carz.details!.gearbox}",
                                                 textAlign: TextAlign.left,
                                                 style: const TextStyle(
                                                   fontFamily: "NeulisAlt",
@@ -372,381 +394,7 @@ class _AddReminderPageState extends ConsumerState<AddReminderPage> {
           //
 
           //other half
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(0),
-              decoration: const BoxDecoration(
-                color: Color(0xffeef5f5),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-              ),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "motiBuddie",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: "NeulisAlt",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                          color: AppColors.appThemeColor,
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: 20,
-                      ),
-
-                      //
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "Mileage Tracker",
-                            style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.appThemeColor,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-
-                          //showDialog here
-                          GestureDetector(
-                            onTap: () {
-                              // showDialog(
-                              //   builder: (context) {
-                              //     return AlertDialog(
-                              //       backgroundColor: Colors
-                              //           .transparent, // Make the background transparent
-                              //       contentPadding: EdgeInsets
-                              //           .zero, // Remove any default padding
-                              //       shape:
-                              //           const RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.only(
-                              //           bottomLeft:
-                              //               Radius.circular(10),
-                              //           bottomRight:
-                              //               Radius.circular(10),
-                              //         ),
-                              //       ),
-                              //       content: ClipRRect(
-                              //         // Clip content to match the dialog's shape
-                              //         borderRadius:
-                              //             const BorderRadius.only(
-                              //           bottomLeft:
-                              //               Radius.circular(10),
-                              //           bottomRight:
-                              //               Radius.circular(10),
-                              //         ),
-                              //         child: Container(
-                              //           color: Colors.white,
-                              //           child: Column(
-                              //             mainAxisSize:
-                              //                 MainAxisSize.min,
-                              //             children: [
-                              //               Row(
-                              //                 mainAxisAlignment:
-                              //                     MainAxisAlignment
-                              //                         .end,
-                              //                 children: [
-                              //                   IconButton(
-                              //                     icon: const Icon(Icons
-                              //                         .close), // Close icon
-                              //                     onPressed: () {
-                              //                       Navigator.of(
-                              //                               context)
-                              //                           .pop(); // Close the dialog
-                              //                     },
-                              //                   ),
-                              //                 ],
-                              //               ),
-                              //               Image.asset(
-                              //                   'assets/images/car_diagram.png'),
-                              //               Container(
-                              //                 padding:
-                              //                     const EdgeInsets
-                              //                         .only(
-                              //                         top: 15,
-                              //                         bottom: 15,
-                              //                         left: 8,
-                              //                         right: 8),
-                              //                 color: const Color(
-                              //                     0xffece6b7),
-                              //                 child: const Padding(
-                              //                   padding: EdgeInsets
-                              //                       .symmetric(
-                              //                           vertical: 8),
-                              //                   child: Text(
-                              //                     "Gear Box",
-                              //                     textAlign: TextAlign
-                              //                         .center,
-                              //                     style: TextStyle(
-                              //                       fontFamily:
-                              //                           "NeulisAlt",
-                              //                       fontSize: 14,
-                              //                       fontStyle:
-                              //                           FontStyle
-                              //                               .normal,
-                              //                       height: 1.2,
-                              //                       fontWeight:
-                              //                           FontWeight
-                              //                               .w400,
-                              //                       color: AppColors
-                              //                           .appThemeColor,
-                              //                     ),
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //             ],
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     );
-                              //   },
-                              //   context: context,
-                              // );
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(3),
-                              // height: 20,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: AppColors.lightGreen),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const Icon(Icons.question_mark_rounded,
-                                  size: 13, color: AppColors.lightGreen),
-                            ),
-                          ),
-
-                          //
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          const Expanded(
-                            child: Divider(
-                              thickness: 1.5,
-                              color: AppColors.divider,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      //
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      // sub
-                      const Text(
-                        "Keep an eye on how much distance your car has covered over time.",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: "NeulisAlt",
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xff667085),
-                          fontSize: 12,
-                        ),
-                      ),
-
-                      //
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      //
-
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: const Color(0xffF8F6E7),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Column(
-                          children: [
-                            //info & image
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "Info",
-                                  style: TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff293536),
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                SvgPicture.asset(
-                                    'assets/images/speedometer-02.svg')
-                              ],
-                            ),
-
-                            //
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  // "1324567",
-                                  HiveStorage.get(HiveKeys.mileage) ?? "18101",
-                                  style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xff006C70),
-                                    fontSize: 57,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 15,
-                                          right: 15,
-                                          top: 4,
-                                          bottom: 4),
-                                      decoration: BoxDecoration(
-                                          color: const Color(0xff7AE6EB),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      child: const Text(
-                                        "6 entries",
-                                        style: TextStyle(
-                                          fontFamily: "NeulisAlt",
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color(0xff006C70),
-                                          fontSize: 11,
-                                        ),
-                                      ),
-                                    ),
-
-                                    const SizedBox(
-                                      height: 2,
-                                    ),
-
-                                    //last entry
-                                    const Text(
-                                      "Last entry: 12.09.24",
-                                      style: TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xff006C70),
-                                        fontSize: 11,
-                                      ),
-                                    ),
-
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          "aprrox. 269km",
-                                          style: TextStyle(
-                                            fontFamily: "NeulisAlt",
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.w500,
-                                            color: Color(0xff006C70),
-                                            fontSize: 11,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                        Container(
-                                          height: 34,
-                                          width: 34,
-                                          // padding: const EdgeInsets.all(8),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              color: AppColors.yellow,
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          child: const Center(
-                                            child: Icon(
-                                              Icons.add,
-                                              color: AppColors.appThemeColor,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: 35,
-                      ),
-
-                      //reminders
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Reminders",
-                            style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.appThemeColor,
-                              fontSize: 16,
-                            ),
-                          ),
-
-                          //
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 1.5,
-                              color: AppColors.divider,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      //
-                      const SizedBox(
-                        height: 8,
-                      ),
-
-                      const Text(
-                        "Never be late to attend to issues or concerns surrounding your car. Schedule reminders and keep revisions, maintenance and payments up to date.",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: "NeulisAlt",
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xff667085),
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+          const Expanded(child: const NewMileage()),
 
           //
         ],
@@ -755,15 +403,7 @@ class _AddReminderPageState extends ConsumerState<AddReminderPage> {
   }
 
   //my Notifications
-  void _showMyNotification(
-    BuildContext context,
-  ) {
-    // final RenderObject? renderBox = key.currentContext?.findRenderObject();
-    // final componentPosition = renderBox?.constraints.isNormalized;
-    // .localToGlobal(Offset.zero);
-
-    // double sheetHeight =
-    //     MediaQuery.of(context).size.height - 50;
+  void _showMyNotification(context) {
     showModalBottomSheet(
       isScrollControlled: true,
       constraints: BoxConstraints.expand(

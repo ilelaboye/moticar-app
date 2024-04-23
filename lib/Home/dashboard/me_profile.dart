@@ -3,15 +3,18 @@ import 'dart:io';
 import 'package:clean_calendar/clean_calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:moticar/Home/expense/add_technician.dart';
 import 'package:moticar/Home/profile/invite_friend.dart';
 import 'package:moticar/auth/login/login_email.dart';
 import 'package:moticar/widgets/eard_dialog.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import '../../models/expensesmodel.dart';
 import '../../models/menu_items.dart';
 import '../../network/dio_utils.dart';
 import '../../providers/app_providers.dart';
@@ -23,6 +26,7 @@ import '../../widgets/image_picker_bottom_sheet.dart';
 import '../../widgets/menu_list_tile.dart';
 import '../profile/change_pass.dart';
 import '../profile/email_sub.dart';
+import 'edit_profile.dart';
 
 class MePage extends StatefulHookConsumerWidget {
   const MePage({super.key});
@@ -33,11 +37,21 @@ class MePage extends StatefulHookConsumerWidget {
 
 class _MePageState extends ConsumerState<MePage> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // ref.read(profileProvider.notifier).getExpenses();
+      ref.read(profileProvider.notifier).getTechnicians();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
     var images = useState(XFile(''));
     final imagePicker = ref.read(imagePickerService);
+    List<GetTechies> myTechiez = state.techies;
     // final hasFp = ref.watch(fingerPrintProvider);
 
     List<AppMenuItem> menuItems = [
@@ -100,7 +114,30 @@ class _MePageState extends ConsumerState<MePage> {
           title: 'My Motor Technicians',
           icon: 'assets/misc_moticar/users_me_.svg',
           action: () {},
-          trailing: const SizedBox()),
+          trailing: TextButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const AddNewTechie();
+                }));
+              },
+              child: const Row(
+                children: [
+                  Icon(
+                    Icons.add_rounded,
+                    color: Color(0xff00AEB5),
+                  ),
+                  Text(
+                    "Add",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: "NeulisAlt",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: Color(0xff00AEB5),
+                    ),
+                  ),
+                ],
+              ))),
 
       AppMenuItem(
         title: 'Invite a friend',
@@ -470,25 +507,755 @@ class _MePageState extends ConsumerState<MePage> {
 
             const SizedBox(height: 10),
 
+            //Change Password
             Expanded(
-              child: Container(
-                color: const Color(0xffeef5f5),
-                child: ListView.separated(
-                  separatorBuilder: (context, index) =>
-                      const Divider(thickness: 0.6, color: Color(0xff7BA0A3)),
-                  itemCount: menuItems.length,
-                  padding: const EdgeInsets.fromLTRB(3, 10, 3, 3),
-                  itemBuilder: (context, index) {
-                    return MenuTile(
-                      item: menuItems[index],
-                    );
-                  },
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    //Edit Profile
+                    // ListTile(
+                    //   onTap: () {
+                    //     Navigator.push(context,
+                    //         MaterialPageRoute(builder: (context) {
+                    //       return const EditProfilePage();
+                    //     }));
+                    //   },
+                    //   leading: SvgPicture.asset(
+                    //     "assets/svgs/edit.svg",
+                    //     fit: BoxFit.scaleDown,
+                    //   ),
+                    //   title: const Text(
+                    //     'Edit Profile',
+                    //     style: TextStyle(
+                    //       fontSize: 16,
+                    //       color: AppColors.appThemeColor,
+                    //       fontWeight: FontWeight.w400,
+                    //     ),
+                    //   ),
+                    //   // ignore: prefer_if_null_operators
+                    //   trailing: const Icon(
+                    //     Icons.arrow_forward_ios,
+                    //     color: Color(0xff7BA0A3),
+                    //     size: 15,
+                    //   ),
+                    // ),
+
+                    // const Padding(
+                    //   padding: EdgeInsets.only(left: 15, right: 15.0, top: 1),
+                    //   child: Divider(
+                    //     thickness: 0.5,
+                    //     color: Color(0xff7BA0A3),
+                    //   ),
+                    // ),
+
+                    //change_password
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const ChangePassPage();
+                        }));
+                      },
+                      leading: SvgPicture.asset(
+                        "assets/misc_moticar/key_me_.svg",
+                        // height: 30,
+                        // width: 30,
+                        // color: AppColors.appThemeColor,
+                        fit: BoxFit.scaleDown,
+                      ),
+                      title: const Text(
+                        'Change Password',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.appThemeColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      // ignore: prefer_if_null_operators
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xff7BA0A3),
+                        size: 15,
+                      ),
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15.0, top: 1),
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Color(0xff7BA0A3),
+                      ),
+                    ),
+
+                    //address
+                    ListTile(
+                      onTap: () {
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        //   return const ChangePassPage();
+                        // }));
+                      },
+                      leading: SvgPicture.asset(
+                        'assets/misc_moticar/compass_me_.svg',
+                        // height: 30,
+                        // width: 30,
+                        // color: AppColors.appThemeColor,
+                        fit: BoxFit.scaleDown,
+                      ),
+                      title: const Text(
+                        'Addresses',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.appThemeColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      // ignore: prefer_if_null_operators
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xff7BA0A3),
+                        size: 15,
+                      ),
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15.0, top: 1),
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Color(0xff7BA0A3),
+                      ),
+                    ),
+
+                    //email sub
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const EmailSubPage();
+                        }));
+                      },
+                      leading: SvgPicture.asset(
+                        'assets/misc_moticar/inbox_me_.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
+                      title: const Text(
+                        'Email Subscriptions',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.appThemeColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      // ignore: prefer_if_null_operators
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xff7BA0A3),
+                        size: 15,
+                      ),
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15.0, top: 1),
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Color(0xff7BA0A3),
+                      ),
+                    ),
+
+                    //rewards & token
+
+                    const SizedBox(
+                      height: 8,
+                    ),
+
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/misc_moticar/gift_me_.svg',
+                                fit: BoxFit.scaleDown,
+                              ),
+
+                              const Text(
+                                'Rewards & Token',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 8, bottom: 8),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffB8F2F4),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Text(
+                                  '0 moticoins',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+
+                              //
+                              GestureDetector(
+                                onTap: () {},
+                                child: const Row(
+                                  children: [
+                                    Text(
+                                      "See All",
+                                      // textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 13,
+                                        color: Color(0xff00AEB5),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 15,
+                                      color: Color(0xff00AEB5),
+                                    ),
+
+                                    //
+                                  ],
+                                ),
+                              ),
+
+                              //
+                            ],
+                          ),
+                        ),
+                        //rewards
+                        const SizedBox(
+                          height: 15,
+                        ),
+
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.11,
+                          child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 6,
+                              itemBuilder: (context, index) {
+                                return const RewardsT(
+                                  awardee: "Rookie Reever",
+                                );
+                              }),
+                        ),
+
+                        const Padding(
+                          padding:
+                              EdgeInsets.only(left: 15, right: 15.0, top: 1),
+                          child: Divider(
+                            thickness: 0.5,
+                            color: Color(0xff7BA0A3),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    //my motor techies
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/misc_moticar/users_me_.svg',
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  const Text(
+                                    'My Motor Technicians',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              //
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const AddNewTechie();
+                                  }));
+                                },
+                                child: const Row(
+                                  children: [
+                                    Icon(
+                                      Icons.add_sharp,
+                                      size: 25,
+                                      color: Color(0xff00AEB5),
+                                    ),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(
+                                      "Add",
+                                      // textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 13,
+                                        color: Color(0xff00AEB5),
+                                      ),
+                                    ),
+
+                                    //
+                                  ],
+                                ),
+                              ),
+
+                              //
+                            ],
+                          ),
+                        ),
+                        //rewards
+                        const SizedBox(
+                          height: 15,
+                        ),
+
+                        myTechiez.isNotEmpty
+                            ? SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.11,
+                                child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: myTechiez.length,
+                                    itemBuilder: (context, index) {
+                                      final newTech = myTechiez[index];
+                                      return TechieT(
+                                        imageUrl: newTech.image.toString(),
+                                        techName:
+                                            "${newTech.firstName} ${newTech.lastName}",
+                                        phoneNo: "${newTech.phone}",
+                                        techType: "${newTech.category}",
+                                      );
+                                    }),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const AddNewTechie();
+                                  }));
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 25, right: 25, top: 8, bottom: 8),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xff29D7DE),
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
+                                  child: const Text(
+                                    'Add Technician',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'NeulisAlt',
+                                      color: AppColors.appThemeColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                        //expenditure
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        //
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {},
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/images/bar-chart-2.svg'),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  const Text(
+                                    "View Expenditure",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: "NeulisAlt",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 13,
+                                      color: Color(0xff00AEB5),
+                                    ),
+                                  ),
+
+                                  //
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const Padding(
+                          padding:
+                              EdgeInsets.only(left: 15, right: 15.0, top: 1),
+                          child: Divider(
+                            thickness: 0.5,
+                            color: Color(0xff7BA0A3),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    //invite friend
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const InviteFriend();
+                        }));
+                      },
+                      leading: SvgPicture.asset(
+                        'assets/misc_moticar/coffee_me_.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
+                      title: const Text(
+                        'Invite a friend',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.appThemeColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      // ignore: prefer_if_null_operators
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color(0xff7BA0A3),
+                        size: 15,
+                      ),
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15.0, top: 1),
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Color(0xff7BA0A3),
+                      ),
+                    ),
+
+                    //import
+                    ListTile(
+                      onTap: () {
+                        //               Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        //   return const InviteFriend();
+                        // }));
+                      },
+                      leading: SvgPicture.asset(
+                        'assets/misc_moticar/download_me_.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
+                      title: const Text(
+                        'Import from an existing account',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.appThemeColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      // ignore: prefer_if_null_operators
+                      // trailing: const Icon(
+                      //   Icons.arrow_forward_ios,
+                      //   color: Color(0xff7BA0A3),
+                      //   size: 15,
+                      // ),
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15.0, top: 1),
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Color(0xff7BA0A3),
+                      ),
+                    ),
+
+                    //logout
+                    ListTile(
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              backgroundColor: const Color(0xff002D36),
+                              title: const Text(
+                                "Are you sure?",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 19,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              // content: const Text(
+                              //   'This action would remove all the information you had previously entered',
+                              //   textAlign: TextAlign.center,
+                              //   style: TextStyle(
+                              //     color: Color(0xff7AE6EB),
+                              //     fontSize: 12,
+                              //     fontWeight: FontWeight.w400,
+                              //   ),
+                              // ),
+                              actionsAlignment: MainAxisAlignment.spaceEvenly,
+                              actions: [
+                                TextButton(
+                                  style: ButtonStyle(
+                                    //i want a borderside of color red
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(32),
+                                        side: const BorderSide(
+                                          color: AppColors.red,
+                                          width: 1,
+                                        ),
+                                      ),
+                                    ),
+
+                                    padding: const MaterialStatePropertyAll(
+                                        EdgeInsets.only(
+                                            left: 50,
+                                            right: 50,
+                                            top: 10,
+                                            bottom: 10)),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        AppColors.appThemeColor),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return const LoginPage();
+                                    }));
+                                  },
+                                  child: const Text(
+                                    'Yes',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.red,
+                                    ),
+                                  ),
+                                ),
+
+                                //no
+
+                                TextButton(
+                                  style: ButtonStyle(
+                                    //i want a borderside of color red
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(32),
+                                        side: const BorderSide(
+                                          color: Color(0xff00AEB5),
+                                          width: 1,
+                                        ),
+                                      ),
+                                    ),
+
+                                    padding: const MaterialStatePropertyAll(
+                                        EdgeInsets.only(
+                                            left: 50,
+                                            right: 50,
+                                            top: 10,
+                                            bottom: 10)),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.transparent),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text(
+                                    'No',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.lightGreen,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      leading: SvgPicture.asset(
+                        'assets/misc_moticar/log-out_me_.svg',
+                        fit: BoxFit.scaleDown,
+                      ),
+                      title: const Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.appThemeColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      // ignore: prefer_if_null_operators
+                      // trailing: const Icon(
+                      //   Icons.arrow_forward_ios,
+                      //   color: Color(0xff7BA0A3),
+                      //   size: 15,
+                      // ),
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15.0, top: 1),
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Color(0xff7BA0A3),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
+            )
+
+            // Expanded(
+            //   child: Container(
+            //     color: const Color(0xffeef5f5),
+            //     child: ListView.separated(
+            //       separatorBuilder: (context, index) =>
+            //           const Divider(thickness: 0.6, color: Color(0xff7BA0A3)),
+            //       itemCount: menuItems.length,
+            //       padding: const EdgeInsets.fromLTRB(3, 10, 3, 3),
+            //       itemBuilder: (context, index) {
+            //         return MenuTile(
+            //           item: menuItems[index],
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class RewardsT extends StatelessWidget {
+  const RewardsT({
+    super.key,
+    required this.awardee,
+  });
+  final String awardee;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SvgPicture.asset("assets/images/Star.svg"),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            awardee,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: "NeulisAlt",
+              fontWeight: FontWeight.w500,
+              fontSize: 10,
+              color: Color(0xff00343F),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class TechieT extends StatelessWidget {
+  const TechieT({
+    super.key,
+    required this.imageUrl,
+    required this.techName,
+    required this.phoneNo,
+    required this.techType,
+  });
+
+  final String imageUrl, techName, phoneNo, techType;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              // color: Colors.white,
+              border: Border.all(width: 0.5, color: Colors.black26),
+              image: DecorationImage(image: NetworkImage(imageUrl))),
+          // child: Image.network(imageUrl),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 3),
+          child: Text(
+            techName,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: "NeulisAlt",
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: Color(0xff00343F),
+            ),
+          ),
+        ),
+
+        //
+        Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 3),
+          child: Text(
+            phoneNo,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: "NeulisAlt",
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+              color: Color(0xff006C70),
+            ),
+          ),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 3),
+          child: Text(
+            techType.toLowerCase(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: "NeulisAlt",
+              fontWeight: FontWeight.w600,
+              fontSize: 8,
+              color: Color(0xff00AEB5),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
