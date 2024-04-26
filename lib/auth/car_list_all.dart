@@ -78,6 +78,12 @@ class _AllCarsPageState extends State<AllCarsPage> {
   ];
 
   @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -108,12 +114,16 @@ class _AllCarsPageState extends State<AllCarsPage> {
                   // SvgPicture.asset(
                   //   carImage[index],
                   // ),
-                  Image.network(
-                    carIcon,
-                    width: 50,
-                    height: 50,
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 15.0, top: 8, bottom: 8),
+                    child: Image.network(
+                      carIcon,
+                      width: 30,
+                      height: 30,
+                    ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 12),
                   Text(
                     carName,
                     textAlign: TextAlign.center,
