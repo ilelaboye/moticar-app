@@ -416,8 +416,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                             children: [
                                               Image.network(
                                                 carIcon,
-                                                width: 50,
-                                                height: 50,
+                                                width: 40,
+                                                height: 40,
                                               ),
                                               const SizedBox(width: 12),
                                               Text(

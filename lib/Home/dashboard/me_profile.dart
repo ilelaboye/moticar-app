@@ -234,13 +234,13 @@ class _MePageState extends ConsumerState<MePage> {
       ),
     ];
 
-    useEffect(
-      () {
-        ref.read(profileProvider.notifier).getMyProfile();
-        return null;
-      },
-      const [],
-    );
+    // useEffect(
+    //   () {
+    //     ref.read(profileProvider.notifier).getMyProfile();
+    //     return null;
+    //   },
+    //   const [],
+    // );
     return RefreshIndicator.adaptive(
       onRefresh: () async {
         ref.read(profileProvider.notifier).getMyProfile();
@@ -285,8 +285,7 @@ class _MePageState extends ConsumerState<MePage> {
 
                                                   // state
                                                   //   .getProfile.image
-                                                  //   .toString(),
-
+                                                  //   .toString() ?? HiveStorage.get(HiveKeys.image),
                                                   ),
                                               radius: 55,
                                             ),

@@ -31,6 +31,7 @@ class _BreakDownPageState extends State<BreakDownPage> {
   );
   @override
   Widget build(BuildContext context) {
+    String newAmount = widget.amount.replaceAll(",", '');
     return Scaffold(
       backgroundColor: const Color(0xffB8F2F4),
       body: SingleChildScrollView(
@@ -336,7 +337,9 @@ class _BreakDownPageState extends State<BreakDownPage> {
                             ),
                           ),
                           Text(
-                            'N ${calculateTotalExpense(widget.carparts)}',
+                            'N ${calculateTotalExpense(
+                              widget.carparts,
+                            )}',
                             style: const TextStyle(
                               fontFamily: "NeulisAlt",
                               fontSize: 16,

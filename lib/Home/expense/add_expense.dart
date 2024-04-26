@@ -207,7 +207,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     _selectedDate = savedDate != null ? DateTime.tryParse(savedDate) : null;
     _selectTechie = _prefs.getString('selectedTechie');
     payType = _prefs.getString("payType") ?? 'defaultValue';
-    selectedCategory = _prefs.getString('selectedCategory')!;
+    selectedCategory = _prefs.getString('selectedCategory') ?? " ";
     final titlez = _prefs.getString('titlez') ?? '';
     final descript = _prefs.getString('descript') ?? '';
     final amountzz = _prefs.getString('amountzz') ?? '';
@@ -267,21 +267,19 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
     //
 
-    DateTime now = DateTime.now();
-    DateTime endOfYear = DateTime(now.year + 1, 1, 1);
-    int remainingDays = endOfYear.difference(now).inDays;
+    // DateTime now = DateTime.now();
+    // DateTime endOfYear = DateTime(now.year + 1, 1, 1);
+    // int remainingDays = endOfYear.difference(now).inDays;
 
-    String widgetAmountz = widget.amountz;
-    String amountControllerText = amountController.text;
-    int calculateTotal(String widgetAmountz, String amountControllerText) {
+    String widgetAmountz = widget.amountz.replaceAll(",", '');
+    String amountControllerText = amountController.text.replaceAll(",", '');
+    int calculateTotal(String int1Str, String int2Str) {
       // Parse strings to integers
-      int int1 = int.tryParse(widgetAmountz) ?? 0; // Use 0 if parsing fails
-      int int2 =
-          int.tryParse(amountControllerText) ?? 0; // Use 0 if parsing fails
-
+      int int1 = int.tryParse(int1Str) ?? 0; // Use 0 if parsing fails
+      int int2 = int.tryParse(int2Str) ?? 0; // Use 0 if parsing fails
       // Calculate the total
       int total = int1 + int2;
-
+      print(amountControllerText);
       return total;
     }
 
@@ -1238,7 +1236,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                         onChanged: (value) {
                                           setState(() {
                                             _selectTechie = value!;
-                                            // _saveState();
+                                            _saveState();
                                           });
                                         },
                                       ),

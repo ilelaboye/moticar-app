@@ -481,9 +481,6 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
 
   Future<ApiResponse> getMyProfile() async {
     try {
-      state = state.copyWith(
-        loading: Loader.loading,
-      );
       final response = await _reader.read(newService).getWithToken(
             // formData: formData,
             path: 'get-profile',
