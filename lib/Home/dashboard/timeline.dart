@@ -196,272 +196,581 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
           }),
     ];
 
-    return Scaffold(
-      backgroundColor: AppColors.teal,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const AddExpensesPage(
-                imagePath: "",
-                quantity: "",
-                isDone: false,
-                productName: "",
-                carParts: "",
-                amountz: "",
-                conditionz: '',
-                measure: '',
-                brand: '');
-          }));
-        },
-        child: const Icon(
-          Icons.add,
-          color: AppColors.appThemeColor,
+    return RefreshIndicator.adaptive(
+      onRefresh: () async {
+        ref.read(profileProvider.notifier).getExpenses(date: myDate);
+        ref.read(profileProvider.notifier).getMyCars();
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.teal,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const AddExpensesPage(
+                  imagePath: "",
+                  quantity: "",
+                  isDone: false,
+                  productName: "",
+                  carParts: "",
+                  amountz: "",
+                  conditionz: '',
+                  measure: '',
+                  brand: '');
+            }));
+          },
+          child: const Icon(
+            Icons.add,
+            color: AppColors.appThemeColor,
+          ),
         ),
-      ),
-      //  const Color(0xffEFF5F5),
-      body: Column(
-        children: [
-          // top green screen
+        //  const Color(0xffEFF5F5),
+        body: Column(
+          children: [
+            // top green screen
 
-          Container(
-            padding: const EdgeInsets.all(6),
-            width: MediaQuery.of(context).size.width,
-            child: state.loading == Loader.loading
-                ? const Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+            Container(
+              padding: const EdgeInsets.all(6),
+              width: MediaQuery.of(context).size.width,
+              child: state.loading == Loader.loading
+                  ? const Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          MoticarLoader(size: 40),
+                        ],
+                      ),
+                    )
+                  : Column(
                       children: [
-                        MoticarLoader(size: 40),
-                      ],
-                    ),
-                  )
-                : Column(
-                    children: [
-                      if (myCarz.isNotEmpty)
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.15,
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 10, right: 10),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: const BoxDecoration(
-                            color: AppColors.teal,
-                          ),
-                          child: ListView.builder(
-                            itemCount: myCarz.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final carz = myCarz[index];
-                              String myRenewal = carz.vehicleLicense ?? '0';
+                        if (myCarz.isNotEmpty)
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.15,
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 10, right: 10),
+                            width: MediaQuery.of(context).size.width,
+                            decoration: const BoxDecoration(
+                              color: AppColors.teal,
+                            ),
+                            child: ListView.builder(
+                              itemCount: myCarz.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final carz = myCarz[index];
+                                String myRenewal = carz.vehicleLicense != null
+                                    ? carz.vehicleLicense.toString()
+                                    : '0';
 
-// Replace `/` with `-` to match the standard date format
-                              myRenewal = myRenewal.replaceAll('/', '-');
+                                myRenewal = myRenewal.replaceAll('/', '-');
 
-                              DateTime renewalDate = DateTime.parse(myRenewal);
-                              Duration difference =
-                                  renewalDate.difference(DateTime.now());
+                                DateTime renewalDate =
+                                    DateTime.parse(myRenewal);
+                                Duration difference =
+                                    renewalDate.difference(DateTime.now());
+                                int daysDifference = difference.inDays;
+                                String daysDifferenceText = daysDifference < 1
+                                    ? "Expired"
+                                    : "exp. $daysDifference days";
 
-// Get the number of days from the difference
-                              int daysDifference = difference.inDays;
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        showMoticarBottom(
-                                          context: context,
-                                          child: FractionallySizedBox(
-                                            heightFactor: 0.89,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(20.0),
-                                                topRight: Radius.circular(20.0),
-                                              ),
-                                              child: MyCarInfoPage(
-                                                exp: daysDifference,
-                                                bodyStyle: carz.category!.name,
-                                                cylinder:
-                                                    carz.details!.cylinder,
-                                                segment: carz.details!.segment,
-                                                fuelCapacity:
-                                                    carz.details!.fuelCapacity,
-                                                driveType:
-                                                    carz.details!.driveType,
-                                                acceleration:
-                                                    carz.details!.acceleration,
-                                                topSpeed:
-                                                    carz.details!.topSpeed,
-                                                tyreSize:
-                                                    carz.details!.tyreSize,
-                                                id: carz.id,
-                                                plateNumber: carz.plateNumber,
-                                                chasisNumber: carz.chasisNumber,
-                                                engineNumber: carz.engineNumber,
-                                                dateOfPurchase:
-                                                    carz.dateOfPurchase,
-                                                vehicleLicense:
-                                                    carz.vehicleLicense,
-                                                roadWorthiness:
-                                                    carz.roadWorthiness,
-                                                thirdPartyInsurance:
-                                                    carz.thirdPartyInsurance,
-                                                engine: carz.details!.engine
-                                                    .toString(),
-                                                gearbox: carz.details!.gearbox
-                                                    .toString(),
-                                                car: carz.car!.name.toString(),
-                                                model:
-                                                    carz.model!.name.toString(),
-                                                category:
-                                                    carz.category.toString(),
-                                                year: carz.details!.year
-                                                    .toString(),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(3),
-                                        decoration: const BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(4),
-                                            topRight: Radius.circular(4),
-                                            bottomLeft: Radius.circular(4),
-                                            bottomRight: Radius.circular(4),
-                                          ),
-                                        ),
-                                        child: Image.asset(
-                                          'assets/images/car_ai.png',
-                                          height: 45,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "${carz.car!.name} ${carz.model!.name} ${carz.details!.year}",
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                fontFamily: "NeulisAlt",
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 8),
-                                            Container(
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                                right: 8,
-                                                top: 4,
-                                                bottom: 4,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xff00343f),
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          showMoticarBottom(
+                                            context: context,
+                                            child: FractionallySizedBox(
+                                              heightFactor: 0.89,
+                                              child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(40),
-                                              ),
-                                              child: Text(
-                                                "exp. $daysDifference days",
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  fontFamily: "NeulisAlt",
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 13,
-                                                  color: Color(0xff92BEC1),
+                                                    const BorderRadius.only(
+                                                  topLeft:
+                                                      Radius.circular(20.0),
+                                                  topRight:
+                                                      Radius.circular(20.0),
+                                                ),
+                                                child: MyCarInfoPage(
+                                                  exp: int.parse(
+                                                      daysDifferenceText),
+                                                  bodyStyle:
+                                                      carz.category!.name,
+                                                  cylinder:
+                                                      carz.details!.cylinder,
+                                                  segment:
+                                                      carz.details!.segment,
+                                                  fuelCapacity: carz
+                                                      .details!.fuelCapacity,
+                                                  driveType:
+                                                      carz.details!.driveType,
+                                                  acceleration: carz
+                                                      .details!.acceleration,
+                                                  topSpeed:
+                                                      carz.details!.topSpeed,
+                                                  tyreSize:
+                                                      carz.details!.tyreSize,
+                                                  id: carz.id,
+                                                  plateNumber: carz.plateNumber,
+                                                  chasisNumber:
+                                                      carz.chasisNumber,
+                                                  engineNumber:
+                                                      carz.engineNumber,
+                                                  dateOfPurchase:
+                                                      carz.dateOfPurchase,
+                                                  vehicleLicense:
+                                                      carz.vehicleLicense,
+                                                  roadWorthiness:
+                                                      carz.roadWorthiness,
+                                                  thirdPartyInsurance:
+                                                      carz.thirdPartyInsurance,
+                                                  engine: carz.details!.engine
+                                                      .toString(),
+                                                  gearbox: carz.details!.gearbox
+                                                      .toString(),
+                                                  car:
+                                                      carz.car!.name.toString(),
+                                                  model: carz.model!.name
+                                                      .toString(),
+                                                  category:
+                                                      carz.category.toString(),
+                                                  year: carz.details!.year
+                                                      .toString(),
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.6,
-                                          child: Text(
-                                            "${carz.details!.engine} . ${carz.category!.name} . ${carz.details!.gearbox}",
-                                            textAlign: TextAlign.left,
-                                            style: const TextStyle(
-                                              fontFamily: "NeulisAlt",
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 12,
-                                              color: Color(0xff7AE6EB),
+                                          );
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(3),
+                                          decoration: const BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(4),
+                                              topRight: Radius.circular(4),
+                                              bottomLeft: Radius.circular(4),
+                                              bottomRight: Radius.circular(4),
                                             ),
                                           ),
+                                          child: Image.asset(
+                                            'assets/images/car_ai.png',
+                                            height: 45,
+                                          ),
                                         ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8, bottom: 8.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            isVisible = !isVisible;
-                                            selectedCarID = carz.id.toString();
-                                          });
-                                        },
-                                        child: isVisible
-                                            ? const Icon(
-                                                Icons.keyboard_arrow_up_rounded,
-                                                color: AppColors.textGrey,
-                                              )
-                                            : const Icon(
-                                                Icons.keyboard_arrow_down_sharp,
-                                                color: AppColors.textGrey,
-                                              ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8, bottom: 8.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          _showMyNotification(context);
-                                        },
-                                        child: isVisible
-                                            ? const SizedBox()
-                                            : const Icon(
-                                                Icons.notifications_none_sharp,
-                                                color: AppColors.white,
+                                      const SizedBox(width: 8),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                "${carz.car!.name} ${carz.model!.name} ${carz.details!.year}",
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontFamily: "NeulisAlt",
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                ),
                                               ),
+                                              const SizedBox(width: 8),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                  left: 8,
+                                                  right: 8,
+                                                  top: 4,
+                                                  bottom: 4,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      const Color(0xff00343f),
+                                                  borderRadius:
+                                                      BorderRadius.circular(40),
+                                                ),
+                                                child: Text(
+                                                  daysDifferenceText,
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                    fontFamily: "NeulisAlt",
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 13,
+                                                    color: Color(0xff92BEC1),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.6,
+                                            child: Text(
+                                              "${carz.details!.engine} . ${carz.category!.name} . ${carz.details!.gearbox}",
+                                              textAlign: TextAlign.left,
+                                              style: const TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 12,
+                                                color: Color(0xff7AE6EB),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 8, bottom: 8.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              isVisible = !isVisible;
+                                              selectedCarID =
+                                                  carz.id.toString();
+                                            });
+                                          },
+                                          child: isVisible
+                                              ? const Icon(
+                                                  Icons
+                                                      .keyboard_arrow_up_rounded,
+                                                  color: AppColors.textGrey,
+                                                )
+                                              : const Icon(
+                                                  Icons
+                                                      .keyboard_arrow_down_sharp,
+                                                  color: AppColors.textGrey,
+                                                ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 8, bottom: 8.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            _showMyNotification(context);
+                                          },
+                                          child: isVisible
+                                              ? const SizedBox()
+                                              : const Icon(
+                                                  Icons
+                                                      .notifications_none_sharp,
+                                                  color: AppColors.white,
+                                                ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        else
+                          Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 30),
+                                const MoticarText(
+                                  text: 'No Cars Available',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  fontColor: AppColors.white,
                                 ),
-                              );
-                            },
+                                const SizedBox(height: 8),
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: SizedBox(
+                                    width: 150,
+                                    child: MoticarLoginButton(
+                                      borderColor: const Color(0xff29D7DE),
+                                      myColor: const Color(0xff29D7DE),
+                                      child: const Center(
+                                        child: Text(
+                                          'Add new Car',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'NeulisAlt',
+                                            color: AppColors.appThemeColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const AddCarPage(
+                                            isHome: true,
+                                          );
+                                        }));
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        )
-                      else
-                        Center(
+
+                        // TextButton(
+                        //     onPressed: () {
+                        //       Navigator.push(context,
+                        //           MaterialPageRoute(builder: (context) {
+                        //         return const AddCarPage(isHome: true);
+                        //       }));
+                        //     },
+                        //     child: const Row(
+                        //       children: [
+                        //         Text("No cars Available, Add New Car")
+                        //       ],
+                        //     ),
+                        //   ),
+
+                        // const SizedBox(
+                        //     height: 150,
+                        //     width: 150,
+                        //     child: RiveAnimation.asset(
+                        //       'assets/images/splashscreenanim.riv',
+                        //     ),
+                        //   ),
+                        Visibility(
+                          visible: isVisible,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const SizedBox(height: 30),
-                              const MoticarText(
-                                text: 'No Cars Available',
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                fontColor: AppColors.white,
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: MoticarLoginButton(
+                                        borderColor: const Color(0xff00AEB5),
+                                        myColor: Colors.transparent,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Text(
+                                              'Edit',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontFamily: 'NeulisAlt',
+                                                color: Color(0xff00AEB5),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            SvgPicture.asset(
+                                                'assets/svgs/new_edit.svg'),
+                                          ],
+                                        ),
+                                        onTap: () {},
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: MoticarLoginButton(
+                                        borderColor: const Color(0xff00AEB5),
+                                        myColor: Colors.transparent,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Text(
+                                              'Delete',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontFamily: 'NeulisAlt',
+                                                color: Color(0xff00AEB5),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            SvgPicture.asset(
+                                                'assets/svgs/delete.svg'),
+                                          ],
+                                        ),
+                                        onTap: () async {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                backgroundColor:
+                                                    const Color(0xff002D36),
+                                                title: const Text(
+                                                  "Are you sure?",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 19,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                                content: const Text(
+                                                  'This action would remove all the information you had previously entered',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xff7AE6EB),
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                                actionsAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                actions: [
+                                                  TextButton(
+                                                    style: ButtonStyle(
+                                                      //i want a borderside of color red
+                                                      shape:
+                                                          MaterialStateProperty
+                                                              .all(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(32),
+                                                          side:
+                                                              const BorderSide(
+                                                            color: AppColors
+                                                                .appThemeColor,
+                                                            width: 1,
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      padding:
+                                                          const MaterialStatePropertyAll(
+                                                              EdgeInsets.only(
+                                                                  left: 50,
+                                                                  right: 50,
+                                                                  top: 10,
+                                                                  bottom: 10)),
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all(AppColors
+                                                                  .appThemeColor),
+                                                    ),
+                                                    onPressed: () {
+                                                      model
+                                                          .deleteCar(formData: {
+                                                        "car_id": selectedCarID
+                                                      }).then((value) async {
+                                                        if (value.successMessage
+                                                            .isNotEmpty) {
+                                                          await showDialog(
+                                                              context: context,
+                                                              barrierDismissible:
+                                                                  false,
+                                                              builder:
+                                                                  (context) {
+                                                                return MoticarDialog(
+                                                                  subtitle: value
+                                                                      .successMessage,
+                                                                  buttonColor:
+                                                                      AppColors
+                                                                          .appThemeColor,
+                                                                  textColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  onTap: () {
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(builder:
+                                                                            (context) {
+                                                                      return BottomHomePage();
+                                                                    }));
+                                                                    // context.router.push(const HomeRoute());
+                                                                  },
+                                                                );
+                                                              });
+                                                        } else {
+                                                          handleError(
+                                                            e: value.error ??
+                                                                value
+                                                                    .errorMessage,
+                                                            context: context,
+                                                          );
+                                                        }
+                                                      });
+                                                    },
+                                                    child: const Text(
+                                                      'Yes',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: AppColors.red,
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                                  //no
+
+                                                  TextButton(
+                                                    style: ButtonStyle(
+                                                      //i want a borderside of color red
+                                                      shape:
+                                                          MaterialStateProperty
+                                                              .all(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(32),
+                                                          side:
+                                                              const BorderSide(
+                                                            color: Color(
+                                                                0xff00AEB5),
+                                                            width: 1,
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      padding:
+                                                          const MaterialStatePropertyAll(
+                                                              EdgeInsets.only(
+                                                                  left: 50,
+                                                                  right: 50,
+                                                                  top: 10,
+                                                                  bottom: 10)),
+                                                      backgroundColor:
+                                                          MaterialStateProperty
+                                                              .all(Colors
+                                                                  .transparent),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text(
+                                                      'No',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: AppColors
+                                                            .lightGreen,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 8),
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: SizedBox(
-                                  width: 150,
+                                  width: 200,
                                   child: MoticarLoginButton(
                                     borderColor: const Color(0xff29D7DE),
                                     myColor: const Color(0xff29D7DE),
@@ -491,898 +800,634 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                             ],
                           ),
                         ),
+                      ],
+                    ),
+            ),
 
-                      // TextButton(
-                      //     onPressed: () {
-                      //       Navigator.push(context,
-                      //           MaterialPageRoute(builder: (context) {
-                      //         return const AddCarPage(isHome: true);
-                      //       }));
-                      //     },
-                      //     child: const Row(
-                      //       children: [
-                      //         Text("No cars Available, Add New Car")
-                      //       ],
-                      //     ),
-                      //   ),
-
-                      // const SizedBox(
-                      //     height: 150,
-                      //     width: 150,
-                      //     child: RiveAnimation.asset(
-                      //       'assets/images/splashscreenanim.riv',
-                      //     ),
-                      //   ),
-                      Visibility(
-                        visible: isVisible,
-                        child: Column(
+            //other half
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                // height: MediaQuery.of(context).size.height * 0.78,
+                // width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                    color: Color(0xffEFF5F5),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10))),
+                child: SingleChildScrollView(
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            const Text(
+                              "Dashboard",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: "NeulisAlt",
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                                color: AppColors.appThemeColor,
+                              ),
+                            ),
                             Row(
                               children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: MoticarLoginButton(
-                                      borderColor: const Color(0xff00AEB5),
-                                      myColor: Colors.transparent,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Text(
-                                            'Edit',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: 'NeulisAlt',
-                                              color: Color(0xff00AEB5),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          SvgPicture.asset(
-                                              'assets/svgs/new_edit.svg'),
-                                        ],
-                                      ),
-                                      onTap: () {},
+                                SizedBox(
+                                  height: 40,
+                                  width: 145,
+                                  child: Container(
+                                    // alignment: Alignment.center,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(7),
+                                      color: const Color(0xffCDD2D2),
                                     ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: MoticarLoginButton(
-                                      borderColor: const Color(0xff00AEB5),
-                                      myColor: Colors.transparent,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Text(
-                                            'Delete',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: 'NeulisAlt',
-                                              color: Color(0xff00AEB5),
+                                    child: DropdownButtonFormField<String>(
+                                        // alignment: AlignmentDirectional.center,
+                                        icon: const Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                        ),
+                                        decoration: const InputDecoration(
+                                          hintText: 'Select Month',
+                                          // fillColor: const Color(0xffCDD2D2),
+                                          hintStyle: TextStyle(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          SvgPicture.asset(
-                                              'assets/svgs/delete.svg'),
-                                        ],
-                                      ),
-                                      onTap: () async {
-                                        await showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              backgroundColor:
-                                                  const Color(0xff002D36),
-                                              title: const Text(
-                                                "Are you sure?",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 19,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                              content: const Text(
-                                                'This action would remove all the information you had previously entered',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Color(0xff7AE6EB),
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                              actionsAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              actions: [
-                                                TextButton(
-                                                  style: ButtonStyle(
-                                                    //i want a borderside of color red
-                                                    shape: MaterialStateProperty
-                                                        .all(
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(32),
-                                                        side: const BorderSide(
-                                                          color: AppColors
-                                                              .appThemeColor,
-                                                          width: 1,
-                                                        ),
-                                                      ),
-                                                    ),
-
-                                                    padding:
-                                                        const MaterialStatePropertyAll(
-                                                            EdgeInsets.only(
-                                                                left: 50,
-                                                                right: 50,
-                                                                top: 10,
-                                                                bottom: 10)),
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all(AppColors
-                                                                .appThemeColor),
-                                                  ),
-                                                  onPressed: () {
-                                                    model.deleteCar(formData: {
-                                                      "car_id": selectedCarID
-                                                    }).then((value) async {
-                                                      if (value.successMessage
-                                                          .isNotEmpty) {
-                                                        await showDialog(
-                                                            context: context,
-                                                            barrierDismissible:
-                                                                false,
-                                                            builder: (context) {
-                                                              return MoticarDialog(
-                                                                subtitle: value
-                                                                    .successMessage,
-                                                                buttonColor:
-                                                                    AppColors
-                                                                        .appThemeColor,
-                                                                textColor:
-                                                                    Colors
-                                                                        .white,
-                                                                onTap: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder:
-                                                                              (context) {
-                                                                    return BottomHomePage();
-                                                                  }));
-                                                                  // context.router.push(const HomeRoute());
-                                                                },
-                                                              );
-                                                            });
-                                                      } else {
-                                                        handleError(
-                                                          e: value.error ??
-                                                              value
-                                                                  .errorMessage,
-                                                          context: context,
-                                                        );
-                                                      }
-                                                    });
-                                                  },
-                                                  child: const Text(
-                                                    'Yes',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xff002D36)),
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                        ),
+                                        items: myMonthz
+                                            .map<DropdownMenuItem<String>>(
+                                              (entry) =>
+                                                  DropdownMenuItem<String>(
+                                                value: entry,
+                                                child: Text(
+                                                  entry,
+                                                  style: const TextStyle(
+                                                      color: Color(0xff002D36),
                                                       fontWeight:
                                                           FontWeight.w600,
-                                                      color: AppColors.red,
-                                                    ),
-                                                  ),
+                                                      fontSize: 13),
                                                 ),
-
-                                                //no
-
-                                                TextButton(
-                                                  style: ButtonStyle(
-                                                    //i want a borderside of color red
-                                                    shape: MaterialStateProperty
-                                                        .all(
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(32),
-                                                        side: const BorderSide(
-                                                          color:
-                                                              Color(0xff00AEB5),
-                                                          width: 1,
-                                                        ),
-                                                      ),
-                                                    ),
-
-                                                    padding:
-                                                        const MaterialStatePropertyAll(
-                                                            EdgeInsets.only(
-                                                                left: 50,
-                                                                right: 50,
-                                                                top: 10,
-                                                                bottom: 10)),
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all(Colors
-                                                                .transparent),
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text(
-                                                    'No',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color:
-                                                          AppColors.lightGreen,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
+                                              ),
+                                            )
+                                            .toList(),
+                                        value: selectedMonth,
+                                        onChanged: (nvalue) {
+                                          setState(() {
+                                            selectedMonth = nvalue;
+                                            updateDaysInMonth(selectedMonth);
+                                          });
+                                        }),
                                   ),
                                 ),
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.search_sharp,
+                                      size: 30,
+                                      color: Color(0xff5E7A7C),
+                                    ))
                               ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: SizedBox(
-                                width: 200,
-                                child: MoticarLoginButton(
-                                  borderColor: const Color(0xff29D7DE),
-                                  myColor: const Color(0xff29D7DE),
-                                  child: const Center(
-                                    child: Text(
-                                      'Add new Car',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: 'NeulisAlt',
-                                        color: AppColors.appThemeColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return const AddCarPage(
-                                        isHome: true,
-                                      );
-                                    }));
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-          ),
-
-          //other half
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              // height: MediaQuery.of(context).size.height * 0.78,
-              // width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                  color: Color(0xffEFF5F5),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10))),
-              child: SingleChildScrollView(
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Dashboard",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              color: AppColors.appThemeColor,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                width: 145,
-                                child: Container(
-                                  // alignment: Alignment.center,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    color: const Color(0xffCDD2D2),
-                                  ),
-                                  child: DropdownButtonFormField<String>(
-                                      // alignment: AlignmentDirectional.center,
-                                      icon: const Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                      ),
-                                      decoration: const InputDecoration(
-                                        hintText: 'Select Month',
-                                        // fillColor: const Color(0xffCDD2D2),
-                                        hintStyle: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: Color(0xff002D36)),
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                      ),
-                                      items: myMonthz
-                                          .map<DropdownMenuItem<String>>(
-                                            (entry) => DropdownMenuItem<String>(
-                                              value: entry,
-                                              child: Text(
-                                                entry,
-                                                style: const TextStyle(
-                                                    color: Color(0xff002D36),
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 13),
-                                              ),
-                                            ),
-                                          )
-                                          .toList(),
-                                      value: selectedMonth,
-                                      onChanged: (nvalue) {
-                                        setState(() {
-                                          selectedMonth = nvalue;
-                                          updateDaysInMonth(selectedMonth);
-                                        });
-                                      }),
-                                ),
-                              ),
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.search_sharp,
-                                    size: 30,
-                                    color: Color(0xff5E7A7C),
-                                  ))
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-
-                    //new calendar
-                    SizedBox(
-                      height: 150,
-                      child: ListView(
-                        children: [
-                          CleanCalendar(
-                            datePickerCalendarView:
-                                DatePickerCalendarView.weekView,
-                            enableDenseViewForDates: true,
-                            enableDenseSplashForDates: true,
-                            datesForStreaks: [
-                              DateTime(2023, 01, 5),
-                              DateTime(2023, 01, 6),
-                              DateTime(2023, 01, 7),
-                              DateTime(2023, 01, 9),
-                              DateTime(2023, 01, 10),
-                              DateTime(2023, 01, 11),
-                              DateTime(2023, 01, 13),
-                              DateTime(2023, 01, 20),
-                              DateTime(2023, 01, 21),
-                              DateTime(2023, 01, 23),
-                              DateTime(2023, 01, 24),
-                              DateTime(2023, 01, 25),
-                            ],
-                            dateSelectionMode:
-                                DatePickerSelectionMode.singleOrMultiple,
-                            onCalendarViewDate: (DateTime calendarViewDate) {
-                              // print(calendarViewDate);
-                            },
-                            selectedDates: selectedDates,
-                            onSelectedDates: (List<DateTime> value) {
-                              setState(() {
-                                if (selectedDates.contains(value.first)) {
-                                  selectedDates.remove(value.first);
-                                } else {
-                                  selectedDates.add(value.first);
-                                }
-                              });
-                              // print(selectedDates);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    //
-                    //
-
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Divider(
-                        thickness: 1.2,
-                        color: Color(0xffCDD2D2),
-                      ),
-                    ),
-
-                    // if no activity or no data
-                    if (state.loading == Loader.loading)
-                      const Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            MoticarLoader(
-                              size: 40,
                             )
                           ],
                         ),
-                      )
-                    else if (myExpensez.isNotEmpty)
-                      Column(
-                        children: [
-                          const SizedBox(height: 350, child: PieChartSample2()),
+                      ),
 
-                          const Padding(
-                            padding:
-                                EdgeInsets.only(left: 30, right: 30, bottom: 2),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    // height: 10,
-                                    width: 80,
-                                    child: Divider(
-                                      thickness: 1.5,
-                                      color: Color(0xff5E7A7C),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "Breakdown",
-                                  style: TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xff202A2A),
-                                      // letterSpacing: 1.2,
-                                      fontSize: 13),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    // height: 10,
-                                    width: 80,
-                                    child: Divider(
-                                      thickness: 1.5,
-                                      color: Color(0xff5E7A7C),
-                                      // indent: 20,
-                                    ),
-                                  ),
-                                ),
+                      //new calendar
+                      SizedBox(
+                        height: 150,
+                        child: ListView(
+                          children: [
+                            CleanCalendar(
+                              datePickerCalendarView:
+                                  DatePickerCalendarView.weekView,
+                              enableDenseViewForDates: true,
+                              enableDenseSplashForDates: true,
+                              datesForStreaks: [
+                                DateTime(2023, 01, 5),
+                                DateTime(2023, 01, 6),
+                                DateTime(2023, 01, 7),
+                                DateTime(2023, 01, 9),
+                                DateTime(2023, 01, 10),
+                                DateTime(2023, 01, 11),
+                                DateTime(2023, 01, 13),
+                                DateTime(2023, 01, 20),
+                                DateTime(2023, 01, 21),
+                                DateTime(2023, 01, 23),
+                                DateTime(2023, 01, 24),
+                                DateTime(2023, 01, 25),
                               ],
+                              dateSelectionMode:
+                                  DatePickerSelectionMode.singleOrMultiple,
+                              onCalendarViewDate: (DateTime calendarViewDate) {
+                                // print(calendarViewDate);
+                              },
+                              selectedDates: selectedDates,
+                              onSelectedDates: (List<DateTime> value) {
+                                setState(() {
+                                  if (selectedDates.contains(value.first)) {
+                                    selectedDates.remove(value.first);
+                                  } else {
+                                    selectedDates.add(value.first);
+                                  }
+                                });
+                                // print(selectedDates);
+                              },
                             ),
+                          ],
+                        ),
+                      ),
+
+                      //
+                      //
+
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Divider(
+                          thickness: 1.2,
+                          color: Color(0xffCDD2D2),
+                        ),
+                      ),
+
+                      // if no activity or no data
+                      if (state.loading == Loader.loading)
+                        const Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              MoticarLoader(
+                                size: 40,
+                              )
+                            ],
                           ),
+                        )
+                      else if (myExpensez.isNotEmpty)
+                        Column(
+                          children: [
+                            const SizedBox(
+                                height: 350, child: PieChartSample2()),
 
-                          //breakdowns
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.5,
-                            width: double.infinity,
-                            child: ListView.builder(
-                              padding: const EdgeInsets.all(1),
-                              shrinkWrap: true,
-                              itemCount: myExpensez.length,
-                              itemBuilder: (context, index) {
-                                final breakdown = myExpensez[index];
-                                // final image
-                                // final String mechName = breakdown.carparts.
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 30, right: 30, bottom: 2),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      // height: 10,
+                                      width: 80,
+                                      child: Divider(
+                                        thickness: 1.5,
+                                        color: Color(0xff5E7A7C),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "Breakdown",
+                                    style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xff202A2A),
+                                        // letterSpacing: 1.2,
+                                        fontSize: 13),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      // height: 10,
+                                      width: 80,
+                                      child: Divider(
+                                        thickness: 1.5,
+                                        color: Color(0xff5E7A7C),
+                                        // indent: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
 
-                                // final String catImaes = if(breakdown.category == "Body works"){}
-                                return ListTile(
-                                  leading: GestureDetector(
-                                    onTap: () {
-                                      showMoticarBottom(
-                                        context: context,
-                                        child: FractionallySizedBox(
-                                          heightFactor: 0.89,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              topLeft: Radius.circular(30.0),
-                                              topRight: Radius.circular(30.0),
-                                            ),
-                                            child: BreakDownPage(
-                                              imagePath:
-                                                  breakdown.category.toString(),
-                                              category:
-                                                  breakdown.category.toString(),
-                                              amount: nairaFormat.format(
-                                                  double.parse(
-                                                      breakdown.amount)),
-                                              paymode: breakdown.methodOfPayment
-                                                  .toString(),
-                                              title: breakdown.title.toString(),
-                                              description: breakdown.description
-                                                  .toString(),
-                                              carparts: breakdown.carparts,
+                            //breakdowns
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.5,
+                              width: double.infinity,
+                              child: ListView.builder(
+                                padding: const EdgeInsets.all(1),
+                                shrinkWrap: true,
+                                itemCount: myExpensez.length,
+                                itemBuilder: (context, index) {
+                                  final breakdown = myExpensez[index];
+                                  // final image
+                                  // final String mechName = breakdown.carparts.
+
+                                  // final String catImaes = if(breakdown.category == "Body works"){}
+                                  return ListTile(
+                                    leading: GestureDetector(
+                                      onTap: () {
+                                        showMoticarBottom(
+                                          context: context,
+                                          child: FractionallySizedBox(
+                                            heightFactor: 0.89,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(30.0),
+                                                topRight: Radius.circular(30.0),
+                                              ),
+                                              child: BreakDownPage(
+                                                imagePath: breakdown.category
+                                                    .toString(),
+                                                category: breakdown.category
+                                                    .toString(),
+                                                amount: nairaFormat.format(
+                                                    double.parse(
+                                                        breakdown.amount)),
+                                                paymode: breakdown
+                                                    .methodOfPayment
+                                                    .toString(),
+                                                title:
+                                                    breakdown.title.toString(),
+                                                description: breakdown
+                                                    .description
+                                                    .toString(),
+                                                carparts: breakdown.carparts,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: getImageColor(
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: getImageColor(breakdown
+                                                  .category
+                                                  .toString()),
+                                              // breakdown.imageColor,
+                                            ),
+                                            child: getImageWidget(
                                                 breakdown.category.toString()),
-                                            // breakdown.imageColor,
                                           ),
-                                          child: getImageWidget(
-                                              breakdown.category.toString()),
+                                          const SizedBox(
+                                            height: 3,
+                                          ),
+                                          Text(
+                                            DateFormat.Hm().format(
+                                                breakdown.date!.toLocal()),
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                color: Color(0xff293536)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    title: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(breakdown.category.toString()),
+                                            const SizedBox(width: 8),
+                                            breakdown.carpart == 0
+                                                ? const SizedBox()
+                                                : Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8,
+                                                            top: 4,
+                                                            bottom: 4,
+                                                            right: 8),
+                                                    decoration: BoxDecoration(
+                                                        color: AppColors
+                                                            .anotherYellow,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(32)),
+                                                    child: Text(
+                                                      'x${breakdown.carpart}',
+                                                      style: const TextStyle(
+                                                          color: Color(
+                                                              0xff293536)),
+                                                    ),
+                                                  )
+                                          ],
                                         ),
-                                        const SizedBox(
-                                          height: 3,
-                                        ),
-                                        Text(
-                                          DateFormat.Hm().format(
-                                              breakdown.date!.toLocal()),
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              color: Color(0xff293536)),
+
+                                        //amount and menu button
+                                        Row(
+                                          children: [
+                                            Text(
+                                                nairaFormat.format(double.parse(
+                                                    breakdown.amount)),
+                                                style: const TextStyle(
+                                                    fontFamily: "Neulis",
+                                                    color: Color(0xff006C70),
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            // GestureDetector(
+                                            //   onTap: (){
+
+                                            //   },
+                                            //   child: const Icon(Icons.more_vert))
+
+                                            PopupMenuButton(
+                                              surfaceTintColor: Colors.white,
+                                              // color: const Color(0xffC1C3C3),
+                                              itemBuilder:
+                                                  (BuildContext context) => [
+                                                PopupMenuItem(
+                                                  value: 'edit',
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          'assets/svgs/edit.svg'),
+                                                      const SizedBox(
+                                                        width: 12,
+                                                      ),
+                                                      const Text('Edit'),
+                                                    ],
+                                                  ),
+                                                ),
+                                                PopupMenuItem(
+                                                  value: 'strike_off',
+                                                  child: Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          'assets/svgs/strike.svg'),
+                                                      const SizedBox(
+                                                        width: 12,
+                                                      ),
+                                                      const Text('Strike off'),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                              onSelected: (String value) {
+                                                if (value == 'edit') {
+                                                  // Handle edit action
+                                                } else if (value ==
+                                                    'strike_off') {
+                                                  // Handle strike off action
+                                                }
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(breakdown.category.toString()),
-                                          const SizedBox(width: 8),
-                                          breakdown.carpart == 0
-                                              ? const SizedBox()
-                                              : Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8,
-                                                          top: 4,
-                                                          bottom: 4,
-                                                          right: 8),
-                                                  decoration: BoxDecoration(
-                                                      color: AppColors
-                                                          .anotherYellow,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              32)),
-                                                  child: Text(
-                                                    'x${breakdown.carpart}',
-                                                    style: const TextStyle(
-                                                        color:
-                                                            Color(0xff293536)),
-                                                  ),
-                                                )
-                                        ],
-                                      ),
-
-                                      //amount and menu button
-                                      Row(
-                                        children: [
-                                          Text(
-                                              nairaFormat.format(double.parse(
-                                                  breakdown.amount)),
-                                              style: const TextStyle(
-                                                  fontFamily: "Neulis",
-                                                  color: Color(0xff006C70),
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500)),
-                                          // GestureDetector(
-                                          //   onTap: (){
-
-                                          //   },
-                                          //   child: const Icon(Icons.more_vert))
-
-                                          PopupMenuButton(
-                                            surfaceTintColor: Colors.white,
-                                            // color: const Color(0xffC1C3C3),
-                                            itemBuilder:
-                                                (BuildContext context) => [
-                                              PopupMenuItem(
-                                                value: 'edit',
-                                                child: Row(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                        'assets/svgs/edit.svg'),
-                                                    const SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                    const Text('Edit'),
-                                                  ],
-                                                ),
-                                              ),
-                                              PopupMenuItem(
-                                                value: 'strike_off',
-                                                child: Row(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                        'assets/svgs/strike.svg'),
-                                                    const SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                    const Text('Strike off'),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                            onSelected: (String value) {
-                                              if (value == 'edit') {
-                                                // Handle edit action
-                                              } else if (value ==
-                                                  'strike_off') {
-                                                // Handle strike off action
-                                              }
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        breakdown.title.toString(),
-                                        style: const TextStyle(
-                                            fontFamily: "NeulisAlt",
-                                            color: Color(0xff425658),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      Text(
-                                        breakdown.description.toString() ?? '',
-                                        style: const TextStyle(
-                                            fontFamily: "NeulisAlt",
-                                            color: Color(0xff7BA0A3),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ],
-                                  ),
-                                  // trailing: Column(
-                                  //   mainAxisAlignment: MainAxisAlignment.center,
-                                  //   children: [
-                                  //     Text(breakdown.amount),
-                                  //   ],
-                                  // ),
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-
-                          //
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height: 50,
-                                  width: MediaQuery.of(context).size.width - 40,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    border: Border.all(
-                                        width: 1,
-                                        color: const Color(0xff00343F)),
-                                    borderRadius: BorderRadius.circular(32),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        'Export',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'NeulisAlt',
-                                          color: AppColors.appThemeColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          breakdown.title.toString(),
+                                          style: const TextStyle(
+                                              fontFamily: "NeulisAlt",
+                                              color: Color(0xff425658),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      SvgPicture.asset('assets/svgs/export.svg')
-                                    ],
-                                  ),
-                                ),
-                              ),
-
-                              const SizedBox(
-                                width: 12,
-                              ),
-
-                              //share
-                              Expanded(
-                                child: Container(
-                                  height: 50,
-                                  width: MediaQuery.of(context).size.width - 40,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.transparent,
-                                    border: Border.all(
-                                        width: 1,
-                                        color: const Color(0xff00343F)),
-                                    borderRadius: BorderRadius.circular(32),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        'Share',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: 'NeulisAlt',
-                                          color: AppColors.appThemeColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
+                                        Text(
+                                          breakdown.description.toString() ??
+                                              '',
+                                          style: const TextStyle(
+                                              fontFamily: "NeulisAlt",
+                                              color: Color(0xff7BA0A3),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      SvgPicture.asset('assets/svgs/share.svg')
-                                    ],
-                                  ),
-                                ),
+                                      ],
+                                    ),
+                                    // trailing: Column(
+                                    //   mainAxisAlignment: MainAxisAlignment.center,
+                                    //   children: [
+                                    //     Text(breakdown.amount),
+                                    //   ],
+                                    // ),
+                                  );
+                                },
                               ),
-                            ],
-                          ),
-                        ],
-                      )
-                    else
-                      Column(
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(top: 2, bottom: 10.0),
-                            child: Image.asset('assets/images/rocket.png',
-                                height: 180),
-                          ),
-                          // const SizedBox(height: 20),
-
-                          const Text(
-                            "You are off to a great start!",
-                            style: TextStyle(
-                                fontFamily: "NeulisAlt",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.appThemeColor,
-                                letterSpacing: 1.2,
-                                fontSize: 18),
-                          ),
-
-                          const SizedBox(height: 20),
-
-                          const Center(
-                            child: Text(
-                              'This is a good sight! \nBut try to remember if there was some expenses you actually made but have forgotten to put in here',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: "NeulisAlt",
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.appThemeColor,
-                                  height: 1.2,
-                                  fontSize: 12),
                             ),
-                          ),
+                            const SizedBox(height: 20),
 
-                          const SizedBox(height: 10),
-
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                left: 30, right: 30, top: 15, bottom: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            //
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    // height: 10,
-                                    width: 50,
-                                    child: Divider(
-                                      thickness: 1.5,
-                                      color: Color(0xff5E7A7C),
-                                      // indent: 20,
+                                Expanded(
+                                  child: Container(
+                                    height: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width - 40,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: Border.all(
+                                          width: 1,
+                                          color: const Color(0xff00343F)),
+                                      borderRadius: BorderRadius.circular(32),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          'Export',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'NeulisAlt',
+                                            color: AppColors.appThemeColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        SvgPicture.asset(
+                                            'assets/svgs/export.svg')
+                                      ],
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 3,
+
+                                const SizedBox(
+                                  width: 12,
                                 ),
-                                Text(
-                                  "Meanwhile, you could...",
-                                  style: TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w600,
-                                      color: Color(0xff202A2A),
-                                      // letterSpacing: 1.2,
-                                      fontSize: 13),
-                                ),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    // height: 10,
-                                    width: 50,
-                                    child: Divider(
-                                      thickness: 1.5,
-                                      color: Color(0xff5E7A7C),
-                                      // indent: 20,
+
+                                //share
+                                Expanded(
+                                  child: Container(
+                                    height: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width - 40,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: Border.all(
+                                          width: 1,
+                                          color: const Color(0xff00343F)),
+                                      borderRadius: BorderRadius.circular(32),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          'Share',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: 'NeulisAlt',
+                                            color: AppColors.appThemeColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        SvgPicture.asset(
+                                            'assets/svgs/share.svg')
+                                      ],
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-
-                          //
-
-                          SizedBox(
-                            height: 194,
-                            child: ListView.builder(
-                              itemCount: menuItems.length,
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return MoticarCards(items: menuItems[index]);
-                              },
+                          ],
+                        )
+                      else
+                        Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 2, bottom: 10.0),
+                              child: Image.asset('assets/images/rocket.png',
+                                  height: 180),
                             ),
-                          ),
-                        ],
-                      )
-                  ],
+                            // const SizedBox(height: 20),
+
+                            const Text(
+                              "You are off to a great start!",
+                              style: TextStyle(
+                                  fontFamily: "NeulisAlt",
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.appThemeColor,
+                                  letterSpacing: 1.2,
+                                  fontSize: 18),
+                            ),
+
+                            const SizedBox(height: 20),
+
+                            const Center(
+                              child: Text(
+                                'This is a good sight! \nBut try to remember if there was some expenses you actually made but have forgotten to put in here',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: "NeulisAlt",
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.appThemeColor,
+                                    height: 1.2,
+                                    fontSize: 12),
+                              ),
+                            ),
+
+                            const SizedBox(height: 10),
+
+                            const Padding(
+                              padding: EdgeInsets.only(
+                                  left: 30, right: 30, top: 15, bottom: 15),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      // height: 10,
+                                      width: 50,
+                                      child: Divider(
+                                        thickness: 1.5,
+                                        color: Color(0xff5E7A7C),
+                                        // indent: 20,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    "Meanwhile, you could...",
+                                    style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xff202A2A),
+                                        // letterSpacing: 1.2,
+                                        fontSize: 13),
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      // height: 10,
+                                      width: 50,
+                                      child: Divider(
+                                        thickness: 1.5,
+                                        color: Color(0xff5E7A7C),
+                                        // indent: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            //
+
+                            SizedBox(
+                              height: 194,
+                              child: ListView.builder(
+                                itemCount: menuItems.length,
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return MoticarCards(items: menuItems[index]);
+                                },
+                              ),
+                            ),
+                          ],
+                        )
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

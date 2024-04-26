@@ -319,7 +319,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                             itemCount: myCarz.length,
                             itemBuilder: (BuildContext context, int index) {
                               final carz = myCarz[index];
-                              String myRenewal = carz.vehicleLicense ?? '0';
+                              String myRenewal = carz.vehicleLicense != null
+                                  ? carz.vehicleLicense.toString()
+                                  : '0';
 
 // Replace `/` with `-` to match the standard date format
                               myRenewal = myRenewal.replaceAll('/', '-');
@@ -330,6 +332,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
 // Get the number of days from the difference
                               int daysDifference = difference.inDays;
+                              String daysDifferenceText = daysDifference < 1
+                                  ? "Expired"
+                                  : "exp. $daysDifference days";
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Row(
@@ -349,7 +354,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                 topRight: Radius.circular(20.0),
                                               ),
                                               child: MyCarInfoPage(
-                                                exp: daysDifference,
+                                                exp: int.parse(
+                                                    daysDifferenceText),
                                                 bodyStyle: carz.category!.name,
                                                 cylinder:
                                                     carz.details!.cylinder,
@@ -442,7 +448,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                     BorderRadius.circular(40),
                                               ),
                                               child: Text(
-                                                "exp. $daysDifference days",
+                                                daysDifferenceText,
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
                                                   fontFamily: "NeulisAlt",

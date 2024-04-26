@@ -318,7 +318,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatDate(DateTime? date) {
     if (date == null) {
-      return "Date of Renewal"; //YYYY-MM-DD
+      return " "; //YYYY-MM-DD
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -326,7 +326,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatDate2(DateTime? date) {
     if (date == null) {
-      return "Date of Road Worthiness"; //YYYY-MM-DD
+      return " "; //YYYY-MM-DD
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -334,7 +334,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatDate3(DateTime? date) {
     if (date == null) {
-      return "Date of Third Party Insurance"; //YYYY-MM-DD
+      return " "; //YYYY-MM-DD
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -342,7 +342,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatDate4(DateTime? date) {
     if (date == null) {
-      return "Date of Tinted Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -352,7 +352,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatTruck(DateTime? date) {
     if (date == null) {
-      return "Date of Truck & Trailer Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -361,7 +361,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //
   String _formatLGA(DateTime? date) {
     if (date == null) {
-      return "Date of Local Govt.Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -370,7 +370,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //mid year
   String _formatMidYear(DateTime? date) {
     if (date == null) {
-      return "Date of Mid Year Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -379,7 +379,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //
   String _formatHackney(DateTime? date) {
     if (date == null) {
-      return "Date of Hackney Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -387,7 +387,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatOG(DateTime? date) {
     if (date == null) {
-      return "Date of OG-HUT Highway";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -396,7 +396,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //state
   String _formatStateCar(DateTime? date) {
     if (date == null) {
-      return "Date of State Carriage Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -405,7 +405,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //heavyDuty
   String _formatDuty(DateTime? date) {
     if (date == null) {
-      return "Date of Heavy Duty Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -413,7 +413,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _newFormatDate(DateTime? date) {
     if (date == null) {
-      return "Date of Purchase"; // Placeholder text when no date is selected
+      return " "; // Placeholder text when no date is selected
     }
 
     // Format the date with day, month, and year
@@ -2908,6 +2908,8 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
     Duration difference = renewalDate.difference(DateTime.now());
 
     int daysDifference = difference.inDays;
+    String daysDifferenceText =
+        daysDifference < 1 ? "Expired" : "exp. $daysDifference days";
     final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
     return Scaffold(
@@ -3015,7 +3017,7 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                             borderRadius: BorderRadius.circular(40),
                           ),
                           child: Text(
-                            "exp. $daysDifference days",
+                            daysDifferenceText,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontFamily: "NeulisAlt",

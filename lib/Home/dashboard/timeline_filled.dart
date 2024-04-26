@@ -1,5 +1,4 @@
 import 'package:clean_calendar/clean_calendar.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,7 +16,6 @@ import '../../widgets/colors.dart';
 import 'package:intl/intl.dart';
 
 import '../../widgets/eard_dialog.dart';
-import '../../widgets/eard_loader.dart';
 import '../breakdown/breakdown.dart';
 import '../expense/add_expense.dart';
 import 'pie_chart/pie.dart';
@@ -144,8 +142,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
             width: MediaQuery.of(context).size.width,
             child: state.loading == Loader.loading
                 ? const SizedBox(
-                    height: 150,
-                    width: 150,
+                    height: 120,
+                    width: 120,
                     child: RiveAnimation.asset(
                       'assets/images/splashscreenanim.riv',
                     ),
@@ -174,7 +172,9 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                               itemCount: 1, //myCarz.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final carz = myCarz[index];
-                                String myRenewal = carz.vehicleLicense ?? '0';
+                                String myRenewal = carz.vehicleLicense != null
+                                    ? carz.vehicleLicense.toString()
+                                    : '0';
 
 // Replace `/` with `-` to match the standard date format
                                 myRenewal = myRenewal.replaceAll('/', '-');
@@ -186,6 +186,9 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
 
 // Get the number of days from the difference
                                 int daysDifference = difference.inDays;
+                                String daysDifferenceText = daysDifference < 1
+                                    ? "Expired"
+                                    : "exp. $daysDifference days";
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 10.0),
                                   child: Row(
@@ -207,7 +210,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                                       Radius.circular(20.0),
                                                 ),
                                                 child: MyCarInfoPage(
-                                                  exp: daysDifference,
+                                                  exp: int.parse(
+                                                      daysDifferenceText),
                                                   bodyStyle:
                                                       carz.category!.name,
                                                   cylinder:
@@ -309,7 +313,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                                       BorderRadius.circular(40),
                                                 ),
                                                 child: Text(
-                                                  "exp. $daysDifference days",
+                                                  daysDifferenceText,
                                                   textAlign: TextAlign.center,
                                                   style: const TextStyle(
                                                     fontFamily: "NeulisAlt",

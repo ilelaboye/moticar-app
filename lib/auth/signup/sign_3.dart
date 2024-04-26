@@ -129,39 +129,39 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                 ),
 
                 //switch to phone number instead
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return SignUpPage3Postal(
-                            token: widget.token,
-                          );
-                        }));
-                      },
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            size: 20,
-                            color: AppColors.indieC,
-                          ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     TextButton(
+                //       onPressed: () {
+                //         Navigator.push(context,
+                //             MaterialPageRoute(builder: (context) {
+                //           return SignUpPage3Postal(
+                //             token: widget.token,
+                //           );
+                //         }));
+                //       },
+                //       child: const Row(
+                //         mainAxisAlignment: MainAxisAlignment.end,
+                //         children: [
+                //           Icon(
+                //             Icons.location_on_outlined,
+                //             size: 20,
+                //             color: AppColors.indieC,
+                //           ),
 
-                          //
-                          MoticarText(
-                            fontColor: AppColors.lightGreen,
-                            text: 'Use postal code instead',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                //           //
+                //           MoticarText(
+                //             fontColor: AppColors.lightGreen,
+                //             text: 'Use postal code instead',
+                //             fontSize: 13,
+                //             fontWeight: FontWeight.w500,
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
 
                 Form(
                   key: _formKey,
