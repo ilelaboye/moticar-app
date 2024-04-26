@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "899782617587",
+    "project_id": "use-moticar",
+    "storage_bucket": "use-moticar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899782617587:android:4ebb40735c9eb35e5c4a86",
+        "android_client_info": {
+          "package_name": "com.example.moticar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "899782617587-q60fop8q1mjebb6p8po9skmetihb1qvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADgGHREIxlS6hKn61UDEvbm3y-fce4iR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "899782617587-q60fop8q1mjebb6p8po9skmetihb1qvv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "899782617587-ir6episqmt1qb0iu35opf1ocsjfvkqpa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.moticar"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

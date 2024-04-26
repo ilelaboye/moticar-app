@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rive/rive.dart';
-import 'Home/profile/company_info.dart';
-import 'Home/profile/mileage_set_reminder.dart';
-import 'Home/profile/new_mileage.dart';
-import 'Home/profile/notification_sett.dart';
 import 'services/hivekeys.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import 'splash/splashscreen/splash_screen.dart';
 
+//  Un-used
+// import 'Home/profile/company_info.dart';
+// import 'Home/profile/mileage_set_reminder.dart';
+// import 'Home/profile/new_mileage.dart';
+// import 'Home/profile/notification_sett.dart';
+
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await Hive.initFlutter();
   await Hive.openBox(HiveKeys.appBox);
+  
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) async {
@@ -62,7 +67,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Moticar',
       builder: EasyLoading.init(),
       theme: ThemeData(
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
