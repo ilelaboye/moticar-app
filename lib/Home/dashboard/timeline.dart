@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -104,6 +106,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
     final state = ref.read(profileProvider);
     final model = ref.read(profileProvider.notifier);
 
+    // final expensesModel = ref.read(expensesProvider);
     List<GetCarz> myCarz = state.getallCarz;
     List<GetExpenses> myExpensez = state.getexpenses;
     List<GetTechies> myTechiez = state.techies;
@@ -865,7 +868,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                       ),
                     ),
 
-                    //new calendar
+                    // new calendar
                     SizedBox(
                       height: 190,
                       child: ListView(
@@ -920,7 +923,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                     ),
 
                     const Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: Divider(
                         thickness: 1.2,
                         color: Color(0xffCDD2D2),
@@ -1389,6 +1392,8 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   }
 
   void getCarData(String? month) {
+    // myExpensez
+    // model
     // model.getCarData().then((value) {
     //   if (value.successMessage.isNotEmpty) {
     //     setState(() {
