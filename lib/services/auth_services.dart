@@ -87,12 +87,16 @@ class AuthService {
     final twitterLogin = TwitterLogin(
       apiKey: '49utyiWtpasaRuWnJtFsdcHfO',
       apiSecretKey: 'jntsXJvxcPySW1fh3LSGXGYh1IhWNzayxiHEIxQ8k4MX6Nr3LU',
-      redirectURI: 'example://',
+      redirectURI: 'moticar://',
     );
 
-    final authResult = twitterLogin.login();
+    final authResult = await twitterLogin.loginV2();
+    print(authResult.user!.name);
+    // final TwitterAuthCredential credential = TwitterAuthProvider.credential(
+    //         accessToken: authResult.authToken, secret: authResult.authTokenSecret);
 
-    // final TwitterAuthCredential credential = TwitterAuthProvider.credential(accessToken: accessToken, secret: secret);
+    // final TwitterAuthCredential credential = TwitterAuthProvider.credential(
+    //     accessToken: authResult.authToken, secret: authResult.authTokenSecret);
     // await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

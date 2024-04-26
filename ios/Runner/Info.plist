@@ -12,6 +12,8 @@
 			<array>
 				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
 				<string>com.googleusercontent.apps.899782617587-ir6episqmt1qb0iu35opf1ocsjfvkqpa</string>
+				<!-- for facebook -->
+				<string>1884568885336801</string>
 			</array>
 		</dict>
 	</array>
