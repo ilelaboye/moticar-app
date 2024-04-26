@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/auth/add_car.dart';
+import 'package:moticar/providers/events_provider.dart';
 import 'package:moticar/widgets/eard_dialog.dart';
 import 'package:rive/rive.dart';
 import '../../models/expensesmodel.dart';
@@ -54,15 +55,10 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   ];
   String? selectedMonth;
   List<int> daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
   int selectedYear = DateTime.now().year;
-
   int currentMonthIndex = DateTime.now().month - 1;
-
   late DateTime _selectedDate;
-
   String selectedCarID = "";
-
   List<DateTime> selectedDates = [];
 
   // Function to get the days of the week
@@ -831,14 +827,22 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                       value: selectedMonth,
                                       onChanged: (nvalue) {
                                         setState(() {
-                                          selectedMonth = nvalue;
+                                          selectedMonth = nvalue as String;
                                           updateDaysInMonth(selectedMonth);
+                                          // auto-fetch data
                                         });
                                       }),
                                 ),
                               ),
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (selectedMonth!.isNotEmpty) {
+                                      getCarData(selectedMonth);
+                                    } else {
+                                      EventProvider.showNotification(
+                                          context, "Select a Month");
+                                    }
+                                  },
                                   icon: const Icon(
                                     Icons.search_sharp,
                                     size: 30,
@@ -852,35 +856,40 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
 
                     //new calendar
                     SizedBox(
-                      height: 150,
+                      height: 400,
                       child: ListView(
                         children: [
                           CleanCalendar(
+                            selectedDatesProperties: DatesProperties(
+                              // To disable taps on selected dates.
+                              // To disable taps on selected dates.
+                              datesDecoration: DatesDecoration(
+                                datesBackgroundColor: const Color(0x3000AFB5),
+                                datesBorderColor: AppColors.lightGreen,
+                              ),
+                            ),
+                            generalDatesProperties: DatesProperties(
+                              datesDecoration: DatesDecoration(
+                                datesBorderColor: Colors.transparent,
+                              ),
+                            ),
+                            currentDateProperties: DatesProperties(
+                                datesDecoration: DatesDecoration(
+                              datesBackgroundColor: AppColors.green,
+                              datesBorderColor: AppColors.green,
+                            )),
                             datePickerCalendarView:
                                 DatePickerCalendarView.weekView,
                             enableDenseViewForDates: true,
                             enableDenseSplashForDates: true,
-                            datesForStreaks: [
-                              DateTime(2023, 01, 5),
-                              DateTime(2023, 01, 6),
-                              DateTime(2023, 01, 7),
-                              DateTime(2023, 01, 9),
-                              DateTime(2023, 01, 10),
-                              DateTime(2023, 01, 11),
-                              DateTime(2023, 01, 13),
-                              DateTime(2023, 01, 20),
-                              DateTime(2023, 01, 21),
-                              DateTime(2023, 01, 23),
-                              DateTime(2023, 01, 24),
-                              DateTime(2023, 01, 25),
-                            ],
-                            dateSelectionMode:
-                                DatePickerSelectionMode.singleOrMultiple,
+                            datesForStreaks: [DateTime.now()],
+                            dateSelectionMode: DatePickerSelectionMode.disable,
                             onCalendarViewDate: (DateTime calendarViewDate) {
-                              // print(calendarViewDate);
+                              print(calendarViewDate);
                             },
                             selectedDates: selectedDates,
                             onSelectedDates: (List<DateTime> value) {
+                              print(value);
                               setState(() {
                                 if (selectedDates.contains(value.first)) {
                                   selectedDates.remove(value.first);
@@ -1365,6 +1374,22 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
         ],
       ),
     );
+  }
+
+  void getCarData(String? month) {
+    print(month);
+    // model.getCarData().then((value) {
+    //   if (value.successMessage.isNotEmpty) {
+    //     setState(() {
+    //       myCarz = value.data;
+    //     });
+    //   } else {
+    //     handleError(
+    //       e: value.error ?? value.errorMessage,
+    //       context: context,
+    //     );
+    //   }
+    // });
   }
 
   void updateDaysInMonth(String? month) {
