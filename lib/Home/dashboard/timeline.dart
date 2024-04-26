@@ -62,6 +62,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   late DateTime _selectedDate;
   String selectedCarID = "";
   List<DateTime> selectedDates = [];
+  bool isVisible = false;
 
   // Function to get the days of the week
   List<String> _getDaysOfWeek() {
@@ -81,7 +82,23 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
     return List<int>.generate(daysInMonth, (index) => index + 1);
   }
 
-  bool isVisible = false;
+  void getCarData(String? month) {
+    // myExpensez
+    var expenses = ref.read(profileProvider.notifier).getExpenses();
+    print(expenses);
+    // model.getCarData().then((value) {
+    //   if (value.successMessage.isNotEmpty) {
+    //     setState(() {
+    //       myCarz = value.data;
+    //     });
+    //   } else {
+    //     handleError(
+    //       e: value.error ?? value.errorMessage,
+    //       context: context,
+    //     );
+    //   }
+    // });
+  }
 
   @override
   void initState() {
@@ -1389,23 +1406,6 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
         ],
       ),
     );
-  }
-
-  void getCarData(String? month) {
-    // myExpensez
-    // model
-    // model.getCarData().then((value) {
-    //   if (value.successMessage.isNotEmpty) {
-    //     setState(() {
-    //       myCarz = value.data;
-    //     });
-    //   } else {
-    //     handleError(
-    //       e: value.error ?? value.errorMessage,
-    //       context: context,
-    //     );
-    //   }
-    // });
   }
 
   void updateDaysInMonth(String? month) {

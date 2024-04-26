@@ -201,7 +201,6 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
           );
       if (response.statusCode == 200) {
         final responseData = response.data['data']; // Access the "data" key
-        print(responseData);
         // Check if responseData is empty
         if (responseData.isEmpty) {
           // Update state with empty list
