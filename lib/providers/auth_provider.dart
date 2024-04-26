@@ -50,7 +50,8 @@ class MoticarAuthProvider with ChangeNotifier {
   Future<Map<String, dynamic>> signInWithFacebook() async {
     try {
       final LoginResult fbUser = await FacebookAuth.instance.login();
-      final credential = FacebookAuthProvider.credential(fbUser.accessToken!.token);
+      final credential =
+          FacebookAuthProvider.credential(fbUser.accessToken!.token);
       final res = await FirebaseAuth.instance.signInWithCredential(credential);
       final user = res.additionalUserInfo!.profile!;
 
@@ -77,12 +78,11 @@ class MoticarAuthProvider with ChangeNotifier {
 
   Future<Map<String, dynamic>> signInWithTwitter() async {
     try {
-       // Create a TwitterLogin instance
+      // Create a TwitterLogin instance
       final twitterLogin = new TwitterLogin(
-        apiKey: '<your consumer key>',
-        apiSecretKey:' <your consumer secret>',
-        redirectURI: '<your_scheme>://'
-      );
+          apiKey: '<your consumer key>',
+          apiSecretKey: ' <your consumer secret>',
+          redirectURI: '<your_scheme>://');
 
       // Trigger the sign-in flow
       final authResult = await twitterLogin.login();
@@ -93,9 +93,10 @@ class MoticarAuthProvider with ChangeNotifier {
         secret: authResult.authTokenSecret!,
       );
 
-    // Once signed in, return the UserCredential
-    final res = await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
-    final user = res.additionalUserInfo!.profile!;
+      // Once signed in, return the UserCredential
+      final res = await FirebaseAuth.instance
+          .signInWithCredential(twitterAuthCredential);
+      final user = res.additionalUserInfo!.profile!;
       return {
         "status": true,
         "message": "Login successful",
@@ -115,7 +116,6 @@ class MoticarAuthProvider with ChangeNotifier {
       print(e);
       return {"status": false, "message": ""};
     }
-
   }
 
   Map<String, dynamic> handleFirebaseError(FirebaseAuthException e) {
