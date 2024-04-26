@@ -33,6 +33,7 @@ class AddCarPage4 extends StatefulHookConsumerWidget {
       required this.carYear,
       required this.gearboxID,
       required this.type,
+      required this.yearID,
       required this.model});
   final bool isHome;
   final String imagePath,
@@ -45,6 +46,7 @@ class AddCarPage4 extends StatefulHookConsumerWidget {
       carID,
       modelID,
       engineID,
+      yearID,
       gearboxID;
 
   @override
@@ -316,7 +318,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatDate(DateTime? date) {
     if (date == null) {
-      return "Date of Renewal"; //YYYY-MM-DD
+      return " "; //YYYY-MM-DD
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -324,7 +326,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatDate2(DateTime? date) {
     if (date == null) {
-      return "Date of Road Worthiness"; //YYYY-MM-DD
+      return " "; //YYYY-MM-DD
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -332,7 +334,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatDate3(DateTime? date) {
     if (date == null) {
-      return "Date of Third Party Insurance"; //YYYY-MM-DD
+      return " "; //YYYY-MM-DD
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -340,7 +342,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatDate4(DateTime? date) {
     if (date == null) {
-      return "Date of Tinted Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -350,7 +352,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatTruck(DateTime? date) {
     if (date == null) {
-      return "Date of Truck & Trailer Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -359,7 +361,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //
   String _formatLGA(DateTime? date) {
     if (date == null) {
-      return "Date of Local Govt.Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -368,7 +370,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //mid year
   String _formatMidYear(DateTime? date) {
     if (date == null) {
-      return "Date of Mid Year Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -377,7 +379,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //
   String _formatHackney(DateTime? date) {
     if (date == null) {
-      return "Date of Hackney Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -385,7 +387,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _formatOG(DateTime? date) {
     if (date == null) {
-      return "Date of OG-HUT Highway";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -394,7 +396,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //state
   String _formatStateCar(DateTime? date) {
     if (date == null) {
-      return "Date of State Carriage Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -403,7 +405,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
   //heavyDuty
   String _formatDuty(DateTime? date) {
     if (date == null) {
-      return "Date of Heavy Duty Permit";
+      return " ";
     }
     return DateFormat('yyyy/MM/dd').format(date);
     // Customize the format as you desire, for example 'dd/MM/yyyy' for day/month/year
@@ -411,7 +413,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
 
   String _newFormatDate(DateTime? date) {
     if (date == null) {
-      return "Date of Purchase"; // Placeholder text when no date is selected
+      return " "; // Placeholder text when no date is selected
     }
 
     // Format the date with day, month, and year
@@ -467,6 +469,9 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
         return text;
       }
     }
+
+    print(
+        "this is everything :- ${widget.carName}, ${widget.carYear}, this is my yearID: ${widget.yearID} ,${widget.model} ,${widget.type} ,${widget.petrol} ,${widget.gearbox}, ,${widget.carID} ,${widget.modelID} ,${widget.engineID},${widget.gearboxID}}");
 
     return Scaffold(
       backgroundColor: const Color(0xffEEF5F5),
@@ -2741,20 +2746,21 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     topRight: Radius.circular(30.0),
                                   ),
                                   child: FinishcarPage(
+                                    yearID: widget.yearID,
                                     isHome: widget.isHome,
                                     carYear: widget.carYear,
-                                    hackney: _formatDuty(hackney),
-                                    ogHut: _formatDuty(ogHut),
+                                    hackney: _formatDuty(hackney) ?? '',
+                                    ogHut: _formatDuty(ogHut) ?? '',
                                     stateCarriage: _formatDuty(stateCarriage),
                                     heavyDuty: _formatDuty(heavyDuty),
                                     trucktrailer: _formatDuty(trucktrailer),
                                     lgaPermit: _formatDuty(lgaPermit),
                                     midYear: _formatDuty(midYear),
-                                    carID: widget.carID,
-                                    modelID: widget.modelID,
-                                    engineID: widget.engineID,
-                                    gearboxID: widget.gearboxID,
-                                    carName: widget.carName,
+                                    carID: widget.carID ?? '',
+                                    modelID: widget.modelID ?? "",
+                                    engineID: widget.engineID ?? "",
+                                    gearboxID: widget.gearboxID ?? '',
+                                    carName: widget.carName ?? "",
                                     imagePath: 'assets/images/car_ai.png',
                                     model: widget.model,
                                     type: widget.type,
@@ -2852,6 +2858,7 @@ class FinishcarPage extends StatefulHookConsumerWidget {
     required this.gearboxID,
     required this.isHome,
     required this.type,
+    required this.yearID,
     this.myselectRenewal,
   });
   final bool isHome;
@@ -2862,6 +2869,7 @@ class FinishcarPage extends StatefulHookConsumerWidget {
       gearbox,
       carName,
       carYear,
+      yearID,
       model,
       type,
       plateController,
@@ -2892,21 +2900,16 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
   @override
   Widget build(BuildContext context) {
     String myRenewal = widget.selectRenewal;
-    //   DateTime renewalDate = DateTime.parse(selectRenewal);
+// Replace `/` with `-` to match the standard date format
+    myRenewal = myRenewal.replaceAll('/', '-');
+// Parse the modified date string
+    DateTime renewalDate = DateTime.parse(myRenewal);
+// Calculate the difference
+    Duration difference = renewalDate.difference(DateTime.now());
 
-    // // Add one year to the renewal date to get the expiration date
-    // DateTime expirationDate = renewalDate.add(Duration(days: 365));
-
-    // // Format the expiration date using the _formatDate function
-    // // String formattedExpirationDate = _formatDate(expirationDate);
-
-    // // Print the formatted expiration date
-    // print("Expiration Date: $expirationDate");
-
-    //
-    DateTime now = DateTime.now();
-    // DateTime endOfYear = DateTime(now.year + 1, 1, 1);
-    int remainingDays = widget.myselectRenewal!.difference(now).inDays;
+    int daysDifference = difference.inDays;
+    String daysDifferenceText =
+        daysDifference < 1 ? "Expired" : "exp. $daysDifference days";
     final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
     return Scaffold(
@@ -2970,59 +2973,64 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
               ),
 
               //car model and plate number
-              Column(
-                children: [
-                  Text(
-                    '${widget.model} ${widget.type} ${widget.carYear}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontFamily: "NeulisAlt",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-
-                  //
-
-                  const SizedBox(height: 8),
-
-                  //plate no
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.plateController,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: "NeulisAlt",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                          color: Color(0xff7AE6EB),
-                        ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      '${widget.model} ${widget.type} ${widget.carYear}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: "NeulisAlt",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.white,
                       ),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 8, right: 8, top: 4, bottom: 4),
-                        decoration: BoxDecoration(
-                          color: const Color(0xff00343f),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: Text(
-                          "exp. $remainingDays days",
+                    ),
+
+                    //
+
+                    const SizedBox(height: 8),
+
+                    //plate no
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.plateController,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontFamily: "NeulisAlt",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: Color(0xff92BEC1),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            color: Color(0xff7AE6EB),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: 8, right: 8, top: 4, bottom: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xff00343f),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: Text(
+                            daysDifferenceText,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: "NeulisAlt",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: Color(0xff92BEC1),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(height: 8),
@@ -3422,6 +3430,8 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                       'car': widget.carID,
                       'model': widget.modelID,
                       'engine': widget.engineID,
+                      // "year" : widget.carYear,
+                      "year": widget.yearID,
                       'gear_box': widget.gearboxID,
                       'date_of_purchase': widget.purchaseDate,
                       "vehicle_license": widget.selectRenewal,
@@ -3512,50 +3522,50 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
       case 'Toyota':
         return SvgPicture.asset('assets/carLogos/toyota.svg');
 
-      case 'Balancing':
-        return SvgPicture.asset('assets/expenseCatIcons/balancing.svg');
+      // case 'Balancing':
+      //   return SvgPicture.asset('assets/expenseCatIcons/balancing.svg');
 
-      case 'Car Wash':
-        return SvgPicture.asset('assets/expenseCatIcons/carWash.svg');
+      // case 'Car Wash':
+      //   return SvgPicture.asset('assets/expenseCatIcons/carWash.svg');
 
-      case 'Dues':
-        return SvgPicture.asset('assets/expenseCatIcons/dues.svg');
+      // case 'Dues':
+      //   return SvgPicture.asset('assets/expenseCatIcons/dues.svg');
 
-      case 'Electronics':
-        return SvgPicture.asset('assets/expenseCatIcons/electronics.svg');
+      // case 'Electronics':
+      //   return SvgPicture.asset('assets/expenseCatIcons/electronics.svg');
 
-      case 'Fuel':
-        return SvgPicture.asset('assets/expenseCatIcons/fuel.svg');
+      // case 'Fuel':
+      //   return SvgPicture.asset('assets/expenseCatIcons/fuel.svg');
 
-      case 'Hydraulics':
-        return SvgPicture.asset('assets/expenseCatIcons/hydraulic.svg');
+      // case 'Hydraulics':
+      //   return SvgPicture.asset('assets/expenseCatIcons/hydraulic.svg');
 
-      case 'Keywork':
-        return SvgPicture.asset('assets/expenseCatIcons/keywork.svg');
+      // case 'Keywork':
+      //   return SvgPicture.asset('assets/expenseCatIcons/keywork.svg');
 
-      case 'Mechanical':
-        return SvgPicture.asset('assets/expenseCatIcons/mechanicalWork.svg');
+      // case 'Mechanical':
+      //   return SvgPicture.asset('assets/expenseCatIcons/mechanicalWork.svg');
 
-      case 'Misc':
-        return SvgPicture.asset('assets/expenseCatIcons/misc.svg');
+      // case 'Misc':
+      //   return SvgPicture.asset('assets/expenseCatIcons/misc.svg');
 
-      case 'Parking':
-        return SvgPicture.asset('assets/expenseCatIcons/parking.svg');
+      // case 'Parking':
+      //   return SvgPicture.asset('assets/expenseCatIcons/parking.svg');
 
-      case 'Penalty':
-        return SvgPicture.asset('assets/expenseCatIcons/penalty.svg');
+      // case 'Penalty':
+      //   return SvgPicture.asset('assets/expenseCatIcons/penalty.svg');
 
-      case 'Radiator':
-        return SvgPicture.asset('assets/expenseCatIcons/radiator.svg');
+      // case 'Radiator':
+      //   return SvgPicture.asset('assets/expenseCatIcons/radiator.svg');
 
-      case 'Servicing':
-        return SvgPicture.asset('assets/expenseCatIcons/servicing.svg');
+      // case 'Servicing':
+      //   return SvgPicture.asset('assets/expenseCatIcons/servicing.svg');
 
-      case 'Tow':
-        return SvgPicture.asset('assets/expenseCatIcons/tow.svg');
+      // case 'Tow':
+      //   return SvgPicture.asset('assets/expenseCatIcons/tow.svg');
 
-      case 'Tyre guage':
-        return SvgPicture.asset('assets/expenseCatIcons/tyreGuage.svg');
+      // case 'Tyre guage':
+      //   return SvgPicture.asset('assets/expenseCatIcons/tyreGuage.svg');
       // Add more cases for other categories if needed
       default:
         // Return a default image or null if no specific image is available

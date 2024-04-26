@@ -31,6 +31,7 @@ class _BreakDownPageState extends State<BreakDownPage> {
   );
   @override
   Widget build(BuildContext context) {
+    String newAmount = widget.amount.replaceAll(",", '');
     return Scaffold(
       backgroundColor: const Color(0xffB8F2F4),
       body: SingleChildScrollView(
@@ -252,7 +253,8 @@ class _BreakDownPageState extends State<BreakDownPage> {
                           Row(
                             children: [
                               Text(
-                                nairaFormat.format(mycarparts.total),
+                                nairaFormat
+                                    .format(double.parse(mycarparts.total)),
                                 style: const TextStyle(
                                     fontFamily: "Neulis",
                                     color: Color(0xff006C70),
@@ -335,7 +337,9 @@ class _BreakDownPageState extends State<BreakDownPage> {
                             ),
                           ),
                           Text(
-                            'N ${calculateTotalExpense(widget.carparts)}',
+                            'N ${calculateTotalExpense(
+                              widget.carparts,
+                            )}',
                             style: const TextStyle(
                               fontFamily: "NeulisAlt",
                               fontSize: 16,
@@ -476,7 +480,7 @@ class _BreakDownPageState extends State<BreakDownPage> {
   int calculateTotalExpense(List<Carpart> expenses) {
     int total = 0;
     for (var expense in expenses) {
-      total += expense.total!.toInt();
+      total += double.parse(expense.total).toInt();
     }
     return total;
   }

@@ -487,7 +487,11 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                           },
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            errorBorder: InputBorder.none,
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: AppColors.red, width: 1.5),
+                            ),
                             hintText: 'Enter your email',
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -541,7 +545,11 @@ class _AddNewTechieState extends ConsumerState<AddNewTechie> {
                         decoration: InputDecoration(
                           counterText: '',
                           border: InputBorder.none,
-                          errorBorder: InputBorder.none,
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                                color: AppColors.red, width: 1.5),
+                          ),
                           hintText: 'Enter your phone number',
 
                           enabledBorder: OutlineInputBorder(

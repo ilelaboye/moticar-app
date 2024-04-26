@@ -227,7 +227,7 @@ class _ConfirmImageState extends State<ConfirmImage> {
   int calculateTotalExpense(List<Carpart> expenses) {
     int total = 0;
     for (var expense in expenses) {
-      total += expense.total!.toInt();
+      total += double.parse(expense.total).toInt();
     }
     return total;
   }

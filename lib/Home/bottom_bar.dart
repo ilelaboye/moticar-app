@@ -10,6 +10,8 @@ import 'dashboard/moticar_page.dart';
 import 'dashboard/spend.dart';
 import 'dashboard/timeline.dart';
 import 'dashboard/timeline_filled.dart';
+import 'profile/mileage_set_reminder.dart';
+import 'profile/new_mileage.dart';
 // import 'package:sizer/sizer.dart';
 
 // @RoutePage()
@@ -29,7 +31,7 @@ class _BottomHomePageState extends State<BottomHomePage> {
     const TimelinePage(),
     // const SpendPage(),
     const TimelineFilledPage(),
-    const MoticarPage(),
+    const AddReminderPage(),
     const MePage(),
     const MorePage(),
   ];

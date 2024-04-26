@@ -17,17 +17,17 @@ class GetExpenses {
     required this.carparts,
   });
 
-  final int? id;
-  final int? userId;
-  final String? category;
-  final String? title;
-  final String? description;
-  final int? technicianId;
-  final int? amount;
-  final int? total;
-  final String? methodOfPayment;
+  final int id;
+  final String userId;
+  final String category;
+  final String title;
+  final String description;
+  final String technicianId;
+  final String amount;
+  final String total;
+  final String methodOfPayment;
   final dynamic imageProof;
-  final int? carpart;
+  final String carpart;
   final DateTime? date;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -35,17 +35,17 @@ class GetExpenses {
 
   factory GetExpenses.fromJson(Map<String, dynamic> json) {
     return GetExpenses(
-      id: json["id"],
-      userId: json["user_id"],
-      category: json["category"],
-      title: json["title"],
-      description: json["description"] ?? '',
-      technicianId: json["technician_id"],
-      amount: json["amount"],
-      total: json["total"],
-      methodOfPayment: json["method_of_payment"],
+      id: json["id"] ?? 0,
+      userId: json["user_id"] ?? "",
+      category: json["category"] ?? "",
+      title: json["title"] ?? "",
+      description: json["description"] ?? "",
+      technicianId: json["technician_id"] ?? "",
+      amount: json["amount"] ?? "",
+      total: json["total"] ?? "",
+      methodOfPayment: json["method_of_payment"] ?? "",
       imageProof: json["image_proof"],
-      carpart: json["carpart"],
+      carpart: json["carpart"] ?? "",
       date: DateTime.tryParse(json["date"] ?? ""),
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
@@ -55,6 +55,24 @@ class GetExpenses {
               json["carparts"]!.map((x) => Carpart.fromJson(x))),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "category": category,
+        "title": title,
+        "description": description,
+        "technician_id": technicianId,
+        "amount": amount,
+        "total": total,
+        "method_of_payment": methodOfPayment,
+        "image_proof": imageProof,
+        "carpart": carpart,
+        "date": date?.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "carparts": carparts.map((x) => x?.toJson()).toList(),
+      };
 }
 
 class Carpart {
@@ -76,17 +94,17 @@ class Carpart {
     required this.updatedAt,
   });
 
-  final int? id;
-  final int? expenseId;
-  final String? category;
-  final String? productName;
+  final int id;
+  final String expenseId;
+  final String category;
+  final String productName;
   final dynamic description;
-  final String? brand;
-  final String? condition;
-  final String? unitOfMeasurement;
-  final int? price;
-  final String? quantity;
-  final int? total;
+  final String brand;
+  final String condition;
+  final String unitOfMeasurement;
+  final String price;
+  final String quantity;
+  final String total;
   final dynamic image;
   final dynamic generatedImage;
   final dynamic createdAt;
@@ -94,23 +112,41 @@ class Carpart {
 
   factory Carpart.fromJson(Map<String, dynamic> json) {
     return Carpart(
-      id: json["id"],
-      expenseId: json["expense_id"],
-      category: json["category"],
-      productName: json["product_name"],
-      description: json["description"] ?? "",
-      brand: json["brand"],
-      condition: json["condition"],
-      unitOfMeasurement: json["unit_of_measurement"],
-      price: json["price"],
-      quantity: json["quantity"],
-      total: json["total"],
+      id: json["id"] ?? 0,
+      expenseId: json["expense_id"] ?? "",
+      category: json["category"] ?? "",
+      productName: json["product_name"] ?? "",
+      description: json["description"],
+      brand: json["brand"] ?? "",
+      condition: json["condition"] ?? "",
+      unitOfMeasurement: json["unit_of_measurement"] ?? "",
+      price: json["price"] ?? "",
+      quantity: json["quantity"] ?? "",
+      total: json["total"] ?? "",
       image: json["image"],
       generatedImage: json["generated_image"],
       createdAt: json["created_at"],
       updatedAt: json["updated_at"],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "expense_id": expenseId,
+        "category": category,
+        "product_name": productName,
+        "description": description,
+        "brand": brand,
+        "condition": condition,
+        "unit_of_measurement": unitOfMeasurement,
+        "price": price,
+        "quantity": quantity,
+        "total": total,
+        "image": image,
+        "generated_image": generatedImage,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+      };
 }
 
 //technicinas
@@ -130,33 +166,47 @@ class GetTechies {
     required this.updatedAt,
   });
 
-  final int? id;
-  final int? userId;
-  final String? firstName;
-  final String? lastName;
-  final dynamic email;
-  final String? preferredName;
-  final String? phone;
-  final String? category;
-  final String? image;
+  final int id;
+  final String userId;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String preferredName;
+  final String phone;
+  final String category;
+  final String image;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
   factory GetTechies.fromJson(Map<String, dynamic> json) {
     return GetTechies(
-      id: json["id"],
-      userId: json["user_id"],
-      firstName: json["first_name"],
-      lastName: json["last_name"],
-      email: json["email"],
-      preferredName: json["preferred_name"],
-      phone: json["phone"],
-      category: json["category"],
-      image: json["image"],
+      id: json["id"] ?? 0,
+      userId: json["user_id"] ?? "",
+      firstName: json["first_name"] ?? "",
+      lastName: json["last_name"] ?? "",
+      email: json["email"] ?? "",
+      preferredName: json["preferred_name"] ?? "",
+      phone: json["phone"] ?? "",
+      category: json["category"] ?? "",
+      image: json["image"] ?? "",
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "preferred_name": preferredName,
+        "phone": phone,
+        "category": category,
+        "image": image,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }
 
 class GetCarz {
@@ -223,17 +273,23 @@ class GetCarz {
       mileage: json["mileage"],
       chasisNumber: json["chasis_number"] ?? "",
       engineNumber: json["engine_number"] ?? "",
-      dateOfPurchase: DateTime.tryParse(json["date_of_purchase"] ?? ""),
-      vehicleLicense: json["vehicle_license"],
-      roadWorthiness: json["road_worthiness"],
-      thirdPartyInsurance: json["third_party_insurance"],
-      hackneyPermit: json["hackney_permit"],
-      ogHut: json["og_hut"],
-      stateCarriagePermit: json["state_carriage_permit"],
-      heavyDutyPermit: json["heavy_duty_permit"],
-      truckTrailerPermit: json["truck_trailer_permit"],
-      localGovtPermit: json["local_govt_permit"],
-      midYearPermit: json["mid_year_permit"],
+      dateOfPurchase: json["date_of_purchase"] != null
+          ? DateTime.tryParse(json["date_of_purchase"])
+          : null,
+      vehicleLicense: json["vehicle_license"] != null
+          ? DateTime.tryParse(json["vehicle_license"])
+          : null,
+      roadWorthiness: DateTime.tryParse(json["road_worthiness"] ?? ""),
+      thirdPartyInsurance:
+          DateTime.tryParse(json["third_party_insurance"] ?? ""),
+      hackneyPermit: DateTime.tryParse(json["hackney_permit"] ?? ""),
+      ogHut: DateTime.tryParse(json["og_hut"] ?? ""),
+      stateCarriagePermit:
+          DateTime.tryParse(json["state_carriage_permit"] ?? ""),
+      heavyDutyPermit: DateTime.tryParse(json["heavy_duty_permit"] ?? ""),
+      truckTrailerPermit: DateTime.tryParse(json["truck_trailer_permit"] ?? ""),
+      localGovtPermit: DateTime.tryParse(json["local_govt_permit"] ?? ""),
+      midYearPermit: DateTime.tryParse(json["mid_year_permit"] ?? ""),
       extra: json["extra"],
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
@@ -256,16 +312,16 @@ class GetCarz {
         "chasis_number": chasisNumber,
         "engine_number": engineNumber,
         "date_of_purchase": dateOfPurchase?.toIso8601String(),
-        "vehicle_license": vehicleLicense,
-        "road_worthiness": roadWorthiness,
-        "third_party_insurance": thirdPartyInsurance,
-        "hackney_permit": hackneyPermit,
-        "og_hut": ogHut,
-        "state_carriage_permit": stateCarriagePermit,
-        "heavy_duty_permit": heavyDutyPermit,
-        "truck_trailer_permit": truckTrailerPermit,
-        "local_govt_permit": localGovtPermit,
-        "mid_year_permit": midYearPermit,
+        "vehicle_license": vehicleLicense?.toIso8601String(),
+        "road_worthiness": roadWorthiness?.toIso8601String(),
+        "third_party_insurance": thirdPartyInsurance?.toIso8601String(),
+        "hackney_permit": hackneyPermit?.toIso8601String(),
+        "og_hut": ogHut?.toIso8601String(),
+        "state_carriage_permit": stateCarriagePermit?.toIso8601String(),
+        "heavy_duty_permit": heavyDutyPermit?.toIso8601String(),
+        "truck_trailer_permit": truckTrailerPermit?.toIso8601String(),
+        "local_govt_permit": localGovtPermit?.toIso8601String(),
+        "mid_year_permit": midYearPermit?.toIso8601String(),
         "extra": extra,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
@@ -493,16 +549,17 @@ class GetProfileModel {
     required this.rememberToken,
     required this.createdAt,
     required this.updatedAt,
+    required this.status,
   });
 
-  final String? uuid;
-  final String? firstName;
-  final String? lastName;
-  final String? preferredName;
-  final String? phone;
-  final String? email;
-  final String? image;
-  final int? stage;
+  final String uuid;
+  final String firstName;
+  final String lastName;
+  final String preferredName;
+  final String phone;
+  final String email;
+  final String image;
+  final String stage;
   final DateTime? emailVerifiedAt;
   final dynamic dob;
   final dynamic gender;
@@ -513,26 +570,27 @@ class GetProfileModel {
   final dynamic lga;
   final dynamic landmark;
   final dynamic postalcode;
-  final String? currency;
-  final String? resetToken;
+  final String currency;
+  final dynamic resetToken;
   final DateTime? verificationTokenCreatedAt;
-  final DateTime? resetTokenCreatedAt;
-  final String? referralCode;
-  final int? offersUpdate;
+  final dynamic resetTokenCreatedAt;
+  final String referralCode;
+  final String offersUpdate;
   final dynamic rememberToken;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String status;
 
   factory GetProfileModel.fromJson(Map<String, dynamic> json) {
     return GetProfileModel(
-      uuid: json["uuid"],
-      firstName: json["first_name"],
-      lastName: json["last_name"],
-      preferredName: json["preferred_name"],
-      phone: json["phone"],
-      email: json["email"],
-      image: json["image"],
-      stage: json["stage"],
+      uuid: json["uuid"] ?? "",
+      firstName: json["first_name"] ?? "",
+      lastName: json["last_name"] ?? "",
+      preferredName: json["preferred_name"] ?? "",
+      phone: json["phone"] ?? "",
+      email: json["email"] ?? "",
+      image: json["image"] ?? "",
+      stage: json["stage"] ?? "",
       emailVerifiedAt: DateTime.tryParse(json["email_verified_at"] ?? ""),
       dob: json["dob"],
       gender: json["gender"],
@@ -543,17 +601,49 @@ class GetProfileModel {
       lga: json["lga"],
       landmark: json["landmark"],
       postalcode: json["postalcode"],
-      currency: json["currency"],
+      currency: json["currency"] ?? "",
       resetToken: json["reset_token"],
       verificationTokenCreatedAt:
           DateTime.tryParse(json["verification_token_created_at"] ?? ""),
-      resetTokenCreatedAt:
-          DateTime.tryParse(json["reset_token_created_at"] ?? ""),
-      referralCode: json["referral_code"],
-      offersUpdate: json["offers_update"],
+      resetTokenCreatedAt: json["reset_token_created_at"],
+      referralCode: json["referral_code"] ?? "",
+      offersUpdate: json["offers_update"] ?? "",
       rememberToken: json["remember_token"],
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
+      status: json["status"] ?? "",
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        "uuid": uuid,
+        "first_name": firstName,
+        "last_name": lastName,
+        "preferred_name": preferredName,
+        "phone": phone,
+        "email": email,
+        "image": image,
+        "stage": stage,
+        "email_verified_at": emailVerifiedAt?.toIso8601String(),
+        "dob": dob,
+        "gender": gender,
+        "address1": address1,
+        "address2": address2,
+        "country": country,
+        "state": state,
+        "lga": lga,
+        "landmark": landmark,
+        "postalcode": postalcode,
+        "currency": currency,
+        "reset_token": resetToken,
+        "verification_token_created_at":
+            verificationTokenCreatedAt?.toIso8601String(),
+        "reset_token_created_at": resetTokenCreatedAt,
+        "referral_code": referralCode,
+        "offers_update": offersUpdate,
+        "remember_token": rememberToken,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "status": status,
+      };
 }

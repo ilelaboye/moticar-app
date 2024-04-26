@@ -66,6 +66,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
   //new
   List<Map<String, dynamic>> carsData = [];
   List<bool> selectedStates = [];
+  int selectedIndex = -1; // Variable to keep track of the selected index
 
   @override
   void initState() {
@@ -369,14 +370,19 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                   return GestureDetector(
                                     onTap: () {
                                       setState(() {
-                                        // Toggle the selected state of the car
-                                        selectedStates[index] =
-                                            !selectedStates[index];
+                                        if (selectedIndex == index) {
+                                          // If the tapped item is already selected, deselect it
+                                          selectedIndex = -1;
+                                        } else {
+                                          // Otherwise, update the selected index
+                                          selectedIndex = index;
+                                          selectedCarName = carName;
+                                          selectedID = carId.toString();
+                                          selectedCar = car;
 
-                                        selectedCarName = carName;
-                                        selectedID = carId.toString();
-
-                                        selectedCar = car;
+                                          print(
+                                              "my $selectedCarName & ID - $selectedID");
+                                        }
                                       });
                                     },
                                     child: Container(
@@ -390,7 +396,7 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(8),
                                         border: Border.all(
-                                          color: selectedStates[index]
+                                          color: selectedIndex == index
                                               ? AppColors.lightGreen
                                               : Colors.black12,
                                           width: 1,
@@ -410,8 +416,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                             children: [
                                               Image.network(
                                                 carIcon,
-                                                width: 50,
-                                                height: 50,
+                                                width: 40,
+                                                height: 40,
                                               ),
                                               const SizedBox(width: 12),
                                               Text(
@@ -428,17 +434,17 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
                                             height: 24,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              color: selectedStates[index]
+                                              color: selectedIndex == index
                                                   ? AppColors.lightGreen
                                                   : Colors.transparent,
                                               border: Border.all(
-                                                color: selectedStates[index]
+                                                color: selectedIndex == index
                                                     ? AppColors.lightGreen
                                                     : Colors.black,
                                                 width: 1,
                                               ),
                                             ),
-                                            child: selectedStates[index]
+                                            child: selectedIndex == index
                                                 ? const Icon(Icons.check,
                                                     size: 15,
                                                     color: Colors.white)

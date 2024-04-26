@@ -1,5 +1,4 @@
 import 'package:clean_calendar/clean_calendar.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,7 +16,6 @@ import '../../widgets/colors.dart';
 import 'package:intl/intl.dart';
 
 import '../../widgets/eard_dialog.dart';
-import '../../widgets/eard_loader.dart';
 import '../breakdown/breakdown.dart';
 import '../expense/add_expense.dart';
 import 'pie_chart/pie.dart';
@@ -79,13 +77,13 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
   //   int daysInMonth = DateTime(date.year, date.month + 1, 0).day;
   //   return List<int>.generate(daysInMonth, (index) => index + 1);
   // }
-
+  String myDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   @override
   void initState() {
     super.initState();
     _selectedDate = DateTime.now();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(profileProvider.notifier).getExpenses();
+      ref.read(profileProvider.notifier).getExpenses(date: myDate);
       ref.read(profileProvider.notifier).getMyCars();
     });
   }
@@ -144,8 +142,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
             width: MediaQuery.of(context).size.width,
             child: state.loading == Loader.loading
                 ? const SizedBox(
-                    height: 150,
-                    width: 150,
+                    height: 120,
+                    width: 120,
                     child: RiveAnimation.asset(
                       'assets/images/splashscreenanim.riv',
                     ),
@@ -174,6 +172,23 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                               itemCount: 1, //myCarz.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final carz = myCarz[index];
+                                String myRenewal = carz.vehicleLicense != null
+                                    ? carz.vehicleLicense.toString()
+                                    : '0';
+
+// Replace `/` with `-` to match the standard date format
+                                myRenewal = myRenewal.replaceAll('/', '-');
+
+                                DateTime renewalDate =
+                                    DateTime.parse(myRenewal);
+                                Duration difference =
+                                    renewalDate.difference(DateTime.now());
+
+// Get the number of days from the difference
+                                int daysDifference = difference.inDays;
+                                String daysDifferenceText = daysDifference < 1
+                                    ? "Expired"
+                                    : "exp. $daysDifference days";
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 10.0),
                                   child: Row(
@@ -195,6 +210,8 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                                       Radius.circular(20.0),
                                                 ),
                                                 child: MyCarInfoPage(
+                                                  exp: int.parse(
+                                                      daysDifferenceText),
                                                   bodyStyle:
                                                       carz.category!.name,
                                                   cylinder:
@@ -296,7 +313,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                                       BorderRadius.circular(40),
                                                 ),
                                                 child: Text(
-                                                  "exp. $remainingDays days",
+                                                  daysDifferenceText,
                                                   textAlign: TextAlign.center,
                                                   style: const TextStyle(
                                                     fontFamily: "NeulisAlt",
@@ -505,7 +522,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                                       onPressed: () {
                                                         model.deleteCar(
                                                             formData: {
-                                                              "id":
+                                                              "car_id":
                                                                   selectedCarID
                                                             }).then(
                                                             (value) async {
@@ -522,6 +539,12 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                                                   return MoticarDialog(
                                                                     subtitle: value
                                                                         .successMessage,
+                                                                    buttonColor:
+                                                                        AppColors
+                                                                            .appThemeColor,
+                                                                    textColor:
+                                                                        Colors
+                                                                            .white,
                                                                     onTap: () {
                                                                       Navigator.push(
                                                                           context,
@@ -1004,7 +1027,9 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                 //amount and menu button
                                 Row(
                                   children: [
-                                    Text(nairaFormat.format(breakdown.amount),
+                                    Text(
+                                        nairaFormat.format(
+                                            double.parse(breakdown.amount)),
                                         style: const TextStyle(
                                             fontFamily: "Neulis",
                                             color: Color(0xff006C70),

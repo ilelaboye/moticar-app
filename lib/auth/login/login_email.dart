@@ -9,9 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/auth/signup/sign_2.dart';
 import 'package:moticar/auth/signup/signup.dart';
-import 'package:moticar/providers/auth_provider.dart';
 import 'package:moticar/providers/authentication.dart';
-import 'package:moticar/services/auth_services.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/auth/verifyResetToken.dart';
 import 'package:moticar/widgets/bottom_sheet_service.dart';
@@ -541,9 +539,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         //facebook, google and twitter
 
                         OtherLoginButton(
-                          onTap: () {
-                            AuthService.signInwithFacebook(context);
-                          },
+                          onTap: () {},
                           child: SvgPicture.asset(
                             "assets/svgs/faceB.svg",
                             height: 31,
@@ -551,15 +547,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ),
 
                         OtherLoginButton(
-                            onTap: () {
-                              AuthService.signInwithGoogle(context);
-                            },
+                            onTap: () {},
                             child: SvgPicture.asset("assets/svgs/Google.svg")),
 
                         OtherLoginButton(
-                          onTap: () {
-                            AuthService.signInWithTwitter(context);
-                          },
+                          onTap: () {},
                           child: SvgPicture.asset("assets/svgs/x.svg"),
                         ),
                       ],
