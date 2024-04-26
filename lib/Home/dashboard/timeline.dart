@@ -56,7 +56,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   String? selectedMonth;
   List<int> daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   int selectedYear = DateTime.now().year;
-  int currentMonthIndex = DateTime.now().month - 1;
+  late int currentMonthIndex;
   late DateTime _selectedDate;
   String selectedCarID = "";
   List<DateTime> selectedDates = [];
@@ -89,6 +89,8 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
       // ref.read(profileProvider.notifier).getExpenses();
       ref.read(profileProvider.notifier).getMyCars();
     });
+
+    currentMonthIndex = DateTime.now().month;
   }
 
   @override
@@ -826,11 +828,20 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                           .toList(),
                                       value: selectedMonth,
                                       onChanged: (nvalue) {
-                                        setState(() {
-                                          selectedMonth = nvalue as String;
-                                          updateDaysInMonth(selectedMonth);
-                                          // auto-fetch data
-                                        });
+                                        if (nvalue != null) {
+                                          int monthIndex =
+                                              myMonthz.indexOf(nvalue) + 1;
+
+                                          setState(() {
+                                            currentMonthIndex = monthIndex;
+                                            // selectedMonth = nvalue as String;
+                                            // updateDaysInMonth(selectedMonth);
+                                            // auto-fetch data
+                                          });
+
+                                          print(DateTime(DateTime.now().year,
+                                              currentMonthIndex, 1));
+                                        }
                                       }),
                                 ),
                               ),
@@ -856,40 +867,41 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
 
                     //new calendar
                     SizedBox(
-                      height: 400,
+                      height: 190,
                       child: ListView(
                         children: [
                           CleanCalendar(
+                            initialViewMonthDateTime: DateTime(
+                                DateTime.now().year,
+                                currentMonthIndex,
+                                currentMonthIndex == DateTime.now().month
+                                    ? DateTime.now().day
+                                    : 1),
+                            enableDenseViewForDates: true,
+                            enableDenseSplashForDates: true,
+                            datePickerCalendarView:
+                                DatePickerCalendarView.weekView,
+                            dateSelectionMode:
+                                DatePickerSelectionMode.singleOrMultiple,
+                            generalDatesProperties: DatesProperties(
+                              datesDecoration: DatesDecoration(
+                                datesBorderColor: Colors.transparent,
+                                datesBackgroundColor: Colors.transparent,
+                              ),
+                            ),
+                            currentDateProperties: DatesProperties(
+                                datesDecoration: DatesDecoration(
+                                    datesBackgroundColor: AppColors.green,
+                                    datesBorderColor: AppColors.green,
+                                    datesTextColor: AppColors.white)),
                             selectedDatesProperties: DatesProperties(
-                              // To disable taps on selected dates.
-                              // To disable taps on selected dates.
                               datesDecoration: DatesDecoration(
                                 datesBackgroundColor: const Color(0x3000AFB5),
                                 datesBorderColor: AppColors.lightGreen,
                               ),
                             ),
-                            generalDatesProperties: DatesProperties(
-                              datesDecoration: DatesDecoration(
-                                datesBorderColor: Colors.transparent,
-                              ),
-                            ),
-                            currentDateProperties: DatesProperties(
-                                datesDecoration: DatesDecoration(
-                              datesBackgroundColor: AppColors.green,
-                              datesBorderColor: AppColors.green,
-                            )),
-                            datePickerCalendarView:
-                                DatePickerCalendarView.weekView,
-                            enableDenseViewForDates: true,
-                            enableDenseSplashForDates: true,
-                            datesForStreaks: [DateTime.now()],
-                            dateSelectionMode: DatePickerSelectionMode.disable,
-                            onCalendarViewDate: (DateTime calendarViewDate) {
-                              print(calendarViewDate);
-                            },
                             selectedDates: selectedDates,
                             onSelectedDates: (List<DateTime> value) {
-                              print(value);
                               setState(() {
                                 if (selectedDates.contains(value.first)) {
                                   selectedDates.remove(value.first);
@@ -899,13 +911,13 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                               });
                               // print(selectedDates);
                             },
+                            // onCalendarViewDate: (DateTime calendarViewDate) {
+                            //   print(calendarViewDate);
+                            // },
                           ),
                         ],
                       ),
                     ),
-
-                    //
-                    //
 
                     const Padding(
                       padding: EdgeInsets.all(8.0),
@@ -1377,7 +1389,6 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   }
 
   void getCarData(String? month) {
-    print(month);
     // model.getCarData().then((value) {
     //   if (value.successMessage.isNotEmpty) {
     //     setState(() {
