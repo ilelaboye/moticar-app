@@ -1,6 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,7 +13,6 @@ class MoticarPage extends StatefulHookConsumerWidget {
 }
 
 class _MoticarPageState extends ConsumerState<MoticarPage> {
-
   @override
   void initState() {
     super.initState();
@@ -44,19 +41,16 @@ class _MoticarPageState extends ConsumerState<MoticarPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          
           Text(
-                            "Welcome to Moticar",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w500,
-                              fontSize: 30,
-                              color: Colors.white,
-                            ),
-                          ),
-
-          
+            "Welcome to Moticar",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: "NeulisAlt",
+              fontWeight: FontWeight.w500,
+              fontSize: 30,
+              color: Colors.white,
+            ),
+          ),
 
           //
         ],
@@ -64,5 +58,3 @@ class _MoticarPageState extends ConsumerState<MoticarPage> {
     );
   }
 }
-
- 

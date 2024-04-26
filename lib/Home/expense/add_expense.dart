@@ -12,7 +12,9 @@ import 'package:moticar/widgets/bottom_sheet_service.dart';
 import 'package:moticar/widgets/eard_loader.dart';
 import 'package:rive/rive.dart';
 
+import '../../auth/add_car.dart';
 import '../../models/expensesmodel.dart';
+import '../../network/dio_utils.dart';
 import '../../providers/app_providers.dart';
 import '../../utils/enums.dart';
 import '../../utils/validator.dart';
@@ -24,6 +26,8 @@ import '../../widgets/total_widget.dart';
 import '../bottom_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../carpart/car_part.dart';
+import '../profile/my_cars.dart';
+import 'add_technician.dart';
 
 class AddExpensesPage extends StatefulHookConsumerWidget {
   const AddExpensesPage(
@@ -67,6 +71,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
   // String? title, descript, carTech, amountz, mode2Pay;
 
   bool _isObscure = true;
+  String selectedCarID = "";
+  bool isVisible = false;
 
   bool isIncur = false;
   DateTime? _selectedDate;
@@ -174,6 +180,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
   late List<bool> isSelectedList;
 
+  // String myDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
   @override
   void initState() {
     _loadSavedText();
@@ -188,7 +196,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // ref.read(registerViewmodelProvider.notifier).fetchAllTrans();
-      // ref.read(registerViewmodelProvider.notifier).getMeProfile();
+      ref.read(profileProvider.notifier).getMyCars();
       ref.read(profileProvider.notifier).getTechnicians();
     });
   }
@@ -198,7 +206,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     final savedDate = _prefs.getString('selectedDate');
     _selectedDate = savedDate != null ? DateTime.tryParse(savedDate) : null;
     _selectTechie = _prefs.getString('selectedTechie');
-    payType = _prefs.getString("payType")!;
+    payType = _prefs.getString("payType") ?? 'defaultValue';
     selectedCategory = _prefs.getString('selectedCategory')!;
     final titlez = _prefs.getString('titlez') ?? '';
     final descript = _prefs.getString('descript') ?? '';
@@ -253,6 +261,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
     List<GetTechies> myTechies = state.techies;
+    List<GetCarz> myCarz = state.getallCarz;
     var images = useState(XFile(''));
     final _imagePicker = ref.read(imagePickerService);
 
@@ -264,6 +273,17 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
 
     String widgetAmountz = widget.amountz;
     String amountControllerText = amountController.text;
+    int calculateTotal(String widgetAmountz, String amountControllerText) {
+      // Parse strings to integers
+      int int1 = int.tryParse(widgetAmountz) ?? 0; // Use 0 if parsing fails
+      int int2 =
+          int.tryParse(amountControllerText) ?? 0; // Use 0 if parsing fails
+
+      // Calculate the total
+      int total = int1 + int2;
+
+      return total;
+    }
 
     int totalSum = calculateTotal(widgetAmountz, amountControllerText);
     print("Total sum: $totalSum");
@@ -272,91 +292,534 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
       backgroundColor: AppColors.teal,
       body: Column(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.129,
+          Container(
+            padding: const EdgeInsets.all(6),
             width: MediaQuery.of(context).size.width,
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                color: AppColors.teal,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(4),
-                          topRight: Radius.circular(4),
-                          bottomLeft: Radius.circular(4),
-                          bottomRight: Radius.circular(4)),
+            child: state.loading == Loader.loading
+                ? const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MoticarLoader(size: 40),
+                      ],
                     ),
-                    child: Image.asset('assets/images/car_ai.png'),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  )
+                : Column(
                     children: [
-                      Row(
-                        children: [
-                          const Text(
-                            "Toyota Corolla 2016",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
+                      if (myCarz.isNotEmpty)
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.15,
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 10, right: 10),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: const BoxDecoration(
+                            color: AppColors.teal,
                           ),
-                          const SizedBox(
-                            width: 8,
+                          child: ListView.builder(
+                            itemCount: myCarz.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final carz = myCarz[index];
+                              String myRenewal = carz.vehicleLicense ?? '0';
+
+// Replace `/` with `-` to match the standard date format
+                              myRenewal = myRenewal.replaceAll('/', '-');
+
+                              DateTime renewalDate = DateTime.parse(myRenewal);
+                              Duration difference =
+                                  renewalDate.difference(DateTime.now());
+
+// Get the number of days from the difference
+                              int daysDifference = difference.inDays;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        showMoticarBottom(
+                                          context: context,
+                                          child: FractionallySizedBox(
+                                            heightFactor: 0.89,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(20.0),
+                                                topRight: Radius.circular(20.0),
+                                              ),
+                                              child: MyCarInfoPage(
+                                                exp: daysDifference,
+                                                bodyStyle: carz.category!.name,
+                                                cylinder:
+                                                    carz.details!.cylinder,
+                                                segment: carz.details!.segment,
+                                                fuelCapacity:
+                                                    carz.details!.fuelCapacity,
+                                                driveType:
+                                                    carz.details!.driveType,
+                                                acceleration:
+                                                    carz.details!.acceleration,
+                                                topSpeed:
+                                                    carz.details!.topSpeed,
+                                                tyreSize:
+                                                    carz.details!.tyreSize,
+                                                id: carz.id,
+                                                plateNumber: carz.plateNumber,
+                                                chasisNumber: carz.chasisNumber,
+                                                engineNumber: carz.engineNumber,
+                                                dateOfPurchase:
+                                                    carz.dateOfPurchase,
+                                                vehicleLicense:
+                                                    carz.vehicleLicense,
+                                                roadWorthiness:
+                                                    carz.roadWorthiness,
+                                                thirdPartyInsurance:
+                                                    carz.thirdPartyInsurance,
+                                                engine: carz.details!.engine
+                                                    .toString(),
+                                                gearbox: carz.details!.gearbox
+                                                    .toString(),
+                                                car: carz.car!.name.toString(),
+                                                model:
+                                                    carz.model!.name.toString(),
+                                                category:
+                                                    carz.category.toString(),
+                                                year: carz.details!.year
+                                                    .toString(),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(3),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(4),
+                                            topRight: Radius.circular(4),
+                                            bottomLeft: Radius.circular(4),
+                                            bottomRight: Radius.circular(4),
+                                          ),
+                                        ),
+                                        child: Image.asset(
+                                          'assets/images/car_ai.png',
+                                          height: 45,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "${carz.car!.name} ${carz.model!.name} ${carz.details!.year}",
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Container(
+                                              padding: const EdgeInsets.only(
+                                                left: 8,
+                                                right: 8,
+                                                top: 4,
+                                                bottom: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xff00343f),
+                                                borderRadius:
+                                                    BorderRadius.circular(40),
+                                              ),
+                                              child: Text(
+                                                "exp. $daysDifference days",
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontFamily: "NeulisAlt",
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 13,
+                                                  color: Color(0xff92BEC1),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.6,
+                                          child: Text(
+                                            "${carz.details!.engine} . ${carz.category!.name} . ${carz.details!.gearbox}",
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                              fontFamily: "NeulisAlt",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12,
+                                              color: Color(0xff7AE6EB),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, bottom: 8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            isVisible = !isVisible;
+                                            selectedCarID = carz.id.toString();
+                                          });
+                                        },
+                                        child: isVisible
+                                            ? const Icon(
+                                                Icons.keyboard_arrow_up_rounded,
+                                                color: AppColors.textGrey,
+                                              )
+                                            : const Icon(
+                                                Icons.keyboard_arrow_down_sharp,
+                                                color: AppColors.textGrey,
+                                              ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, bottom: 8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          _showMyNotification(context);
+                                        },
+                                        child: isVisible
+                                            ? const SizedBox()
+                                            : const Icon(
+                                                Icons.notifications_none_sharp,
+                                                color: AppColors.white,
+                                              ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                                left: 8, right: 8, top: 4, bottom: 4),
-                            decoration: BoxDecoration(
-                              color: const Color(0xff00343f),
-                              borderRadius: BorderRadius.circular(40),
-                            ),
-                            child: Text(
-                              "exp. $remainingDays days",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: "NeulisAlt",
-                                fontWeight: FontWeight.w400,
+                        )
+                      else
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 30),
+                              const MoticarText(
+                                text: 'No Cars Available',
                                 fontSize: 13,
-                                color: Color(0xff92BEC1),
+                                fontWeight: FontWeight.w500,
+                                fontColor: AppColors.white,
+                              ),
+                              const SizedBox(height: 8),
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: SizedBox(
+                                  width: 150,
+                                  child: MoticarLoginButton(
+                                    borderColor: const Color(0xff29D7DE),
+                                    myColor: const Color(0xff29D7DE),
+                                    child: const Center(
+                                      child: Text(
+                                        'Add new Car',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: 'NeulisAlt',
+                                          color: AppColors.appThemeColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return const AddCarPage(
+                                          isHome: true,
+                                        );
+                                      }));
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      Visibility(
+                        visible: isVisible,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: MoticarLoginButton(
+                                      borderColor: const Color(0xff00AEB5),
+                                      myColor: Colors.transparent,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Edit',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: 'NeulisAlt',
+                                              color: Color(0xff00AEB5),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          SvgPicture.asset(
+                                              'assets/svgs/new_edit.svg'),
+                                        ],
+                                      ),
+                                      onTap: () {},
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: MoticarLoginButton(
+                                      borderColor: const Color(0xff00AEB5),
+                                      myColor: Colors.transparent,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text(
+                                            'Delete',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: 'NeulisAlt',
+                                              color: Color(0xff00AEB5),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          SvgPicture.asset(
+                                              'assets/svgs/delete.svg'),
+                                        ],
+                                      ),
+                                      onTap: () async {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              backgroundColor:
+                                                  const Color(0xff002D36),
+                                              title: const Text(
+                                                "Are you sure?",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 19,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                              content: const Text(
+                                                'This action would remove all the information you had previously entered',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Color(0xff7AE6EB),
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                              actionsAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              actions: [
+                                                TextButton(
+                                                  style: ButtonStyle(
+                                                    //i want a borderside of color red
+                                                    shape: MaterialStateProperty
+                                                        .all(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(32),
+                                                        side: const BorderSide(
+                                                          color: AppColors
+                                                              .appThemeColor,
+                                                          width: 1,
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                                    padding:
+                                                        const MaterialStatePropertyAll(
+                                                            EdgeInsets.only(
+                                                                left: 50,
+                                                                right: 50,
+                                                                top: 10,
+                                                                bottom: 10)),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all(AppColors
+                                                                .appThemeColor),
+                                                  ),
+                                                  onPressed: () {
+                                                    model.deleteCar(formData: {
+                                                      "car_id": selectedCarID
+                                                    }).then((value) async {
+                                                      if (value.successMessage
+                                                          .isNotEmpty) {
+                                                        await showDialog(
+                                                            context: context,
+                                                            barrierDismissible:
+                                                                false,
+                                                            builder: (context) {
+                                                              return MoticarDialog(
+                                                                subtitle: value
+                                                                    .successMessage,
+                                                                buttonColor:
+                                                                    AppColors
+                                                                        .appThemeColor,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
+                                                                onTap: () {
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder:
+                                                                              (context) {
+                                                                    return BottomHomePage();
+                                                                  }));
+                                                                  // context.router.push(const HomeRoute());
+                                                                },
+                                                              );
+                                                            });
+                                                      } else {
+                                                        handleError(
+                                                          e: value.error ??
+                                                              value
+                                                                  .errorMessage,
+                                                          context: context,
+                                                        );
+                                                      }
+                                                    });
+                                                  },
+                                                  child: const Text(
+                                                    'Yes',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: AppColors.red,
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                //no
+
+                                                TextButton(
+                                                  style: ButtonStyle(
+                                                    //i want a borderside of color red
+                                                    shape: MaterialStateProperty
+                                                        .all(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(32),
+                                                        side: const BorderSide(
+                                                          color:
+                                                              Color(0xff00AEB5),
+                                                          width: 1,
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                                    padding:
+                                                        const MaterialStatePropertyAll(
+                                                            EdgeInsets.only(
+                                                                left: 50,
+                                                                right: 50,
+                                                                top: 10,
+                                                                bottom: 10)),
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all(Colors
+                                                                .transparent),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text(
+                                                    'No',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color:
+                                                          AppColors.lightGreen,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: SizedBox(
+                                width: 200,
+                                child: MoticarLoginButton(
+                                  borderColor: const Color(0xff29D7DE),
+                                  myColor: const Color(0xff29D7DE),
+                                  child: const Center(
+                                    child: Text(
+                                      'Add new Car',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'NeulisAlt',
+                                        color: AppColors.appThemeColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return const AddCarPage(
+                                        isHome: true,
+                                      );
+                                    }));
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-
-                      //petrol and gear
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        child: const Text(
-                          "GGE 53 6HB. Diesel . Hatchback . 1.6 CDTI (68)",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: Color(0xff7AE6EB),
-                          ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
           ),
 
           //other half
@@ -672,7 +1135,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                 padding: const EdgeInsets.only(
                                     bottom: 8, left: 3, right: 3),
                                 child: myTechies.isEmpty
-                                    ? SizedBox() // Render SizedBox if myTechies list is empty
+                                    ? const SizedBox() // Render SizedBox if myTechies list is empty
                                     : DropdownButtonFormField<String>(
                                         decoration: const InputDecoration(
                                           hintText: 'Select Technician',
@@ -718,7 +1181,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                               BoxShape.circle,
                                                         ),
                                                         child: Image.network(
-                                                          tech.image.toString(),
+                                                          tech.image
+                                                                  .toString() ??
+                                                              "https://www.shutterstock.com/image-vector/technician-icon-simple-silhouette-design-260nw-1489431878.jpg",
                                                           fit: BoxFit.cover,
                                                         )),
 
@@ -748,7 +1213,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                                     //phone number
                                                     Text(
                                                       // tech.preferredName.toString(),
-                                                      '${tech.phone}',
+                                                      tech.phone,
                                                       style: const TextStyle(
                                                           fontFamily:
                                                               "NeulisAlt",
@@ -777,6 +1242,10 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   null) // Display the button only when no technician is selected
                                 GestureDetector(
                                   onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return const AddNewTechie();
+                                    }));
                                     // Handle the button tap here
                                   },
                                   child: Container(
@@ -1276,7 +1745,14 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                           myColor: const Color(0xFFFFFFFF),
                                           borderColor: AppColors.indieC,
                                           onTap: () {
-                                            Navigator.pop(context);
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return const BottomHomePage();
+                                                },
+                                              ),
+                                            );
                                             _clearState();
                                           },
                                           child: const MoticarText(
@@ -1470,17 +1946,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
         ],
       ),
     );
-  }
-
-  int calculateTotal(String str1, String str2) {
-    // Parse strings to integers
-    int int1 = int.tryParse(str1) ?? 0; // Use 0 if parsing fails
-    int int2 = int.tryParse(str2) ?? 0; // Use 0 if parsing fails
-
-    // Calculate the total
-    int total = int1 + int2;
-
-    return total;
   }
 
   // Function to remove thousand separators from formatted text
@@ -1723,6 +2188,214 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
       },
     );
   }
+
+  //
+//notification
+  void _showMyNotification(
+    BuildContext context,
+  ) {
+    // final RenderObject? renderBox = key.currentContext?.findRenderObject();
+    // final componentPosition = renderBox?.constraints.isNormalized;
+    // .localToGlobal(Offset.zero);
+
+    // double sheetHeight =
+    //     MediaQuery.of(context).size.height - 50;
+    showModalBottomSheet(
+      isScrollControlled: true,
+      constraints: BoxConstraints.expand(
+        height: MediaQuery.of(context).size.height * 0.65,
+      ),
+      backgroundColor: const Color(0xff002D36),
+      enableDrag: false,
+      context: context,
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     IconButton(
+                //       icon: const Icon(Icons.close, color: Color(0xff101828)),
+                //       onPressed: () {
+                //         Navigator.pop(context);
+                //       },
+                //     ),
+                //   ],
+                // ),
+
+                const SizedBox(height: 12),
+                const Center(
+                  child: Text(
+                    'Notifications',
+                    style: TextStyle(
+                      fontFamily: "NeulisAlt",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                // Add your terms and conditions here
+
+                // const SizedBox(height: 5),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xff00232A),
+                      borderRadius: BorderRadius.circular(64),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        '- Today -',
+                        style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          color: Color(0xff7BA0A3),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 5),
+
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'You have not logged in since 7 days',
+                            style: TextStyle(
+                              fontFamily: "NeulisAlt",
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          SvgPicture.asset('assets/svgs/delete.svg',
+                              height: 25),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Not like we are watching and monitoring you. We just discovered you haven’t had any activitity in the past 5 days.',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Divider(
+                    thickness: 1,
+                    color: Color(0xff001A1F),
+                  ),
+                ),
+
+                //list of categories
+                const SizedBox(height: 5),
+
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: const Color(0xff00232A),
+                      borderRadius: BorderRadius.circular(64),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        '- Yesterday -',
+                        style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          color: Color(0xff7BA0A3),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Add your terms and conditions content here
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'You have not logged in since 7 days',
+                            style: TextStyle(
+                              fontFamily: "NeulisAlt",
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          SvgPicture.asset('assets/svgs/delete.svg',
+                              height: 25),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'Not like we are watching and monitoring you. We just discovered you haven’t had any activitity in the past 5 days.',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontFamily: "NeulisAlt",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Divider(
+                    thickness: 1,
+                    color: Color(0xff001A1F),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+  //
 }
 
 class CategoryPart {

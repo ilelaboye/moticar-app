@@ -166,6 +166,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -186,6 +187,8 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
   late List<GetExpenses> data;
   late TooltipBehavior _tooltip;
 
+  String myDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
   @override
   void initState() {
     data = [
@@ -199,7 +202,7 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(profileProvider.notifier).getExpenses();
+      ref.read(profileProvider.notifier).getExpenses(date: myDate);
     });
   }
 
@@ -212,20 +215,20 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
     return Column(
       children: [
         if (state.loading == Loader.loading)
-    const Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        MoticarLoader(
-          size: 40,
-        )
-      ],
-    ),
-  )
-  else if (myTechies.isNotEmpty)
+          const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MoticarLoader(
+                  size: 40,
+                )
+              ],
+            ),
+          )
+        else if (myTechies.isNotEmpty)
           SfCircularChart(
-             margin : EdgeInsets.all(1),
-             
+            margin: EdgeInsets.all(1),
+
             // title: ChartTitle(text: 'Moticar'),
             // legend: const Legend(position: LegendPosition.bottom),
 
@@ -242,7 +245,6 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
               //             color: const Color.fromRGBO(230, 230, 230, 1)))
               //             ),
               CircularChartAnnotation(
-
                   widget: Container(
                       alignment: Alignment.center,
                       child: Column(
@@ -272,28 +274,27 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
                 xValueMapper: (GetExpenses myTechies, _) =>
                     myTechies.category.toString(),
                 yValueMapper: (GetExpenses myTechies, _) =>
-                    myTechies.amount!.toInt(),
+                    double.parse(myTechies.amount).toInt(),
                 // name: 'Gold',
                 innerRadius: '75%',
               )
             ],
           )
-          else
-    const Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(height: 30),
-        MoticarText(
-          text: 'No Expenses Available',
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-          fontColor: AppColors.textColor,
-        ),
-      ],
-    ),
-  )
-        
+        else
+          const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 30),
+                MoticarText(
+                  text: 'No Expenses Available',
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  fontColor: AppColors.textColor,
+                ),
+              ],
+            ),
+          )
       ],
     );
   }
@@ -301,7 +302,7 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
   int calculateTotalExpense(List<GetExpenses> expenses) {
     int total = 0;
     for (var expense in expenses) {
-      total += expense.total!.toInt();
+      total += double.parse(expense.total).toInt();
     }
     return total;
   }

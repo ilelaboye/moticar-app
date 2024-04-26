@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, avoid_print
 
 import 'dart:convert';
 
@@ -190,15 +190,16 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
   //       state = state.copyWith(loading: Loader.loaded, getexpenses: newexpense);
 
   // /expenses
-  Future<ApiResponse> getExpenses() async {
+  Future<ApiResponse> getExpenses({required String date}) async {
     state = state.copyWith(
       loading: Loader.loading,
     );
     try {
       final response = await _reader.read(newService).getWithToken(
-            // formData: formData,
-            path: 'get-expenses',
-          );
+          // formData: formData,
+          path:
+              // 'get-expenses',
+              "get-expenses?date=$date");
       if (response.statusCode == 200) {
         final responseData = response.data['data']; // Access the "data" key
         print(responseData);
@@ -291,9 +292,9 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
 
   //getCars
   Future<ApiResponse> getMyCars() async {
-    state = state.copyWith(
-      loading: Loader.loading, // Set loading state before making the API call
-    );
+    // state = state.copyWith(
+    //   loading: Loader.loading, // Set loading state before making the API call
+    // );
     try {
       final response = await _reader.read(newService).getWithToken(
             path: 'get-my-cars',
@@ -302,13 +303,13 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
       if (response.statusCode == 200) {
         final responseData = response.data['data'];
 
-        if (responseData.isEmpty) {
-          // Update state with empty list if no cars are available
-          state = state.copyWith(loading: Loader.loaded, getexpenses: []);
-          return ApiResponse(
-            successMessage: 'No Cars available',
-          );
-        }
+        // if (responseData.isEmpty) {
+        //   // Update state with empty list if no cars are available
+        //   state = state.copyWith(loading: Loader.loaded, getexpenses: []);
+        //   return ApiResponse(
+        //     successMessage: 'No Cars available',
+        //   );
+        // }
 
         final List<GetCarz> newCarz = (responseData as List<dynamic>)
             .map((json) => GetCarz.fromJson(json))
@@ -441,7 +442,7 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
         loading: Loader.loading,
       );
       final response = await _reader.read(serviceProvider).postMultipart(
-            path: "api/changeimage/",
+            path: "update-profile",
             formData: {},
             pathName: 'image',
             files: files,
@@ -491,13 +492,13 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
         final responseData = response.data['data']; // Access the "data" key
         print(responseData);
         // Check if responseData is empty
-        if (responseData.isEmpty) {
-          // Update state with empty list
-          state = state.copyWith(loading: Loader.loaded, getexpenses: []);
-          return ApiResponse(
-            successMessage: 'No Profile available',
-          );
-        }
+        // if (responseData.isEmpty) {
+        //   // Update state with empty list
+        //   state = state.copyWith(loading: Loader.loaded, getexpenses: []);
+        //   return ApiResponse(
+        //     successMessage: 'No Profile available',
+        //   );
+        // }
         // Map response data to GetExpenses objects
         var userProfile = GetProfileModel.fromJson(response.data['data']);
 

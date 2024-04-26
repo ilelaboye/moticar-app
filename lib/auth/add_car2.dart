@@ -49,15 +49,22 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
 
   //
   String selectedModel = '';
-  String selectedModelID = '';
+  int selectedModelID = 0;
   String selectedModeltype = '';
-  String selectedCarName = '';
+  String selectedModelName = '';
   List<Model> selectedEngine = [];
   List<Model> selectedGearBox = [];
 
-  // int selectedModelIndex = -1;
+  //
+  final Map<String, dynamic> selectedNewModel = {};
 
-  List<bool> selectedModelIndex = [];
+  int selectedModelIndex = -1;
+  List<bool> isExpandedList = [];
+  Map<String, int> selectedModelIndexPerCategory = {};
+
+  //
+  Map<String, dynamic>? selectedModelMine;
+  Map<String, dynamic>? selectedYears;
 
   @override
   void initState() {
@@ -75,8 +82,8 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(profileProvider);
-    final model = ref.read(profileProvider.notifier);
+    // final state = ref.watch(profileProvider);
+    // final model = ref.read(profileProvider.notifier);
     // final List<Category> carmodelz = state.getCategories;
     List<dynamic> categories = widget.selectedCar['categories'];
 
@@ -291,80 +298,88 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                             itemCount: categories.length,
                             itemBuilder: (context, index) {
                               final category = categories[index];
-                              final List<dynamic> models = category['models'];
-                              // List<bool> selectedModelIndex = List.generate(
-                              //   models.length,
-                              //   (index) => false,
-                              // );
 
-                              selectedModelIndex = List<bool>.filled(
-                                  widget.selectedCar.length, false);
-                              bool isExpanded =
-                                  false; // Initialize isExpanded for each category
+                              final String categoryName = category['name'];
+                              // final String categoryId = category['id'];
+                              final List<dynamic> models = category['models'];
+                              int? selectedModelIndex =
+                                  selectedModelIndexPerCategory
+                                          .containsKey(categoryName)
+                                      ? selectedModelIndexPerCategory[
+                                          categoryName]
+                                      : -1;
 
                               return Column(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isExpanded =
-                                            !isExpanded; // Toggle visibility for the tapped category
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            category['name'],
-                                            style: const TextStyle(
-                                              fontFamily: "NeulisAlt",
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xff202A2A),
-                                              letterSpacing: 1.5,
-                                              fontSize: 14,
-                                            ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          categoryName,
+                                          style: const TextStyle(
+                                            fontFamily: "NeulisAlt",
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w700,
+                                            color: Color(0xff202A2A),
+                                            letterSpacing: 1.5,
+                                            fontSize: 14,
                                           ),
-                                          const SizedBox(
-                                            width: 8,
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        const Expanded(
+                                          child: Divider(
+                                            thickness: 1.5,
+                                            color: Colors
+                                                .grey, // Change color to your preference
                                           ),
-                                          const Expanded(
-                                            child: Divider(
-                                              thickness: 1.5,
-                                              color: Colors
-                                                  .grey, // Change color to your preference
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 8,
-                                          ),
-                                          Icon(
-                                            selectedModelIndex[index]
-                                                ? Icons
-                                                    .keyboard_arrow_up_rounded // Icon when expanded
-                                                : Icons
-                                                    .keyboard_arrow_down_sharp, // Icon when collapsed
-                                            color: Colors.grey,
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  // if (isExpanded)
                                   Column(
                                     children: models
                                         .asMap()
                                         .entries
                                         .map<Widget>((entry) {
-                                      final int index = entry.key;
+                                      final int modelIndex = entry.key;
                                       final dynamic model = entry.value;
                                       return GestureDetector(
                                         onTap: () {
                                           setState(() {
-                                            selectedModelIndex[index] =
-                                                !selectedModelIndex[
-                                                    index]; // Update selected model index
+                                            if (selectedModelIndexPerCategory
+                                                    .containsKey(
+                                                        categoryName) &&
+                                                selectedModelIndexPerCategory[
+                                                        categoryName] ==
+                                                    modelIndex) {
+                                              selectedModelIndexPerCategory.remove(
+                                                  categoryName); // Deselect the model
+                                              selectedNewModel.remove(
+                                                  categoryName); // Remove the model from the selectedModel map
+                                            } else {
+                                              selectedModelIndexPerCategory[
+                                                      categoryName] =
+                                                  modelIndex; // Select the model
+
+                                              selectedNewModel[categoryName] =
+                                                  model; // Add the model to the selectedModel map
+                                            }
+
+                                            //set the selected model index
+                                            selectedModeltype = categoryName;
+                                            selectedModelName = model['name'];
+                                            selectedModelID = model['id'];
+
+                                            selectedModelMine =
+                                                models[modelIndex];
+                                            selectedYears =
+                                                selectedModelMine!['years'];
+
+                                            print(
+                                                "my {$selectedModeltype $selectedModelName ID - $selectedModelID}");
                                           });
                                         },
                                         child: Container(
@@ -382,9 +397,9 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                             border: Border.all(
-                                              color: selectedModelIndex[index]
-                                                  ? AppColors
-                                                      .lightGreen // Highlight selected model
+                                              color: selectedModelIndex ==
+                                                      modelIndex
+                                                  ? AppColors.lightGreen
                                                   : Colors.black12,
                                               width: 1,
                                             ),
@@ -411,19 +426,20 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                                 height: 24,
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.circle,
-                                                  color:
-                                                      selectedModelIndex[index]
-                                                          ? AppColors.lightGreen
-                                                          : Colors.transparent,
+                                                  color: selectedModelIndex ==
+                                                          modelIndex
+                                                      ? AppColors.lightGreen
+                                                      : Colors.transparent,
                                                   border: Border.all(
-                                                    color: selectedModelIndex[
-                                                            index]
+                                                    color: selectedModelIndex ==
+                                                            modelIndex
                                                         ? AppColors.lightGreen
                                                         : Colors.black,
                                                     width: 1,
                                                   ),
                                                 ),
-                                                child: selectedModelIndex[index]
+                                                child: selectedModelIndex ==
+                                                        modelIndex
                                                     ? const Icon(
                                                         Icons.check,
                                                         size: 15,
@@ -676,90 +692,46 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                     borderColor: AppColors.indieC,
                     onTap: () async {
                       print(
-                          "{$selectedEngine + $selectedGearBox  + $selectedCarName my carName is ${widget.carName} may model is  $selectedModeltype}");
-                      // if (selectedModel.isNotEmpty) {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (context) {
-                          return Center(
-                            child: AlertDialog(
-                              backgroundColor: AppColors.appThemeColor,
-                              shadowColor: AppColors.appThemeColor,
-                              content: Container(
-                                padding: const EdgeInsets.all(20),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    // const SpinKitWave(
-                                    //   color: AppColors.appThemeColor,
-                                    //   size: 30.0,
-                                    // ),
-
-                                    SizedBox(
-                                      height: 100,
-                                      width: 100,
-                                      child: RiveAnimation.asset(
-                                        'assets/images/preloader.riv',
-                                      ),
-                                    ),
-                                    SizedBox(height: 8),
-                                    Text('Processing, please wait.',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(color: Colors.white))
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-
-                      await Future.delayed(const Duration(seconds: 3));
-
-                      Navigator.pop(context);
-
-                      //
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return AddCarPage3(
+                          "{$selectedEngine + $selectedGearBox  + $selectedModelName my carName is ${widget.carName} may model is  $selectedModeltype} =  $selectedNewModel this year $selectedYears");
+                      if (selectedModel != null && selectedYears != null) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return AddCarPage3(
                             isHome: widget.isHome,
                             carID: widget.carID,
-                            modelID: selectedModelID,
-                            //  selectedEngine = ;
-                            //                 selectedGearBox = myBox;
-                            mygear: selectedGearBox,
-                            myEngine: selectedEngine,
-                            type: selectedModeltype,
-                            model: selectedCarName,
-                            // selectedModel,
+                            modelID: selectedModelID.toString(),
                             imagePath: widget.carName,
-                            carName: widget.carName);
-                      }));
+                            carName: widget.carName,
+                            //important
+                            type: selectedModeltype,
+                            model: selectedModelName,
+                            //
+                            selectedModel: selectedModelMine!,
+                            selectedYears: selectedYears!,
+                          );
+                        }));
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return MoticarDialog(
+                              icon: const Icon(Icons.info_rounded,
+                                  color: AppColors.appThemeColor, size: 50),
+                              title: '',
+                              subtitle:
+                                  'Please select your car model, before proceeding',
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              buttonColor: AppColors.appThemeColor,
+                              textColor: AppColors.white,
+                              buttonText: "Dismiss",
+                            );
+                          },
+                        );
+                      }
 
-                      // } else {
-                      //   await showDialog(
-                      //     context: context,
-                      //     builder: (BuildContext context) {
-                      //       return MoticarDialog(
-                      //         icon: const Icon(Icons.info_rounded,
-                      //             color: AppColors.appThemeColor, size: 50),
-                      //         title: '',
-                      //         subtitle:
-                      //             'Please select your car model, before proceeding',
-                      //         onTap: () {
-                      //           Navigator.pop(context);
-                      //         },
-                      //         buttonColor: AppColors.appThemeColor,
-                      //         textColor: AppColors.white,
-                      //         buttonText: "Dismiss",
-                      //       );
-                      //     },
-                      //   );
-                      // }
+                      // if (selectedModel.isNotEmpty) {
                     },
                     child: const MoticarText(
                       fontColor: AppColors.appThemeColor,

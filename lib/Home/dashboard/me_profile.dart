@@ -1,10 +1,4 @@
-import 'dart:io';
-
-import 'package:clean_calendar/clean_calendar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,10 +17,8 @@ import '../../services/localdatabase.dart';
 import '../../utils/enums.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
-import '../../widgets/menu_list_tile.dart';
 import '../profile/change_pass.dart';
 import '../profile/email_sub.dart';
-import 'edit_profile.dart';
 
 class MePage extends StatefulHookConsumerWidget {
   const MePage({super.key});
@@ -285,7 +277,7 @@ class _MePageState extends ConsumerState<MePage> {
                                               const Color(0xffEAEAEA),
                                           child: CircleAvatar(
                                             backgroundImage: NetworkImage(
-                                                "${HiveStorage.get(HiveKeys.image)}"
+                                                "${HiveStorage.get(HiveKeys.image) ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}"
 
                                                 // state
                                                 //   .getProfile.image
@@ -832,13 +824,13 @@ class _MePageState extends ConsumerState<MePage> {
                         ),
                         //rewards
                         const SizedBox(
-                          height: 15,
+                          height: 3,
                         ),
 
                         myTechiez.isNotEmpty
                             ? SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.11,
+                                    MediaQuery.of(context).size.height * 0.13,
                                 child: ListView.builder(
                                     physics: const BouncingScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
@@ -846,7 +838,8 @@ class _MePageState extends ConsumerState<MePage> {
                                     itemBuilder: (context, index) {
                                       final newTech = myTechiez[index];
                                       return TechieT(
-                                        imageUrl: newTech.image.toString(),
+                                        imageUrl: newTech.image.toString() ??
+                                            "https://www.shutterstock.com/image-vector/technician-icon-simple-silhouette-design-260nw-1489431878.jpg",
                                         techName:
                                             "${newTech.firstName} ${newTech.lastName}",
                                         phoneNo: "${newTech.phone}",
@@ -883,7 +876,7 @@ class _MePageState extends ConsumerState<MePage> {
 
                         //expenditure
                         const SizedBox(
-                          height: 12,
+                          height: 15,
                         ),
                         //
                         Row(
@@ -1049,7 +1042,7 @@ class _MePageState extends ConsumerState<MePage> {
                                         AppColors.appThemeColor),
                                   ),
                                   onPressed: () {
-                                    Navigator.push(context,
+                                    Navigator.pushReplacement(context,
                                         MaterialPageRoute(builder: (context) {
                                       return const LoginPage();
                                     }));
@@ -1206,15 +1199,19 @@ class TechieT extends StatelessWidget {
     return Column(
       children: [
         Container(
+          height: 51, width: 60,
+          // padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               // color: Colors.white,
               border: Border.all(width: 0.5, color: Colors.black26),
-              image: DecorationImage(image: NetworkImage(imageUrl))),
+              image: DecorationImage(
+                  fit: BoxFit.contain, image: NetworkImage(imageUrl))),
           // child: Image.network(imageUrl),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 3),
+          padding:
+              const EdgeInsets.only(left: 8, right: 8.0, bottom: 3, top: 3),
           child: Text(
             techName,
             textAlign: TextAlign.center,

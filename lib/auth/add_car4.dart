@@ -33,6 +33,7 @@ class AddCarPage4 extends StatefulHookConsumerWidget {
       required this.carYear,
       required this.gearboxID,
       required this.type,
+      required this.yearID,
       required this.model});
   final bool isHome;
   final String imagePath,
@@ -45,6 +46,7 @@ class AddCarPage4 extends StatefulHookConsumerWidget {
       carID,
       modelID,
       engineID,
+      yearID,
       gearboxID;
 
   @override
@@ -467,6 +469,9 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
         return text;
       }
     }
+
+    print(
+        "this is everything :- ${widget.carName}, ${widget.carYear}, this is my yearID: ${widget.yearID} ,${widget.model} ,${widget.type} ,${widget.petrol} ,${widget.gearbox}, ,${widget.carID} ,${widget.modelID} ,${widget.engineID},${widget.gearboxID}}");
 
     return Scaffold(
       backgroundColor: const Color(0xffEEF5F5),
@@ -2741,20 +2746,21 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                     topRight: Radius.circular(30.0),
                                   ),
                                   child: FinishcarPage(
+                                    yearID: widget.yearID,
                                     isHome: widget.isHome,
                                     carYear: widget.carYear,
-                                    hackney: _formatDuty(hackney),
-                                    ogHut: _formatDuty(ogHut),
+                                    hackney: _formatDuty(hackney) ?? '',
+                                    ogHut: _formatDuty(ogHut) ?? '',
                                     stateCarriage: _formatDuty(stateCarriage),
                                     heavyDuty: _formatDuty(heavyDuty),
                                     trucktrailer: _formatDuty(trucktrailer),
                                     lgaPermit: _formatDuty(lgaPermit),
                                     midYear: _formatDuty(midYear),
-                                    carID: widget.carID,
-                                    modelID: widget.modelID,
-                                    engineID: widget.engineID,
-                                    gearboxID: widget.gearboxID,
-                                    carName: widget.carName,
+                                    carID: widget.carID ?? '',
+                                    modelID: widget.modelID ?? "",
+                                    engineID: widget.engineID ?? "",
+                                    gearboxID: widget.gearboxID ?? '',
+                                    carName: widget.carName ?? "",
                                     imagePath: 'assets/images/car_ai.png',
                                     model: widget.model,
                                     type: widget.type,
@@ -2852,6 +2858,7 @@ class FinishcarPage extends StatefulHookConsumerWidget {
     required this.gearboxID,
     required this.isHome,
     required this.type,
+    required this.yearID,
     this.myselectRenewal,
   });
   final bool isHome;
@@ -2862,6 +2869,7 @@ class FinishcarPage extends StatefulHookConsumerWidget {
       gearbox,
       carName,
       carYear,
+      yearID,
       model,
       type,
       plateController,
@@ -2892,21 +2900,14 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
   @override
   Widget build(BuildContext context) {
     String myRenewal = widget.selectRenewal;
-    //   DateTime renewalDate = DateTime.parse(selectRenewal);
+// Replace `/` with `-` to match the standard date format
+    myRenewal = myRenewal.replaceAll('/', '-');
+// Parse the modified date string
+    DateTime renewalDate = DateTime.parse(myRenewal);
+// Calculate the difference
+    Duration difference = renewalDate.difference(DateTime.now());
 
-    // // Add one year to the renewal date to get the expiration date
-    // DateTime expirationDate = renewalDate.add(Duration(days: 365));
-
-    // // Format the expiration date using the _formatDate function
-    // // String formattedExpirationDate = _formatDate(expirationDate);
-
-    // // Print the formatted expiration date
-    // print("Expiration Date: $expirationDate");
-
-    //
-    DateTime now = DateTime.now();
-    // DateTime endOfYear = DateTime(now.year + 1, 1, 1);
-    int remainingDays = widget.myselectRenewal!.difference(now).inDays;
+    int daysDifference = difference.inDays;
     final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
     return Scaffold(
@@ -2970,59 +2971,64 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
               ),
 
               //car model and plate number
-              Column(
-                children: [
-                  Text(
-                    '${widget.model} ${widget.type} ${widget.carYear}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontFamily: "NeulisAlt",
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-
-                  //
-
-                  const SizedBox(height: 8),
-
-                  //plate no
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.plateController,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: "NeulisAlt",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                          color: Color(0xff7AE6EB),
-                        ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      '${widget.model} ${widget.type} ${widget.carYear}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: "NeulisAlt",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.white,
                       ),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 8, right: 8, top: 4, bottom: 4),
-                        decoration: BoxDecoration(
-                          color: const Color(0xff00343f),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: Text(
-                          "exp. $remainingDays days",
+                    ),
+
+                    //
+
+                    const SizedBox(height: 8),
+
+                    //plate no
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.plateController,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontFamily: "NeulisAlt",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: Color(0xff92BEC1),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            color: Color(0xff7AE6EB),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: 8, right: 8, top: 4, bottom: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xff00343f),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: Text(
+                            "exp. $daysDifference days",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: "NeulisAlt",
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13,
+                              color: Color(0xff92BEC1),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(height: 8),
@@ -3422,6 +3428,8 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                       'car': widget.carID,
                       'model': widget.modelID,
                       'engine': widget.engineID,
+                      // "year" : widget.carYear,
+                      "year": widget.yearID,
                       'gear_box': widget.gearboxID,
                       'date_of_purchase': widget.purchaseDate,
                       "vehicle_license": widget.selectRenewal,

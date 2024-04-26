@@ -62,6 +62,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   late DateTime _selectedDate;
 
   String selectedCarID = "";
+  bool isVisible = false;
 
   List<DateTime> selectedDates = [];
 
@@ -78,19 +79,19 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   }
 
   // Function to get the dates of the selected month
-  List<int> _getDatesInMonth(DateTime date) {
-    int daysInMonth = DateTime(date.year, date.month + 1, 0).day;
-    return List<int>.generate(daysInMonth, (index) => index + 1);
-  }
+  // List<int> _getDatesInMonth(DateTime date) {
+  //   int daysInMonth = DateTime(date.year, date.month + 1, 0).day;
+  //   return List<int>.generate(daysInMonth, (index) => index + 1);
+  // }
 
-  bool isVisible = false;
+  String myDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
   @override
   void initState() {
     super.initState();
     _selectedDate = DateTime.now();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // ref.read(profileProvider.notifier).getExpenses();
+      ref.read(profileProvider.notifier).getExpenses(date: myDate);
       ref.read(profileProvider.notifier).getMyCars();
     });
   }
@@ -99,7 +100,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     DateTime endOfYear = DateTime(now.year + 1, 1, 1);
-    int remainingDays = endOfYear.difference(now).inDays;
+    // int remainingDays = endOfYear.difference(now).inDays;
 
     // List<String> daysOfWeek = _getDaysOfWeek();
     // List<int> datesInMonth = _getDatesInMonth(_selectedDate);
@@ -249,6 +250,17 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                             itemCount: myCarz.length,
                             itemBuilder: (BuildContext context, int index) {
                               final carz = myCarz[index];
+                              String myRenewal = carz.vehicleLicense ?? '0';
+
+// Replace `/` with `-` to match the standard date format
+                              myRenewal = myRenewal.replaceAll('/', '-');
+
+                              DateTime renewalDate = DateTime.parse(myRenewal);
+                              Duration difference =
+                                  renewalDate.difference(DateTime.now());
+
+// Get the number of days from the difference
+                              int daysDifference = difference.inDays;
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Row(
@@ -268,6 +280,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                                 topRight: Radius.circular(20.0),
                                               ),
                                               child: MyCarInfoPage(
+                                                exp: daysDifference,
                                                 bodyStyle: carz.category!.name,
                                                 cylinder:
                                                     carz.details!.cylinder,
@@ -360,7 +373,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                                     BorderRadius.circular(40),
                                               ),
                                               child: Text(
-                                                "exp. $remainingDays days",
+                                                "exp. $daysDifference days",
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
                                                   fontFamily: "NeulisAlt",
@@ -619,7 +632,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                                   ),
                                                   onPressed: () {
                                                     model.deleteCar(formData: {
-                                                      "id": selectedCarID
+                                                      "car_id": selectedCarID
                                                     }).then((value) async {
                                                       if (value.successMessage
                                                           .isNotEmpty) {
@@ -631,6 +644,12 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                                               return MoticarDialog(
                                                                 subtitle: value
                                                                     .successMessage,
+                                                                buttonColor:
+                                                                    AppColors
+                                                                        .appThemeColor,
+                                                                textColor:
+                                                                    Colors
+                                                                        .white,
                                                                 onTap: () {
                                                                   Navigator.push(
                                                                       context,
@@ -1004,8 +1023,9 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                                   breakdown.category.toString(),
                                               category:
                                                   breakdown.category.toString(),
-                                              amount: nairaFormat
-                                                  .format(breakdown.amount),
+                                              amount: nairaFormat.format(
+                                                  double.parse(
+                                                      breakdown.amount)),
                                               paymode: breakdown.methodOfPayment
                                                   .toString(),
                                               title: breakdown.title.toString(),
@@ -1080,8 +1100,8 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                       Row(
                                         children: [
                                           Text(
-                                              nairaFormat
-                                                  .format(breakdown.amount),
+                                              nairaFormat.format(double.parse(
+                                                  breakdown.amount)),
                                               style: const TextStyle(
                                                   fontFamily: "Neulis",
                                                   color: Color(0xff006C70),

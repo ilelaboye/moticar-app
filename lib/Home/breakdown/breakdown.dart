@@ -252,7 +252,8 @@ class _BreakDownPageState extends State<BreakDownPage> {
                           Row(
                             children: [
                               Text(
-                                nairaFormat.format(mycarparts.total),
+                                nairaFormat
+                                    .format(double.parse(mycarparts.total)),
                                 style: const TextStyle(
                                     fontFamily: "Neulis",
                                     color: Color(0xff006C70),
@@ -476,7 +477,7 @@ class _BreakDownPageState extends State<BreakDownPage> {
   int calculateTotalExpense(List<Carpart> expenses) {
     int total = 0;
     for (var expense in expenses) {
-      total += expense.total!.toInt();
+      total += double.parse(expense.total).toInt();
     }
     return total;
   }

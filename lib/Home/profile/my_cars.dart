@@ -26,7 +26,7 @@ class MyCarInfoPage extends ConsumerStatefulWidget {
     required this.acceleration,
     required this.topSpeed,
     required this.tyreSize,
-    // required this.userId,
+    required this.exp,
     // required this.carId,
     // required this.carModelId,
     // required this.engineId,
@@ -91,6 +91,7 @@ class MyCarInfoPage extends ConsumerStatefulWidget {
   final String gearbox;
   final String car;
   final String model;
+  final int exp;
   final String category;
 
   @override
@@ -234,7 +235,7 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                           borderRadius: BorderRadius.circular(40),
                         ),
                         child: Text(
-                          "exp. $remainingDays days",
+                          "exp. ${widget.exp} days",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontFamily: "NeulisAlt",
