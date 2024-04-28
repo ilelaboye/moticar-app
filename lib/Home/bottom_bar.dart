@@ -1,17 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/colors.dart';
 import 'dashboard/me_profile.dart';
 import 'dashboard/more_page.dart';
-import 'dashboard/moticar_page.dart';
 import 'dashboard/spend.dart';
 import 'dashboard/timeline.dart';
-import 'dashboard/timeline_filled.dart';
 import 'profile/mileage_set_reminder.dart';
-import 'profile/new_mileage.dart';
 // import 'package:sizer/sizer.dart';
 
 // @RoutePage()
@@ -27,13 +23,13 @@ class BottomHomePage extends StatefulWidget {
 class _BottomHomePageState extends State<BottomHomePage> {
   int currentPageIndex = 0;
 
-  final List<Widget> _pages = [
-    const TimelinePage(),
-    // const SpendPage(),
-    const TimelineFilledPage(),
-    const AddReminderPage(),
-    const MePage(),
-    const MorePage(),
+  final List<Widget> _pages = const [
+    TimelinePage(),
+    //   TimelineFilledPage(),
+    SpendPage(),
+    AddReminderPage(),
+    MePage(),
+    MorePage(),
   ];
   List<bool> isLoading = [false, false, false, false, false];
 

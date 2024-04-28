@@ -35,13 +35,13 @@ class AddExpensesPage extends StatefulHookConsumerWidget {
       required this.conditionz,
       required this.isDone,
       required this.measure,
-      required this.imagePath,
+      required this.partImage,
       required this.brand,
       required this.quantity,
       required this.productName,
       required this.carParts,
       required this.amountz});
-  final String imagePath,
+  final String partImage,
       quantity,
       productName,
       carParts,
@@ -207,7 +207,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     _selectedDate = savedDate != null ? DateTime.tryParse(savedDate) : null;
     _selectTechie = _prefs.getString('selectedTechie');
     payType = _prefs.getString("payType") ?? 'defaultValue';
-    selectedCategory = _prefs.getString('selectedCategory') ?? " ";
+    selectedCategory = _prefs.getString('selectedCategory') ?? "Car Wash";
     final titlez = _prefs.getString('titlez') ?? '';
     final descript = _prefs.getString('descript') ?? '';
     final amountzz = _prefs.getString('amountzz') ?? '';
@@ -218,25 +218,25 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     });
   }
 
-  Future<void> _saveState() async {
-    if (_selectedDate != null) {
-      await _prefs.setString('selectedDate', _selectedDate!.toString());
-    }
-    if (_selectTechie != null) {
-      await _prefs.setString('selectedTechie', _selectTechie!);
-    }
+  // Future<void> _saveState() async {
+  //   if (_selectedDate != null) {
+  //     await _prefs.setString('selectedDate', _selectedDate!.toString());
+  //   }
+  //   if (_selectTechie != null) {
+  //     await _prefs.setString('selectedTechie', _selectTechie!);
+  //   }
 
-    if (payType != null) {
-      await _prefs.setString("payType", payType);
-    }
+  //   if (payType != null) {
+  //     await _prefs.setString("payType", payType);
+  //   }
 
-    if (selectedCategory != null) {
-      await _prefs.setString("selectedCategory", selectedCategory);
-    }
-    await _prefs.setString('titlez', titleController.text);
-    await _prefs.setString('descript', descriptionController.text);
-    await _prefs.setString('amountzz', amountController.text);
-  }
+  //   if (selectedCategory != null) {
+  //     await _prefs.setString("selectedCategory", selectedCategory);
+  //   }
+  //   await _prefs.setString('titlez', titleController.text);
+  //   await _prefs.setString('descript', descriptionController.text);
+  //   await _prefs.setString('amountzz', amountController.text);
+  // }
 
   Future<void> _clearState() async {
     await _prefs.remove('selectedDate');
@@ -291,14 +291,14 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
       body: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(6),
+            padding: const EdgeInsets.all(4),
             width: MediaQuery.of(context).size.width,
             child: state.loading == Loader.loading
                 ? const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MoticarLoader(size: 40),
+                        MoticarLoader(size: 30),
                       ],
                     ),
                   )
@@ -314,21 +314,25 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                             color: AppColors.teal,
                           ),
                           child: ListView.builder(
-                            itemCount: myCarz.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            // itemCount: myCarz.length,
+                            itemCount: myCarz.isNotEmpty
+                                ? 1
+                                : 0, // Only show 1 item if myCarz is not empty
                             itemBuilder: (BuildContext context, int index) {
                               final carz = myCarz[index];
                               String myRenewal = carz.vehicleLicense != null
                                   ? carz.vehicleLicense.toString()
                                   : '0';
 
-// Replace `/` with `-` to match the standard date format
+                              // Replace `/` with `-` to match the standard date format
                               myRenewal = myRenewal.replaceAll('/', '-');
 
                               DateTime renewalDate = DateTime.parse(myRenewal);
                               Duration difference =
                                   renewalDate.difference(DateTime.now());
 
-// Get the number of days from the difference
+                              // Get the number of days from the difference
                               int daysDifference = difference.inDays;
                               String daysDifferenceText = daysDifference < 1
                                   ? "Expired"
@@ -822,6 +826,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: 6,
+                      )
                     ],
                   ),
           ),
@@ -863,18 +870,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                         .imagePath,
                                   ),
                                 ),
-                                // Container(
-                                //   height: 50,
-                                //   width: 50,
-                                //   padding: const EdgeInsets.all(8),
-                                //   decoration: const BoxDecoration(
-                                //     color: AppColors.yellow,
-                                //     shape: BoxShape.circle,
-                                //   ),
-                                //     child: SvgPicture.asset(
-
-                                //   ),
-                                // ),
                                 const SizedBox(width: 8),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -894,7 +889,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     GestureDetector(
                                       onTap: () async {
                                         _showExpenseCategory(context);
-                                        _saveState();
+                                        // _saveState();
+
+                                        _loadSavedText();
                                       },
                                       child: Text(
                                         selectedCategory,
@@ -920,7 +917,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   child: GestureDetector(
                                     onTap: () {
                                       _selectDate(context);
-                                      _saveState();
+                                      // _saveState();
+                                      _loadSavedText();
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
@@ -1011,7 +1009,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                 validator: (value) =>
                                     FieldValidator.validate(value!),
                                 onEditingComplete: () {
-                                  _saveState();
+                                  // _saveState();
+                                  _loadSavedText();
                                 },
                                 // onChanged: (value) {
                                 //   // Update the email variable as the user types
@@ -1075,7 +1074,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                 validator: (value) =>
                                     FieldValidaor.validateEmptyfield(value!),
                                 onEditingComplete: () {
-                                  _saveState();
+                                  // _saveState();
+                                  _loadSavedText();
                                 },
                                 // onChanged: (value) {
                                 //   _saveState();
@@ -1236,7 +1236,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                         onChanged: (value) {
                                           setState(() {
                                             _selectTechie = value!;
-                                            _saveState();
+                                            // _saveState();
+                                            _loadSavedText();
                                           });
                                         },
                                       ),
@@ -1307,10 +1308,12 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                       fontSize: 16),
                                   maxLength: 9,
                                   onEditingComplete: () {
-                                    _saveState();
+                                    // _saveState();
+                                    _loadSavedText();
                                   },
                                   onChanged: (value) {
-                                    _saveState();
+                                    // _saveState();
+                                    _loadSavedText();
                                   },
                                   validator: (value) =>
                                       FieldValidator.validate(value!),
@@ -1374,8 +1377,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                         return GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              _saveState();
-                                              // selectedIndex = index;
+                                              // _saveState();
+                                              _loadSavedText();
 
                                               payType = paymentList[index];
 
@@ -1559,7 +1562,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     children: [
                                       Row(
                                         children: [
-                                          SvgPicture.asset(widget.imagePath),
+                                          SvgPicture.asset(widget.partImage),
                                           const SizedBox(width: 12),
                                           Container(
                                             padding: const EdgeInsets.only(

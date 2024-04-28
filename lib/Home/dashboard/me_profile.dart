@@ -274,7 +274,7 @@ class _MePageState extends ConsumerState<MePage> {
                                   // mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     state.getProfile.image != null &&
-                                            state.getProfile.image!.isNotEmpty
+                                            state.getProfile.image.isNotEmpty
                                         ? CircleAvatar(
                                             radius: 60,
                                             backgroundColor:

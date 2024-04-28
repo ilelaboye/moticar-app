@@ -4,19 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/Home/bottom_bar.dart';
-import 'package:moticar/auth/signup/sign_2.dart';
 import 'package:moticar/auth/signup/signup.dart';
 import 'package:moticar/providers/authentication.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/auth/verifyResetToken.dart';
 import 'package:moticar/widgets/bottom_sheet_service.dart';
-import 'package:moticar/widgets/eard_loader.dart';
 import 'package:moticar/widgets/flushbar.dart';
-import 'package:moticar/widgets/loader.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rive/rive.dart';
 
 import '../../providers/app_providers.dart';
@@ -27,7 +22,6 @@ import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/eard_dialog.dart';
-import 'login_phone.dart';
 
 class LoginPage extends StatefulHookConsumerWidget {
   const LoginPage({super.key});

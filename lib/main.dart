@@ -58,7 +58,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       builder: EasyLoading.init(),
       theme: ThemeData(
         floatingActionButtonTheme: const FloatingActionButtonThemeData(

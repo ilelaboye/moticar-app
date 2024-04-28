@@ -231,7 +231,7 @@ class _FirstKnowState extends State<FirstKnow> {
                       builder: (context) {
                         return AlertDialog(
                           backgroundColor: const Color(
-                              0xff222222E5), // Set background color to black
+                              0xff222222e5), // Set background color to black
                           title: const Text(
                             '“moticar” would like to send you notifications',
                             textAlign: TextAlign.center,

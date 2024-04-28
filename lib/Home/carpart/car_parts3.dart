@@ -506,7 +506,7 @@ class _AddCarPart3State extends ConsumerState<AddCarPart3> {
                             builder: (context) {
                               return AddExpensesPage(
                                   isDone: true,
-                                  imagePath: widget.partImage,
+                                  partImage: widget.partImage,
                                   quantity: widget.quantity.toString(),
                                   measure: widget.measurements,
                                   conditionz: widget.condition,

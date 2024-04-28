@@ -207,7 +207,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return const AddExpensesPage(
-                  imagePath: "",
+                  partImage: " ",
                   quantity: "",
                   isDone: false,
                   productName: "",
@@ -229,7 +229,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
             // top green screen
 
             Container(
-              padding: const EdgeInsets.all(6),
+              padding: const EdgeInsets.all(4),
               width: MediaQuery.of(context).size.width,
               child: state.loading == Loader.loading
                   ? const Center(
@@ -252,7 +252,11 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                               color: AppColors.teal,
                             ),
                             child: ListView.builder(
-                              itemCount: myCarz.length,
+                              // itemCount: myCarz.length,
+                              itemCount: myCarz.isNotEmpty
+                                  ? 1
+                                  : 0, // Only show 1 item if myCarz is not empty
+
                               itemBuilder: (BuildContext context, int index) {
                                 final carz = myCarz[index];
                                 String myRenewal = carz.vehicleLicense != null
@@ -514,28 +518,6 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                               ],
                             ),
                           ),
-
-                        // TextButton(
-                        //     onPressed: () {
-                        //       Navigator.push(context,
-                        //           MaterialPageRoute(builder: (context) {
-                        //         return const AddCarPage(isHome: true);
-                        //       }));
-                        //     },
-                        //     child: const Row(
-                        //       children: [
-                        //         Text("No cars Available, Add New Car")
-                        //       ],
-                        //     ),
-                        //   ),
-
-                        // const SizedBox(
-                        //     height: 150,
-                        //     width: 150,
-                        //     child: RiveAnimation.asset(
-                        //       'assets/images/splashscreenanim.riv',
-                        //     ),
-                        //   ),
                         Visibility(
                           visible: isVisible,
                           child: Column(
@@ -800,6 +782,9 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: 6,
+                        )
                       ],
                     ),
             ),

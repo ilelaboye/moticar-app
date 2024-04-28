@@ -116,7 +116,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return const AddExpensesPage(
-                imagePath: "",
+                partImage: "",
                 quantity: "",
                 isDone: false,
                 productName: "",
@@ -169,22 +169,19 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                               color: AppColors.teal,
                             ),
                             child: ListView.builder(
-                              itemCount: 1, //myCarz.length,
+                              itemCount: myCarz.isNotEmpty
+                                  ? 1
+                                  : 0, // Only show 1 item if myCarz is not empty
                               itemBuilder: (BuildContext context, int index) {
                                 final carz = myCarz[index];
                                 String myRenewal = carz.vehicleLicense != null
                                     ? carz.vehicleLicense.toString()
                                     : '0';
-
-// Replace `/` with `-` to match the standard date format
                                 myRenewal = myRenewal.replaceAll('/', '-');
-
                                 DateTime renewalDate =
                                     DateTime.parse(myRenewal);
                                 Duration difference =
                                     renewalDate.difference(DateTime.now());
-
-// Get the number of days from the difference
                                 int daysDifference = difference.inDays;
                                 String daysDifferenceText = daysDifference < 1
                                     ? "Expired"
@@ -670,6 +667,9 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                 ),
                               ],
                             ),
+                          ),
+                          SizedBox(
+                            height: 6,
                           )
                         ],
                       )
@@ -1204,9 +1204,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
   }
 
 // notifications
-  void _showMyNotification(
-    BuildContext context,
-  ) {
+  void _showMyNotification(context) {
     showModalBottomSheet(
       isScrollControlled: true,
       constraints: BoxConstraints.expand(
