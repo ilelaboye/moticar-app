@@ -218,25 +218,25 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
     });
   }
 
-  // Future<void> _saveState() async {
-  //   if (_selectedDate != null) {
-  //     await _prefs.setString('selectedDate', _selectedDate!.toString());
-  //   }
-  //   if (_selectTechie != null) {
-  //     await _prefs.setString('selectedTechie', _selectTechie!);
-  //   }
+  Future<void> _saveState() async {
+    if (_selectedDate != null) {
+      await _prefs.setString('selectedDate', _selectedDate!.toString());
+    }
+    if (_selectTechie != null) {
+      await _prefs.setString('selectedTechie', _selectTechie!);
+    }
 
-  //   if (payType != null) {
-  //     await _prefs.setString("payType", payType);
-  //   }
+    if (payType != null) {
+      await _prefs.setString("payType", payType);
+    }
 
-  //   if (selectedCategory != null) {
-  //     await _prefs.setString("selectedCategory", selectedCategory);
-  //   }
-  //   await _prefs.setString('titlez', titleController.text);
-  //   await _prefs.setString('descript', descriptionController.text);
-  //   await _prefs.setString('amountzz', amountController.text);
-  // }
+    if (selectedCategory != null) {
+      await _prefs.setString("selectedCategory", selectedCategory);
+    }
+    await _prefs.setString('titlez', titleController.text);
+    await _prefs.setString('descript', descriptionController.text);
+    await _prefs.setString('amountzz', amountController.text);
+  }
 
   Future<void> _clearState() async {
     await _prefs.remove('selectedDate');
@@ -295,7 +295,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
-                if (state.getallCarz != Loader.loading &&
+                if (state.loading != Loader.loading &&
                     state.getallCarz.isNotEmpty)
                   // if (myCarz.isNotEmpty)
                   Container(
@@ -797,9 +797,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 6,
-                )
+                // SizedBox(
+                //   height: 6,
+                // )
               ],
             ),
           ),
@@ -859,7 +859,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     GestureDetector(
                                       onTap: () async {
                                         _showExpenseCategory(context);
-                                        // _saveState();
+                                        _saveState();
 
                                         _loadSavedText();
                                       },
@@ -887,7 +887,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                   child: GestureDetector(
                                     onTap: () {
                                       _selectDate(context);
-                                      // _saveState();
+                                      _saveState();
                                       _loadSavedText();
                                     },
                                     child: Container(
@@ -964,11 +964,8 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                               TextFormField(
                                 controller: titleController,
                                 keyboardType: TextInputType.text,
-                                onTapOutside: (event) {
-                                  // FocusScope.of(context)
-                                  //     .unfocus(); // Close the keyboard
-                                },
-                                textInputAction: TextInputAction.next,
+
+                                textInputAction: TextInputAction.done,
                                 style: const TextStyle(
                                     fontFamily: "NeulisAlt",
                                     color: AppColors.textColor,
@@ -979,7 +976,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                 validator: (value) =>
                                     FieldValidator.validate(value!),
                                 onEditingComplete: () {
-                                  // _saveState();
+                                  _saveState();
                                   _loadSavedText();
                                 },
                                 // onChanged: (value) {
@@ -1044,7 +1041,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                 validator: (value) =>
                                     FieldValidaor.validateEmptyfield(value!),
                                 onEditingComplete: () {
-                                  // _saveState();
+                                  _saveState();
                                   _loadSavedText();
                                 },
                                 // onChanged: (value) {
@@ -1206,7 +1203,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                         onChanged: (value) {
                                           setState(() {
                                             _selectTechie = value!;
-                                            // _saveState();
+                                            _saveState();
                                             _loadSavedText();
                                           });
                                         },
@@ -1267,9 +1264,9 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                     FilteringTextInputFormatter.digitsOnly,
                                     ThousandsFormatter(),
                                   ],
-                                  onTapOutside: (event) {
-                                    FocusScope.of(context).unfocus();
-                                  },
+                                  // onTapOutside: (event) {
+                                  //   FocusScope.of(context).unfocus();
+                                  // },
                                   textInputAction: TextInputAction.done,
                                   style: const TextStyle(
                                       fontFamily: "NeulisAlt",
@@ -1278,12 +1275,12 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                       fontSize: 16),
                                   maxLength: 9,
                                   onEditingComplete: () {
-                                    // _saveState();
+                                    _saveState();
                                     _loadSavedText();
                                   },
                                   onChanged: (value) {
-                                    // _saveState();
-                                    _loadSavedText();
+                                    _saveState();
+                                    // _loadSavedText();
                                   },
                                   validator: (value) =>
                                       FieldValidator.validate(value!),
@@ -1347,7 +1344,7 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                         return GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              // _saveState();
+                                              _saveState();
                                               _loadSavedText();
 
                                               payType = paymentList[index];

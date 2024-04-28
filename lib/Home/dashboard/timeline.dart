@@ -14,8 +14,6 @@ import '../../widgets/bottom_sheet_service.dart';
 import '../../widgets/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:clean_calendar/clean_calendar.dart';
-
-import '../../widgets/eard_loader.dart';
 import '../breakdown/breakdown.dart';
 import '../expense/add_expense.dart';
 import '../expense/add_technician.dart';
@@ -233,7 +231,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
-                  if (state.getallCarz != Loader.loading &&
+                  if (state.loading != Loader.loading &&
                       state.getallCarz.isNotEmpty)
                     // if (myCarz.isNotEmpty)
                     Container(
@@ -902,18 +900,20 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                       ),
 
                       // if no activity or no data
-                      if (state.loading == Loader.loading)
-                        const Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              MoticarLoader(
-                                size: 40,
-                              )
-                            ],
-                          ),
-                        )
-                      else if (myExpensez.isNotEmpty)
+                      // if (state.loading == Loader.loading)
+                      //   const Center(
+                      //     child: Column(
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       children: [
+                      //         MoticarLoader(
+                      //           size: 40,
+                      //         )
+                      //       ],
+                      //     ),
+                      //   )
+                      if (state.loading != Loader.loading &&
+                          state.getexpenses.isNotEmpty)
+                        // else if (myExpensez.isNotEmpty)
                         Column(
                           children: [
                             const SizedBox(
@@ -1259,6 +1259,19 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                 ),
                               ],
                             ),
+                          ],
+                        )
+                      else if (state.loading == Loader.loading)
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 120,
+                              width: 120,
+                              child: RiveAnimation.asset(
+                                'assets/images/splashscreenanim.riv',
+                              ),
+                            )
                           ],
                         )
                       else

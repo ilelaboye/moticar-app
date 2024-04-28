@@ -207,7 +207,7 @@ class _SpendPageState extends ConsumerState<SpendPage> {
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
-                    if (state.getallCarz != Loader.loading &&
+                    if (state.loading != Loader.loading &&
                         state.getallCarz.isNotEmpty)
                       // if (myCarz.isNotEmpty)
                       Container(
