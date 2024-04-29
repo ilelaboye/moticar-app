@@ -263,6 +263,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                         child: IntlPhoneField(
                           key: const Key('phoneField'),
                           controller: phoneController,
+                          showCountryFlag: false,
                           style: const TextStyle(
                               fontFamily: "NeulisAlt",
                               color: AppColors.textColor,
