@@ -1,0 +1,2853 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		CA272E8348BAB4CE0B0C804FB7B818C4 /* FlutterMacOS */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 624022EE1C2EAB1C3CC38699E1368C5F /* Build configuration list for PBXAggregateTarget "FlutterMacOS" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = FlutterMacOS;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		02488BDEF1B924D03F440237AB9891E3 /* hb-buffer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 778CFD7A5EE3C6BFD62D00CC2441585D /* hb-buffer.cc */; };
+		0292452585B969EF4D0016F95FEE65AA /* YGNodePrint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 64EA9996DD6F3B53D36D4D3125BD3319 /* YGNodePrint.cpp */; };
+		02B2F69662FEBBF564356C3FE34CC2B3 /* hb-subset-input.cc in Sources */ = {isa = PBXBuildFile; fileRef = 3DF60E3840F580193F46DA1C32759708 /* hb-subset-input.cc */; };
+		0814F5B732AF4233080C74FECF882FA0 /* hb-ucd.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1BB0357D13FD89651BF339E02CDF5645 /* hb-ucd.cc */; };
+		08BEC4BBA6563BA06263DC318E922597 /* hb-ot-color.cc in Sources */ = {isa = PBXBuildFile; fileRef = 742BDD874442CC51F8864F62F8E4A323 /* hb-ot-color.cc */; };
+		0B0A53771CF98E086D7C4BC76A2104AC /* SBCodepoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B9AE143435EAB0A9C217AAD017D6BE1 /* SBCodepoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		10342EB1BB776ADC1A70B79B8082B09D /* YGLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCD9417067A91EF616F3A225CDAD9FAB /* YGLayout.cpp */; };
+		1629B8406B32693D774F27FEDAB006FE /* hb-ot-cff2-table.cc in Sources */ = {isa = PBXBuildFile; fileRef = F37AF791FC6DE80C4BACCAC6CBB57EB4 /* hb-ot-cff2-table.cc */; };
+		1A4A2C18A40EAD1876D003CC072C0D3A /* hb-draw.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7D6411ADC20C20C1BA9B5184760A8D8C /* hb-draw.cc */; };
+		1E15E4F7400C067A1C273655830C16D1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */; };
+		1FE240B506FB0DAA50CBE22E357F226A /* hb-ot-shaper-indic.cc in Sources */ = {isa = PBXBuildFile; fileRef = C88471D40A8B9B93AF627824A16EED57 /* hb-ot-shaper-indic.cc */; };
+		213846393B1F0D938A126A671C148271 /* SBMirrorLocator.h in Headers */ = {isa = PBXBuildFile; fileRef = DA8235F3B1E042FA2D74806C39749823 /* SBMirrorLocator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		280491699FFA9D23C8806DD69C7493C1 /* SBScriptLocator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F636D3005D061057A1951C57A2C91F2 /* SBScriptLocator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A3FB874CD12A5867DB15640C2118B8B /* SheenBidi.c in Sources */ = {isa = PBXBuildFile; fileRef = 565AD3EF80E5DFC58E378A48EF93C3F1 /* SheenBidi.c */; };
+		2FAB98BCB0F5CEB7029470EEFB22ACA2 /* SBBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BA7ACDCE0D21F6F8FB3494BCB89C460 /* SBBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		313E8A4B76F8E7A70B936B61BE7B80B6 /* SBGeneralCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FB96F7C4D8841126EAFC2D3F2CECBAC /* SBGeneralCategory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		318921EDE176D3B78F4E9B708BCB8C63 /* hb-shaper.cc in Sources */ = {isa = PBXBuildFile; fileRef = AE253563C6E1678C1FF417EAACD1B201 /* hb-shaper.cc */; };
+		32E35993FB152BF7DDEBFADA6E5110E4 /* hb-aat-map.cc in Sources */ = {isa = PBXBuildFile; fileRef = A296B1BD8421B5464440D74858192DB5 /* hb-aat-map.cc */; };
+		35B4D9B95704FD2A14F855C5BE6E2D61 /* SheenBidi.h in Headers */ = {isa = PBXBuildFile; fileRef = 7105902DE0FDD5B9C5408D3EA98F5108 /* SheenBidi.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		36F00A75F01C0BA260E997FE9AB3044D /* Yoga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88065F7E46F69B8903B8F11F0DCFF040 /* Yoga.cpp */; };
+		39DC101DDE0D196418F9EFF6260641A9 /* hb-ot-shaper-use.cc in Sources */ = {isa = PBXBuildFile; fileRef = 55C309EA1017F6E34036154483911B2F /* hb-ot-shaper-use.cc */; };
+		3DBE8F233A5E86688038DA8DA1366327 /* hb-ot-shaper-syllabic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 54B34F4EB853118A2E0F0E1E2F65AE44 /* hb-ot-shaper-syllabic.cc */; };
+		3F1709D0A30CFA36FDF89F94654E26B7 /* path_provider_foundation-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BC27993860A58C4BFFA9CB91EE6AEE4 /* path_provider_foundation-dummy.m */; };
+		422EDDEA180E5F1A4365F516D0FBF905 /* hb-buffer-serialize.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7F5CFEAD3CEFB017695736D59F3458DA /* hb-buffer-serialize.cc */; };
+		43E31E6E75E1AF59766B88A0B690CA0A /* hb-static.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8661AEB50C58D627E080EC38321E2EBF /* hb-static.cc */; };
+		4AFA84442D41E20C53689FF1D62FA62F /* audio_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 429F4E1979945EB1758C0201DBC117FB /* audio_reader.cpp */; };
+		4B0ED1C2587C6438B531D2251919DEC2 /* hb-number.cc in Sources */ = {isa = PBXBuildFile; fileRef = B20B1BA143430689160B51D5B4B71D6A /* hb-number.cc */; };
+		4BAAEC4C567074063F9FF23DFCBB6E74 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */; };
+		4C9A0BE44F743E65E995D2795AF758DF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */; };
+		4D34277C028799D9C089E4B2359A702F /* SBScript.h in Headers */ = {isa = PBXBuildFile; fileRef = 37C76F45C8BE2B6145F9A747813B30D6 /* SBScript.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4F3120F3389701E93CA012CC1322A2DB /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667F772D801AF4B6644A69FE0F71482B /* common.cpp */; };
+		51FD0D395C6CAEAC204501806A89BD23 /* hb-shape-plan.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4FBD56820BBBE4FE9EE94C40B4FF4E68 /* hb-shape-plan.cc */; };
+		52D483B42EE10281ABA92E6F86C45E41 /* hb-ot-shaper-arabic.cc in Sources */ = {isa = PBXBuildFile; fileRef = 604E817B86F6CDBF659908F62539640D /* hb-ot-shaper-arabic.cc */; };
+		56C547097E9EDEE52F621570CBA6CBDD /* hb-ot-shaper-myanmar.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7CF8FB4A2F8C7A4243B1E2478BD5BC01 /* hb-ot-shaper-myanmar.cc */; };
+		576ABE6AFEF945A11FB7653D9739430A /* rive_common-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 21634AEA19BF2B14A8F67C42928AB9EC /* rive_common-dummy.m */; };
+		58816022F1DF97C6EAAC566C65EFA3D7 /* YGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABBA46929B4EA098CCA546BE9D0D52EF /* YGNode.cpp */; };
+		589B70959B164BF899C3F9AA49D03BB7 /* audio_source.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2FBC8AA67CA6614811124963B9E00B3 /* audio_source.cpp */; };
+		5938A7E95F656D549431B8E92E3B79E4 /* hb-ot-shaper-khmer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6DA804D40DDA01B44F8A9CA65D89303C /* hb-ot-shaper-khmer.cc */; };
+		5A909D9B43714059BDDF544CEC8BD85A /* hb-ot-shaper-vowel-constraints.cc in Sources */ = {isa = PBXBuildFile; fileRef = 03EA5F79AD228385CCCDE79C07C2302D /* hb-ot-shaper-vowel-constraints.cc */; };
+		5CB236DECF701D1003C0A9BD0DB2961D /* hb-ot-shape-normalize.cc in Sources */ = {isa = PBXBuildFile; fileRef = E0F48362C17FCC5C3D7DB5F28BFB17CB /* hb-ot-shape-normalize.cc */; };
+		5F78346CF5A886CB36A5952536064180 /* SBLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 7005B92602133AFD05A435DC0CD09D6E /* SBLine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		60B199B0F1B8FBA0811B0A39430C98E0 /* SBBidiType.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DE1482FA1C8453201DF625336852C05 /* SBBidiType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61B2FCF497ABD498DE580B7FC9A5A885 /* hb-ot-map.cc in Sources */ = {isa = PBXBuildFile; fileRef = 389BA3C7789AF26D3564A54BA336E445 /* hb-ot-map.cc */; };
+		6232A980CBD5DD8DE02A60B5B4D5D4BE /* hb-unicode.cc in Sources */ = {isa = PBXBuildFile; fileRef = 213606AA7CA08A0C557069516E989BF5 /* hb-unicode.cc */; };
+		627C4F51E8F8DC3068AC4A2F47740E97 /* hb-subset-cff2.cc in Sources */ = {isa = PBXBuildFile; fileRef = C8B031E16A927E5FE57F118A00A74D22 /* hb-subset-cff2.cc */; };
+		63669F32EA18104D94799AF26D21DCD9 /* rive_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CC84B0ADCC5AF6AED329152937E2B765 /* rive_text.cpp */; };
+		66BB7ABF14105B6EDC0AFD22E558F4E2 /* hb-buffer-verify.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0FFBBFA3B9B19FCF7D822C265D7FF234 /* hb-buffer-verify.cc */; };
+		68DD428154EE48C88AA2567DD5313830 /* path_provider_foundation-path_provider_foundation_privacy in Resources */ = {isa = PBXBuildFile; fileRef = 3DBD4BADE27F8B91024E4B4B4DD75DB5 /* path_provider_foundation-path_provider_foundation_privacy */; };
+		6B1E62EB116E7D7A6252B6F079890306 /* Pods-RunnerTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D3DB54C128E3D88C0C9C7DDEA475ED7 /* Pods-RunnerTests-dummy.m */; };
+		72D3200876FDB5A8805B73DDC2961E75 /* PathProviderPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC252A1406DB785CE86E49892A26C12B /* PathProviderPlugin.swift */; };
+		73D1DE99F651121FA050C71C099292DB /* YGValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 976B7506BF2A634A883FB5A010D10FD4 /* YGValue.cpp */; };
+		76396C5FFDEE830D97EF9B22B8CBB9C2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */; };
+		778C02F3484FA782E650C2DE1A478FD0 /* renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93268494BAEC8A1C72D30C5D68D68522 /* renderer.cpp */; };
+		7A1DD069F84033245F615EC81BF016F7 /* hb-ot-shaper-thai.cc in Sources */ = {isa = PBXBuildFile; fileRef = D6BF447CCECEE9A5FE1C7D31540301A6 /* hb-ot-shaper-thai.cc */; };
+		7B78AFB7E313F8F4859A1320F649AA11 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EA563FCC86399EF493AF14024D633AE1 /* Utils.cpp */; };
+		84FB5FF785F9BDE8F46FD2FE1FF66356 /* mat2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375109BA0A072C2C276EB95C032F77FD /* mat2d.cpp */; };
+		886A3B76AC1AC1B36524B8C5D16D2D35 /* hb-ot-var.cc in Sources */ = {isa = PBXBuildFile; fileRef = D25939A043649A72420FC56FEBF34A13 /* hb-ot-var.cc */; };
+		8B5182245C9632A12E128248E9B60AED /* SBRun.h in Headers */ = {isa = PBXBuildFile; fileRef = 5064D9DF5DB26BF08CB36BEC1C8A2475 /* SBRun.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8C7815BA4D09A8357082A3CAB1A6E642 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01EBAC997D36AEE1C8B3EE09B4B119B8 /* event.cpp */; };
+		8D454D702EB115B52A5ED5A5F9D52C9C /* hb-ot-meta.cc in Sources */ = {isa = PBXBuildFile; fileRef = 48AA1D841DD8B0B5E91B0E57A055A794 /* hb-ot-meta.cc */; };
+		8FBDBAB093E99DE199E3EDA8F0994AE8 /* hb-ot-math.cc in Sources */ = {isa = PBXBuildFile; fileRef = D978FEBEFD20B1A29D8D556470DBB9DB /* hb-ot-math.cc */; };
+		8FD94CBDDF027DA1D383B3A3DAFC7F15 /* hb-ot-shaper-hebrew.cc in Sources */ = {isa = PBXBuildFile; fileRef = F187FE7295E3599723BEF50197400FA1 /* hb-ot-shaper-hebrew.cc */; };
+		91CAC7FE294205D6A9AB9548D6E6AC5E /* YGStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7F3B4FD2D8B11E17A53AE5630A865CC /* YGStyle.cpp */; };
+		91D3F56FCD629AFE00BAE7127A2294AE /* FileSelectorPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A044EF3BA4CD1E2F5A75779B8C4948E1 /* FileSelectorPlugin.swift */; };
+		9314D08D2937F357C00E5F5BE617F749 /* hb-face.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1F9B88BC293A68DF894C7F2A219578E7 /* hb-face.cc */; };
+		941C918272EAF54969FAC3CC623B9FD3 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4DDA6C145D6825EB10D82919B6B2E1 /* log.cpp */; };
+		9595B7206C7C74E117793C60FA3B3438 /* hb-ot-shape.cc in Sources */ = {isa = PBXBuildFile; fileRef = D3D5BC7DFB6E82502018CAF2B9E2D1D2 /* hb-ot-shape.cc */; };
+		9648704AA5B6C59CE184DCEC148C8F3A /* hb-map.cc in Sources */ = {isa = PBXBuildFile; fileRef = CE304F8B0971DA70C17ACB67295E7240 /* hb-map.cc */; };
+		970701982BC8890FE9A86C074DE8E21B /* hb-subset-cff1.cc in Sources */ = {isa = PBXBuildFile; fileRef = E328857B404FFCE5C19BC22ECD743E5C /* hb-subset-cff1.cc */; };
+		98CAA8E342B097918D38A159F825B5EA /* SBConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = FCD1B60D81EA4178B8362E4C554E298A /* SBConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C4A06C0435B54BA18A01D132B3BB388 /* Pods-Runner-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 499E3722E8DACDC2AAA6C15AD1796520 /* Pods-Runner-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9CFB6D13187650953A9A4E4E58198B9A /* file_selector_macos-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E612607A223F66CAA042D572F16E1AB /* file_selector_macos-dummy.m */; };
+		9E678E80EDED4E0D702633A4A7D536B1 /* hb-subset-repacker.cc in Sources */ = {isa = PBXBuildFile; fileRef = E2A788C083705DE65ACD8BAB919F6A81 /* hb-subset-repacker.cc */; };
+		9EB01D4BAD34551CB1BFD18DF8FC5608 /* YGConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 240C3990EF01AE28C09C968FCDC35670 /* YGConfig.cpp */; };
+		9EFA50210DE293ED63A826898E1C15EB /* audio_engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14343E4F0E2B4D76232F0885AB46D68B /* audio_engine.cpp */; };
+		9F31FF5D00E07B3B173970A57F86478C /* hb-subset-instancer-solver.cc in Sources */ = {isa = PBXBuildFile; fileRef = 860D006F4D1942CEBAA5562C68675040 /* hb-subset-instancer-solver.cc */; };
+		A0FEA142F58346B53311A81D3B21D63A /* hb-ot-tag.cc in Sources */ = {isa = PBXBuildFile; fileRef = 614CB33CE7A9A57F859C9F135D01379E /* hb-ot-tag.cc */; };
+		A18BCFB59CDD3971F418DC231C17CB8D /* hb-ot-layout.cc in Sources */ = {isa = PBXBuildFile; fileRef = 869A1732A78F7E60BD5CF71376539AA4 /* hb-ot-layout.cc */; };
+		A2C4F99AFB40B8CF02EAC82A627E9E43 /* hb-subset-cff-common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 22F5145FDEC7F2E171B3079BE511828F /* hb-subset-cff-common.cc */; };
+		A98F705888BF84D59BF489F3A358314E /* SBCodepointSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FF3383D181C33951487254BC8DDFD7C /* SBCodepointSequence.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA63379DD5CC1A84A9B632F04E8D6E0F /* file_selector_macos-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DA275CB68D0CFCBCF29350EB61BD9351 /* file_selector_macos-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ABF0F38712D83E07999737A1B20CD858 /* hb-ot-metrics.cc in Sources */ = {isa = PBXBuildFile; fileRef = F11F174555D7471C26B7CD827A072871 /* hb-ot-metrics.cc */; };
+		AC23BBF5B8F538CEA52B81A466686B77 /* hb-subset.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7988ED9637A9496A5F9F64B48AC83353 /* hb-subset.cc */; };
+		AC537BF16FF87535A604468BCD74792D /* rive_common-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F2F9321BA47C1811C330DA57437A8FDD /* rive_common-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B0CCCC4F461614560A0292DEE3732860 /* RivePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EE514B9C4E0BAA8E3E9D074EB0CA98 /* RivePlugin.swift */; };
+		B22CCC3D9892AD3308D965EF7ABA6662 /* hb-blob.cc in Sources */ = {isa = PBXBuildFile; fileRef = F40BADD8E9EC7CBD48C5CF660984260F /* hb-blob.cc */; };
+		B43301D7921B3BC835D97185C320F3EE /* hb-shape.cc in Sources */ = {isa = PBXBuildFile; fileRef = 9D2C5ADEFD2EFB18703B4759513E1013 /* hb-shape.cc */; };
+		B7EE6269A533026BF8EAD46D6BC349D4 /* SBAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C602D74B7A9676A8105BF3A0E1D61C5 /* SBAlgorithm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BE34AEB9093462DFF56F8DC2B428119D /* hb-set.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46B37D396507E039B1F8885AA400D1F0 /* hb-set.cc */; };
+		BF3AA3B9EDAC1F416A5B844BA593F411 /* messages.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9A287F083A1A82AC7CCE4D7ED2B6F4 /* messages.g.swift */; };
+		BF79083EAB6C7FA27980976F6D439791 /* hb-common.cc in Sources */ = {isa = PBXBuildFile; fileRef = 40C829AD2EE51CE245922A67D188345E /* hb-common.cc */; };
+		C19D70D8251C49FF44D5B1E2347DD9F1 /* raw_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8A76EB4FD311C06F35DB69BB2F970BF /* raw_path.cpp */; };
+		C5BF5735BCF766ED656873F72BC03155 /* hb-ot-shape-fallback.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8436C4BE62289442119F864ACDCA7AE /* hb-ot-shape-fallback.cc */; };
+		C761D83590667D0BBB76FCB77CFA9365 /* gsubgpos-context.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD9FD0D535D43112108BB09FC934E654 /* gsubgpos-context.cc */; };
+		CA4747D6596D312FAC7A07D9FBBE0840 /* hb-ot-shaper-hangul.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD861EA6E88B29ADDFD3552B08A003D4 /* hb-ot-shaper-hangul.cc */; };
+		CC09EE181D27D4AE0901E49F38A227C2 /* hb-subset-plan.cc in Sources */ = {isa = PBXBuildFile; fileRef = B7C0C613197AB1165F376F62A472BA79 /* hb-subset-plan.cc */; };
+		CDD40558A669FFC7CDFB37E4C82F51AE /* hb-aat-layout.cc in Sources */ = {isa = PBXBuildFile; fileRef = 578B74AE2ADBF3988117BFB3C491D23B /* hb-aat-layout.cc */; };
+		CFDA5C669C9657E149377564B8FEDDE6 /* hb-paint-extents.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5717A49F1DF42E4CB53EA473D6BF7F5C /* hb-paint-extents.cc */; };
+		D0BD084553F4C6424BC71E9FCA65A6F8 /* messages.g.swift in Sources */ = {isa = PBXBuildFile; fileRef = C915EFC074ED7AFC1888761E07FA025A /* messages.g.swift */; };
+		D0C6545C93F21A51A3F2724F919C4AD1 /* hb-ot-cff1-table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 09B7E6435A5A0575A59B49E26E5D3BA9 /* hb-ot-cff1-table.cc */; };
+		D4D42C5A0DD5237AA8AED230376A2F3D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F1C89FFCD86807A25BFBB0C697276305 /* PrivacyInfo.xcprivacy */; };
+		D4F329A9C814606AEB92E5BB6B7BC80B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */; };
+		D922019E7702484D2BA36882BB4A398B /* font_hb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 716A2454C78BD436D68AC753750FC3A6 /* font_hb.cpp */; };
+		DA625BB788219EAFE9036304AC80C55D /* Pods-Runner-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E794494AB90477BA94C681E994ADF341 /* Pods-Runner-dummy.m */; };
+		DFC1D192C742C86CAAC947A7F6EB764B /* line_breaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ACED96003CAC36C9FD100C2E0702892 /* line_breaker.cpp */; };
+		E026F6B9FB034E6088BE11E428F371BC /* hb-face-builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0A2BB0B9040ABFE769D668112F130EDE /* hb-face-builder.cc */; };
+		E07C9E85A51FA5342BC29005D08999A0 /* SBParagraph.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FD5972724F24FCE09CB65F6ECF6A43C /* SBParagraph.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E391DBEEE6EECEE3AE32C2DF8D47CE78 /* hb-ot-face.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4EE811EC8DB180E7220B6E08FAFB3964 /* hb-ot-face.cc */; };
+		EB5A670CAF8B46C98A8054E666335106 /* hb-ot-name.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4993EC1DB284CE99D99237AC58AAEC80 /* hb-ot-name.cc */; };
+		EC809D5921F0F4A062A71AB7364738A7 /* hb-font.cc in Sources */ = {isa = PBXBuildFile; fileRef = 0EFD46E5F203411EA97F78E6AD608C69 /* hb-font.cc */; };
+		F1E7C2244FFFE807BFC6FBBF5D1B744C /* path_provider_foundation-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FBE012567AD5AA2DF5F3A6466C8EA187 /* path_provider_foundation-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F2D93653DF821D561BBD7328728A5BBA /* YGEnums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 78B93C7C89BA5BDFA12C0D134E0B4A3E /* YGEnums.cpp */; };
+		F2F49C44D1F5F658CF2BD6B3FC636919 /* hb-outline.cc in Sources */ = {isa = PBXBuildFile; fileRef = AD74B8B291D8B809611E353669FA210B /* hb-outline.cc */; };
+		F3731ACF300791BFA514B4F66E26977F /* hb-ot-shaper-indic-table.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5FB9C6A119B09BD12A62A91272546931 /* hb-ot-shaper-indic-table.cc */; };
+		F71AFBB7FAA78734C1A70DEDB154FB85 /* hb-paint.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2FDCB0ACF44377DD5EA718443F30D1B4 /* hb-paint.cc */; };
+		FA4ACD3E3801A6116D2CB1A64C52C00D /* audio_sound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B621D8C5BDB293D60433E1D0CF261AC2 /* audio_sound.cpp */; };
+		FB92D19DEE943228088329B768399796 /* hb-ot-font.cc in Sources */ = {isa = PBXBuildFile; fileRef = 705010D68330A0EF1B520CC08FF249F9 /* hb-ot-font.cc */; };
+		FC01A3F426A510A36DDB100DAC4E1B85 /* hb-ot-shaper-default.cc in Sources */ = {isa = PBXBuildFile; fileRef = B3E8BAF95DF4510330501F38C87F4B57 /* hb-ot-shaper-default.cc */; };
+		FC05A1BE39A9244D5B09A2F3B09A967A /* Pods-RunnerTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E9B12BCE5540D02A80250C3EC16D399 /* Pods-RunnerTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1DA69CD2C95DEA5002E4A466F7FA68BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B74B458B450D74B75744B87BD747314;
+			remoteInfo = "Pods-Runner";
+		};
+		21E449E89B079D005A1F10E9A69E9FD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CACE6618E7996464E38687E13F67D945;
+			remoteInfo = "path_provider_foundation-path_provider_foundation_privacy";
+		};
+		39382782E7443FD8D5F4BE66DABFE668 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA272E8348BAB4CE0B0C804FB7B818C4;
+			remoteInfo = FlutterMacOS;
+		};
+		57B29C1C8B515747C98CBAA58EB4C93F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA272E8348BAB4CE0B0C804FB7B818C4;
+			remoteInfo = FlutterMacOS;
+		};
+		599839BD93154E94AF053219E6E0AE31 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA272E8348BAB4CE0B0C804FB7B818C4;
+			remoteInfo = FlutterMacOS;
+		};
+		67B4D404B2669C551110F98CCDCFA531 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56F581DDCB0A032454E604885E17AE3C;
+			remoteInfo = path_provider_foundation;
+		};
+		6CFB20FA3192DD7ABC4D4FF383B1CF94 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E9C719E84F67F73FC0C74005C9B0C057;
+			remoteInfo = rive_common;
+		};
+		9F12F04A2AF43A95E345F2DB78F2F735 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 773D4A7C7FA9CAB9B055EBF0A53821FB;
+			remoteInfo = file_selector_macos;
+		};
+		9FDAB00F214DB29FDBC27551F255F93E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA272E8348BAB4CE0B0C804FB7B818C4;
+			remoteInfo = FlutterMacOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		017BC84903F37229D25E9DDCA97A12BD /* file_selector_macos.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = file_selector_macos.modulemap; sourceTree = "<group>"; };
+		01EBAC997D36AEE1C8B3EE09B4B119B8 /* event.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = event.cpp; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/event/event.cpp"; sourceTree = "<group>"; };
+		03E8AD2E8B75443E12D3D3BD12A9900E /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		03EA5F79AD228385CCCDE79C07C2302D /* hb-ot-shaper-vowel-constraints.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-vowel-constraints.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-vowel-constraints.cc"; sourceTree = "<group>"; };
+		040CD68AE03999EB4E1D29E24992D747 /* FlutterMacOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FlutterMacOS.debug.xcconfig; sourceTree = "<group>"; };
+		09B7E6435A5A0575A59B49E26E5D3BA9 /* hb-ot-cff1-table.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-cff1-table.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-cff1-table.cc"; sourceTree = "<group>"; };
+		09EE514B9C4E0BAA8E3E9D074EB0CA98 /* RivePlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RivePlugin.swift; path = "../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/Classes/RivePlugin.swift"; sourceTree = "<group>"; };
+		0A2BB0B9040ABFE769D668112F130EDE /* hb-face-builder.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-face-builder.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-face-builder.cc"; sourceTree = "<group>"; };
+		0AFB643DA4919253F749E2836A5AAFDC /* Pods-Runner-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Runner-Info.plist"; sourceTree = "<group>"; };
+		0BC27993860A58C4BFFA9CB91EE6AEE4 /* path_provider_foundation-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "path_provider_foundation-dummy.m"; sourceTree = "<group>"; };
+		0D4DDA6C145D6825EB10D82919B6B2E1 /* log.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = log.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/log.cpp"; sourceTree = "<group>"; };
+		0EA655C7389E4D720D47043FCC8EF411 /* file_selector_macos-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "file_selector_macos-prefix.pch"; sourceTree = "<group>"; };
+		0EFD46E5F203411EA97F78E6AD608C69 /* hb-font.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-font.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-font.cc"; sourceTree = "<group>"; };
+		0FFBBFA3B9B19FCF7D822C265D7FF234 /* hb-buffer-verify.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-buffer-verify.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-buffer-verify.cc"; sourceTree = "<group>"; };
+		11AA7018F95317D959D9D2E76CBB2377 /* Pods-RunnerTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RunnerTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		14343E4F0E2B4D76232F0885AB46D68B /* audio_engine.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = audio_engine.cpp; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive-cpp/src/audio/audio_engine.cpp"; sourceTree = "<group>"; };
+		148311DE55E6B6956613115A9F7A56C9 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2/LICENSE"; sourceTree = "<group>"; };
+		18C28D2BAA27DACABA33B0965610C9FC /* path_provider_foundation-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "path_provider_foundation-prefix.pch"; sourceTree = "<group>"; };
+		1B136F41D5B5FAE96EA576E768A5771D /* Pods-Runner-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Runner-acknowledgements.plist"; sourceTree = "<group>"; };
+		1BB0357D13FD89651BF339E02CDF5645 /* hb-ucd.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ucd.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ucd.cc"; sourceTree = "<group>"; };
+		1F9B88BC293A68DF894C7F2A219578E7 /* hb-face.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-face.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-face.cc"; sourceTree = "<group>"; };
+		1FB96F7C4D8841126EAFC2D3F2CECBAC /* SBGeneralCategory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBGeneralCategory.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBGeneralCategory.h"; sourceTree = "<group>"; };
+		213606AA7CA08A0C557069516E989BF5 /* hb-unicode.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-unicode.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-unicode.cc"; sourceTree = "<group>"; };
+		21634AEA19BF2B14A8F67C42928AB9EC /* rive_common-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "rive_common-dummy.m"; sourceTree = "<group>"; };
+		22F5145FDEC7F2E171B3079BE511828F /* hb-subset-cff-common.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-subset-cff-common.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-subset-cff-common.cc"; sourceTree = "<group>"; };
+		240C3990EF01AE28C09C968FCDC35670 /* YGConfig.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = YGConfig.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/YGConfig.cpp"; sourceTree = "<group>"; };
+		241D6481A3138F4FE14EB3044AA841BB /* rive_common.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = rive_common.modulemap; sourceTree = "<group>"; };
+		2BA7ACDCE0D21F6F8FB3494BCB89C460 /* SBBase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBBase.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBBase.h"; sourceTree = "<group>"; };
+		2E612607A223F66CAA042D572F16E1AB /* file_selector_macos-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "file_selector_macos-dummy.m"; sourceTree = "<group>"; };
+		2FDCB0ACF44377DD5EA718443F30D1B4 /* hb-paint.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-paint.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-paint.cc"; sourceTree = "<group>"; };
+		3544776D2F5BD8765FDA8D6471B071C9 /* rive_common.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = rive_common.podspec; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive_common.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		375109BA0A072C2C276EB95C032F77FD /* mat2d.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = mat2d.cpp; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive-cpp/src/math/mat2d.cpp"; sourceTree = "<group>"; };
+		37C76F45C8BE2B6145F9A747813B30D6 /* SBScript.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBScript.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBScript.h"; sourceTree = "<group>"; };
+		389BA3C7789AF26D3564A54BA336E445 /* hb-ot-map.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-map.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-map.cc"; sourceTree = "<group>"; };
+		3ACED96003CAC36C9FD100C2E0702892 /* line_breaker.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = line_breaker.cpp; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive-cpp/src/text/line_breaker.cpp"; sourceTree = "<group>"; };
+		3C602D74B7A9676A8105BF3A0E1D61C5 /* SBAlgorithm.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBAlgorithm.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBAlgorithm.h"; sourceTree = "<group>"; };
+		3DBD4BADE27F8B91024E4B4B4DD75DB5 /* path_provider_foundation-path_provider_foundation_privacy */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "path_provider_foundation-path_provider_foundation_privacy"; path = path_provider_foundation_privacy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		3DF60E3840F580193F46DA1C32759708 /* hb-subset-input.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-subset-input.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-subset-input.cc"; sourceTree = "<group>"; };
+		3F636D3005D061057A1951C57A2C91F2 /* SBScriptLocator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBScriptLocator.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBScriptLocator.h"; sourceTree = "<group>"; };
+		3FF3383D181C33951487254BC8DDFD7C /* SBCodepointSequence.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBCodepointSequence.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBCodepointSequence.h"; sourceTree = "<group>"; };
+		40C829AD2EE51CE245922A67D188345E /* hb-common.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-common.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-common.cc"; sourceTree = "<group>"; };
+		429F4E1979945EB1758C0201DBC117FB /* audio_reader.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = audio_reader.cpp; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive-cpp/src/audio/audio_reader.cpp"; sourceTree = "<group>"; };
+		46B37D396507E039B1F8885AA400D1F0 /* hb-set.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-set.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-set.cc"; sourceTree = "<group>"; };
+		4875F8CF0D5756842129C154C61FC0AA /* file_selector_macos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = file_selector_macos.debug.xcconfig; sourceTree = "<group>"; };
+		48AA1D841DD8B0B5E91B0E57A055A794 /* hb-ot-meta.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-meta.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-meta.cc"; sourceTree = "<group>"; };
+		4993EC1DB284CE99D99237AC58AAEC80 /* hb-ot-name.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-name.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-name.cc"; sourceTree = "<group>"; };
+		499E3722E8DACDC2AAA6C15AD1796520 /* Pods-Runner-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Runner-umbrella.h"; sourceTree = "<group>"; };
+		4D3DB54C128E3D88C0C9C7DDEA475ED7 /* Pods-RunnerTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RunnerTests-dummy.m"; sourceTree = "<group>"; };
+		4EE811EC8DB180E7220B6E08FAFB3964 /* hb-ot-face.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-face.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-face.cc"; sourceTree = "<group>"; };
+		4FBD56820BBBE4FE9EE94C40B4FF4E68 /* hb-shape-plan.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-shape-plan.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-shape-plan.cc"; sourceTree = "<group>"; };
+		5064D9DF5DB26BF08CB36BEC1C8A2475 /* SBRun.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBRun.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBRun.h"; sourceTree = "<group>"; };
+		54B34F4EB853118A2E0F0E1E2F65AE44 /* hb-ot-shaper-syllabic.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-syllabic.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-syllabic.cc"; sourceTree = "<group>"; };
+		55C309EA1017F6E34036154483911B2F /* hb-ot-shaper-use.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-use.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-use.cc"; sourceTree = "<group>"; };
+		565AD3EF80E5DFC58E378A48EF93C3F1 /* SheenBidi.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SheenBidi.c; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Source/SheenBidi.c"; sourceTree = "<group>"; };
+		5717A49F1DF42E4CB53EA473D6BF7F5C /* hb-paint-extents.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-paint-extents.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-paint-extents.cc"; sourceTree = "<group>"; };
+		578B74AE2ADBF3988117BFB3C491D23B /* hb-aat-layout.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-aat-layout.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-aat-layout.cc"; sourceTree = "<group>"; };
+		5FB9C6A119B09BD12A62A91272546931 /* hb-ot-shaper-indic-table.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-indic-table.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-indic-table.cc"; sourceTree = "<group>"; };
+		604E817B86F6CDBF659908F62539640D /* hb-ot-shaper-arabic.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-arabic.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-arabic.cc"; sourceTree = "<group>"; };
+		614CB33CE7A9A57F859C9F135D01379E /* hb-ot-tag.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-tag.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-tag.cc"; sourceTree = "<group>"; };
+		64EA9996DD6F3B53D36D4D3125BD3319 /* YGNodePrint.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = YGNodePrint.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/YGNodePrint.cpp"; sourceTree = "<group>"; };
+		667F772D801AF4B6644A69FE0F71482B /* common.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = common.cpp; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/common.cpp"; sourceTree = "<group>"; };
+		669E8F25E1897672BDB80B7EB784DA24 /* Pods-Runner */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-Runner"; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A06CF6DE0C467B193E1F6323CAFF8AC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/file_selector_macos-0.9.3+3/LICENSE"; sourceTree = "<group>"; };
+		6C3345B1B3CAEDF5B03B1F731FDC492E /* Pods-RunnerTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-RunnerTests"; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C9A287F083A1A82AC7CCE4D7ED2B6F4 /* messages.g.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = messages.g.swift; path = "../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/file_selector_macos-0.9.3+3/macos/Classes/messages.g.swift"; sourceTree = "<group>"; };
+		6DA804D40DDA01B44F8A9CA65D89303C /* hb-ot-shaper-khmer.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-khmer.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-khmer.cc"; sourceTree = "<group>"; };
+		6DE1482FA1C8453201DF625336852C05 /* SBBidiType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBBidiType.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBBidiType.h"; sourceTree = "<group>"; };
+		6FD5972724F24FCE09CB65F6ECF6A43C /* SBParagraph.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBParagraph.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBParagraph.h"; sourceTree = "<group>"; };
+		7005B92602133AFD05A435DC0CD09D6E /* SBLine.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBLine.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBLine.h"; sourceTree = "<group>"; };
+		705010D68330A0EF1B520CC08FF249F9 /* hb-ot-font.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-font.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-font.cc"; sourceTree = "<group>"; };
+		7105902DE0FDD5B9C5408D3EA98F5108 /* SheenBidi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SheenBidi.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SheenBidi.h"; sourceTree = "<group>"; };
+		716A2454C78BD436D68AC753750FC3A6 /* font_hb.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = font_hb.cpp; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive-cpp/src/text/font_hb.cpp"; sourceTree = "<group>"; };
+		728A5ED1DD60BAC8C8F382A87B976F84 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		7293E79A1834DCAC4076C2A1DDEC6D51 /* path_provider_foundation.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = path_provider_foundation.modulemap; sourceTree = "<group>"; };
+		742BDD874442CC51F8864F62F8E4A323 /* hb-ot-color.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-color.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-color.cc"; sourceTree = "<group>"; };
+		773BFCE41424EB8EBB72EF3F6A5FB719 /* Pods-Runner-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Runner-frameworks.sh"; sourceTree = "<group>"; };
+		778CFD7A5EE3C6BFD62D00CC2441585D /* hb-buffer.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-buffer.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-buffer.cc"; sourceTree = "<group>"; };
+		78B93C7C89BA5BDFA12C0D134E0B4A3E /* YGEnums.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = YGEnums.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/YGEnums.cpp"; sourceTree = "<group>"; };
+		7988ED9637A9496A5F9F64B48AC83353 /* hb-subset.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-subset.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-subset.cc"; sourceTree = "<group>"; };
+		79F83F4D505FA40C1CD18A8029181D59 /* Pods-RunnerTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RunnerTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		7CF8FB4A2F8C7A4243B1E2478BD5BC01 /* hb-ot-shaper-myanmar.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-myanmar.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-myanmar.cc"; sourceTree = "<group>"; };
+		7D6411ADC20C20C1BA9B5184760A8D8C /* hb-draw.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-draw.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-draw.cc"; sourceTree = "<group>"; };
+		7E1917D278F6321CC247C42F191DBD15 /* rive_common-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "rive_common-prefix.pch"; sourceTree = "<group>"; };
+		7F5CFEAD3CEFB017695736D59F3458DA /* hb-buffer-serialize.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-buffer-serialize.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-buffer-serialize.cc"; sourceTree = "<group>"; };
+		860D006F4D1942CEBAA5562C68675040 /* hb-subset-instancer-solver.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-subset-instancer-solver.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-subset-instancer-solver.cc"; sourceTree = "<group>"; };
+		8661AEB50C58D627E080EC38321E2EBF /* hb-static.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-static.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-static.cc"; sourceTree = "<group>"; };
+		869A1732A78F7E60BD5CF71376539AA4 /* hb-ot-layout.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-layout.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-layout.cc"; sourceTree = "<group>"; };
+		88065F7E46F69B8903B8F11F0DCFF040 /* Yoga.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = Yoga.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/Yoga.cpp"; sourceTree = "<group>"; };
+		891AA7761777901A877BD520F0529838 /* path_provider_foundation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = path_provider_foundation.debug.xcconfig; sourceTree = "<group>"; };
+		8B9AE143435EAB0A9C217AAD017D6BE1 /* SBCodepoint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBCodepoint.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBCodepoint.h"; sourceTree = "<group>"; };
+		8C21068FC02EF874B40A848CA7684464 /* rive_common.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = rive_common.release.xcconfig; sourceTree = "<group>"; };
+		93268494BAEC8A1C72D30C5D68D68522 /* renderer.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = renderer.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive-cpp/src/renderer.cpp"; sourceTree = "<group>"; };
+		976B7506BF2A634A883FB5A010D10FD4 /* YGValue.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = YGValue.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/YGValue.cpp"; sourceTree = "<group>"; };
+		979C9040C76B6FB59E07087B09855435 /* rive_common-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "rive_common-Info.plist"; sourceTree = "<group>"; };
+		9D2C5ADEFD2EFB18703B4759513E1013 /* hb-shape.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-shape.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-shape.cc"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9E9B12BCE5540D02A80250C3EC16D399 /* Pods-RunnerTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-RunnerTests-umbrella.h"; sourceTree = "<group>"; };
+		A044EF3BA4CD1E2F5A75779B8C4948E1 /* FileSelectorPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FileSelectorPlugin.swift; path = "../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/file_selector_macos-0.9.3+3/macos/Classes/FileSelectorPlugin.swift"; sourceTree = "<group>"; };
+		A06804B12769FB0D1610B1E34CAAB5EC /* FlutterMacOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FlutterMacOS.release.xcconfig; sourceTree = "<group>"; };
+		A296B1BD8421B5464440D74858192DB5 /* hb-aat-map.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-aat-map.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-aat-map.cc"; sourceTree = "<group>"; };
+		A8436C4BE62289442119F864ACDCA7AE /* hb-ot-shape-fallback.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shape-fallback.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shape-fallback.cc"; sourceTree = "<group>"; };
+		ABBA46929B4EA098CCA546BE9D0D52EF /* YGNode.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = YGNode.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/YGNode.cpp"; sourceTree = "<group>"; };
+		AC8FE152530FBDCE460186B326C1A8FB /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
+		AD74B8B291D8B809611E353669FA210B /* hb-outline.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-outline.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-outline.cc"; sourceTree = "<group>"; };
+		AE157A33FEF959A214796BFF348717F6 /* path_provider_foundation */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = path_provider_foundation; path = path_provider_foundation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE253563C6E1678C1FF417EAACD1B201 /* hb-shaper.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-shaper.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-shaper.cc"; sourceTree = "<group>"; };
+		AF08346F5A1923C6F7FAE211EC9F1B8C /* ResourceBundle-path_provider_foundation_privacy-path_provider_foundation-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-path_provider_foundation_privacy-path_provider_foundation-Info.plist"; sourceTree = "<group>"; };
+		B00A5ECAED4CA0C16FF7C65365BC0334 /* Pods-RunnerTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RunnerTests-Info.plist"; sourceTree = "<group>"; };
+		B0BD57AB3672E53828D11C2A3368023A /* Pods-RunnerTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-RunnerTests.modulemap"; sourceTree = "<group>"; };
+		B20B1BA143430689160B51D5B4B71D6A /* hb-number.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-number.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-number.cc"; sourceTree = "<group>"; };
+		B2ED0D4D505EB2E3F4C7D8E35E4FE152 /* FlutterMacOS.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = FlutterMacOS.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B2FBC8AA67CA6614811124963B9E00B3 /* audio_source.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = audio_source.cpp; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive-cpp/src/audio/audio_source.cpp"; sourceTree = "<group>"; };
+		B388C7538ADBD513BB8AD4B3C2513D6B /* path_provider_foundation.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = path_provider_foundation.podspec; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2/darwin/path_provider_foundation.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B3E8BAF95DF4510330501F38C87F4B57 /* hb-ot-shaper-default.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-default.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-default.cc"; sourceTree = "<group>"; };
+		B621D8C5BDB293D60433E1D0CF261AC2 /* audio_sound.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = audio_sound.cpp; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive-cpp/src/audio/audio_sound.cpp"; sourceTree = "<group>"; };
+		B703785507B22BAF0B800737429577EC /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		B7C0C613197AB1165F376F62A472BA79 /* hb-subset-plan.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-subset-plan.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-subset-plan.cc"; sourceTree = "<group>"; };
+		B86A7AE14827C052B79D0CEF46503622 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/LICENSE"; sourceTree = "<group>"; };
+		BCD9417067A91EF616F3A225CDAD9FAB /* YGLayout.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = YGLayout.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/YGLayout.cpp"; sourceTree = "<group>"; };
+		C0EEDA4B61EF24EF3AC272620BEB0E1F /* file_selector_macos.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = file_selector_macos.podspec; path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/file_selector_macos-0.9.3+3/macos/file_selector_macos.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		C24C1A035F22D24883C6F1876F274C6F /* Pods-Runner.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Runner.modulemap"; sourceTree = "<group>"; };
+		C2A19B351EE3987102FF0AA4CD33F175 /* file_selector_macos */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = file_selector_macos; path = file_selector_macos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C50FD10CD19FF6999637BA5ECAF1681B /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		C88471D40A8B9B93AF627824A16EED57 /* hb-ot-shaper-indic.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-indic.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-indic.cc"; sourceTree = "<group>"; };
+		C8B031E16A927E5FE57F118A00A74D22 /* hb-subset-cff2.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-subset-cff2.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-subset-cff2.cc"; sourceTree = "<group>"; };
+		C915EFC074ED7AFC1888761E07FA025A /* messages.g.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = messages.g.swift; path = "../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2/darwin/Classes/messages.g.swift"; sourceTree = "<group>"; };
+		CB0FC54400A71B8070338D8629CC2384 /* file_selector_macos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = file_selector_macos.release.xcconfig; sourceTree = "<group>"; };
+		CC252A1406DB785CE86E49892A26C12B /* PathProviderPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PathProviderPlugin.swift; path = "../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2/darwin/Classes/PathProviderPlugin.swift"; sourceTree = "<group>"; };
+		CC84B0ADCC5AF6AED329152937E2B765 /* rive_text.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = rive_text.cpp; path = "../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive_text/rive_text.cpp"; sourceTree = "<group>"; };
+		CD45C6F012BB11A9A2F63E8363508EC9 /* file_selector_macos-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "file_selector_macos-Info.plist"; sourceTree = "<group>"; };
+		CD861EA6E88B29ADDFD3552B08A003D4 /* hb-ot-shaper-hangul.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-hangul.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-hangul.cc"; sourceTree = "<group>"; };
+		CD9FD0D535D43112108BB09FC934E654 /* gsubgpos-context.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "gsubgpos-context.cc"; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/graph/gsubgpos-context.cc"; sourceTree = "<group>"; };
+		CE304F8B0971DA70C17ACB67295E7240 /* hb-map.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-map.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-map.cc"; sourceTree = "<group>"; };
+		D25939A043649A72420FC56FEBF34A13 /* hb-ot-var.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-var.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-var.cc"; sourceTree = "<group>"; };
+		D3D5BC7DFB6E82502018CAF2B9E2D1D2 /* hb-ot-shape.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shape.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shape.cc"; sourceTree = "<group>"; };
+		D6BF447CCECEE9A5FE1C7D31540301A6 /* hb-ot-shaper-thai.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-thai.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-thai.cc"; sourceTree = "<group>"; };
+		D978FEBEFD20B1A29D8D556470DBB9DB /* hb-ot-math.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-math.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-math.cc"; sourceTree = "<group>"; };
+		DA275CB68D0CFCBCF29350EB61BD9351 /* file_selector_macos-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "file_selector_macos-umbrella.h"; sourceTree = "<group>"; };
+		DA8235F3B1E042FA2D74806C39749823 /* SBMirrorLocator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBMirrorLocator.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBMirrorLocator.h"; sourceTree = "<group>"; };
+		DE8135CAE607F7824D08D08BDA5968B9 /* rive_common */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = rive_common; path = rive_common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0F48362C17FCC5C3D7DB5F28BFB17CB /* hb-ot-shape-normalize.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shape-normalize.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shape-normalize.cc"; sourceTree = "<group>"; };
+		E2A788C083705DE65ACD8BAB919F6A81 /* hb-subset-repacker.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-subset-repacker.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-subset-repacker.cc"; sourceTree = "<group>"; };
+		E328857B404FFCE5C19BC22ECD743E5C /* hb-subset-cff1.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-subset-cff1.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-subset-cff1.cc"; sourceTree = "<group>"; };
+		E4B3CB2DAADDAC406DB48184B9079885 /* rive_common.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = rive_common.debug.xcconfig; sourceTree = "<group>"; };
+		E736E0C9C5B73D27B8865E363E2108AC /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
+		E794494AB90477BA94C681E994ADF341 /* Pods-Runner-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Runner-dummy.m"; sourceTree = "<group>"; };
+		E7F3B4FD2D8B11E17A53AE5630A865CC /* YGStyle.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = YGStyle.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/YGStyle.cpp"; sourceTree = "<group>"; };
+		EA563FCC86399EF493AF14024D633AE1 /* Utils.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = Utils.cpp; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/yoga/yoga/Utils.cpp"; sourceTree = "<group>"; };
+		ECDF6AA713870989438BA93B395DC557 /* Pods-Runner-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Runner-acknowledgements.markdown"; sourceTree = "<group>"; };
+		F11F174555D7471C26B7CD827A072871 /* hb-ot-metrics.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-metrics.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-metrics.cc"; sourceTree = "<group>"; };
+		F187FE7295E3599723BEF50197400FA1 /* hb-ot-shaper-hebrew.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-shaper-hebrew.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-shaper-hebrew.cc"; sourceTree = "<group>"; };
+		F1C89FFCD86807A25BFBB0C697276305 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = "../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2/darwin/Resources/PrivacyInfo.xcprivacy"; sourceTree = "<group>"; };
+		F2F9321BA47C1811C330DA57437A8FDD /* rive_common-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "rive_common-umbrella.h"; sourceTree = "<group>"; };
+		F37AF791FC6DE80C4BACCAC6CBB57EB4 /* hb-ot-cff2-table.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-ot-cff2-table.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-ot-cff2-table.cc"; sourceTree = "<group>"; };
+		F40BADD8E9EC7CBD48C5CF660984260F /* hb-blob.cc */ = {isa = PBXFileReference; includeInIndex = 1; name = "hb-blob.cc"; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/harfbuzz/src/hb-blob.cc"; sourceTree = "<group>"; };
+		F437A73B9F7FDBF78E4240184E9EDDAC /* path_provider_foundation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = path_provider_foundation.release.xcconfig; sourceTree = "<group>"; };
+		F7F771C2C6D5D2857CDB7BDF5FB11A90 /* path_provider_foundation-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "path_provider_foundation-Info.plist"; sourceTree = "<group>"; };
+		F8A76EB4FD311C06F35DB69BB2F970BF /* raw_path.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = raw_path.cpp; path = "../../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/rive-cpp/src/math/raw_path.cpp"; sourceTree = "<group>"; };
+		FBE012567AD5AA2DF5F3A6466C8EA187 /* path_provider_foundation-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "path_provider_foundation-umbrella.h"; sourceTree = "<group>"; };
+		FCD1B60D81EA4178B8362E4C554E298A /* SBConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SBConfig.h; path = "../../../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3/macos/SheenBidi/Headers/SBConfig.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		26812204F9E66782F63AE60743733A27 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E15E4F7400C067A1C273655830C16D1 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BE51520BF140EF19DE41C9C9D5792D6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4F329A9C814606AEB92E5BB6B7BC80B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C9CFA1F134286F648EEA7BF6DBEDD6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C9A0BE44F743E65E995D2795AF758DF /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B038B1A2814B3EB0E5741954E9EAFE5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BAAEC4C567074063F9FF23DFCBB6E74 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C490C2CC2EE2221C199D32B46591FE37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76396C5FFDEE830D97EF9B22B8CBB9C2 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEDE27F4DD6DE4AD7BED02C4E2B03B2D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08BD2865E3067569A4DE3683406CBC32 /* Flutter */ = {
+			isa = PBXGroup;
+			children = (
+				F6ADDAB4B465861896C6DAE73A74F586 /* ephemeral */,
+			);
+			name = Flutter;
+			path = Flutter;
+			sourceTree = "<group>";
+		};
+		09DA5F3DA4A436D2002A6E8FA52094E2 /* macos */ = {
+			isa = PBXGroup;
+			children = (
+				0D2D36C3798F4DF35A65293829A195B8 /* Flutter */,
+			);
+			name = macos;
+			path = macos;
+			sourceTree = "<group>";
+		};
+		0D2D36C3798F4DF35A65293829A195B8 /* Flutter */ = {
+			isa = PBXGroup;
+			children = (
+				EDB88EEED9235AFCC6C374EE27DA367A /* ephemeral */,
+			);
+			name = Flutter;
+			path = Flutter;
+			sourceTree = "<group>";
+		};
+		0D78485BDE1E9F07C9FD1AFDC123F380 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				EE2DBC9975CD9BA2F29171F076BBFDC2 /* .. */,
+			);
+			name = ..;
+			path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/rive_common-0.3.3";
+			sourceTree = "<group>";
+		};
+		0EE2F592D9E91615920375486DE2287F /* src */ = {
+			isa = PBXGroup;
+			children = (
+				578B74AE2ADBF3988117BFB3C491D23B /* hb-aat-layout.cc */,
+				A296B1BD8421B5464440D74858192DB5 /* hb-aat-map.cc */,
+				F40BADD8E9EC7CBD48C5CF660984260F /* hb-blob.cc */,
+				778CFD7A5EE3C6BFD62D00CC2441585D /* hb-buffer.cc */,
+				7F5CFEAD3CEFB017695736D59F3458DA /* hb-buffer-serialize.cc */,
+				0FFBBFA3B9B19FCF7D822C265D7FF234 /* hb-buffer-verify.cc */,
+				40C829AD2EE51CE245922A67D188345E /* hb-common.cc */,
+				7D6411ADC20C20C1BA9B5184760A8D8C /* hb-draw.cc */,
+				1F9B88BC293A68DF894C7F2A219578E7 /* hb-face.cc */,
+				0A2BB0B9040ABFE769D668112F130EDE /* hb-face-builder.cc */,
+				0EFD46E5F203411EA97F78E6AD608C69 /* hb-font.cc */,
+				CE304F8B0971DA70C17ACB67295E7240 /* hb-map.cc */,
+				B20B1BA143430689160B51D5B4B71D6A /* hb-number.cc */,
+				09B7E6435A5A0575A59B49E26E5D3BA9 /* hb-ot-cff1-table.cc */,
+				F37AF791FC6DE80C4BACCAC6CBB57EB4 /* hb-ot-cff2-table.cc */,
+				742BDD874442CC51F8864F62F8E4A323 /* hb-ot-color.cc */,
+				4EE811EC8DB180E7220B6E08FAFB3964 /* hb-ot-face.cc */,
+				705010D68330A0EF1B520CC08FF249F9 /* hb-ot-font.cc */,
+				869A1732A78F7E60BD5CF71376539AA4 /* hb-ot-layout.cc */,
+				389BA3C7789AF26D3564A54BA336E445 /* hb-ot-map.cc */,
+				D978FEBEFD20B1A29D8D556470DBB9DB /* hb-ot-math.cc */,
+				48AA1D841DD8B0B5E91B0E57A055A794 /* hb-ot-meta.cc */,
+				F11F174555D7471C26B7CD827A072871 /* hb-ot-metrics.cc */,
+				4993EC1DB284CE99D99237AC58AAEC80 /* hb-ot-name.cc */,
+				D3D5BC7DFB6E82502018CAF2B9E2D1D2 /* hb-ot-shape.cc */,
+				A8436C4BE62289442119F864ACDCA7AE /* hb-ot-shape-fallback.cc */,
+				E0F48362C17FCC5C3D7DB5F28BFB17CB /* hb-ot-shape-normalize.cc */,
+				604E817B86F6CDBF659908F62539640D /* hb-ot-shaper-arabic.cc */,
+				B3E8BAF95DF4510330501F38C87F4B57 /* hb-ot-shaper-default.cc */,
+				CD861EA6E88B29ADDFD3552B08A003D4 /* hb-ot-shaper-hangul.cc */,
+				F187FE7295E3599723BEF50197400FA1 /* hb-ot-shaper-hebrew.cc */,
+				C88471D40A8B9B93AF627824A16EED57 /* hb-ot-shaper-indic.cc */,
+				5FB9C6A119B09BD12A62A91272546931 /* hb-ot-shaper-indic-table.cc */,
+				6DA804D40DDA01B44F8A9CA65D89303C /* hb-ot-shaper-khmer.cc */,
+				7CF8FB4A2F8C7A4243B1E2478BD5BC01 /* hb-ot-shaper-myanmar.cc */,
+				54B34F4EB853118A2E0F0E1E2F65AE44 /* hb-ot-shaper-syllabic.cc */,
+				D6BF447CCECEE9A5FE1C7D31540301A6 /* hb-ot-shaper-thai.cc */,
+				55C309EA1017F6E34036154483911B2F /* hb-ot-shaper-use.cc */,
+				03EA5F79AD228385CCCDE79C07C2302D /* hb-ot-shaper-vowel-constraints.cc */,
+				614CB33CE7A9A57F859C9F135D01379E /* hb-ot-tag.cc */,
+				D25939A043649A72420FC56FEBF34A13 /* hb-ot-var.cc */,
+				AD74B8B291D8B809611E353669FA210B /* hb-outline.cc */,
+				2FDCB0ACF44377DD5EA718443F30D1B4 /* hb-paint.cc */,
+				5717A49F1DF42E4CB53EA473D6BF7F5C /* hb-paint-extents.cc */,
+				46B37D396507E039B1F8885AA400D1F0 /* hb-set.cc */,
+				9D2C5ADEFD2EFB18703B4759513E1013 /* hb-shape.cc */,
+				4FBD56820BBBE4FE9EE94C40B4FF4E68 /* hb-shape-plan.cc */,
+				AE253563C6E1678C1FF417EAACD1B201 /* hb-shaper.cc */,
+				8661AEB50C58D627E080EC38321E2EBF /* hb-static.cc */,
+				7988ED9637A9496A5F9F64B48AC83353 /* hb-subset.cc */,
+				22F5145FDEC7F2E171B3079BE511828F /* hb-subset-cff-common.cc */,
+				E328857B404FFCE5C19BC22ECD743E5C /* hb-subset-cff1.cc */,
+				C8B031E16A927E5FE57F118A00A74D22 /* hb-subset-cff2.cc */,
+				3DF60E3840F580193F46DA1C32759708 /* hb-subset-input.cc */,
+				860D006F4D1942CEBAA5562C68675040 /* hb-subset-instancer-solver.cc */,
+				B7C0C613197AB1165F376F62A472BA79 /* hb-subset-plan.cc */,
+				E2A788C083705DE65ACD8BAB919F6A81 /* hb-subset-repacker.cc */,
+				1BB0357D13FD89651BF339E02CDF5645 /* hb-ucd.cc */,
+				213606AA7CA08A0C557069516E989BF5 /* hb-unicode.cc */,
+				70988B4D78918CBC32EA3A1234864F75 /* graph */,
+			);
+			name = src;
+			path = src;
+			sourceTree = "<group>";
+		};
+		0FBAC5E218BEA3E265E707270F24EB4A /* cord3 */ = {
+			isa = PBXGroup;
+			children = (
+				FFD42B5A402AAAA1FACA82F9E88EB706 /* morticar */,
+			);
+			name = cord3;
+			path = cord3;
+			sourceTree = "<group>";
+		};
+		115130A7A5D7B9D46CC84A16C6C552AB /* Flutter */ = {
+			isa = PBXGroup;
+			children = (
+				DDF699C73E6E248546E0427C54090CC1 /* ephemeral */,
+			);
+			name = Flutter;
+			path = Flutter;
+			sourceTree = "<group>";
+		};
+		12C98C69833BE40B653D0E9534C7E0B7 /* morticar */ = {
+			isa = PBXGroup;
+			children = (
+				CE7EC9D6B2A027F6280C066063F222FC /* mobileApp_frontend */,
+			);
+			name = morticar;
+			path = morticar;
+			sourceTree = "<group>";
+		};
+		1345134B9065ED7B97E13824045AE795 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				FE1D70AE418849CE0A85B5B82A66BD84 /* Documents */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		1E55AC099AA83266FC642D10D3244D8C /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				7436D6CD336197C8F67AF23040FDBACC /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		1FE6C658A5E90CFBA3726E58874A58AB /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7293E79A1834DCAC4076C2A1DDEC6D51 /* path_provider_foundation.modulemap */,
+				0BC27993860A58C4BFFA9CB91EE6AEE4 /* path_provider_foundation-dummy.m */,
+				F7F771C2C6D5D2857CDB7BDF5FB11A90 /* path_provider_foundation-Info.plist */,
+				18C28D2BAA27DACABA33B0965610C9FC /* path_provider_foundation-prefix.pch */,
+				FBE012567AD5AA2DF5F3A6466C8EA187 /* path_provider_foundation-umbrella.h */,
+				891AA7761777901A877BD520F0529838 /* path_provider_foundation.debug.xcconfig */,
+				F437A73B9F7FDBF78E4240184E9EDDAC /* path_provider_foundation.release.xcconfig */,
+				AF08346F5A1923C6F7FAE211EC9F1B8C /* ResourceBundle-path_provider_foundation_privacy-path_provider_foundation-Info.plist */,
+			);
+			name = "Support Files";
+			path = "../../../../../../Pods/Target Support Files/path_provider_foundation";
+			sourceTree = "<group>";
+		};
+		2041803D94FEE5DAF37C920AFB539FF3 /* path_provider_foundation */ = {
+			isa = PBXGroup;
+			children = (
+				381CFEE077ADD0172FA25704B25CA73E /* .. */,
+				9BE27727C4A4F743F9647933886E6D8B /* Pod */,
+				1FE6C658A5E90CFBA3726E58874A58AB /* Support Files */,
+			);
+			name = path_provider_foundation;
+			path = ../Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin;
+			sourceTree = "<group>";
+		};
+		2130D836532F1984ABD25220DB2D9051 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				D2C60C1D851C106C313B547F598A323F /* Documents */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		27A807A0D8B357D8E41FBD5AD55FF8EB /* macos */ = {
+			isa = PBXGroup;
+			children = (
+				4AF8B3821A1622FF1B82E8998978181F /* Classes */,
+			);
+			name = macos;
+			path = macos;
+			sourceTree = "<group>";
+		};
+		28E3E5AB18BEAF0D4D65830216DD3160 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				80B432E12B4ABCCFFAA805CC18BA5CD2 /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		2C1FE981ECEE15D51E75FBB073B2881D /* file_selector_macos */ = {
+			isa = PBXGroup;
+			children = (
+				72DB7BCCD13C40626755CC84A5B066D2 /* .. */,
+				BBE373053E77D35FF9ABFD8BB367FFCD /* Pod */,
+				C3C6C34A14EF0C15491FE2014477A28E /* Support Files */,
+			);
+			name = file_selector_macos;
+			path = ../Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos;
+			sourceTree = "<group>";
+		};
+		2DB8426A477BA92773F00012EBA84D53 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				E806A4F97D48F5FD3B4CA1BC617EA1F5 /* Pods-Runner */,
+				537E840C4F4E30B706FD9D64B15C53A7 /* Pods-RunnerTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		349C7EFD7F52C9F77B4E984422B3380A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				040CD68AE03999EB4E1D29E24992D747 /* FlutterMacOS.debug.xcconfig */,
+				A06804B12769FB0D1610B1E34CAAB5EC /* FlutterMacOS.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../../Pods/Target Support Files/FlutterMacOS";
+			sourceTree = "<group>";
+		};
+		35C9AB54B86DB79FE10874016CE56A86 /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2C1FE981ECEE15D51E75FBB073B2881D /* file_selector_macos */,
+				F58BBFDBFCDAEBDE0ACB3BE5C6C9A01E /* FlutterMacOS */,
+				2041803D94FEE5DAF37C920AFB539FF3 /* path_provider_foundation */,
+				5C642B16A4F1EA90B597AA24956BB031 /* rive_common */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		381CFEE077ADD0172FA25704B25CA73E /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				7656E4CA175B39ACC55EEDDA9376600F /* .. */,
+			);
+			name = ..;
+			path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2/darwin";
+			sourceTree = "<group>";
+		};
+		44DE05A740C66AA7F79A8D504C62DE64 /* mobileApp_frontend */ = {
+			isa = PBXGroup;
+			children = (
+				7FEB41B5999AA1E84770644049DD4A45 /* macos */,
+			);
+			name = mobileApp_frontend;
+			path = mobileApp_frontend;
+			sourceTree = "<group>";
+		};
+		460AD0C3530B4B50240BEA605F75E2A7 /* path_provider_foundation */ = {
+			isa = PBXGroup;
+			children = (
+				6FECB0DDE99A0349033FB98B7575443E /* darwin */,
+			);
+			name = path_provider_foundation;
+			path = path_provider_foundation;
+			sourceTree = "<group>";
+		};
+		47475CC2DDF28D8D15616BDE78E5B0C3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C2A19B351EE3987102FF0AA4CD33F175 /* file_selector_macos */,
+				AE157A33FEF959A214796BFF348717F6 /* path_provider_foundation */,
+				3DBD4BADE27F8B91024E4B4B4DD75DB5 /* path_provider_foundation-path_provider_foundation_privacy */,
+				669E8F25E1897672BDB80B7EB784DA24 /* Pods-Runner */,
+				6C3345B1B3CAEDF5B03B1F731FDC492E /* Pods-RunnerTests */,
+				DE8135CAE607F7824D08D08BDA5968B9 /* rive_common */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4AF8B3821A1622FF1B82E8998978181F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A044EF3BA4CD1E2F5A75779B8C4948E1 /* FileSelectorPlugin.swift */,
+				6C9A287F083A1A82AC7CCE4D7ED2B6F4 /* messages.g.swift */,
+			);
+			name = Classes;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4BEA4CFD17488D14915467484B678D24 /* plugins */ = {
+			isa = PBXGroup;
+			children = (
+				BAFF5A79C3A1909918693675F3AB2ACB /* file_selector_macos */,
+			);
+			name = plugins;
+			path = plugins;
+			sourceTree = "<group>";
+		};
+		4C836E70EC59C1BD1799D4B3C653C135 /* macos */ = {
+			isa = PBXGroup;
+			children = (
+				08BD2865E3067569A4DE3683406CBC32 /* Flutter */,
+			);
+			name = macos;
+			path = macos;
+			sourceTree = "<group>";
+		};
+		531D6C788B9ACFE972329CDA50025452 /* cord3 */ = {
+			isa = PBXGroup;
+			children = (
+				12C98C69833BE40B653D0E9534C7E0B7 /* morticar */,
+			);
+			name = cord3;
+			path = cord3;
+			sourceTree = "<group>";
+		};
+		537E840C4F4E30B706FD9D64B15C53A7 /* Pods-RunnerTests */ = {
+			isa = PBXGroup;
+			children = (
+				B0BD57AB3672E53828D11C2A3368023A /* Pods-RunnerTests.modulemap */,
+				11AA7018F95317D959D9D2E76CBB2377 /* Pods-RunnerTests-acknowledgements.markdown */,
+				79F83F4D505FA40C1CD18A8029181D59 /* Pods-RunnerTests-acknowledgements.plist */,
+				4D3DB54C128E3D88C0C9C7DDEA475ED7 /* Pods-RunnerTests-dummy.m */,
+				B00A5ECAED4CA0C16FF7C65365BC0334 /* Pods-RunnerTests-Info.plist */,
+				9E9B12BCE5540D02A80250C3EC16D399 /* Pods-RunnerTests-umbrella.h */,
+				03E8AD2E8B75443E12D3D3BD12A9900E /* Pods-RunnerTests.debug.xcconfig */,
+				E736E0C9C5B73D27B8865E363E2108AC /* Pods-RunnerTests.profile.xcconfig */,
+				AC8FE152530FBDCE460186B326C1A8FB /* Pods-RunnerTests.release.xcconfig */,
+			);
+			name = "Pods-RunnerTests";
+			path = "Target Support Files/Pods-RunnerTests";
+			sourceTree = "<group>";
+		};
+		542D39DD258AA80F798884717070A621 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				28E3E5AB18BEAF0D4D65830216DD3160 /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		5C642B16A4F1EA90B597AA24956BB031 /* rive_common */ = {
+			isa = PBXGroup;
+			children = (
+				0D78485BDE1E9F07C9FD1AFDC123F380 /* .. */,
+				CCBA534548D1F625D2615BCAFEDF460C /* Pod */,
+				84DEF1FFE2BAA45F01FF89B38A9CAFA7 /* Support Files */,
+			);
+			name = rive_common;
+			path = ../Flutter/ephemeral/.symlinks/plugins/rive_common/macos;
+			sourceTree = "<group>";
+		};
+		61DF674F45180CC0A2932D841343BE85 /* rive-cpp */ = {
+			isa = PBXGroup;
+			children = (
+				D53CD4A46B6416507FA68B634EE92F60 /* src */,
+			);
+			name = "rive-cpp";
+			path = "rive-cpp";
+			sourceTree = "<group>";
+		};
+		6FECB0DDE99A0349033FB98B7575443E /* darwin */ = {
+			isa = PBXGroup;
+			children = (
+				DCA97863A4AD2F2F7F8EBC7C19B2B183 /* Classes */,
+				EE6DC46C27DB6D44DE20AA8470847045 /* Resources */,
+			);
+			name = darwin;
+			path = darwin;
+			sourceTree = "<group>";
+		};
+		70988B4D78918CBC32EA3A1234864F75 /* graph */ = {
+			isa = PBXGroup;
+			children = (
+				CD9FD0D535D43112108BB09FC934E654 /* gsubgpos-context.cc */,
+			);
+			name = graph;
+			path = graph;
+			sourceTree = "<group>";
+		};
+		71CEB5FB46B31B5E8A88540417A1D85D /* plugins */ = {
+			isa = PBXGroup;
+			children = (
+				460AD0C3530B4B50240BEA605F75E2A7 /* path_provider_foundation */,
+			);
+			name = plugins;
+			path = plugins;
+			sourceTree = "<group>";
+		};
+		72DB7BCCD13C40626755CC84A5B066D2 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				542D39DD258AA80F798884717070A621 /* .. */,
+			);
+			name = ..;
+			path = "../../../../../../../../../../../../.pub-cache/hosted/pub.dev/file_selector_macos-0.9.3+3/macos";
+			sourceTree = "<group>";
+		};
+		7436D6CD336197C8F67AF23040FDBACC /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				78065997518C9307E3D7FCC152F8396F /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		75615CA0B3EB654B4A510D0DA9095782 /* harfbuzz */ = {
+			isa = PBXGroup;
+			children = (
+				0EE2F592D9E91615920375486DE2287F /* src */,
+			);
+			name = harfbuzz;
+			path = harfbuzz;
+			sourceTree = "<group>";
+		};
+		7656E4CA175B39ACC55EEDDA9376600F /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				1E55AC099AA83266FC642D10D3244D8C /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		78065997518C9307E3D7FCC152F8396F /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				BD870338B244FCA44C8C463AB3D801D5 /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		79A03EC9C8B22C98FA89F21DF37EF6CF /* .symlinks */ = {
+			isa = PBXGroup;
+			children = (
+				B3B0D3FC2BD413A9E4974298899EC383 /* plugins */,
+			);
+			name = .symlinks;
+			path = .symlinks;
+			sourceTree = "<group>";
+		};
+		79D7BDD2897D69315FED7FDF291658D0 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				09EE514B9C4E0BAA8E3E9D074EB0CA98 /* RivePlugin.swift */,
+			);
+			name = Classes;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		7FEB41B5999AA1E84770644049DD4A45 /* macos */ = {
+			isa = PBXGroup;
+			children = (
+				115130A7A5D7B9D46CC84A16C6C552AB /* Flutter */,
+			);
+			name = macos;
+			path = macos;
+			sourceTree = "<group>";
+		};
+		80B432E12B4ABCCFFAA805CC18BA5CD2 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				BD88DD181CDECD523C73544768CE2460 /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		839BEF6E8AF43EC519B40FF2623EFA1F /* .symlinks */ = {
+			isa = PBXGroup;
+			children = (
+				4BEA4CFD17488D14915467484B678D24 /* plugins */,
+			);
+			name = .symlinks;
+			path = .symlinks;
+			sourceTree = "<group>";
+		};
+		84DEF1FFE2BAA45F01FF89B38A9CAFA7 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				241D6481A3138F4FE14EB3044AA841BB /* rive_common.modulemap */,
+				21634AEA19BF2B14A8F67C42928AB9EC /* rive_common-dummy.m */,
+				979C9040C76B6FB59E07087B09855435 /* rive_common-Info.plist */,
+				7E1917D278F6321CC247C42F191DBD15 /* rive_common-prefix.pch */,
+				F2F9321BA47C1811C330DA57437A8FDD /* rive_common-umbrella.h */,
+				E4B3CB2DAADDAC406DB48184B9079885 /* rive_common.debug.xcconfig */,
+				8C21068FC02EF874B40A848CA7684464 /* rive_common.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../../../../../../Pods/Target Support Files/rive_common";
+			sourceTree = "<group>";
+		};
+		9BE27727C4A4F743F9647933886E6D8B /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				148311DE55E6B6956613115A9F7A56C9 /* LICENSE */,
+				B388C7538ADBD513BB8AD4B3C2513D6B /* path_provider_foundation.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		9BF8E1DC8926CE786251AD2ADE5CFC24 /* cord3 */ = {
+			isa = PBXGroup;
+			children = (
+				F936C34989CF3644F98C1165E34F2173 /* morticar */,
+			);
+			name = cord3;
+			path = cord3;
+			sourceTree = "<group>";
+		};
+		A687AD98985BC79B003B5836CADF07F2 /* work */ = {
+			isa = PBXGroup;
+			children = (
+				531D6C788B9ACFE972329CDA50025452 /* cord3 */,
+			);
+			name = work;
+			path = work;
+			sourceTree = "<group>";
+		};
+		A73A9691AA6901DA1334B36974717871 /* yoga */ = {
+			isa = PBXGroup;
+			children = (
+				A82B3695AD053401E575CA455D9D6785 /* yoga */,
+			);
+			name = yoga;
+			path = yoga;
+			sourceTree = "<group>";
+		};
+		A82B3695AD053401E575CA455D9D6785 /* yoga */ = {
+			isa = PBXGroup;
+			children = (
+				0D4DDA6C145D6825EB10D82919B6B2E1 /* log.cpp */,
+				EA563FCC86399EF493AF14024D633AE1 /* Utils.cpp */,
+				240C3990EF01AE28C09C968FCDC35670 /* YGConfig.cpp */,
+				78B93C7C89BA5BDFA12C0D134E0B4A3E /* YGEnums.cpp */,
+				BCD9417067A91EF616F3A225CDAD9FAB /* YGLayout.cpp */,
+				ABBA46929B4EA098CCA546BE9D0D52EF /* YGNode.cpp */,
+				64EA9996DD6F3B53D36D4D3125BD3319 /* YGNodePrint.cpp */,
+				E7F3B4FD2D8B11E17A53AE5630A865CC /* YGStyle.cpp */,
+				976B7506BF2A634A883FB5A010D10FD4 /* YGValue.cpp */,
+				88065F7E46F69B8903B8F11F0DCFF040 /* Yoga.cpp */,
+				B6D4B5B412892EDADAA0BB1F50CFD4E4 /* event */,
+			);
+			name = yoga;
+			path = yoga;
+			sourceTree = "<group>";
+		};
+		ABEF645A7D2A51EEF623F1624DD111FD /* rive_common */ = {
+			isa = PBXGroup;
+			children = (
+				C28927287C43F88A7EA61DCE738F1274 /* macos */,
+			);
+			name = rive_common;
+			path = rive_common;
+			sourceTree = "<group>";
+		};
+		B3B0D3FC2BD413A9E4974298899EC383 /* plugins */ = {
+			isa = PBXGroup;
+			children = (
+				ABEF645A7D2A51EEF623F1624DD111FD /* rive_common */,
+			);
+			name = plugins;
+			path = plugins;
+			sourceTree = "<group>";
+		};
+		B52F36C3E5C72A2994C7B2E9999C44D6 /* math */ = {
+			isa = PBXGroup;
+			children = (
+				375109BA0A072C2C276EB95C032F77FD /* mat2d.cpp */,
+				F8A76EB4FD311C06F35DB69BB2F970BF /* raw_path.cpp */,
+			);
+			name = math;
+			path = math;
+			sourceTree = "<group>";
+		};
+		B6D4B5B412892EDADAA0BB1F50CFD4E4 /* event */ = {
+			isa = PBXGroup;
+			children = (
+				01EBAC997D36AEE1C8B3EE09B4B119B8 /* event.cpp */,
+			);
+			name = event;
+			path = event;
+			sourceTree = "<group>";
+		};
+		B8480779CB683C1612BE6FC5896FDF99 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				14343E4F0E2B4D76232F0885AB46D68B /* audio_engine.cpp */,
+				429F4E1979945EB1758C0201DBC117FB /* audio_reader.cpp */,
+				B621D8C5BDB293D60433E1D0CF261AC2 /* audio_sound.cpp */,
+				B2FBC8AA67CA6614811124963B9E00B3 /* audio_source.cpp */,
+			);
+			name = audio;
+			path = audio;
+			sourceTree = "<group>";
+		};
+		BA4A80F173AA8190BCA4A8ADAA778059 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				F82ABFEF396D17D4D554404572194DEC /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		BAFF5A79C3A1909918693675F3AB2ACB /* file_selector_macos */ = {
+			isa = PBXGroup;
+			children = (
+				27A807A0D8B357D8E41FBD5AD55FF8EB /* macos */,
+			);
+			name = file_selector_macos;
+			path = file_selector_macos;
+			sourceTree = "<group>";
+		};
+		BBE373053E77D35FF9ABFD8BB367FFCD /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				C0EEDA4B61EF24EF3AC272620BEB0E1F /* file_selector_macos.podspec */,
+				6A06CF6DE0C467B193E1F6323CAFF8AC /* LICENSE */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		BD870338B244FCA44C8C463AB3D801D5 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				F5617443D4AFB32F415617CF43E0A30A /* Documents */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		BD88DD181CDECD523C73544768CE2460 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				1345134B9065ED7B97E13824045AE795 /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		BE55C83CE0A4C21D43E35D100A434673 /* rive_text */ = {
+			isa = PBXGroup;
+			children = (
+				CC84B0ADCC5AF6AED329152937E2B765 /* rive_text.cpp */,
+			);
+			name = rive_text;
+			path = rive_text;
+			sourceTree = "<group>";
+		};
+		C28927287C43F88A7EA61DCE738F1274 /* macos */ = {
+			isa = PBXGroup;
+			children = (
+				667F772D801AF4B6644A69FE0F71482B /* common.cpp */,
+				79D7BDD2897D69315FED7FDF291658D0 /* Classes */,
+				75615CA0B3EB654B4A510D0DA9095782 /* harfbuzz */,
+				61DF674F45180CC0A2932D841343BE85 /* rive-cpp */,
+				BE55C83CE0A4C21D43E35D100A434673 /* rive_text */,
+				E429FEFDBDC1DF8DA169613BD76AD67F /* SheenBidi */,
+				A73A9691AA6901DA1334B36974717871 /* yoga */,
+			);
+			name = macos;
+			path = macos;
+			sourceTree = "<group>";
+		};
+		C3C6C34A14EF0C15491FE2014477A28E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				017BC84903F37229D25E9DDCA97A12BD /* file_selector_macos.modulemap */,
+				2E612607A223F66CAA042D572F16E1AB /* file_selector_macos-dummy.m */,
+				CD45C6F012BB11A9A2F63E8363508EC9 /* file_selector_macos-Info.plist */,
+				0EA655C7389E4D720D47043FCC8EF411 /* file_selector_macos-prefix.pch */,
+				DA275CB68D0CFCBCF29350EB61BD9351 /* file_selector_macos-umbrella.h */,
+				4875F8CF0D5756842129C154C61FC0AA /* file_selector_macos.debug.xcconfig */,
+				CB0FC54400A71B8070338D8629CC2384 /* file_selector_macos.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../../../../../../Pods/Target Support Files/file_selector_macos";
+			sourceTree = "<group>";
+		};
+		C984A391F2B8D0B078A51835568A7831 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				3C602D74B7A9676A8105BF3A0E1D61C5 /* SBAlgorithm.h */,
+				2BA7ACDCE0D21F6F8FB3494BCB89C460 /* SBBase.h */,
+				6DE1482FA1C8453201DF625336852C05 /* SBBidiType.h */,
+				8B9AE143435EAB0A9C217AAD017D6BE1 /* SBCodepoint.h */,
+				3FF3383D181C33951487254BC8DDFD7C /* SBCodepointSequence.h */,
+				FCD1B60D81EA4178B8362E4C554E298A /* SBConfig.h */,
+				1FB96F7C4D8841126EAFC2D3F2CECBAC /* SBGeneralCategory.h */,
+				7005B92602133AFD05A435DC0CD09D6E /* SBLine.h */,
+				DA8235F3B1E042FA2D74806C39749823 /* SBMirrorLocator.h */,
+				6FD5972724F24FCE09CB65F6ECF6A43C /* SBParagraph.h */,
+				5064D9DF5DB26BF08CB36BEC1C8A2475 /* SBRun.h */,
+				37C76F45C8BE2B6145F9A747813B30D6 /* SBScript.h */,
+				3F636D3005D061057A1951C57A2C91F2 /* SBScriptLocator.h */,
+				7105902DE0FDD5B9C5408D3EA98F5108 /* SheenBidi.h */,
+			);
+			name = Headers;
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		CAEC1394F79CCF2B1F3D7C37F536C2CE /* text */ = {
+			isa = PBXGroup;
+			children = (
+				716A2454C78BD436D68AC753750FC3A6 /* font_hb.cpp */,
+				3ACED96003CAC36C9FD100C2E0702892 /* line_breaker.cpp */,
+			);
+			name = text;
+			path = text;
+			sourceTree = "<group>";
+		};
+		CCBA534548D1F625D2615BCAFEDF460C /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				B86A7AE14827C052B79D0CEF46503622 /* LICENSE */,
+				3544776D2F5BD8765FDA8D6471B071C9 /* rive_common.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		CE7EC9D6B2A027F6280C066063F222FC /* mobileApp_frontend */ = {
+			isa = PBXGroup;
+			children = (
+				4C836E70EC59C1BD1799D4B3C653C135 /* macos */,
+			);
+			name = mobileApp_frontend;
+			path = mobileApp_frontend;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				35C9AB54B86DB79FE10874016CE56A86 /* Development Pods */,
+				E0A1E60606E0BF6E2E10F1F01350DFE8 /* Frameworks */,
+				47475CC2DDF28D8D15616BDE78E5B0C3 /* Products */,
+				2DB8426A477BA92773F00012EBA84D53 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D2C60C1D851C106C313B547F598A323F /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				F15D091B92F3D0BC1F26CBB8888F2F15 /* work */,
+			);
+			name = Documents;
+			path = Documents;
+			sourceTree = "<group>";
+		};
+		D53CD4A46B6416507FA68B634EE92F60 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				93268494BAEC8A1C72D30C5D68D68522 /* renderer.cpp */,
+				B8480779CB683C1612BE6FC5896FDF99 /* audio */,
+				B52F36C3E5C72A2994C7B2E9999C44D6 /* math */,
+				CAEC1394F79CCF2B1F3D7C37F536C2CE /* text */,
+			);
+			name = src;
+			path = src;
+			sourceTree = "<group>";
+		};
+		DCA97863A4AD2F2F7F8EBC7C19B2B183 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C915EFC074ED7AFC1888761E07FA025A /* messages.g.swift */,
+				CC252A1406DB785CE86E49892A26C12B /* PathProviderPlugin.swift */,
+			);
+			name = Classes;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		DDF699C73E6E248546E0427C54090CC1 /* ephemeral */ = {
+			isa = PBXGroup;
+			children = (
+				79A03EC9C8B22C98FA89F21DF37EF6CF /* .symlinks */,
+			);
+			name = ephemeral;
+			path = ephemeral;
+			sourceTree = "<group>";
+		};
+		E0A1E60606E0BF6E2E10F1F01350DFE8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E2A8756CA1FF5258A0344D53C5C60EC1 /* OS X */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2A8756CA1FF5258A0344D53C5C60EC1 /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				C1430F003D39D9906881A6AC724B7931 /* Cocoa.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
+		E3900294F474BFF58E4D91896B726A9D /* mobileApp_frontend */ = {
+			isa = PBXGroup;
+			children = (
+				09DA5F3DA4A436D2002A6E8FA52094E2 /* macos */,
+			);
+			name = mobileApp_frontend;
+			path = mobileApp_frontend;
+			sourceTree = "<group>";
+		};
+		E4026901D5CFC7E5438901472FDFA869 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				B2ED0D4D505EB2E3F4C7D8E35E4FE152 /* FlutterMacOS.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		E429FEFDBDC1DF8DA169613BD76AD67F /* SheenBidi */ = {
+			isa = PBXGroup;
+			children = (
+				C984A391F2B8D0B078A51835568A7831 /* Headers */,
+				E90FB08B42DE9505729D1FCEB1113B32 /* Source */,
+			);
+			name = SheenBidi;
+			path = SheenBidi;
+			sourceTree = "<group>";
+		};
+		E806A4F97D48F5FD3B4CA1BC617EA1F5 /* Pods-Runner */ = {
+			isa = PBXGroup;
+			children = (
+				C24C1A035F22D24883C6F1876F274C6F /* Pods-Runner.modulemap */,
+				ECDF6AA713870989438BA93B395DC557 /* Pods-Runner-acknowledgements.markdown */,
+				1B136F41D5B5FAE96EA576E768A5771D /* Pods-Runner-acknowledgements.plist */,
+				E794494AB90477BA94C681E994ADF341 /* Pods-Runner-dummy.m */,
+				773BFCE41424EB8EBB72EF3F6A5FB719 /* Pods-Runner-frameworks.sh */,
+				0AFB643DA4919253F749E2836A5AAFDC /* Pods-Runner-Info.plist */,
+				499E3722E8DACDC2AAA6C15AD1796520 /* Pods-Runner-umbrella.h */,
+				728A5ED1DD60BAC8C8F382A87B976F84 /* Pods-Runner.debug.xcconfig */,
+				C50FD10CD19FF6999637BA5ECAF1681B /* Pods-Runner.profile.xcconfig */,
+				B703785507B22BAF0B800737429577EC /* Pods-Runner.release.xcconfig */,
+			);
+			name = "Pods-Runner";
+			path = "Target Support Files/Pods-Runner";
+			sourceTree = "<group>";
+		};
+		E90FB08B42DE9505729D1FCEB1113B32 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				565AD3EF80E5DFC58E378A48EF93C3F1 /* SheenBidi.c */,
+			);
+			name = Source;
+			path = Source;
+			sourceTree = "<group>";
+		};
+		EDB88EEED9235AFCC6C374EE27DA367A /* ephemeral */ = {
+			isa = PBXGroup;
+			children = (
+				839BEF6E8AF43EC519B40FF2623EFA1F /* .symlinks */,
+			);
+			name = ephemeral;
+			path = ephemeral;
+			sourceTree = "<group>";
+		};
+		EE2DBC9975CD9BA2F29171F076BBFDC2 /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				BA4A80F173AA8190BCA4A8ADAA778059 /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		EE6DC46C27DB6D44DE20AA8470847045 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F1C89FFCD86807A25BFBB0C697276305 /* PrivacyInfo.xcprivacy */,
+			);
+			name = Resources;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F15D091B92F3D0BC1F26CBB8888F2F15 /* work */ = {
+			isa = PBXGroup;
+			children = (
+				0FBAC5E218BEA3E265E707270F24EB4A /* cord3 */,
+			);
+			name = work;
+			path = work;
+			sourceTree = "<group>";
+		};
+		F5617443D4AFB32F415617CF43E0A30A /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				A687AD98985BC79B003B5836CADF07F2 /* work */,
+			);
+			name = Documents;
+			path = Documents;
+			sourceTree = "<group>";
+		};
+		F58BBFDBFCDAEBDE0ACB3BE5C6C9A01E /* FlutterMacOS */ = {
+			isa = PBXGroup;
+			children = (
+				E4026901D5CFC7E5438901472FDFA869 /* Pod */,
+				349C7EFD7F52C9F77B4E984422B3380A /* Support Files */,
+			);
+			name = FlutterMacOS;
+			path = ../Flutter/ephemeral;
+			sourceTree = "<group>";
+		};
+		F6ADDAB4B465861896C6DAE73A74F586 /* ephemeral */ = {
+			isa = PBXGroup;
+			children = (
+				FF4E567613D187B46BCD2CD96AC10EFC /* .symlinks */,
+			);
+			name = ephemeral;
+			path = ephemeral;
+			sourceTree = "<group>";
+		};
+		F82ABFEF396D17D4D554404572194DEC /* .. */ = {
+			isa = PBXGroup;
+			children = (
+				2130D836532F1984ABD25220DB2D9051 /* .. */,
+			);
+			name = ..;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		F936C34989CF3644F98C1165E34F2173 /* morticar */ = {
+			isa = PBXGroup;
+			children = (
+				E3900294F474BFF58E4D91896B726A9D /* mobileApp_frontend */,
+			);
+			name = morticar;
+			path = morticar;
+			sourceTree = "<group>";
+		};
+		FC50A0C687ED3017B0B5476C1290356D /* work */ = {
+			isa = PBXGroup;
+			children = (
+				9BF8E1DC8926CE786251AD2ADE5CFC24 /* cord3 */,
+			);
+			name = work;
+			path = work;
+			sourceTree = "<group>";
+		};
+		FE1D70AE418849CE0A85B5B82A66BD84 /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				FC50A0C687ED3017B0B5476C1290356D /* work */,
+			);
+			name = Documents;
+			path = Documents;
+			sourceTree = "<group>";
+		};
+		FF4E567613D187B46BCD2CD96AC10EFC /* .symlinks */ = {
+			isa = PBXGroup;
+			children = (
+				71CEB5FB46B31B5E8A88540417A1D85D /* plugins */,
+			);
+			name = .symlinks;
+			path = .symlinks;
+			sourceTree = "<group>";
+		};
+		FFD42B5A402AAAA1FACA82F9E88EB706 /* morticar */ = {
+			isa = PBXGroup;
+			children = (
+				44DE05A740C66AA7F79A8D504C62DE64 /* mobileApp_frontend */,
+			);
+			name = morticar;
+			path = morticar;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		142B3D4D76C500A061E6BCF30EC9A53C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC05A1BE39A9244D5B09A2F3B09A967A /* Pods-RunnerTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5DDFC6033A57C3B32E804B87281AF3E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C4A06C0435B54BA18A01D132B3BB388 /* Pods-Runner-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A784CDBCD7C81402017687AE68DBC1CF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1E7C2244FFFE807BFC6FBBF5D1B744C /* path_provider_foundation-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C83C140DBB876D0F912C24C374D573B7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC537BF16FF87535A604468BCD74792D /* rive_common-umbrella.h in Headers */,
+				B7EE6269A533026BF8EAD46D6BC349D4 /* SBAlgorithm.h in Headers */,
+				2FAB98BCB0F5CEB7029470EEFB22ACA2 /* SBBase.h in Headers */,
+				60B199B0F1B8FBA0811B0A39430C98E0 /* SBBidiType.h in Headers */,
+				0B0A53771CF98E086D7C4BC76A2104AC /* SBCodepoint.h in Headers */,
+				A98F705888BF84D59BF489F3A358314E /* SBCodepointSequence.h in Headers */,
+				98CAA8E342B097918D38A159F825B5EA /* SBConfig.h in Headers */,
+				313E8A4B76F8E7A70B936B61BE7B80B6 /* SBGeneralCategory.h in Headers */,
+				5F78346CF5A886CB36A5952536064180 /* SBLine.h in Headers */,
+				213846393B1F0D938A126A671C148271 /* SBMirrorLocator.h in Headers */,
+				E07C9E85A51FA5342BC29005D08999A0 /* SBParagraph.h in Headers */,
+				8B5182245C9632A12E128248E9B60AED /* SBRun.h in Headers */,
+				4D34277C028799D9C089E4B2359A702F /* SBScript.h in Headers */,
+				280491699FFA9D23C8806DD69C7493C1 /* SBScriptLocator.h in Headers */,
+				35B4D9B95704FD2A14F855C5BE6E2D61 /* SheenBidi.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F3BF1763BCC5E0FA9BFD84F959948C3F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA63379DD5CC1A84A9B632F04E8D6E0F /* file_selector_macos-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		3232F0C0E7C65B232832393F9ADDD8C3 /* Pods-RunnerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C93FE463016A8F6A183A1AD3D9FA6BAD /* Build configuration list for PBXNativeTarget "Pods-RunnerTests" */;
+			buildPhases = (
+				142B3D4D76C500A061E6BCF30EC9A53C /* Headers */,
+				E10C36E928F64731CA20595F8549B229 /* Sources */,
+				C490C2CC2EE2221C199D32B46591FE37 /* Frameworks */,
+				1FCDCF5B151D07CE5E500ACCA90F4EF3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C858BD45CA8E1796B3F1D8B65A2EDC7B /* PBXTargetDependency */,
+			);
+			name = "Pods-RunnerTests";
+			productName = Pods_RunnerTests;
+			productReference = 6C3345B1B3CAEDF5B03B1F731FDC492E /* Pods-RunnerTests */;
+			productType = "com.apple.product-type.framework";
+		};
+		56F581DDCB0A032454E604885E17AE3C /* path_provider_foundation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9BE2E94BFE4C924B683A82AC505494B7 /* Build configuration list for PBXNativeTarget "path_provider_foundation" */;
+			buildPhases = (
+				A784CDBCD7C81402017687AE68DBC1CF /* Headers */,
+				E5F38189A463192632F895E606CF7093 /* Sources */,
+				7C9CFA1F134286F648EEA7BF6DBEDD6B /* Frameworks */,
+				3CD2A2D9F4A02255843027C9E1551D1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B6D846BDBE01FB77D2E08C4C3832590F /* PBXTargetDependency */,
+				BC0EA8A96242C8BDE45B69DF57C420E3 /* PBXTargetDependency */,
+			);
+			name = path_provider_foundation;
+			productName = path_provider_foundation;
+			productReference = AE157A33FEF959A214796BFF348717F6 /* path_provider_foundation */;
+			productType = "com.apple.product-type.framework";
+		};
+		773D4A7C7FA9CAB9B055EBF0A53821FB /* file_selector_macos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 40D89E4919EEC2E7D1BD1B154FB8EC19 /* Build configuration list for PBXNativeTarget "file_selector_macos" */;
+			buildPhases = (
+				F3BF1763BCC5E0FA9BFD84F959948C3F /* Headers */,
+				CE1E3716CAB16AF6DB4BF272960C84B5 /* Sources */,
+				26812204F9E66782F63AE60743733A27 /* Frameworks */,
+				36F6297C73D8C9240119FAB4AC09D231 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D808A4AE2399A6A9A7EB0E0AB07DC205 /* PBXTargetDependency */,
+			);
+			name = file_selector_macos;
+			productName = file_selector_macos;
+			productReference = C2A19B351EE3987102FF0AA4CD33F175 /* file_selector_macos */;
+			productType = "com.apple.product-type.framework";
+		};
+		8B74B458B450D74B75744B87BD747314 /* Pods-Runner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7404DC77287516B7728E3D28248E5F8 /* Build configuration list for PBXNativeTarget "Pods-Runner" */;
+			buildPhases = (
+				A5DDFC6033A57C3B32E804B87281AF3E /* Headers */,
+				F6A1E59A674BDAB1B976BBBB6109F26C /* Sources */,
+				B038B1A2814B3EB0E5741954E9EAFE5E /* Frameworks */,
+				7601E152C992D240F62934AC29D48578 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BF2C958EB25D04327C2DCB6ACED75A9E /* PBXTargetDependency */,
+				BB1436DEAD6B0C1E12E6D765F0506176 /* PBXTargetDependency */,
+				89ECEAF5E87639D26CE286CA63A4E2D3 /* PBXTargetDependency */,
+				8A5B2AD51C9A52F21CCD98554DAE48D2 /* PBXTargetDependency */,
+			);
+			name = "Pods-Runner";
+			productName = Pods_Runner;
+			productReference = 669E8F25E1897672BDB80B7EB784DA24 /* Pods-Runner */;
+			productType = "com.apple.product-type.framework";
+		};
+		CACE6618E7996464E38687E13F67D945 /* path_provider_foundation-path_provider_foundation_privacy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 121144B9970B292E828C888876068008 /* Build configuration list for PBXNativeTarget "path_provider_foundation-path_provider_foundation_privacy" */;
+			buildPhases = (
+				B27572D2719D17735035AF090E12D60A /* Sources */,
+				EEDE27F4DD6DE4AD7BED02C4E2B03B2D /* Frameworks */,
+				02EEBF681305D70B3959624559F30219 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "path_provider_foundation-path_provider_foundation_privacy";
+			productName = path_provider_foundation_privacy;
+			productReference = 3DBD4BADE27F8B91024E4B4B4DD75DB5 /* path_provider_foundation-path_provider_foundation_privacy */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E9C719E84F67F73FC0C74005C9B0C057 /* rive_common */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 802BC8290C29092C76611F6D8D344206 /* Build configuration list for PBXNativeTarget "rive_common" */;
+			buildPhases = (
+				C83C140DBB876D0F912C24C374D573B7 /* Headers */,
+				F8D36DF895C0AF7371FB669B9586BA75 /* Sources */,
+				2BE51520BF140EF19DE41C9C9D5792D6 /* Frameworks */,
+				4B80336159F4A0D3AA1F298249909B09 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7287E553161723EEF3FF9AA6D4B83435 /* PBXTargetDependency */,
+			);
+			name = rive_common;
+			productName = rive_common;
+			productReference = DE8135CAE607F7824D08D08BDA5968B9 /* rive_common */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 12.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 47475CC2DDF28D8D15616BDE78E5B0C3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				773D4A7C7FA9CAB9B055EBF0A53821FB /* file_selector_macos */,
+				CA272E8348BAB4CE0B0C804FB7B818C4 /* FlutterMacOS */,
+				56F581DDCB0A032454E604885E17AE3C /* path_provider_foundation */,
+				CACE6618E7996464E38687E13F67D945 /* path_provider_foundation-path_provider_foundation_privacy */,
+				8B74B458B450D74B75744B87BD747314 /* Pods-Runner */,
+				3232F0C0E7C65B232832393F9ADDD8C3 /* Pods-RunnerTests */,
+				E9C719E84F67F73FC0C74005C9B0C057 /* rive_common */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		02EEBF681305D70B3959624559F30219 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4D42C5A0DD5237AA8AED230376A2F3D /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1FCDCF5B151D07CE5E500ACCA90F4EF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		36F6297C73D8C9240119FAB4AC09D231 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CD2A2D9F4A02255843027C9E1551D1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68DD428154EE48C88AA2567DD5313830 /* path_provider_foundation-path_provider_foundation_privacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4B80336159F4A0D3AA1F298249909B09 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7601E152C992D240F62934AC29D48578 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B27572D2719D17735035AF090E12D60A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CE1E3716CAB16AF6DB4BF272960C84B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CFB6D13187650953A9A4E4E58198B9A /* file_selector_macos-dummy.m in Sources */,
+				91D3F56FCD629AFE00BAE7127A2294AE /* FileSelectorPlugin.swift in Sources */,
+				BF3AA3B9EDAC1F416A5B844BA593F411 /* messages.g.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E10C36E928F64731CA20595F8549B229 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B1E62EB116E7D7A6252B6F079890306 /* Pods-RunnerTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5F38189A463192632F895E606CF7093 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0BD084553F4C6424BC71E9FCA65A6F8 /* messages.g.swift in Sources */,
+				3F1709D0A30CFA36FDF89F94654E26B7 /* path_provider_foundation-dummy.m in Sources */,
+				72D3200876FDB5A8805B73DDC2961E75 /* PathProviderPlugin.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6A1E59A674BDAB1B976BBBB6109F26C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA625BB788219EAFE9036304AC80C55D /* Pods-Runner-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8D36DF895C0AF7371FB669B9586BA75 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9EFA50210DE293ED63A826898E1C15EB /* audio_engine.cpp in Sources */,
+				4AFA84442D41E20C53689FF1D62FA62F /* audio_reader.cpp in Sources */,
+				FA4ACD3E3801A6116D2CB1A64C52C00D /* audio_sound.cpp in Sources */,
+				589B70959B164BF899C3F9AA49D03BB7 /* audio_source.cpp in Sources */,
+				4F3120F3389701E93CA012CC1322A2DB /* common.cpp in Sources */,
+				8C7815BA4D09A8357082A3CAB1A6E642 /* event.cpp in Sources */,
+				D922019E7702484D2BA36882BB4A398B /* font_hb.cpp in Sources */,
+				C761D83590667D0BBB76FCB77CFA9365 /* gsubgpos-context.cc in Sources */,
+				CDD40558A669FFC7CDFB37E4C82F51AE /* hb-aat-layout.cc in Sources */,
+				32E35993FB152BF7DDEBFADA6E5110E4 /* hb-aat-map.cc in Sources */,
+				B22CCC3D9892AD3308D965EF7ABA6662 /* hb-blob.cc in Sources */,
+				02488BDEF1B924D03F440237AB9891E3 /* hb-buffer.cc in Sources */,
+				422EDDEA180E5F1A4365F516D0FBF905 /* hb-buffer-serialize.cc in Sources */,
+				66BB7ABF14105B6EDC0AFD22E558F4E2 /* hb-buffer-verify.cc in Sources */,
+				BF79083EAB6C7FA27980976F6D439791 /* hb-common.cc in Sources */,
+				1A4A2C18A40EAD1876D003CC072C0D3A /* hb-draw.cc in Sources */,
+				9314D08D2937F357C00E5F5BE617F749 /* hb-face.cc in Sources */,
+				E026F6B9FB034E6088BE11E428F371BC /* hb-face-builder.cc in Sources */,
+				EC809D5921F0F4A062A71AB7364738A7 /* hb-font.cc in Sources */,
+				9648704AA5B6C59CE184DCEC148C8F3A /* hb-map.cc in Sources */,
+				4B0ED1C2587C6438B531D2251919DEC2 /* hb-number.cc in Sources */,
+				D0C6545C93F21A51A3F2724F919C4AD1 /* hb-ot-cff1-table.cc in Sources */,
+				1629B8406B32693D774F27FEDAB006FE /* hb-ot-cff2-table.cc in Sources */,
+				08BEC4BBA6563BA06263DC318E922597 /* hb-ot-color.cc in Sources */,
+				E391DBEEE6EECEE3AE32C2DF8D47CE78 /* hb-ot-face.cc in Sources */,
+				FB92D19DEE943228088329B768399796 /* hb-ot-font.cc in Sources */,
+				A18BCFB59CDD3971F418DC231C17CB8D /* hb-ot-layout.cc in Sources */,
+				61B2FCF497ABD498DE580B7FC9A5A885 /* hb-ot-map.cc in Sources */,
+				8FBDBAB093E99DE199E3EDA8F0994AE8 /* hb-ot-math.cc in Sources */,
+				8D454D702EB115B52A5ED5A5F9D52C9C /* hb-ot-meta.cc in Sources */,
+				ABF0F38712D83E07999737A1B20CD858 /* hb-ot-metrics.cc in Sources */,
+				EB5A670CAF8B46C98A8054E666335106 /* hb-ot-name.cc in Sources */,
+				9595B7206C7C74E117793C60FA3B3438 /* hb-ot-shape.cc in Sources */,
+				C5BF5735BCF766ED656873F72BC03155 /* hb-ot-shape-fallback.cc in Sources */,
+				5CB236DECF701D1003C0A9BD0DB2961D /* hb-ot-shape-normalize.cc in Sources */,
+				52D483B42EE10281ABA92E6F86C45E41 /* hb-ot-shaper-arabic.cc in Sources */,
+				FC01A3F426A510A36DDB100DAC4E1B85 /* hb-ot-shaper-default.cc in Sources */,
+				CA4747D6596D312FAC7A07D9FBBE0840 /* hb-ot-shaper-hangul.cc in Sources */,
+				8FD94CBDDF027DA1D383B3A3DAFC7F15 /* hb-ot-shaper-hebrew.cc in Sources */,
+				1FE240B506FB0DAA50CBE22E357F226A /* hb-ot-shaper-indic.cc in Sources */,
+				F3731ACF300791BFA514B4F66E26977F /* hb-ot-shaper-indic-table.cc in Sources */,
+				5938A7E95F656D549431B8E92E3B79E4 /* hb-ot-shaper-khmer.cc in Sources */,
+				56C547097E9EDEE52F621570CBA6CBDD /* hb-ot-shaper-myanmar.cc in Sources */,
+				3DBE8F233A5E86688038DA8DA1366327 /* hb-ot-shaper-syllabic.cc in Sources */,
+				7A1DD069F84033245F615EC81BF016F7 /* hb-ot-shaper-thai.cc in Sources */,
+				39DC101DDE0D196418F9EFF6260641A9 /* hb-ot-shaper-use.cc in Sources */,
+				5A909D9B43714059BDDF544CEC8BD85A /* hb-ot-shaper-vowel-constraints.cc in Sources */,
+				A0FEA142F58346B53311A81D3B21D63A /* hb-ot-tag.cc in Sources */,
+				886A3B76AC1AC1B36524B8C5D16D2D35 /* hb-ot-var.cc in Sources */,
+				F2F49C44D1F5F658CF2BD6B3FC636919 /* hb-outline.cc in Sources */,
+				F71AFBB7FAA78734C1A70DEDB154FB85 /* hb-paint.cc in Sources */,
+				CFDA5C669C9657E149377564B8FEDDE6 /* hb-paint-extents.cc in Sources */,
+				BE34AEB9093462DFF56F8DC2B428119D /* hb-set.cc in Sources */,
+				B43301D7921B3BC835D97185C320F3EE /* hb-shape.cc in Sources */,
+				51FD0D395C6CAEAC204501806A89BD23 /* hb-shape-plan.cc in Sources */,
+				318921EDE176D3B78F4E9B708BCB8C63 /* hb-shaper.cc in Sources */,
+				43E31E6E75E1AF59766B88A0B690CA0A /* hb-static.cc in Sources */,
+				AC23BBF5B8F538CEA52B81A466686B77 /* hb-subset.cc in Sources */,
+				A2C4F99AFB40B8CF02EAC82A627E9E43 /* hb-subset-cff-common.cc in Sources */,
+				970701982BC8890FE9A86C074DE8E21B /* hb-subset-cff1.cc in Sources */,
+				627C4F51E8F8DC3068AC4A2F47740E97 /* hb-subset-cff2.cc in Sources */,
+				02B2F69662FEBBF564356C3FE34CC2B3 /* hb-subset-input.cc in Sources */,
+				9F31FF5D00E07B3B173970A57F86478C /* hb-subset-instancer-solver.cc in Sources */,
+				CC09EE181D27D4AE0901E49F38A227C2 /* hb-subset-plan.cc in Sources */,
+				9E678E80EDED4E0D702633A4A7D536B1 /* hb-subset-repacker.cc in Sources */,
+				0814F5B732AF4233080C74FECF882FA0 /* hb-ucd.cc in Sources */,
+				6232A980CBD5DD8DE02A60B5B4D5D4BE /* hb-unicode.cc in Sources */,
+				DFC1D192C742C86CAAC947A7F6EB764B /* line_breaker.cpp in Sources */,
+				941C918272EAF54969FAC3CC623B9FD3 /* log.cpp in Sources */,
+				84FB5FF785F9BDE8F46FD2FE1FF66356 /* mat2d.cpp in Sources */,
+				C19D70D8251C49FF44D5B1E2347DD9F1 /* raw_path.cpp in Sources */,
+				778C02F3484FA782E650C2DE1A478FD0 /* renderer.cpp in Sources */,
+				576ABE6AFEF945A11FB7653D9739430A /* rive_common-dummy.m in Sources */,
+				63669F32EA18104D94799AF26D21DCD9 /* rive_text.cpp in Sources */,
+				B0CCCC4F461614560A0292DEE3732860 /* RivePlugin.swift in Sources */,
+				2A3FB874CD12A5867DB15640C2118B8B /* SheenBidi.c in Sources */,
+				7B78AFB7E313F8F4859A1320F649AA11 /* Utils.cpp in Sources */,
+				9EB01D4BAD34551CB1BFD18DF8FC5608 /* YGConfig.cpp in Sources */,
+				F2D93653DF821D561BBD7328728A5BBA /* YGEnums.cpp in Sources */,
+				10342EB1BB776ADC1A70B79B8082B09D /* YGLayout.cpp in Sources */,
+				58816022F1DF97C6EAAC566C65EFA3D7 /* YGNode.cpp in Sources */,
+				0292452585B969EF4D0016F95FEE65AA /* YGNodePrint.cpp in Sources */,
+				91CAC7FE294205D6A9AB9548D6E6AC5E /* YGStyle.cpp in Sources */,
+				73D1DE99F651121FA050C71C099292DB /* YGValue.cpp in Sources */,
+				36F00A75F01C0BA260E997FE9AB3044D /* Yoga.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7287E553161723EEF3FF9AA6D4B83435 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FlutterMacOS;
+			target = CA272E8348BAB4CE0B0C804FB7B818C4 /* FlutterMacOS */;
+			targetProxy = 9FDAB00F214DB29FDBC27551F255F93E /* PBXContainerItemProxy */;
+		};
+		89ECEAF5E87639D26CE286CA63A4E2D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = path_provider_foundation;
+			target = 56F581DDCB0A032454E604885E17AE3C /* path_provider_foundation */;
+			targetProxy = 67B4D404B2669C551110F98CCDCFA531 /* PBXContainerItemProxy */;
+		};
+		8A5B2AD51C9A52F21CCD98554DAE48D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = rive_common;
+			target = E9C719E84F67F73FC0C74005C9B0C057 /* rive_common */;
+			targetProxy = 6CFB20FA3192DD7ABC4D4FF383B1CF94 /* PBXContainerItemProxy */;
+		};
+		B6D846BDBE01FB77D2E08C4C3832590F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FlutterMacOS;
+			target = CA272E8348BAB4CE0B0C804FB7B818C4 /* FlutterMacOS */;
+			targetProxy = 57B29C1C8B515747C98CBAA58EB4C93F /* PBXContainerItemProxy */;
+		};
+		BB1436DEAD6B0C1E12E6D765F0506176 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = file_selector_macos;
+			target = 773D4A7C7FA9CAB9B055EBF0A53821FB /* file_selector_macos */;
+			targetProxy = 9F12F04A2AF43A95E345F2DB78F2F735 /* PBXContainerItemProxy */;
+		};
+		BC0EA8A96242C8BDE45B69DF57C420E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "path_provider_foundation-path_provider_foundation_privacy";
+			target = CACE6618E7996464E38687E13F67D945 /* path_provider_foundation-path_provider_foundation_privacy */;
+			targetProxy = 21E449E89B079D005A1F10E9A69E9FD7 /* PBXContainerItemProxy */;
+		};
+		BF2C958EB25D04327C2DCB6ACED75A9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FlutterMacOS;
+			target = CA272E8348BAB4CE0B0C804FB7B818C4 /* FlutterMacOS */;
+			targetProxy = 599839BD93154E94AF053219E6E0AE31 /* PBXContainerItemProxy */;
+		};
+		C858BD45CA8E1796B3F1D8B65A2EDC7B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-Runner";
+			target = 8B74B458B450D74B75744B87BD747314 /* Pods-Runner */;
+			targetProxy = 1DA69CD2C95DEA5002E4A466F7FA68BB /* PBXContainerItemProxy */;
+		};
+		D808A4AE2399A6A9A7EB0E0AB07DC205 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FlutterMacOS;
+			target = CA272E8348BAB4CE0B0C804FB7B818C4 /* FlutterMacOS */;
+			targetProxy = 39382782E7443FD8D5F4BE66DABFE668 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0A5323A61FCBCC33368BB7873630DBE3 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F437A73B9F7FDBF78E4240184E9EDDAC /* path_provider_foundation.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/path_provider_foundation";
+				IBSC_MODULE = path_provider_foundation;
+				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/ResourceBundle-path_provider_foundation_privacy-path_provider_foundation-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_NAME = path_provider_foundation_privacy;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Profile;
+		};
+		1D6BBE705B4E14F77C21AB0FECA78CC3 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A06804B12769FB0D1610B1E34CAAB5EC /* FlutterMacOS.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				SDKROOT = macosx;
+			};
+			name = Profile;
+		};
+		1D783FEE961B69074E216266D59A1B81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 891AA7761777901A877BD520F0529838 /* path_provider_foundation.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/path_provider_foundation";
+				IBSC_MODULE = path_provider_foundation;
+				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/ResourceBundle-path_provider_foundation_privacy-path_provider_foundation-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_NAME = path_provider_foundation_privacy;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		21412FBF50C5F4B24A3526C376BF0255 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C50FD10CD19FF6999637BA5ECAF1681B /* Pods-Runner.profile.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/Pods-Runner/Pods-Runner.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Profile;
+		};
+		33119897E0AD455DF867C9E13C771819 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 891AA7761777901A877BD520F0529838 /* path_provider_foundation.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64\"",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "Target Support Files/path_provider_foundation/path_provider_foundation-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation.modulemap";
+				PRODUCT_MODULE_NAME = path_provider_foundation;
+				PRODUCT_NAME = path_provider_foundation;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		376901DDB874F6DB1B196DE7072B0934 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F437A73B9F7FDBF78E4240184E9EDDAC /* path_provider_foundation.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "Target Support Files/path_provider_foundation/path_provider_foundation-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation.modulemap";
+				PRODUCT_MODULE_NAME = path_provider_foundation;
+				PRODUCT_NAME = path_provider_foundation;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		560048DB319899562C5F1A5849A19C4B /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C21068FC02EF874B40A848CA7684464 /* rive_common.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "Target Support Files/rive_common/rive_common-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/rive_common/rive_common-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/rive_common/rive_common.modulemap";
+				PRODUCT_MODULE_NAME = rive_common;
+				PRODUCT_NAME = rive_common;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Profile;
+		};
+		6C1046BA06E7F6D95147C564B3809CED /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F437A73B9F7FDBF78E4240184E9EDDAC /* path_provider_foundation.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/path_provider_foundation";
+				IBSC_MODULE = path_provider_foundation;
+				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/ResourceBundle-path_provider_foundation_privacy-path_provider_foundation-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_NAME = path_provider_foundation_privacy;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		7A8CE26E2657D46289BD7D25835F92A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B703785507B22BAF0B800737429577EC /* Pods-Runner.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/Pods-Runner/Pods-Runner.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8DA40B30B720EFA62A732AE1DAB3FF02 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB0FC54400A71B8070338D8629CC2384 /* file_selector_macos.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "Target Support Files/file_selector_macos/file_selector_macos-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/file_selector_macos/file_selector_macos-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/file_selector_macos/file_selector_macos.modulemap";
+				PRODUCT_MODULE_NAME = file_selector_macos;
+				PRODUCT_NAME = file_selector_macos;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Profile;
+		};
+		99E22572A8FFA7BB45BF8D9E5CDB9405 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03E8AD2E8B75443E12D3D3BD12A9900E /* Pods-RunnerTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A4237582D764DB9ACDCAEB574198EFF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB0FC54400A71B8070338D8629CC2384 /* file_selector_macos.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "Target Support Files/file_selector_macos/file_selector_macos-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/file_selector_macos/file_selector_macos-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/file_selector_macos/file_selector_macos.modulemap";
+				PRODUCT_MODULE_NAME = file_selector_macos;
+				PRODUCT_NAME = file_selector_macos;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A734648D21C485124F4CA7866CB7B37C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		B2AC953410975D4FAC01D6592A2813C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A06804B12769FB0D1610B1E34CAAB5EC /* FlutterMacOS.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BD53B19862F90664FE360356A18DA71C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC8FE152530FBDCE460186B326C1A8FB /* Pods-RunnerTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C38C56AC8A0B6CDAE880C1F3D00965FD /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_PROFILE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Profile;
+		};
+		C3A596F70B0BE20E42000E6D84292605 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C21068FC02EF874B40A848CA7684464 /* rive_common.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "Target Support Files/rive_common/rive_common-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/rive_common/rive_common-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/rive_common/rive_common.modulemap";
+				PRODUCT_MODULE_NAME = rive_common;
+				PRODUCT_NAME = rive_common;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D54AD075843DE89D7130ACC40C1138F4 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E736E0C9C5B73D27B8865E363E2108AC /* Pods-RunnerTests.profile.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Profile;
+		};
+		D7C18A4BB3A23E3E9BD431BC6F0C4001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		DE3522BD18406F17F8719EC967A26EB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 040CD68AE03999EB4E1D29E24992D747 /* FlutterMacOS.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F573674CC0D105389B6D43355CEC0FDE /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F437A73B9F7FDBF78E4240184E9EDDAC /* path_provider_foundation.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64-release\"",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "Target Support Files/path_provider_foundation/path_provider_foundation-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation.modulemap";
+				PRODUCT_MODULE_NAME = path_provider_foundation;
+				PRODUCT_NAME = path_provider_foundation;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Profile;
+		};
+		F9CC591A5FF501F822BAAF8565BED104 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4B3CB2DAADDAC406DB48184B9079885 /* rive_common.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64\"",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "Target Support Files/rive_common/rive_common-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/rive_common/rive_common-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/rive_common/rive_common.modulemap";
+				PRODUCT_MODULE_NAME = rive_common;
+				PRODUCT_NAME = rive_common;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FC6ED70E946FA06D5EB91B9455F54AC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 728A5ED1DD60BAC8C8F382A87B976F84 /* Pods-Runner.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64\"",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/Pods-Runner/Pods-Runner.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FD9DD0A2CCC807CE5B30BBCA3BFF34C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4875F8CF0D5756842129C154C61FC0AA /* file_selector_macos.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"/Users/transformed/Documents/env/flutter/bin/cache/artifacts/engine/darwin-x64\"",
+					"$(inherited)",
+				);
+				GCC_PREFIX_HEADER = "Target Support Files/file_selector_macos/file_selector_macos-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/file_selector_macos/file_selector_macos-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MODULEMAP_FILE = "Target Support Files/file_selector_macos/file_selector_macos.modulemap";
+				PRODUCT_MODULE_NAME = file_selector_macos;
+				PRODUCT_NAME = file_selector_macos;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		121144B9970B292E828C888876068008 /* Build configuration list for PBXNativeTarget "path_provider_foundation-path_provider_foundation_privacy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D783FEE961B69074E216266D59A1B81 /* Debug */,
+				0A5323A61FCBCC33368BB7873630DBE3 /* Profile */,
+				6C1046BA06E7F6D95147C564B3809CED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		40D89E4919EEC2E7D1BD1B154FB8EC19 /* Build configuration list for PBXNativeTarget "file_selector_macos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD9DD0A2CCC807CE5B30BBCA3BFF34C4 /* Debug */,
+				8DA40B30B720EFA62A732AE1DAB3FF02 /* Profile */,
+				A4237582D764DB9ACDCAEB574198EFF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A734648D21C485124F4CA7866CB7B37C /* Debug */,
+				C38C56AC8A0B6CDAE880C1F3D00965FD /* Profile */,
+				D7C18A4BB3A23E3E9BD431BC6F0C4001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		624022EE1C2EAB1C3CC38699E1368C5F /* Build configuration list for PBXAggregateTarget "FlutterMacOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE3522BD18406F17F8719EC967A26EB4 /* Debug */,
+				1D6BBE705B4E14F77C21AB0FECA78CC3 /* Profile */,
+				B2AC953410975D4FAC01D6592A2813C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		802BC8290C29092C76611F6D8D344206 /* Build configuration list for PBXNativeTarget "rive_common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9CC591A5FF501F822BAAF8565BED104 /* Debug */,
+				560048DB319899562C5F1A5849A19C4B /* Profile */,
+				C3A596F70B0BE20E42000E6D84292605 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9BE2E94BFE4C924B683A82AC505494B7 /* Build configuration list for PBXNativeTarget "path_provider_foundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33119897E0AD455DF867C9E13C771819 /* Debug */,
+				F573674CC0D105389B6D43355CEC0FDE /* Profile */,
+				376901DDB874F6DB1B196DE7072B0934 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7404DC77287516B7728E3D28248E5F8 /* Build configuration list for PBXNativeTarget "Pods-Runner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FC6ED70E946FA06D5EB91B9455F54AC2 /* Debug */,
+				21412FBF50C5F4B24A3526C376BF0255 /* Profile */,
+				7A8CE26E2657D46289BD7D25835F92A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C93FE463016A8F6A183A1AD3D9FA6BAD /* Build configuration list for PBXNativeTarget "Pods-RunnerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99E22572A8FFA7BB45BF8D9E5CDB9405 /* Debug */,
+				D54AD075843DE89D7130ACC40C1138F4 /* Profile */,
+				BD53B19862F90664FE360356A18DA71C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

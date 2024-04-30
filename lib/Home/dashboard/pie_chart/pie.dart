@@ -274,7 +274,7 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
                 xValueMapper: (GetExpenses myTechies, _) =>
                     myTechies.category.toString(),
                 yValueMapper: (GetExpenses myTechies, _) =>
-                    double.parse(myTechies.amount).toInt(),
+                    myTechies.amount!.toInt(),
                 // name: 'Gold',
                 innerRadius: '75%',
               )
@@ -302,7 +302,7 @@ class _PieChartSample2State extends ConsumerState<PieChartSample2> {
   int calculateTotalExpense(List<GetExpenses> expenses) {
     int total = 0;
     for (var expense in expenses) {
-      total += double.parse(expense.total).toInt();
+      total += expense.total!.toInt();
     }
     return total;
   }

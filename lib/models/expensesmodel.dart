@@ -17,17 +17,17 @@ class GetExpenses {
     required this.carparts,
   });
 
-  final int id;
-  final String userId;
-  final String category;
-  final String title;
-  final String description;
-  final String technicianId;
-  final String amount;
-  final String total;
-  final String methodOfPayment;
+  final int? id;
+  final int? userId;
+  final String? category;
+  final String? title;
+  final String? description;
+  final int? technicianId;
+  final int? amount;
+  final int? total;
+  final String? methodOfPayment;
   final dynamic imageProof;
-  final String carpart;
+  final int? carpart;
   final DateTime? date;
   final DateTime? createdAt;
   final DateTime? updatedAt;

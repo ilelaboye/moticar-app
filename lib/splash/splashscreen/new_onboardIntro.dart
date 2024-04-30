@@ -123,7 +123,7 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
 
                         OtherLoginButton(
                           onTap: () {
-                            // AuthService().signInwithGoogle();
+                            AuthService.signInwithFacebook(context);
                           },
                           child: SvgPicture.asset(
                             "assets/svgs/faceB.svg",
@@ -133,13 +133,13 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
 
                         OtherLoginButton(
                             onTap: () {
-                              // AuthService().signInwithGoogle();
+                              AuthService.signInwithGoogle(context);
                             },
                             child: SvgPicture.asset("assets/svgs/Google.svg")),
 
                         OtherLoginButton(
                           onTap: () {
-                            // AuthService().signInwithGoogle();
+                            AuthService.signInWithTwitter(context);
                           },
                           child: SvgPicture.asset("assets/svgs/x.svg"),
                         ),
