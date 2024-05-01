@@ -1001,8 +1001,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                                 category: breakdown.category
                                                     .toString(),
                                                 amount: nairaFormat.format(
-                                                    double.parse(
-                                                        breakdown.amount)),
+                                                    breakdown.amount),
                                                 paymode: breakdown
                                                     .methodOfPayment
                                                     .toString(),
@@ -1081,8 +1080,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                         Row(
                                           children: [
                                             Text(
-                                                nairaFormat.format(double.parse(
-                                                    breakdown.amount)),
+                                                nairaFormat.format(breakdown.amount),
                                                 style: const TextStyle(
                                                     fontFamily: "Neulis",
                                                     color: Color(0xff006C70),

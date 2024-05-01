@@ -23,8 +23,8 @@ class GetExpenses {
   final String? title;
   final String? description;
   final int? technicianId;
-  final int? amount;
-  final int? total;
+  final double? amount;
+  final double? total;
   final String? methodOfPayment;
   final dynamic imageProof;
   final int? carpart;

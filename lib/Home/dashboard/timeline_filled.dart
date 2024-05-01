@@ -960,7 +960,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                   children: [
                                     Text(
                                         nairaFormat.format(
-                                            double.parse(breakdown.amount)),
+                                            breakdown.amount),
                                         style: const TextStyle(
                                             fontFamily: "Neulis",
                                             color: Color(0xff006C70),
