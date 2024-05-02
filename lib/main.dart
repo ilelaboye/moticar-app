@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,6 +8,7 @@ import 'package:rive/rive.dart';
 import 'services/hivekeys.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'splash/splashscreen/splash_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //  Un-used
 // import 'Home/profile/company_info.dart';
@@ -17,7 +18,8 @@ import 'splash/splashscreen/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await dotenv.load(fileName: ".env");
+  await Firebase.initializeApp();
   await Hive.initFlutter();
   await Hive.openBox(HiveKeys.appBox);
 

@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/providers/auth_provider.dart';
 import 'package:moticar/providers/events_provider.dart';
+import 'package:moticar/services/hivekeys.dart';
+import 'package:moticar/services/localdatabase.dart';
+import 'package:moticar/widgets/colors.dart';
+import 'package:rive/rive.dart';
 import 'package:twitter_login/twitter_login.dart';
 
 class AuthService {
@@ -11,18 +16,66 @@ class AuthService {
     try {
       // lets sign in
       MoticarAuthProvider provider = MoticarAuthProvider();
-      Map<String, dynamic> res = await provider.signInWithGoogle();
+      Map<String, dynamic> res = await provider.signInWithGoogle(context);
+
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) {
+            return Center(
+              child: AlertDialog(
+                backgroundColor: AppColors.appThemeColor,
+                shadowColor: AppColors.appThemeColor,
+                content: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: RiveAnimation.asset(
+                          'assets/images/preloader.riv',
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text('Welcome to Moticar',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white))
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+
+        await Future.delayed(const Duration(seconds: 3));
+      }
 
       print('G sign res');
       print(res);
       if (res["status"] == true) {
         //       if (await Storage.setUser(res["data"], res["token"])) {
         if (context.mounted) {
+          Navigator.pop(context);
           EventProvider.showNotification(context, "Successfully logged in");
-          //           Navigator.pushAndRemoveUntil(
-          //               context,
-          //               MaterialPageRoute(builder: (context) => const Home()),
-          //               (route) => false);
+
+          await Future.delayed(const Duration(milliseconds: 100), () async {
+            await HiveStorage.put(HiveKeys.userEmail, res["email"]);
+            await HiveStorage.put(HiveKeys.token, res["token"]);
+            await HiveStorage.put(HiveKeys.hasLoggedIn, true);
+          });
+
+          if (context.mounted) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const BottomHomePage();
+            }));
+          }
         }
       } else {
         if (context.mounted) {
@@ -31,7 +84,6 @@ class AuthService {
         }
       }
     } catch (e) {
-      print(e);
       if (context.mounted) {
         EventProvider.showNotification(
             context, "Something went wrong, Try again.");
@@ -45,23 +97,69 @@ class AuthService {
       MoticarAuthProvider provider = MoticarAuthProvider();
       Map<String, dynamic> res = await provider.signInWithFacebook();
 
-      print(res);
+      // if (context.mounted) {
+      //   showDialog(
+      //     context: context,
+      //     barrierDismissible: true,
+      //     builder: (context) {
+      //       return Center(
+      //         child: AlertDialog(
+      //           backgroundColor: AppColors.appThemeColor,
+      //           shadowColor: AppColors.appThemeColor,
+      //           content: Container(
+      //             padding: const EdgeInsets.all(20),
+      //             decoration: BoxDecoration(
+      //               borderRadius: BorderRadius.circular(10),
+      //             ),
+      //             child: const Column(
+      //               mainAxisSize: MainAxisSize.min,
+      //               children: [
+      //                 SizedBox(
+      //                   height: 100,
+      //                   width: 100,
+      //                   child: RiveAnimation.asset(
+      //                     'assets/images/preloader.riv',
+      //                   ),
+      //                 ),
+      //                 SizedBox(height: 8),
+      //                 Text('Welcome to Moticar',
+      //                     textAlign: TextAlign.center,
+      //                     style: TextStyle(color: Colors.white))
+      //               ],
+      //             ),
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //   );
 
-      if (res["status"] == true) {
-        //       if (await Storage.setUser(res["data"], res["token"])) {
-        if (context.mounted) {
-          EventProvider.showNotification(context, "Successfully logged in");
-          //           Navigator.pushAndRemoveUntil(
-          //               context,
-          //               MaterialPageRoute(builder: (context) => const Home()),
-          //               (route) => false);
-        }
-      } else {
-        if (context.mounted) {
-          EventProvider.showNotification(
-              context, "Something went wrong, Try again.");
-        }
-      }
+      //   await Future.delayed(const Duration(seconds: 3));
+      // }
+
+      // if (res["status"] == true) {
+      //   //       if (await Storage.setUser(res["data"], res["token"])) {
+      //   if (context.mounted) {
+      //     Navigator.pop(context);
+      //     EventProvider.showNotification(context, "Successfully logged in");
+
+      //     await Future.delayed(const Duration(milliseconds: 100), () async {
+      //       await HiveStorage.put(HiveKeys.userEmail, res["email"]);
+      //       await HiveStorage.put(HiveKeys.token, res["token"]);
+      //       await HiveStorage.put(HiveKeys.hasLoggedIn, true);
+      //     });
+
+      //     if (context.mounted) {
+      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //         return const BottomHomePage();
+      //       }));
+      //     }
+      //   }
+      // } else {
+      //   if (context.mounted) {
+      //     EventProvider.showNotification(
+      //         context, "Something went wrong, Try again.");
+      //   }
+      // }
     } catch (e) {
       print(e);
       if (context.mounted) {
@@ -84,19 +182,84 @@ class AuthService {
   // }
 
   static signInWithTwitter(BuildContext context) async {
-    final twitterLogin = TwitterLogin(
-      apiKey: '49utyiWtpasaRuWnJtFsdcHfO',
-      apiSecretKey: 'jntsXJvxcPySW1fh3LSGXGYh1IhWNzayxiHEIxQ8k4MX6Nr3LU',
-      redirectURI: 'moticar://',
-    );
+    try {
+      final twitterLogin = TwitterLogin(
+        apiKey: '49utyiWtpasaRuWnJtFsdcHfO',
+        apiSecretKey: 'jntsXJvxcPySW1fh3LSGXGYh1IhWNzayxiHEIxQ8k4MX6Nr3LU',
+        redirectURI: 'moticar://',
+      );
 
-    final authResult = await twitterLogin.loginV2();
-    print(authResult.user!.name);
-    // final TwitterAuthCredential credential = TwitterAuthProvider.credential(
-    //         accessToken: authResult.authToken, secret: authResult.authTokenSecret);
+      final authResult = await twitterLogin.loginV2();
+      print(authResult.user!.name);
+      // if (context.mounted) {
+      //     showDialog(
+      //       context: context,
+      //       barrierDismissible: true,
+      //       builder: (context) {
+      //         return Center(
+      //           child: AlertDialog(
+      //             backgroundColor: AppColors.appThemeColor,
+      //             shadowColor: AppColors.appThemeColor,
+      //             content: Container(
+      //               padding: const EdgeInsets.all(20),
+      //               decoration: BoxDecoration(
+      //                 borderRadius: BorderRadius.circular(10),
+      //               ),
+      //               child: const Column(
+      //                 mainAxisSize: MainAxisSize.min,
+      //                 children: [
+      //                   SizedBox(
+      //                     height: 100,
+      //                     width: 100,
+      //                     child: RiveAnimation.asset(
+      //                       'assets/images/preloader.riv',
+      //                     ),
+      //                   ),
+      //                   SizedBox(height: 8),
+      //                   Text('Welcome to Moticar',
+      //                       textAlign: TextAlign.center,
+      //                       style: TextStyle(color: Colors.white))
+      //                 ],
+      //               ),
+      //             ),
+      //           ),
+      //         );
+      //       },
+      //     );
 
-    // final TwitterAuthCredential credential = TwitterAuthProvider.credential(
-    //     accessToken: authResult.authToken, secret: authResult.authTokenSecret);
-    // await FirebaseAuth.instance.signInWithCredential(credential);
+      //     await Future.delayed(const Duration(seconds: 3));
+      //   }
+
+      //   if (res["status"] == true) {
+      //     //       if (await Storage.setUser(res["data"], res["token"])) {
+      //     if (context.mounted) {
+      //       Navigator.pop(context);
+      //       EventProvider.showNotification(context, "Successfully logged in");
+
+      //       await Future.delayed(const Duration(milliseconds: 100), () async {
+      //         await HiveStorage.put(HiveKeys.userEmail, res["email"]);
+      //         await HiveStorage.put(HiveKeys.token, res["token"]);
+      //         await HiveStorage.put(HiveKeys.hasLoggedIn, true);
+      //       });
+
+      //       if (context.mounted) {
+      //         Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //           return const BottomHomePage();
+      //         }));
+      //       }
+      //     }
+      //   } else {
+      //     if (context.mounted) {
+      //       EventProvider.showNotification(
+      //           context, "Something went wrong, Try again.");
+      //     }
+      //   }
+      // final TwitterAuthCredential credential = TwitterAuthProvider.credential(
+      //         accessToken: authResult.authToken, secret: authResult.authTokenSecret);
+
+      // final TwitterAuthCredential credential = TwitterAuthProvider.credential(
+      //     accessToken: authResult.authToken, secret: authResult.authTokenSecret);
+      // await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {}
   }
 }

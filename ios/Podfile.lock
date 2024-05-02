@@ -20,7 +20,7 @@ PODS:
     - FirebaseAuth (~> 10.24.0)
   - Firebase/CoreOnly (10.24.0):
     - FirebaseCore (= 10.24.0)
-  - firebase_auth (4.19.2):
+  - firebase_auth (4.19.4):
     - Firebase/Auth (= 10.24.0)
     - firebase_core
     - Flutter
@@ -89,12 +89,12 @@ PODS:
     - GTMSessionFetcher/Core
   - image_picker_ios (0.0.1):
     - Flutter
-  - local_auth_ios (0.0.1):
+  - local_auth_darwin (0.0.1):
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - permission_handler_apple (9.1.1):
+  - permission_handler_apple (9.3.0):
     - Flutter
   - PromisesObjC (2.4.0)
   - RecaptchaInterop (100.0.0)
@@ -115,7 +115,7 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
+  - local_auth_darwin (from `.symlinks/plugins/local_auth_darwin/darwin`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - rive_common (from `.symlinks/plugins/rive_common/ios`)
@@ -158,8 +158,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_sign_in_ios/darwin"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
-  local_auth_ios:
-    :path: ".symlinks/plugins/local_auth_ios/ios"
+  local_auth_darwin:
+    :path: ".symlinks/plugins/local_auth_darwin/darwin"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
@@ -179,7 +179,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit_Basics: 92b7b7458d57091370b0b6cc197578874c3b4b16
   FBSDKLoginKit: 5d5271ebfd1e39c6b071de8db5c4bd6255be3561
   Firebase: 91fefd38712feb9186ea8996af6cbdef41473442
-  firebase_auth: c889ae9f6d5116804d50bf9fa931b383f3e82a9b
+  firebase_auth: b782567cafd5cfd64debf54638a9f29b63abd7bf
   firebase_core: 7f1e1156934d0da3be260174812842df9420e4ab
   FirebaseAppCheckInterop: fecc08c89936c8acb1428d8088313aabedb348e4
   FirebaseAuth: 711d01cccefaf10035b3090a92956d0dd4f99088
@@ -193,13 +193,13 @@ SPEC CHECKSUMS:
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
-  image_picker_ios: 99dfe1854b4fa34d0364e74a78448a0151025425
-  local_auth_ios: 1ba1475238daa33a6ffa2a29242558437be435ac
+  image_picker_ios: b545a5f16c0fa88e3ecbbce3ed4de45567a8ec18
+  local_auth_darwin: c7e464000a6a89e952235699e32b329457608d98
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
-  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  rive_common: c537b4eed761e903a9403d93c347b69bd7a4762f
+  rive_common: 8630be7f6385198f9d31a5bc8cd7f6ccccedf5a1
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   twitter_login: 2794db69b7640681171b17b3c2c84ad9dfb4a57f
 
