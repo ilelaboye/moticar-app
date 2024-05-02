@@ -8,6 +8,7 @@ import 'package:rive/rive.dart';
 import 'services/hivekeys.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'splash/splashscreen/splash_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //  Un-used
 // import 'Home/profile/company_info.dart';
@@ -17,6 +18,7 @@ import 'splash/splashscreen/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
   await Hive.initFlutter();
   await Hive.openBox(HiveKeys.appBox);
