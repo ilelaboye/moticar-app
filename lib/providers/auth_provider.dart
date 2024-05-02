@@ -15,6 +15,7 @@ class MoticarAuthProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> signInWithGoogle() async {
+    print('auth google');
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
@@ -25,7 +26,8 @@ class MoticarAuthProvider with ChangeNotifier {
       );
       final res = await FirebaseAuth.instance.signInWithCredential(credential);
       final user = res.additionalUserInfo!.profile!;
-
+      print('a-google resp');
+      print(res);
       return {
         "status": true,
         "message": "Login successful",
@@ -42,6 +44,7 @@ class MoticarAuthProvider with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       return handleFirebaseError(e);
     } catch (e) {
+      print('error');
       print(e);
       return {"status": false, "message": ""};
     }

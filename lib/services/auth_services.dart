@@ -13,6 +13,8 @@ class AuthService {
       MoticarAuthProvider provider = MoticarAuthProvider();
       Map<String, dynamic> res = await provider.signInWithGoogle();
 
+      print('G sign res');
+      print(res);
       if (res["status"] == true) {
         //       if (await Storage.setUser(res["data"], res["token"])) {
         if (context.mounted) {
