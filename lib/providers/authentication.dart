@@ -16,10 +16,7 @@ class Authentication with ChangeNotifier {
   Future<Map<String, dynamic>> getOnboardingScreen(
     BuildContext context,
   ) async {
-    print('get onboarding screen');
     Response res = await req.get(context, "auth/get-onboarding-screens");
-    print('onboarding screen');
-    print(res);
     return {'status': true, 'data': res.data};
   }
 

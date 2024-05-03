@@ -28,12 +28,17 @@ class _SplashScreenState extends State<SplashScreen>
     // getOnboardingScreen();
   }
 
-  Future<void> getOnboardingScreen() async {
+  Future<void> getOnboardingScreen(BuildContext context) async {
     Authentication provider = Authentication();
     var res = await provider.getOnboardingScreen(context);
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return OnBoardingScreenPage(screens: res['data']['data']);
-    }));
+
+    if (context.mounted) {
+      if (res["status"] == true && res["data"]) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return OnBoardingScreenPage(screens: res['data']['data']);
+        }));
+      }
+    }
   }
 
   @override

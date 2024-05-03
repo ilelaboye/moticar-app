@@ -20,7 +20,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(
-      options: FirebaseOptions(
+      options: const FirebaseOptions(
     apiKey: 'AIzaSyADgGHREIxlS6hKn61UDEvbm3y-fce4iR4',
     appId: '899782617587',
     messagingSenderId: 'use-moticar',
