@@ -8,8 +8,11 @@ import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 
 class OnBoardingScreenPage extends StatefulWidget {
-  const OnBoardingScreenPage({super.key});
-
+  const OnBoardingScreenPage({
+    super.key,
+    required this.screens,
+  });
+  final List screens;
   @override
   State<OnBoardingScreenPage> createState() => _OnBoardingScreenPageState();
 }
@@ -73,12 +76,15 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
                       });
                     },
                     controller: _controller,
-                    children: [
-                      Image.asset("assets/images/step1.png"),
-                      Image.asset("assets/images/step2.png"),
-                      Image.asset("assets/images/step3.png"),
-                      Image.asset("assets/images/step4.png"),
-                    ],
+                    children: widget.screens
+                        .map((e) => Image.network(e['image']))
+                        .toList(),
+                    // children: [
+                    //   Image.asset("assets/images/step1.png"),
+                    //   Image.asset("assets/images/step2.png"),
+                    //   Image.asset("assets/images/step3.png"),
+                    //   Image.asset("assets/images/step4.png"),
+                    // ],
                   ),
                 ),
 

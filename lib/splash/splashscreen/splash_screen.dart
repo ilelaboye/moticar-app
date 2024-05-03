@@ -1,5 +1,6 @@
 // import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:moticar/providers/authentication.dart';
 import 'package:rive/rive.dart';
 
 // import '../../router/app_router.gr.dart';
@@ -24,18 +25,15 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    _nextPage();
+    getOnboardingScreen();
   }
 
-  Future _nextPage() async {
-    await Future.delayed(const Duration(seconds: 3), () {
-      // context.router.push(const LoginRouteCopy());
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const OnBoardingScreenPage();
-      }));
-
-      //
-    });
+  Future<void> getOnboardingScreen() async {
+    Authentication provider = Authentication();
+    var res = await provider.getOnboardingScreen(context);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return OnBoardingScreenPage(screens: res['data']['data']);
+    }));
   }
 
   @override

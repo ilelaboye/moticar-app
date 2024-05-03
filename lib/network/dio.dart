@@ -8,7 +8,7 @@ import 'package:moticar/widgets/flushbar.dart';
 class DioClient extends ChangeNotifier {
   final Dio _dio;
   final String? token;
-  final String? baseUrl;
+  String baseUrl = Constant.baseUrl;
 
   DioClient(this._dio, this.baseUrl, {this.token}) {
     _dio
@@ -111,7 +111,7 @@ class DioExceptions implements Exception {
   DioExceptions.fromDioError(DioError dioError) {
     print('jfjjf ');
     // print(dioError.response!.statusMessage);
-    print(dioError.response!.data['message']);
+    print(dioError);
     // print(dioError.type);
     // print(dioError.response?.statusCode);
     // print(dioError.response);

@@ -13,6 +13,16 @@ class Authentication with ChangeNotifier {
     req = DioClient(Dio(), Constant.baseUrl);
   }
 
+  Future<Map<String, dynamic>> getOnboardingScreen(
+    BuildContext context,
+  ) async {
+    print('get onboarding screen');
+    Response res = await req.get(context, "auth/get-onboarding-screens");
+    print('onboarding screen');
+    print(res);
+    return {'status': true, 'data': res.data};
+  }
+
   Future<Map<String, dynamic>> forgotPassword(
     BuildContext context,
     String email,
