@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    getOnboardingScreen();
+    // getOnboardingScreen();
   }
 
   Future<void> getOnboardingScreen() async {
