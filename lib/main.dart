@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:moticar/auth/login/login_email.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:rive/rive.dart';
 import 'services/hivekeys.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'splash/splashscreen/splash_screen.dart';
+import 'package:moticar/splash/splashscreen/splash_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 //  Un-used
@@ -21,7 +22,7 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-    apiKey: 'AIzaSyADgGHREIxlS6hKn61UDEvbm3y-fce4iR4',
+    apiKey: 'AIzaSyA6Op6W0hnQy5fGTwwZNcXgXSderW_yXog',
     appId: '899782617587',
     messagingSenderId: 'use-moticar',
     projectId: 'use-moticar',
@@ -75,25 +76,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Moticar',
-      builder: EasyLoading.init(),
-      theme: ThemeData(
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            // largeSizeConstraints: BoxConstraints.tight(10),
-            backgroundColor: AppColors.yellow),
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
-        useMaterial3: true,
-        fontFamily: "NeulisAlt",
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(fontFamily: 'NeulisAlt'),
+        debugShowCheckedModeBanner: false,
+        title: 'Moticar',
+        builder: EasyLoading.init(),
+        theme: ThemeData(
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              // largeSizeConstraints: BoxConstraints.tight(10),
+              backgroundColor: AppColors.yellow),
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.yellow),
+          useMaterial3: true,
+          fontFamily: "NeulisAlt",
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(fontFamily: 'NeulisAlt'),
+          ),
         ),
-      ),
-      home:
-          // const NotifyMotPage()
-
-          const SplashScreen(),
-    );
+        home:
+            // const NotifyMotPage()
+            const LoginPage()
+        // const SplashScreen(),
+        );
   }
 }
 

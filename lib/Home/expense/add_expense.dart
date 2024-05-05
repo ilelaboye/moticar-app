@@ -279,13 +279,10 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
       int int2 = int.tryParse(int2Str) ?? 0; // Use 0 if parsing fails
       // Calculate the total
       int total = int1 + int2;
-      print(amountControllerText);
       return total;
     }
 
     int totalSum = calculateTotal(widgetAmountz, amountControllerText);
-    print("Total sum: $totalSum");
-
     return Scaffold(
       backgroundColor: AppColors.teal,
       body: Column(
@@ -1348,8 +1345,6 @@ class _AddExpensesPageState extends ConsumerState<AddExpensesPage> {
                                               _loadSavedText();
 
                                               payType = paymentList[index];
-
-                                              print(payType);
 
                                               // Toggle the selection // Deselect previously selected item
                                               for (int i = 0;

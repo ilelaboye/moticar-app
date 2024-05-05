@@ -840,7 +840,6 @@
 
 //                                               payType = paymentList[index];
 
-//                                               print(payType);
 
 //                                               // Toggle the selection // Deselect previously selected item
 //                                               for (int i = 0;
@@ -855,10 +854,8 @@
 //                                                   !isSelectedList[index];
 //                                               // Print the selected payment type
 //                                               if (isSelectedList[index]) {
-//                                                 print(paymentList[index]);
 //                                               } else {
-//                                                 print(
-//                                                     'No payment type selected');
+
 //                                               }
 //                                             });
 //                                           },

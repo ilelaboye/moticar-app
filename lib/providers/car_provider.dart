@@ -17,7 +17,6 @@ class CarProvider with ChangeNotifier {
     BuildContext context,
     String email,
   ) async {
-    print('forgot click');
     Response res = await req.post(context, "auth/forgot-password", data: {
       "email": email,
     });
@@ -26,9 +25,6 @@ class CarProvider with ChangeNotifier {
 
   Future<Map<String, dynamic>> verifyResetToken(
       BuildContext context, String email, String token) async {
-    print('reset click');
-    print(email);
-    print(token);
     Response res = await req.post(context, "auth/verify-forgot-password-token",
         data: {"email": email, "token": token});
     return {'status': true, 'data': res.data};
@@ -38,9 +34,6 @@ class CarProvider with ChangeNotifier {
 
   Future<Map<String, dynamic>> addNewExpense(
       BuildContext context, String email, String token) async {
-    print('adding expense click');
-    print(email);
-    print(token);
     Response res = await req.post(context, "auth/verify-forgot-password-token",
         data: {"email": email, "token": token});
     return {'status': true, 'data': res.data};

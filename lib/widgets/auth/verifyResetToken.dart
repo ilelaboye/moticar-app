@@ -146,18 +146,14 @@ class _ForgotPasswordTokenVerificationState
                     borderColor: AppColors.diaColor,
                     onTap: () async {
                       String pinCode = pinController.text;
-                      print('llll');
-                      print(widget.emailController);
                       if (pinCode.length == 5) {
                         EasyLoading.show(status: 'Loading');
                         Authentication provider = Authentication();
 
-                        print('verify token');
                         final res = await provider.verifyResetToken(
                             context, widget.emailController, pinCode);
                         if (res['status']) {
                           EasyLoading.dismiss();
-                          print('yes true');
                           Alert.showNotification(
                             message: "Code verified successfully",
                             notificationType: 0,

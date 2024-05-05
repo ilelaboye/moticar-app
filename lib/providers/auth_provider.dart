@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:moticar/network/dio.dart';
@@ -30,36 +31,42 @@ class MoticarAuthProvider with ChangeNotifier {
       final res = await FirebaseAuth.instance.signInWithCredential(credential);
       final user = res.additionalUserInfo!.profile!;
 
+      await EasyLoading.show(
+        status: 'loading...',
+      );
+
       //send data to API
       if (context.mounted) {
-        final apiRes = await dioClient.post(context, "/auth/social-login",
-            data: {
-              "email": user["email"],
-              "user_id": res.user!.uid,
-              "platform": "google"
-            });
+        if (context.mounted) {
+          final apiRes = await dioClient.post(context, "/auth/social-login",
+              data: {
+                "email": user["email"],
+                "user_id": res.user!.uid,
+                "platform": "google"
+              });
 
-        return {
-          "status": true,
-          "message": "Login successful",
-          "data": {
-            "uid": res.user!.uid,
-            "image": user["picture"],
-            "firstname": user["given_name"],
-            "lastname": user["family_name"],
-            "email": user["email"],
-            // "phoneNumber": res.user!.phoneNumber ?? "",
-          },
-          "token": apiRes.data["data"]["token"]
-        };
+          return {
+            "status": true,
+            "message": "Login successful",
+            "data": {
+              "uid": res.user!.uid,
+              "image": user["picture"],
+              "firstname": user["given_name"],
+              "lastname": user["family_name"],
+              "email": user["email"],
+              // "phoneNumber": res.user!.phoneNumber ?? "",
+            },
+            "token": apiRes.data["data"]["token"]
+          };
+        } else {
+          return {"status": false, "message": "Something went wrong"};
+        }
       } else {
         return {"status": false, "message": "Something went wrong"};
       }
     } on FirebaseAuthException catch (e) {
       return handleFirebaseError(e);
     } catch (e) {
-      print('error');
-      print(e);
       return {"status": false, "message": ""};
     }
   }
@@ -88,7 +95,6 @@ class MoticarAuthProvider with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       return handleFirebaseError(e);
     } catch (e) {
-      print(e);
       return {"status": false, "message": ""};
     }
   }
@@ -130,7 +136,6 @@ class MoticarAuthProvider with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       return handleFirebaseError(e);
     } catch (e) {
-      print(e);
       return {"status": false, "message": ""};
     }
   }
