@@ -10,7 +10,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MoticarAuthProvider with ChangeNotifier {
   String? _token;
-  DioClient dioClient = DioClient(Dio(), Constant.baseUrl);
+  DioClient dioClient = DioClient(Dio());
   String? get token => _token;
 
   set token(String? value) {
@@ -50,7 +50,7 @@ class MoticarAuthProvider with ChangeNotifier {
             "email": user["email"],
             // "phoneNumber": res.user!.phoneNumber ?? "",
           },
-          "token": apiRes.data["data"]["token"]
+          "token": apiRes['data']["data"]["token"]
         };
       } else {
         return {"status": false, "message": "Something went wrong"};

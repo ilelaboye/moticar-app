@@ -10,7 +10,7 @@ class DioClient extends ChangeNotifier {
   final String? token;
   String baseUrl = Constant.baseUrl;
 
-  DioClient(this._dio, this.baseUrl, {this.token}) {
+  DioClient(this._dio, {this.token}) {
     _dio
       ..options.baseUrl = baseUrl ?? ""
       ..options.connectTimeout = Constant.connectionTimeout
@@ -23,7 +23,7 @@ class DioClient extends ChangeNotifier {
       };
   }
 
-  Future<Response> get(context, String url,
+  Future<Map<String, dynamic>> get(context, String url,
       {Map<String, dynamic>? queryParameters,
       Options? options,
       CancelToken? cancelToken,
@@ -38,25 +38,21 @@ class DioClient extends ChangeNotifier {
         onReceiveProgress: onReceiveProgress,
       );
 
-      return response;
+      return {'status': true, 'data': response.data};
     } on DioError catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     message: errorMessage,
-      //   ),
-      // );
       Alert.showNotificationError(
         message: errorMessage,
         context: context,
         notificationType: 1,
       );
-      throw errorMessage;
+      // throw errorMessage;
+
+      return {'status': false, 'message': errorMessage};
     }
   }
 
-  Future<Response> post(context, String url,
+  Future<Map<String, dynamic>> post(context, String url,
       {data,
       Map<String, dynamic>? queryParameters,
       Options? options,
@@ -80,19 +76,13 @@ class DioClient extends ChangeNotifier {
       );
 
       // print(response);
-
-      return response;
+      return {"status": true, "data": response.data};
     } on DioError catch (e) {
       print('chec');
 
       final errorMessage = DioExceptions.fromDioError(e).toString();
+      print('post err');
       print(errorMessage);
-      // showTopSnackBar(
-      //   Overlay.of(context),
-      //   CustomSnackBar.error(
-      //     message: errorMessage,
-      //   ),
-      // );
 
       Alert.showNotificationError(
         message: errorMessage,
@@ -100,7 +90,8 @@ class DioClient extends ChangeNotifier {
         notificationType: 1,
       );
 
-      throw errorMessage;
+      // throw errorMessage;
+      return {"status": false, "message": errorMessage};
     }
   }
 }

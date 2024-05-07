@@ -70,7 +70,7 @@ class Alert {
         style: TextStyle(
           fontFamily: 'NeulisAlt',
           fontSize: 13,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
     ).show(context);
@@ -107,7 +107,8 @@ class Alert {
           subtitle: message,
           onTap: onTap ??
               () {
-                // context.router.pop();
+                // pop twice because there are two popup dialog
+                Navigator.pop(context);
                 Navigator.pop(context);
               },
           buttonColor: AppColors.red,

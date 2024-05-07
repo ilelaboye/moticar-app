@@ -10,17 +10,32 @@ class Authentication with ChangeNotifier {
   late DioClient req;
 
   Authentication() {
-    req = DioClient(Dio(), Constant.baseUrl);
+    req = DioClient(Dio());
+  }
+
+  Future<Map<String, dynamic>> register1(
+      BuildContext context, String email, String phone) async {
+    print('signup 1 click');
+    Map<String, dynamic> res = await req.post(context, "auth/register-email",
+        data: {"email": email, "phone": phone});
+    if (res['status']) {
+      return {'status': true, 'data': res['data']};
+    } else {
+      return {'status': false, 'message': res['message']};
+    }
   }
 
   Future<Map<String, dynamic>> getOnboardingScreen(
     BuildContext context,
   ) async {
-    print('get onboarding screen');
-    Response res = await req.get(context, "auth/get-onboarding-screens");
-    print('onboarding screen');
-    print(res);
-    return {'status': true, 'data': res.data};
+    Map<String, dynamic> res =
+        await req.get(context, "auth/get-onboarding-screens");
+
+    if (res['status']) {
+      return {'status': true, 'data': res['data']['data']};
+    } else {
+      return {'status': true, 'data': res['message']};
+    }
   }
 
   Future<Map<String, dynamic>> forgotPassword(
@@ -28,31 +43,31 @@ class Authentication with ChangeNotifier {
     String email,
   ) async {
     print('forgot click');
-    Response res = await req.post(context, "auth/forgot-password", data: {
+    Map<String, dynamic> res =
+        await req.post(context, "auth/forgot-password", data: {
       "email": email,
     });
-    return {'status': true, 'data': res.data};
+    if (res['status']) {
+      return {'status': true, 'data': res['data']};
+    } else {
+      return {'status': true, 'data': res['message']};
+    }
   }
 
   Future<Map<String, dynamic>> verifyResetToken(
       BuildContext context, String email, String token) async {
     print('reset click');
-    print(email);
-    print(token);
-    Response res = await req.post(context, "auth/verify-forgot-password-token",
-        data: {"email": email, "token": token});
-    return {'status': true, 'data': res.data};
-  }
 
-  //add expense
-
-  Future<Map<String, dynamic>> addNewExpense(
-      BuildContext context, String email, String token) async {
-    print('adding expense click');
-    print(email);
-    print(token);
-    Response res = await req.post(context, "auth/verify-forgot-password-token",
+    Map<String, dynamic> res = await req.post(
+        context, "auth/verify-forgot-password-token",
         data: {"email": email, "token": token});
-    return {'status': true, 'data': res.data};
+    print('reset click ress');
+    print(res);
+    if (res['status']) {
+      // print('yes from');
+      return {'status': true, 'data': res['data']};
+    } else {
+      return {'status': false, 'data': res['message']};
+    }
   }
 }

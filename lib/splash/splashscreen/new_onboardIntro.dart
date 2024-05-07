@@ -12,7 +12,7 @@ class OnBoardingScreenPage extends StatefulWidget {
     super.key,
     required this.screens,
   });
-  final List screens;
+  final Map<String, dynamic> screens;
   @override
   State<OnBoardingScreenPage> createState() => _OnBoardingScreenPageState();
 }
@@ -47,16 +47,15 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const MoticarText(
-                    text: "How moticar works",
+                MoticarText(
+                    text: widget.screens['text']['title'],
                     fontSize: 30,
                     fontWeight: FontWeight.w500,
                     fontColor: Colors.white),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(
                       left: 50.0, right: 50, top: 15, bottom: 20),
-                  child: Text(
-                      "Get all the insights to your car in 4 easy steps!",
+                  child: Text(widget.screens['text']['description'],
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: "NeulisAlt",
@@ -72,19 +71,19 @@ class _OnBoardingScreenPageState extends State<OnBoardingScreenPage>
                   child: PageView(
                     onPageChanged: (value) {
                       setState(() {
-                        onLastPage = (value == 4);
+                        onLastPage = (value == widget.screens['images'].length);
                       });
                     },
                     controller: _controller,
-                    // children: widget.screens
-                    //     .map((e) => Image.network(e['image']))
-                    //     .toList(),
-                    children: [
-                      Image.asset("assets/images/step1.png"),
-                      Image.asset("assets/images/step2.png"),
-                      Image.asset("assets/images/step3.png"),
-                      Image.asset("assets/images/step4.png"),
-                    ],
+                    children: widget.screens['images']
+                        .map<Widget>((e) => Image.network(e['image']))
+                        .toList(),
+                    // children: [
+                    //   Image.asset("assets/images/step1.png"),
+                    //   Image.asset("assets/images/step2.png"),
+                    //   Image.asset("assets/images/step3.png"),
+                    //   Image.asset("assets/images/step4.png"),
+                    // ],
                   ),
                 ),
 

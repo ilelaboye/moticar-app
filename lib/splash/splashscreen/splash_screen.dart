@@ -25,14 +25,17 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    // getOnboardingScreen();
+    getOnboardingScreen();
   }
 
   Future<void> getOnboardingScreen() async {
     Authentication provider = Authentication();
     var res = await provider.getOnboardingScreen(context);
+    print('retur');
+    print(res['data']);
+
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return OnBoardingScreenPage(screens: res['data']['data']);
+      return OnBoardingScreenPage(screens: res['data']);
     }));
   }
 

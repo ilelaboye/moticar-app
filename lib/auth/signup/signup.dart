@@ -2,11 +2,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:moticar/auth/login/login_email.dart';
+import 'package:moticar/providers/authentication.dart';
 import 'package:moticar/widgets/appBar.dart';
+import 'package:moticar/widgets/flushbar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:rive/rive.dart';
 
@@ -504,70 +507,61 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           if (emailz.isNotEmpty &&
                               phonie.isNotEmpty &&
                               _isCheckboxChecked) {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (context) {
-                                return Center(
-                                  child: AlertDialog(
-                                    backgroundColor: AppColors.appThemeColor,
-                                    shadowColor: AppColors.appThemeColor,
-                                    content: Container(
-                                      padding: const EdgeInsets.all(20),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          SizedBox(
-                                            height: 100,
-                                            width: 100,
-                                            child: RiveAnimation.asset(
-                                              'assets/images/preloader.riv',
-                                            ),
-                                          ),
-                                          SizedBox(height: 8),
-                                          Text('Processing, please wait.',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: Colors.white))
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
+                            EasyLoading.show(status: 'Processing, please wait');
+                            // showDialog(
+                            //   context: context,
+                            //   barrierDismissible: true,
+                            //   builder: (context) {
+                            //     return Center(
+                            //       child: AlertDialog(
+                            //         backgroundColor: AppColors.appThemeColor,
+                            //         shadowColor: AppColors.appThemeColor,
+                            //         content: Container(
+                            //           padding: const EdgeInsets.all(20),
+                            //           decoration: BoxDecoration(
+                            //             borderRadius: BorderRadius.circular(10),
+                            //           ),
+                            //           child: const Column(
+                            //             mainAxisSize: MainAxisSize.min,
+                            //             children: [
+                            //               SizedBox(
+                            //                 height: 100,
+                            //                 width: 100,
+                            //                 child: RiveAnimation.asset(
+                            //                   'assets/images/preloader.riv',
+                            //                 ),
+                            //               ),
+                            //               SizedBox(height: 8),
+                            //               Text('Processing, please wait.',
+                            //                   textAlign: TextAlign.center,
+                            //                   style: TextStyle(
+                            //                       color: Colors.white))
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     );
+                            //   },
+                            // );
 
                             await Future.delayed(
                                 const Duration(milliseconds: 300));
+                            EasyLoading.dismiss();
                             print('jfjfj');
                             print(emailz);
                             // All fields are filled, attempt sign-up
-                            final signUpResult = await model.signUp1(
-                              formData: {
-                                'email': emailz,
-                                'phone': phonie,
-                              },
-                            );
+                            // final signUpResult = await model.signUp1(
+                            //   formData: {
+                            //     'email': emailz,
+                            //     'phone': phonie,
+                            //   },
+                            // );
+                            Authentication provider = Authentication();
+                            var signUpResult = await provider.register1(
+                                context, emailz, phonie);
 
                             // Check the result of sign-up
-                            if (signUpResult.successMessage.isNotEmpty) {
-                              // Sign-up successful, show success dialog
-                              // showDialog(
-                              //   barrierDismissible: false,
-                              //   context: context,
-                              //   builder: (context) => MoticarDialog(
-                              //     buttonColor: AppColors.textColor,
-                              //     textColor: AppColors.diaColor,
-                              //     buttonText: "Continue",
-                              //     subtitle: signUpResult.successMessage,
-                              //     onTap: () {
-
-                              //     },
-                              //   ),
-                              // );
+                            if (signUpResult['status']) {
                               showMoticarBottom(
                                   context: context,
                                   child: FractionallySizedBox(
@@ -583,46 +577,38 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                       ),
                                     ),
                                   ));
-                            } else if (signUpResult.errorMessage.isNotEmpty) {
+                            } else if (!signUpResult['status']) {
                               // Sign-up failed, show error dialog
-                              showDialog(
+                              Alert.showNotificationError(
+                                message: signUpResult['message'],
                                 context: context,
-                                builder: (BuildContext context) {
-                                  return MoticarDialog(
-                                    icon: const Icon(Icons.error_outline_sharp,
-                                        color: AppColors.red, size: 50),
-                                    title: '',
-                                    subtitle: signUpResult.errorMessage,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                    },
-                                    buttonColor: AppColors.red,
-                                    textColor: AppColors.white,
-                                    buttonText: "Dismiss",
-                                  );
-                                },
+                                notificationType: 1,
                               );
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (BuildContext context) {
+                              //     return MoticarDialog(
+                              //       icon: const Icon(Icons.error_outline_sharp,
+                              //           color: AppColors.red, size: 50),
+                              //       title: '',
+                              //       subtitle: signUpResult.errorMessage,
+                              //       onTap: () {
+                              //         Navigator.pop(context);
+                              //         Navigator.pop(context);
+                              //       },
+                              //       buttonColor: AppColors.red,
+                              //       textColor: AppColors.white,
+                              //       buttonText: "Dismiss",
+                              //     );
+                              //   },
+                              // );
                             }
                           } else {
                             // Show dialog if any required fields are empty
-                            showDialog(
+                            Alert.showNotificationError(
+                              message: "All Fields are required to proceed",
                               context: context,
-                              builder: (BuildContext context) {
-                                return MoticarDialog(
-                                  icon: const Icon(Icons.info_rounded,
-                                      color: AppColors.appThemeColor, size: 50),
-                                  title: '',
-                                  subtitle:
-                                      'All Fields are required to proceed',
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  buttonColor: AppColors.appThemeColor,
-                                  textColor: AppColors.white,
-                                  buttonText: "Dismiss",
-                                );
-                              },
+                              notificationType: 1,
                             );
                           }
                         }
