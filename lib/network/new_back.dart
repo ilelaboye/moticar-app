@@ -95,7 +95,7 @@ class NewAgencyBackEnd implements AgencyNetwork {
     // Map<String, dynamic>? formData,
   }) async {
     String? token = HiveStorage.get(HiveKeys.token);
-    print(token);
+
     try {
       final response = await _dio.get(
         path,

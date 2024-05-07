@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "899782617587-7947ab8807mv2hsf8vjsev3geh4ger8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.moticar",
+            "certificate_hash": "2ec600f3c3f1fa40a97992eee8caf243dd31c8bf"
+          }
+        },
+        {
           "client_id": "899782617587-q60fop8q1mjebb6p8po9skmetihb1qvv.apps.googleusercontent.com",
           "client_type": 3
         }

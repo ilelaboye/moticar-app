@@ -78,8 +78,6 @@ class DioClient extends ChangeNotifier {
       // print(response);
       return {"status": true, "data": response.data};
     } on DioError catch (e) {
-      print('chec');
-
       final errorMessage = DioExceptions.fromDioError(e).toString();
       print('post err');
       print(errorMessage);
@@ -100,13 +98,6 @@ class DioExceptions implements Exception {
   String message = '';
 
   DioExceptions.fromDioError(DioError dioError) {
-    print('jfjjf ');
-    // print(dioError.response!.statusMessage);
-    print(dioError);
-    // print(dioError.type);
-    // print(dioError.response?.statusCode);
-    // print(dioError.response);
-
     EasyLoading.dismiss();
     switch (dioError.type) {
       case DioErrorType.cancel:
@@ -143,9 +134,6 @@ class DioExceptions implements Exception {
   String _handleError(int? statusCode, dynamic error) {
     switch (statusCode) {
       case 400:
-        print('400');
-        print(error.runtimeType);
-        print(error['message']);
         if (error["message"].toString().isNotEmpty) {
           return error["message"];
         }
@@ -162,9 +150,6 @@ class DioExceptions implements Exception {
       case 422:
         return error["errors"].values.first[0];
       case 500:
-        // print(jsonDecode(error));
-        print('500 error');
-        print(error);
         var error2 = jsonDecode(error);
 
         if (error2.containsKey('message')) {

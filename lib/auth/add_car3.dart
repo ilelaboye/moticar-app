@@ -1379,8 +1379,6 @@ class _ImageAIState extends State<ImageAI> {
 
                     Navigator.pop(context);
 
-                    // print();
-
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return AddCarPage4(

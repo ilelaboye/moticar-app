@@ -129,7 +129,6 @@ class AgencyBackEnd implements AgencyNetwork {
   @override
   Future<Response> post(
       {required Map<String, dynamic> formData, required String path}) async {
-    print('loogin in');
     try {
       final response = await _dio.post(
         path,
@@ -142,10 +141,7 @@ class AgencyBackEnd implements AgencyNetwork {
       );
       return response;
     } on DioError catch (e) {
-      print('error');
       final errorMessage = DioExceptions.fromDioError(e).toString();
-
-      print(errorMessage);
 
       if (e.response != null && e.response!.statusCode! >= 500) {
         e.response!.data = {
@@ -353,12 +349,6 @@ class DioExceptions implements Exception {
   String message = '';
 
   DioExceptions.fromDioError(DioError dioError) {
-    // print('jfjjf ');
-    // // print(dioError);
-    // print(dioError.type);
-    // print(dioError.response?.statusCode);
-    // print(dioError.response);
-
     EasyLoading.dismiss();
     switch (dioError.type) {
       case DioErrorType.cancel:
@@ -411,9 +401,6 @@ class DioExceptions implements Exception {
       case 422:
         return error["errors"].values.first[0];
       case 500:
-        // print(jsonDecode(error));
-        print('500 error');
-        print(error);
         var error2 = jsonDecode(error);
 
         if (error2.containsKey('message')) {

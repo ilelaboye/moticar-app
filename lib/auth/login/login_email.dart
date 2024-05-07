@@ -50,8 +50,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       //     ? HiveStorage.get(HiveKeys.userPassword)
       //     : ''
       );
-  String email = '', password = '';
 
+  String email = '', password = '';
   bool _isObscure = true;
 
   bool _isChecked = false;
@@ -422,6 +422,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                             if (signUpResult.successMessage.isNotEmpty) {
                               Navigator.pop(context);
+
                               // Sign-up successful, show success dialog
                               await Future.delayed(
                                   const Duration(milliseconds: 100), () async {
