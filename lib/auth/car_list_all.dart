@@ -3,47 +3,23 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:moticar/providers/car_provider.dart';
+import 'package:moticar/utils/constants.dart';
+import 'package:moticar/widgets/flushbar.dart';
 
 import '../services/hivekeys.dart';
 import '../services/localdatabase.dart';
 
 class AllCarsPage extends StatefulWidget {
-  const AllCarsPage({super.key});
+  List<dynamic> carsData;
+  String letters;
+  AllCarsPage({super.key, required this.carsData, required this.letters});
 
   @override
   State<AllCarsPage> createState() => _AllCarsPageState();
 }
 
 class _AllCarsPageState extends State<AllCarsPage> {
-  Future<void> fetchData() async {
-    final String token = HiveStorage.get(HiveKeys.token);
-    String apiUrl = 'https://moticar.ngvoices.ng/api/v1/get-cars';
-
-    final response = await http.get(
-      Uri.parse(apiUrl),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json', // Adjust content type if needed
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final parsedResponse = json.decode(response.body);
-      final List<dynamic> data = parsedResponse['data'];
-      final List<Map<String, dynamic>> carDataList =
-          data.cast<Map<String, dynamic>>();
-
-      setState(() {
-        carsData = carDataList;
-        // selectedStates = List<bool>.filled(carsData.length, false);
-      });
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
-
-  List<Map<String, dynamic>> carsData = [];
-
   // Placeholder data for cars, you can replace it with your actual data
   List<String> cars = [
     'Audi',
@@ -62,6 +38,7 @@ class _AllCarsPageState extends State<AllCarsPage> {
 
   // String carImage = 'assets/carLogos/gordon.svg';
 
+  List<dynamic> carsData = [];
   List<String> carImage = [
     'assets/carLogos/audi.svg',
     'assets/carLogos/mercedes.svg',
@@ -79,8 +56,30 @@ class _AllCarsPageState extends State<AllCarsPage> {
 
   @override
   void initState() {
-    fetchData();
+    filterCar();
     super.initState();
+  }
+
+  filterCar() {
+    if (widget.letters == 'all') {
+      carsData = widget.carsData;
+    } else {
+      List<String> arr = widget.letters.split(',');
+      print('list arr ${widget.letters}');
+      List<dynamic> filtered = [];
+      for (int i = 0; i < arr.length; i++) {
+        var c = widget.carsData
+            .where((element) => element['name'][0] == arr[i])
+            .toList();
+
+        if (c.isNotEmpty) {
+          filtered.addAll(c);
+        }
+      }
+      print('aft fil');
+      print(filtered);
+      carsData = filtered;
+    }
   }
 
   @override
@@ -111,9 +110,6 @@ class _AllCarsPageState extends State<AllCarsPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // SvgPicture.asset(
-                  //   carImage[index],
-                  // ),
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 15.0, top: 8, bottom: 8),
@@ -121,6 +117,12 @@ class _AllCarsPageState extends State<AllCarsPage> {
                       carIcon,
                       width: 30,
                       height: 30,
+                      errorBuilder: (context, error, stackTrace) =>
+                          SvgPicture.network(
+                        carIcon,
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),

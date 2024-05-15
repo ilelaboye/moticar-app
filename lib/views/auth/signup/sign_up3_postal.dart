@@ -2,19 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:moticar/auth/login/login_email.dart';
+import 'package:moticar/views/auth/login.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:rive/rive.dart';
 
-import '../../providers/app_providers.dart';
-import '../../widgets/app_texts.dart';
-import '../../widgets/colors.dart';
-import '../../widgets/eard_dialog.dart';
+import '../../../providers/app_providers.dart';
+import '../../../widgets/app_texts.dart';
+import '../../../widgets/colors.dart';
+import '../../../widgets/eard_dialog.dart';
 import 'sign_3.dart';
 
 class SignUpPage3Postal extends StatefulHookConsumerWidget {
-  const SignUpPage3Postal( {super.key, required this.token,
+  const SignUpPage3Postal({
+    super.key,
+    required this.token,
   });
   final String token;
 
@@ -93,9 +95,7 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return  SignUpPage3(
-                              token: widget.token
-                            );
+                            return SignUpPage3(token: widget.token);
                           }));
                         },
                         child: const Row(
@@ -160,7 +160,7 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                                     color: AppColors.red, width: 1.5),
                               ),
                               hintText: 'Enter Postal Code',
-                        
+
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
                                 borderSide: const BorderSide(
@@ -222,7 +222,7 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                   ),
 
                   //create an account
-                   MoticarLoginButton(
+                  MoticarLoginButton(
                     myColor: AppColors.indieC,
                     borderColor: AppColors.indieC,
                     onTap: () async {
@@ -316,7 +316,6 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                     ),
                   ),
 
-
                   //
                   const SizedBox(
                     height: 10,
@@ -345,9 +344,7 @@ class _SignUpPage3PostalState extends ConsumerState<SignUpPage3Postal> {
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return SignUpPage3(
-                              token: widget.token
-                            );
+                            return SignUpPage3(token: widget.token);
                           }));
                         },
                       ),

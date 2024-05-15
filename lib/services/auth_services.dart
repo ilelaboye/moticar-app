@@ -11,6 +11,15 @@ import 'package:rive/rive.dart';
 import 'package:twitter_login/twitter_login.dart';
 
 class AuthService {
+  static setUser(user) async {
+    print('set user');
+    print(user);
+    await HiveStorage.put(HiveKeys.token, user['token']);
+    await HiveStorage.put(HiveKeys.userEmail, user["email"]);
+    await HiveStorage.put(HiveKeys.userPassword, user["password"]);
+    await HiveStorage.put(HiveKeys.hasLoggedIn, true);
+    await HiveStorage.put(HiveKeys.hasLoggedIn, true);
+  }
   // google sign-in
 
   static signInwithGoogle(BuildContext context) async {

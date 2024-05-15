@@ -64,6 +64,7 @@ dependencies:
   flutter_facebook_auth: ^6.2.0
   twitter_login: ^4.4.2
   flutter_dotenv: ^5.1.0
+  top_modal_sheet: ^2.1.0
 
 dev_dependencies:
   flutter_test:

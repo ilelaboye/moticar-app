@@ -958,9 +958,7 @@ class _TimelineFilledPageState extends ConsumerState<TimelineFilledPage> {
                                 //amount and menu button
                                 Row(
                                   children: [
-                                    Text(
-                                        nairaFormat.format(
-                                            breakdown.amount),
+                                    Text(nairaFormat.format(breakdown.amount),
                                         style: const TextStyle(
                                             fontFamily: "Neulis",
                                             color: Color(0xff006C70),

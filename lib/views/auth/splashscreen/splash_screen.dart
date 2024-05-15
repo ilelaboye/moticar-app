@@ -1,13 +1,15 @@
 // import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:moticar/models/onboarding.dart';
 import 'package:moticar/providers/authentication.dart';
+import 'package:moticar/widgets/flushbar.dart';
 import 'package:rive/rive.dart';
 
 // import '../../router/app_router.gr.dart';
-import '../../widgets/app_texts.dart';
-import '../../widgets/colors.dart';
-import 'new_onboardIntro.dart';
-import 'onboard_screen.dart';
+import '../../../widgets/app_texts.dart';
+import '../../../widgets/colors.dart';
+import 'onboarding.dart';
+import 'onboarding_screen2.dart';
 
 // @RoutePage()
 class SplashScreen extends StatefulWidget {
@@ -25,17 +27,28 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    getOnboardingScreen();
+    getOnboardingScreen(context);
   }
 
   Future<void> getOnboardingScreen(BuildContext context) async {
     Authentication provider = Authentication();
     var res = await provider.getOnboardingScreen(context);
-    print('retur');
-    print(res['data']);
+    IOnboarding data = IOnboarding.fromMap(res['data']);
+    if (!res['status']) {
+      Alert.showNotificationError(
+        message: 'Invalid email address',
+        context: context,
+        notificationType: 1,
+      );
+      return;
+    }
 
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return OnBoardingScreenPage(screens: res['data']);
+      if (data.images.length > 0) {
+        return OnBoardingScreenPage(screens: res['data']);
+      } else {
+        return OnBoardingScreenPageFailed();
+      }
     }));
 
     //  if (context.mounted) {
@@ -75,7 +88,6 @@ class _SplashScreenState extends State<SplashScreen>
                 'assets/images/splashscreenanim.riv',
               ),
             ),
-
             Padding(
               padding: EdgeInsets.only(top: 30.0, left: 50, right: 50),
               child: MoticarText(
@@ -85,43 +97,6 @@ class _SplashScreenState extends State<SplashScreen>
                   fontWeight: FontWeight.w500,
                   fontColor: AppColors.appThemeColor),
             ),
-
-            // const SizedBox(),
-            // AnimatedBuilder(
-            //     animation: _animation,
-            //     builder: (context, child) {
-            //       return Transform.scale(
-            //           scale: _animation.value,
-            //           child:   const Column(
-            //             children: [
-            //               // Image.asset(
-            //               //   'assets/images/moticar.png',
-            //               //   height: 150,
-            //               //   width: 150,
-            //               // ),
-
-            //                SizedBox(
-            //                 height: 150,
-            //                 width: 150,
-            //                 child: RiveAnimation.asset(
-            //                   'assets/images/splashscreenanim.riv',
-            //                 ),
-            //               ),
-
-            //                  Padding(
-            //                 padding:
-            //                     EdgeInsets.only(top: 50.0, left: 50, right: 50),
-            //                 child: MoticarText(
-            //                     text:
-            //                         'Every kobo of your car \nexpenses \nis just a tap away!',
-            //                     fontSize: 13,
-            //                     fontWeight: FontWeight.w500,
-            //                     fontColor: AppColors.appThemeColor),
-            //               ),
-
-            //             ],
-            //           ));
-            //     }),
           ],
         ),
       ),

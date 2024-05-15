@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../auth/login/login_email.dart';
-import '../../auth/signup/signup.dart';
-import '../../services/auth_services.dart';
-import '../../widgets/app_texts.dart';
-import '../../widgets/colors.dart';
+import '../../../auth/login/login_email.dart';
+import '../signup/signup.dart';
+import '../../../services/auth_services.dart';
+import '../../../widgets/app_texts.dart';
+import '../../../widgets/colors.dart';
 
 class OnBoardingScreenPage extends StatefulWidget {
   const OnBoardingScreenPage({

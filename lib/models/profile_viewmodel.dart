@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:moticar/providers/car_provider.dart';
 import '../../services/localdatabase.dart';
 import '../network/dio_utils.dart';
 import '../providers/app_providers.dart';
@@ -390,47 +391,31 @@ class ProfileViewModel extends StateNotifier<ProfileState> {
   }
 
   //getAvailablecarz
-  Future<ApiResponse> getCars() async {
+  Future<ApiResponse> getCars(context) async {
     state = state.copyWith(
       loading: Loader.loading,
     );
-    try {
-      final response = await _reader.read(newService).getWithToken(
-            // formData: formData,
-            path: 'get-cars',
-          );
-      if (response.statusCode == 200) {
-        final responseData = response.data['data'];
 
-        // Map response data to NewCarzModel objects
-        final List<NewCarzModel> getCars = (responseData as List<dynamic>)
-            .map((json) => NewCarzModel.fromJson(json))
-            .toList();
+    CarProvider provider = CarProvider();
+    final res = await provider.getCars(context);
+    if (res['status']) {
+      final List<NewCarzModel> getCars = (res['data']['data'] as List<dynamic>)
+          .map((json) => NewCarzModel.fromJson(json))
+          .toList();
 
-        // Update state with new expenses
-        state = state.copyWith(
-            loading: Loader.loaded,
-            // getCategories: getCategoriz,
-            getCars: getCars);
-        return ApiResponse(
-          successMessage: 'Success',
-        );
-      } else {
-        state = state.copyWith(loading: Loader.error);
-        return ApiResponse(
-          errorMessage: response.data['message'] ?? "Error",
-        );
-      }
-    } on DioError catch (e) {
+      // Update state with new expenses
+      state = state.copyWith(
+          loading: Loader.loaded,
+          // getCategories: getCategoriz,
+          getCars: getCars);
+      return ApiResponse(
+        successMessage: 'Success',
+      );
+    } else {
       state = state.copyWith(loading: Loader.error);
       return ApiResponse(
-        error: e.response!.data['message'] ??
-            e.response!.data['detail'] ??
-            "Error",
+        errorMessage: res['message'],
       );
-    } catch (e) {
-      state = state.copyWith(loading: Loader.error);
-      rethrow;
     }
   }
 

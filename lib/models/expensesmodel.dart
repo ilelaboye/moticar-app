@@ -95,7 +95,7 @@ class Carpart {
   });
 
   final int id;
-  final String expenseId;
+  final int expenseId;
   final String category;
   final String productName;
   final dynamic description;
@@ -167,7 +167,7 @@ class GetTechies {
   });
 
   final int id;
-  final String userId;
+  final int userId;
   final String firstName;
   final String lastName;
   final String email;
@@ -239,8 +239,8 @@ class GetCarz {
   });
 
   final int id;
-  final String userId;
-  final String carYearId;
+  final int userId;
+  final int carYearId;
   final dynamic plateNumber;
   final dynamic mileage;
   final String chasisNumber;
@@ -303,6 +303,44 @@ class GetCarz {
     );
   }
 
+  factory GetCarz.fromMap(Map<String, dynamic> json) => GetCarz(
+        id: json["id"] as int,
+        userId: json["user_id"] as int,
+        carYearId: json["car_year_id"] as int,
+        plateNumber: json["plate_number"],
+        mileage: json["mileage"],
+        chasisNumber: json["chasis_number"] ?? "",
+        engineNumber: json["engine_number"] ?? "",
+        dateOfPurchase: json["date_of_purchase"] != null
+            ? DateTime.tryParse(json["date_of_purchase"])
+            : null,
+        vehicleLicense: json["vehicle_license"] != null
+            ? DateTime.tryParse(json["vehicle_license"])
+            : null,
+        roadWorthiness: DateTime.tryParse(json["road_worthiness"] ?? ""),
+        thirdPartyInsurance:
+            DateTime.tryParse(json["third_party_insurance"] ?? ""),
+        hackneyPermit: DateTime.tryParse(json["hackney_permit"] ?? ""),
+        ogHut: DateTime.tryParse(json["og_hut"] ?? ""),
+        stateCarriagePermit:
+            DateTime.tryParse(json["state_carriage_permit"] ?? ""),
+        heavyDutyPermit: DateTime.tryParse(json["heavy_duty_permit"] ?? ""),
+        truckTrailerPermit:
+            DateTime.tryParse(json["truck_trailer_permit"] ?? ""),
+        localGovtPermit: DateTime.tryParse(json["local_govt_permit"] ?? ""),
+        midYearPermit: DateTime.tryParse(json["mid_year_permit"] ?? ""),
+        extra: json["extra"],
+        createdAt: DateTime.tryParse(json["created_at"] ?? ""),
+        updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
+        details:
+            json["details"] == null ? null : Details.fromJson(json["details"]),
+        model: json["model"] == null ? null : Model.fromJson(json["model"]),
+        category: json["category"] == null
+            ? null
+            : CategoryCar.fromJson(json["category"]),
+        car: json["car"] == null ? null : Car.fromJson(json["car"]),
+      );
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "user_id": userId,
@@ -343,7 +381,7 @@ class Car {
     required this.updatedAt,
   });
 
-  final String id;
+  final int id;
   final String name;
   final String icon;
   final dynamic description;
@@ -383,8 +421,8 @@ class CategoryCar {
     required this.updatedAt,
   });
 
-  final String id;
-  final String carId;
+  final int id;
+  final int carId;
   final String name;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -428,7 +466,7 @@ class Details {
   });
 
   final int id;
-  final String modelId;
+  final int modelId;
   final String year;
   final String engine;
   final String gearbox;
@@ -492,8 +530,8 @@ class Model {
     required this.updatedAt,
   });
 
-  final String id;
-  final String categoryId;
+  final int id;
+  final int categoryId;
   final String name;
   final dynamic others;
   final DateTime? createdAt;

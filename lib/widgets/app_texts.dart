@@ -66,11 +66,13 @@ class MoticarLoginButton extends StatelessWidget {
   final child;
   final void Function() onTap;
   final Color? myColor, borderColor;
+  final double height;
   const MoticarLoginButton(
       {super.key,
       required this.child,
       this.borderColor,
       this.myColor,
+      this.height = 55,
       required this.onTap});
 
   @override
@@ -78,7 +80,7 @@ class MoticarLoginButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-          height: 55,
+          height: height,
           width: MediaQuery.of(context).size.width - 40,
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -113,7 +115,8 @@ class ThousandsFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     final regEx = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
-    String newText = newValue.text.replaceAllMapped(regEx, (match) => '${match[0]},');
+    String newText =
+        newValue.text.replaceAllMapped(regEx, (match) => '${match[0]},');
     return newValue.copyWith(
       text: newText,
       selection: TextSelection.collapsed(offset: newText.length),

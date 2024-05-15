@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:moticar/services/hivekeys.dart';
+import 'package:moticar/services/localdatabase.dart';
 import 'package:moticar/widgets/app_texts.dart';
 
 import '../../models/expensesmodel.dart';
@@ -99,6 +101,11 @@ class MyCarInfoPage extends ConsumerStatefulWidget {
 }
 
 class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final NumberFormat nairaFormat = NumberFormat.currency(
     symbol: 'N ', //₦
     // decimalDigits: 0,
@@ -110,8 +117,12 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
     DateTime now = DateTime.now();
     DateTime endOfYear = DateTime(now.year + 1, 1, 1);
     int remainingDays = endOfYear.difference(now).inDays;
-    final state = ref.read(profileProvider);
+    final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
+
+    var referral_code = HiveStorage.get(HiveKeys.referral);
+    print('printing state');
+    print(referral_code);
     return Scaffold(
       backgroundColor: const Color(0xff001A1F),
       body: SingleChildScrollView(
@@ -226,25 +237,29 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                           color: Color(0xff7AE6EB),
                         ),
                       ),
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 8, right: 8, top: 4, bottom: 4),
-                        decoration: BoxDecoration(
-                          color: const Color(0xff00343f),
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: Text(
-                          "exp. ${widget.exp} days",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: "NeulisAlt",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: Color(0xff92BEC1),
-                          ),
-                        ),
-                      ),
+                      const SizedBox(width: 0),
+                      widget.exp > 0
+                          ? Container(
+                              padding: const EdgeInsets.only(
+                                  left: 8, right: 8, top: 4, bottom: 4),
+                              decoration: BoxDecoration(
+                                color: const Color(0xff00343f),
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: Text(
+                                "exp. ${widget.exp} days",
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontFamily: "NeulisAlt",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 13,
+                                  color: Color(0xff92BEC1),
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              height: 1,
+                            )
                     ],
                   ),
                 ],
@@ -262,7 +277,7 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                       color: const Color(0xffF8E761),
                       borderRadius: BorderRadius.circular(32),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -276,7 +291,7 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                           ),
                         ),
                         Text(
-                          "THIFNJ34349",
+                          referral_code,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: "NeulisAlt",
@@ -1014,7 +1029,7 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.tyreSize,
+                            widget.tyreSize == 'null' ? '' : widget.tyreSize,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
@@ -1062,7 +1077,7 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.topSpeed,
+                            widget.topSpeed == 'null' ? '' : widget.topSpeed,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,
@@ -1086,7 +1101,9 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                                 fontSize: 12),
                           ),
                           trailing: Text(
-                            widget.acceleration,
+                            widget.acceleration == 'null'
+                                ? ''
+                                : widget.acceleration,
                             style: const TextStyle(
                                 fontFamily: "NeulisAlt",
                                 fontStyle: FontStyle.normal,

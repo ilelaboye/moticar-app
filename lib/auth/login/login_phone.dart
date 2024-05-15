@@ -10,12 +10,12 @@ import 'package:moticar/widgets/appBar.dart';
 import '../../providers/app_providers.dart';
 import '../../services/hivekeys.dart';
 import '../../services/localdatabase.dart';
-import '../../splash/splashscreen/new_onboardIntro.dart';
+import '../../views/auth/splashscreen/onboarding.dart';
 import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
-import '../signup/signup.dart';
-import 'login_email.dart';
+import '../../views/auth/signup/signup.dart';
+import 'package:moticar/views/auth/login.dart';
 
 class LoginPhonePage extends StatefulHookConsumerWidget {
   const LoginPhonePage({super.key});

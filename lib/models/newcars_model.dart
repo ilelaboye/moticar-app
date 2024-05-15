@@ -60,7 +60,7 @@ class Model {
   });
 
   final int id;
-  final String categoryId;
+  final int categoryId;
   final String name;
   final dynamic others;
   final DateTime? createdAt;
@@ -107,7 +107,7 @@ class Category {
   });
 
   final int id;
-  final String carId;
+  final int carId;
   final String name;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -156,7 +156,7 @@ class Year {
   });
 
   final int id;
-  final String modelId;
+  final int modelId;
   final String year;
   final String engine;
   final String gearbox;

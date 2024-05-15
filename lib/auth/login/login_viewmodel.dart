@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:moticar/services/auth_services.dart';
 import '../../network/dio_utils.dart';
 import '../../providers/app_providers.dart';
 import '../../services/hivekeys.dart';
@@ -126,14 +127,20 @@ class LoginViewModel extends StateNotifier<LoginState> {
           // response.data != null &&
           response.data['status'] == true) {
         // await HiveStorage.put(HiveKeys.userId, body['data']['_id']);
-        await HiveStorage.put(HiveKeys.token, body['token']);
-        await HiveStorage.put(HiveKeys.userEmail, formData["email"]);
-        await HiveStorage.put(HiveKeys.userPassword, formData["password"]);
-        await HiveStorage.put(HiveKeys.hasLoggedIn, true);
+        // await HiveStorage.put(HiveKeys.token, body['token']);
+        // await HiveStorage.put(HiveKeys.userEmail, formData["email"]);
+        // await HiveStorage.put(HiveKeys.userPassword, formData["password"]);
+        // await HiveStorage.put(HiveKeys.hasLoggedIn, true);
 
-        if (existingUser == null) {
-          await HiveStorage.put(HiveKeys.userEmail, formData["email"]);
-        }
+        AuthService.setUser({
+          'token': body['token'],
+          "email": formData["email"],
+          "password": formData["password"]
+        });
+
+        // if (existingUser == null) {
+        //   await HiveStorage.put(HiveKeys.userEmail, formData["email"]);
+        // }
 
         state = state.copyWith(
           loadStatus: Loader.loaded,

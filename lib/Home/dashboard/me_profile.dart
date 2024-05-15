@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:moticar/Home/expense/add_technician.dart';
 import 'package:moticar/Home/profile/invite_friend.dart';
-import 'package:moticar/auth/login/login_email.dart';
+import 'package:moticar/views/auth/login.dart';
 import 'package:moticar/widgets/eard_dialog.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../models/expensesmodel.dart';
@@ -412,7 +412,7 @@ class _MePageState extends ConsumerState<MePage> {
                                     color: const Color(0xff29D7DE),
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Text(
-                                  "User ID : ${state.getProfile.uuid}",
+                                  "User ID : ${state.getProfile.referralCode}",
                                   // 'User ID: ${HiveStorage.get(HiveKeys.userId)}',
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(

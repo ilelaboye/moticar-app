@@ -24,12 +24,12 @@ import 'package:rive/rive.dart';
 import '../../providers/app_providers.dart';
 import '../../services/hivekeys.dart';
 import '../../services/localdatabase.dart';
-import '../../views/auth/splashscreen/onboarding.dart';
+import 'splashscreen/onboarding.dart';
 import '../../utils/validator.dart';
 import '../../widgets/app_texts.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/eard_dialog.dart';
-import 'login_phone.dart';
+// import 'login_phone.dart';
 
 class LoginPage extends StatefulHookConsumerWidget {
   const LoginPage({super.key});

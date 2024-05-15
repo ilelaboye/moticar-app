@@ -6,19 +6,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:moticar/auth/login/login_email.dart';
-import 'package:moticar/auth/signup/sign_3.dart';
+import 'package:moticar/views/auth/login.dart';
+import 'package:moticar/views/auth/signup/sign_3.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:rive/rive.dart';
 
-import '../../providers/app_providers.dart';
-import '../../widgets/app_texts.dart';
-import '../../widgets/colors.dart';
+import '../../../providers/app_providers.dart';
+import '../../../widgets/app_texts.dart';
+import '../../../widgets/colors.dart';
 import 'package:intl/intl.dart';
 
-import '../../widgets/eard_dialog.dart';
-import '../add_car.dart';
+import '../../../widgets/eard_dialog.dart';
+import '../../../auth/add_car.dart';
 
 class SignUpPage4 extends StatefulHookConsumerWidget {
   const SignUpPage4({

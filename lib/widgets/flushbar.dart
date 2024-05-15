@@ -109,7 +109,7 @@ class Alert {
               () {
                 // pop twice because there are two popup dialog
                 Navigator.pop(context);
-                Navigator.pop(context);
+                // Navigator.pop(context);
               },
           buttonColor: AppColors.red,
           buttonText: buttonText ?? 'Dismiss',

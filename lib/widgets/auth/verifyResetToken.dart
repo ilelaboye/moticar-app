@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:moticar/auth/signup/sign_2.dart';
+import 'package:moticar/views/auth/signup/sign_2.dart';
 import 'package:moticar/providers/app_providers.dart';
 import 'package:moticar/providers/authentication.dart';
+import 'package:moticar/services/auth_services.dart';
 import 'package:moticar/widgets/app_texts.dart';
+import 'package:moticar/widgets/auth/setNewPassword.dart';
+import 'package:moticar/widgets/bottom_sheet_service.dart';
 import 'package:moticar/widgets/colors.dart';
 import 'package:moticar/widgets/eard_dialog.dart';
 import 'package:moticar/widgets/flushbar.dart';
@@ -159,6 +162,19 @@ class _ForgotPasswordTokenVerificationState
                             notificationType: 0,
                             context: context,
                           );
+
+                          AuthService.setUser({
+                            'token': res['data']['data']['token'],
+                            "email": res['data']['data']["email"],
+                            "password": res['data']["password"]
+                          });
+                          // Navigator.pop(context);
+                          showMoticarBottomSheet(
+                              context: context,
+                              child: SetNewPassword(),
+                              radius: 0,
+                              isDismissible: false,
+                              background: true);
                         }
                       } else {
                         Alert.showNotificationError(
@@ -170,7 +186,7 @@ class _ForgotPasswordTokenVerificationState
                     },
                     child: const MoticarText(
                       fontColor: AppColors.white,
-                      text: 'Continue',
+                      text: 'Continues',
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                     ),

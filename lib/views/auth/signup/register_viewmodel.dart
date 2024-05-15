@@ -1,11 +1,11 @@
 // ignore_for_file: unnecessary_null_comparison
 
-
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../providers/app_providers.dart';
-import '../../network/dio_utils.dart';
-import '../../utils/enums.dart';
+import 'package:moticar/providers/authentication.dart';
+import '../../../../providers/app_providers.dart';
+import '../../../network/dio_utils.dart';
+import '../../../utils/enums.dart';
 
 class RegisterViewmodel extends StateNotifier<RegisterState> {
   RegisterViewmodel(this._reader)
@@ -80,6 +80,7 @@ class RegisterViewmodel extends StateNotifier<RegisterState> {
       // var body = json.decode(response.body);
       // if (body != null) {
       if (response.statusCode == 200) {
+        Authentication.setUser(response.data['data']);
         state = state.copyWith(
             loadStatus: Loader.loaded, token: response.data['data']['token']);
         return ApiResponse(
@@ -118,7 +119,6 @@ class RegisterViewmodel extends StateNotifier<RegisterState> {
       return ApiResponse(errorMessage: "Connection error, please try again.");
     }
   }
-
 
   //add_technician
   Future<ApiResponse> addNewTechnician({

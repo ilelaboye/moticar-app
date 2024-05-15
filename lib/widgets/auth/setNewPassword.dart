@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/utils/validator.dart';
 import 'package:moticar/widgets/app_texts.dart';
 import 'package:moticar/widgets/colors.dart';
@@ -22,6 +23,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
   String password = '';
   String confirmPassword = '';
   bool _isObscure = true;
+  bool _isPassObscure = true;
 
   void forgotPassword() async {
     final form = _formKey.currentState!;
@@ -32,20 +34,22 @@ class _SetNewPasswordState extends State<SetNewPassword> {
       Authentication provider = Authentication();
 
       print('entered');
-      print(email);
-      final res = await provider.forgotPassword(context, email);
+      print(password);
+      final res = await provider.resetPassword(context, password);
       if (res['status']) {
         EasyLoading.dismiss();
-        print('yes true');
         Alert.showNotification(
           message: "Reset code sent successfully",
           notificationType: 0,
           context: context,
         );
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const BottomHomePage();
+        }));
       }
     } else {
       Alert.showNotificationError(
-        message: 'Invalid email address',
+        message: 'Invalid password',
         context: context,
         notificationType: 1,
       );
@@ -92,6 +96,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                       fontColor: AppColors.textColor),
                 ),
                 TextFormField(
+                  obscureText: _isPassObscure,
                   controller: passwordController,
                   keyboardType: TextInputType.text,
                   onTapOutside: (event) {
@@ -104,7 +109,21 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                       fontWeight: FontWeight.w600,
                       fontSize: 16),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => EmailValidator.validateEmail(value!),
+                  validator: (value) {
+                    PasswordValidator.validatePassword(value!);
+                    if (value.isEmpty) {
+                      return 'New password field is required';
+                    }
+                    if (value.length < 6) {
+                      return 'Password should be more than 6 characters';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
                   onSaved: (value) {
                     password = value!;
                   },
@@ -114,7 +133,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                         borderSide:
                             const BorderSide(color: AppColors.appThemeColor)),
                     // errorBorder: InputBorder.none,
-                    hintText: 'Enter your email address',
+                    hintText: 'Enter new password',
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 18, horizontal: 11),
                     enabledBorder: OutlineInputBorder(
@@ -134,6 +153,20 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                         color: Color(0xffC1C3C3),
                         letterSpacing: 1.2,
                         fontSize: 14),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _isPassObscure = !_isPassObscure;
+                        });
+                      },
+                      icon: Icon(
+                          _isPassObscure
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          color: _isPassObscure
+                              ? AppColors.oldGrey
+                              : Colors.black.withOpacity(0.55)),
+                    ),
                   ),
                 ),
                 const Padding(
@@ -145,7 +178,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                       fontColor: AppColors.textColor),
                 ),
                 TextFormField(
-                  controller: passwordController,
+                  controller: confirmPasswordController,
                   obscureText: _isObscure,
                   keyboardType: TextInputType.text,
                   textCapitalization: TextCapitalization.words,
@@ -159,8 +192,13 @@ class _SetNewPasswordState extends State<SetNewPassword> {
                       fontWeight: FontWeight.w600,
                       fontSize: 16),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  // validator: (value) =>
-                  //     PasswordValidator.validatePassword(value!),
+                  validator: (value) {
+                    PasswordValidator.validatePassword(value!);
+                    if (value != password) {
+                      return 'New password and confirm new password does not match';
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     confirmPassword = value!;
                   },
@@ -219,7 +257,7 @@ class _SetNewPasswordState extends State<SetNewPassword> {
             },
             child: const MoticarText(
               fontColor: Colors.white,
-              text: 'Send Code',
+              text: 'Reset Password',
               fontSize: 16,
               fontWeight: FontWeight.w700,
             ),

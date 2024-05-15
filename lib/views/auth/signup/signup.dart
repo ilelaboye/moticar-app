@@ -6,24 +6,24 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:moticar/auth/login/login_email.dart';
+import 'package:moticar/views/auth/login.dart';
 import 'package:moticar/providers/authentication.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/flushbar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:rive/rive.dart';
 
-import '../../providers/app_providers.dart';
-import '../../services/hivekeys.dart';
-import '../../services/localdatabase.dart';
-import '../../splash/splashscreen/new_onboardIntro.dart';
-import '../../utils/validator.dart';
-import '../../widgets/app_texts.dart';
-import '../../widgets/bottom_sheet_service.dart';
-import '../../widgets/colors.dart';
+import '../../../providers/app_providers.dart';
+import '../../../services/hivekeys.dart';
+import '../../../services/localdatabase.dart';
+import '../splashscreen/onboarding.dart';
+import '../../../utils/validator.dart';
+import '../../../widgets/app_texts.dart';
+import '../../../widgets/bottom_sheet_service.dart';
+import '../../../widgets/colors.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../widgets/eard_dialog.dart';
+import '../../../widgets/eard_dialog.dart';
 import 'sign_2.dart';
 
 class SignUpPage extends StatefulHookConsumerWidget {
@@ -94,14 +94,14 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
                 //
                 const MoticarText(
-                    text: "Your Login Details",
+                    text: "Let's get you a sparkling account!",
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
                     fontColor: AppColors.appThemeColor),
                 const Padding(
                   padding: EdgeInsets.only(top: 12, bottom: 20),
                   child: Text(
-                      "We’ll be using your email and phone number as the main log in credentials",
+                      "We'll be using your email and phone number as the main log in credentials",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           fontFamily: "NeulisAlt",
@@ -578,7 +578,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                                     ),
                                   ));
                             } else if (!signUpResult['status']) {
-                              // Sign-up failed, show error dialog
                               Alert.showNotificationError(
                                 message: signUpResult['message'],
                                 context: context,
@@ -1011,47 +1010,6 @@ class _VerificationPageState extends ConsumerState<VerificationPage> {
                   // Handle PIN code changes
                 },
               ),
-
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     PinField(
-              //       borderRadius: const BorderRadius.only(
-              //         topLeft: Radius.circular(8.0),
-              //         bottomLeft: Radius.circular(8.0),
-              //       ),
-              //       onChanged: (value) => updatePinValue(0, value),
-              //     ),
-              //     const SizedBox(
-              //       width: 8,
-              //     ),
-              //     PinField(
-              //       onChanged: (value) => updatePinValue(1, value),
-              //     ),
-              //     const SizedBox(
-              //       width: 8,
-              //     ),
-              //     PinField(
-              //       onChanged: (value) => updatePinValue(2, value),
-              //     ),
-              //     const SizedBox(
-              //       width: 8,
-              //     ),
-              //     PinField(
-              //       onChanged: (value) => updatePinValue(3, value),
-              //     ),
-              //     const SizedBox(
-              //       width: 8,
-              //     ),
-              //     PinField(
-              //       borderRadius: const BorderRadius.only(
-              //         topRight: Radius.circular(8.0),
-              //         bottomRight: Radius.circular(8.0),
-              //       ),
-              //       onChanged: (value) => updatePinValue(4, value),
-              //     ),
-              //   ],
-              // ),
 
               const SizedBox(
                 height: 15,

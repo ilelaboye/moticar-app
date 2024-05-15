@@ -1,6 +1,7 @@
 class HiveKeys {
   static const appBox = "appBox";
   static const token = 'token';
+  static const skipOnboarding = 'skipOnboarding';
   static const refreshToken = 'refresh_token';
   static const hasEnabledBiometricLogin = "hasEnabledBiometricLogin";
   static const stayLoggedIn = "staySigned";

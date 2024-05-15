@@ -3,11 +3,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/auth/add_car2.dart';
 import 'package:moticar/models/newcars_model.dart';
+import 'package:moticar/providers/car_provider.dart';
 import 'package:moticar/utils/validator.dart';
 import 'package:moticar/widgets/eard_dialog.dart';
 import 'package:moticar/widgets/eard_loader.dart';
@@ -64,7 +66,8 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
   // String selectedAcctCode = '';
 
   //new
-  List<Map<String, dynamic>> carsData = [];
+  List<dynamic> carsData = [];
+  List<dynamic> mostPopularCars = [];
   List<bool> selectedStates = [];
   int selectedIndex = -1; // Variable to keep track of the selected index
 
@@ -74,35 +77,30 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
     fetchData();
     _tabController = TabController(length: 4, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(profileProvider.notifier).getCars();
+      ref.read(profileProvider.notifier).getCars(context);
     });
   }
 
   Future<void> fetchData() async {
-    final String token = HiveStorage.get(HiveKeys.token);
-    String apiUrl = 'https://moticar.ngvoices.ng/api/v1/get-cars';
+    EasyLoading.show(status: 'Loading...');
+    CarProvider provider = CarProvider();
+    final res = await provider.getCars(context);
+    EasyLoading.dismiss();
+    carsData = res['data']['data'];
+    mostPopularCars = carsData.take(4).toList();
+    print('all cars');
+    print(carsData);
+  }
 
-    final response = await http.get(
-      Uri.parse(apiUrl),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json', // Adjust content type if needed
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final parsedResponse = json.decode(response.body);
-      final List<dynamic> data = parsedResponse['data'];
-      final List<Map<String, dynamic>> carDataList =
-          data.cast<Map<String, dynamic>>();
-
-      setState(() {
-        carsData = carDataList;
-        selectedStates = List<bool>.filled(carsData.length, false);
-      });
-    } else {
-      throw Exception('Failed to load data');
-    }
+  void searchCar() {
+    mostPopularCars = carsData
+        .where((element) => element['name']
+            .toString()
+            .toLowerCase()
+            .contains(searchQuery.toLowerCase()))
+        .toList();
+    print('search');
+    print(mostPopularCars);
   }
 
   @override
@@ -115,11 +113,6 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
   Widget build(BuildContext context) {
     final state = ref.watch(profileProvider);
     final model = ref.read(profileProvider.notifier);
-    // List<Category>? moticatz;
-    // List<Model>? carmodelz;
-    List<NewCarzModel> newCarz = state.getCars;
-
-    // List<Category> getCategoriz = state.getCategories;
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -176,557 +169,430 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Row(
+                    child: carsData.length > 0
+                        ? Column(
                             children: [
-                              PageIndicator(
-                                  currentPage: 1,
-                                  indicatorColor: AppColors.indieC,
-                                  inactiveIndicatorColor: Color(0xffD7E2E4),
-                                  totalPages: 4),
-                            ],
-                          ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Row(
+                                    children: [
+                                      PageIndicator(
+                                          currentPage: 1,
+                                          indicatorColor: AppColors.indieC,
+                                          inactiveIndicatorColor:
+                                              Color(0xffD7E2E4),
+                                          totalPages: 4),
+                                    ],
+                                  ),
 
-                          const SizedBox(
-                            height: 10,
-                          ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
 
-                          //
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            // alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadiusDirectional.circular(20),
-                                color: const Color(0xffECE6B7)),
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                top: 8,
-                                bottom: 8,
-                              ),
-                              child: Text(
-                                "We promise not to share information about your vehicle with anyone. All information provided is to provide tailor made experience for you.",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    fontSize: 12,
-                                    fontStyle: FontStyle.normal,
-                                    height: 1.2,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.appThemeColor),
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(
-                            height: 20,
-                          ),
-
-                          const Center(
-                            child: Text(
-                              "Select by brand",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: "NeulisAlt",
-                                  fontSize: 18,
-                                  fontStyle: FontStyle.normal,
-                                  height: 1.2,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.appThemeColor),
-                            ),
-                          ),
-
-                          const SizedBox(
-                            height: 13,
-                          ),
-
-                          Form(
-                            key: _formKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    controller: carController,
-                                    keyboardType: TextInputType.text,
-                                    onTapOutside: (event) {
-                                      FocusScope.of(context)
-                                          .unfocus(); // Close the keyboard
-                                    },
-                                    textInputAction: TextInputAction.next,
-                                    style: const TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        color: AppColors.textColor,
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 1.2,
-                                        fontSize: 16),
-                                    validator: (value) =>
-                                        FieldValidaor.validateEmptyfield(
-                                            value!),
-                                    onSaved: (value) {
-                                      // email = value!;
-                                    },
-                                    onChanged: (value) {
-                                      setState(() {
-                                        searchQuery = value;
-                                      });
-                                    },
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      errorBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide: const BorderSide(
-                                            color: AppColors.red, width: 1.5),
+                                  //
+                                  Container(
+                                    padding: const EdgeInsets.all(15),
+                                    // alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadiusDirectional.circular(
+                                                20),
+                                        color: const Color(0xffECE6B7)),
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(
+                                        top: 8,
+                                        bottom: 8,
                                       ),
-                                      hintText:
-                                          'Search by car name or moticode',
-
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide: const BorderSide(
-                                            color: Color(0xffD0D5DD),
-                                            width: 1.5),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          borderSide: const BorderSide(
-                                              color: AppColors.appThemeColor)),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      // hintText: 'Enter your password',
-                                      hintStyle: const TextStyle(
-                                          fontFamily: "NeulisAlt",
-                                          fontWeight: FontWeight.w300,
-                                          color: Color(0xffC1C3C3),
-                                          fontSize: 13),
-
-                                      suffixIcon: const Icon(
-                                        Icons.search_sharp,
-                                        color: Color(0xffC1C3C3),
+                                      child: Text(
+                                        "We promise not to share information about your vehicle with anyone. All information provided is to provide tailor made experience for you.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontFamily: "NeulisAlt",
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.normal,
+                                            height: 1.2,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.appThemeColor),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
 
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.all(12.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Divider(
-                                    thickness: 1.5,
-                                    color: AppColors.divider,
+                                  const SizedBox(
+                                    height: 20,
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "Most Popular",
-                                  style: TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xff202A2A),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Expanded(
-                                  child: Divider(
-                                    thickness: 1.5,
-                                    color: AppColors.divider,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (carsData.isNotEmpty)
-                            SizedBox(
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: carsData.length,
-                                itemBuilder: (context, index) {
-                                  final car = carsData[index];
-                                  final carName = car["name"];
-                                  final carIcon = car["icon"];
-                                  final carId = car['id'];
 
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (selectedIndex == index) {
-                                          // If the tapped item is already selected, deselect it
-                                          selectedIndex = -1;
-                                        } else {
-                                          // Otherwise, update the selected index
-                                          selectedIndex = index;
-                                          selectedCarName = carName;
-                                          selectedID = carId.toString();
-                                          selectedCar = car;
+                                  const Center(
+                                    child: Text(
+                                      "Select by brand",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontFamily: "NeulisAlt",
+                                          fontSize: 18,
+                                          fontStyle: FontStyle.normal,
+                                          height: 1.2,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.appThemeColor),
+                                    ),
+                                  ),
 
-                                          print(
-                                              "my $selectedCarName & ID - $selectedID");
-                                        }
-                                      });
-                                    },
-                                    child: Container(
-                                      height: 57,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.85,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 3, horizontal: 15),
-                                      margin: const EdgeInsets.only(bottom: 8),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          color: selectedIndex == index
-                                              ? AppColors.lightGreen
-                                              : Colors.black12,
-                                          width: 1,
+                                  const SizedBox(
+                                    height: 13,
+                                  ),
+
+                                  Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 55,
+                                          child: TextFormField(
+                                            controller: carController,
+                                            keyboardType: TextInputType.text,
+                                            onTapOutside: (event) {
+                                              FocusScope.of(context)
+                                                  .unfocus(); // Close the keyboard
+                                            },
+                                            textInputAction:
+                                                TextInputAction.next,
+                                            style: const TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                color: AppColors.textColor,
+                                                fontWeight: FontWeight.w600,
+                                                letterSpacing: 1.2,
+                                                fontSize: 16),
+                                            validator: (value) => FieldValidaor
+                                                .validateEmptyfield(value!),
+                                            onSaved: (value) {
+                                              // email = value!;
+                                            },
+                                            onChanged: (value) {
+                                              setState(() {
+                                                searchQuery = value;
+                                                print(
+                                                    'search car - ${searchQuery}');
+                                                searchCar();
+                                              });
+                                            },
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              errorBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: const BorderSide(
+                                                    color: AppColors.red,
+                                                    width: 1.5),
+                                              ),
+                                              hintText: 'Search by car name',
+
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                borderSide: const BorderSide(
+                                                    color: Color(0xffD0D5DD),
+                                                    width: 1.5),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  borderSide: const BorderSide(
+                                                      color: AppColors
+                                                          .appThemeColor)),
+                                              filled: true,
+                                              fillColor: Colors.white,
+                                              // hintText: 'Enter your password',
+                                              hintStyle: const TextStyle(
+                                                  fontFamily: "NeulisAlt",
+                                                  fontWeight: FontWeight.w300,
+                                                  color: Color(0xffC1C3C3),
+                                                  fontSize: 13),
+
+                                              suffixIcon: const Icon(
+                                                Icons.search_sharp,
+                                                color: Color(0xffC1C3C3),
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black45,
-                                            blurRadius: 0.1,
+                                      ],
+                                    ),
+                                  ),
+
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.all(12.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Divider(
+                                            thickness: 1.5,
+                                            color: AppColors.divider,
                                           ),
-                                        ],
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Image.network(
-                                                carIcon,
-                                                width: 40,
-                                                height: 40,
-                                              ),
-                                              const SizedBox(width: 12),
-                                              Text(
-                                                carName,
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ],
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          "Most Popular",
+                                          style: TextStyle(
+                                            fontFamily: "NeulisAlt",
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w500,
+                                            color: Color(0xff202A2A),
+                                            fontSize: 12,
                                           ),
-                                          Container(
-                                            width: 24,
-                                            height: 24,
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Expanded(
+                                          child: Divider(
+                                            thickness: 1.5,
+                                            color: AppColors.divider,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  SizedBox(
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: mostPopularCars.length,
+                                      itemBuilder: (context, index) {
+                                        final car = mostPopularCars[index];
+                                        final carName = car["name"];
+                                        final carIcon = car["icon"];
+                                        final carId = car['id'];
+
+                                        return GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              if (selectedIndex == index) {
+                                                // If the tapped item is already selected, deselect it
+                                                selectedIndex = -1;
+                                              } else {
+                                                // Otherwise, update the selected index
+                                                selectedIndex = index;
+                                                selectedCarName = carName;
+                                                selectedID = carId.toString();
+                                                selectedCar = car;
+
+                                                print(
+                                                    "my $selectedCarName & ID - $selectedID");
+                                              }
+                                            });
+                                          },
+                                          child: Container(
+                                            height: 57,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.85,
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 3, horizontal: 15),
+                                            margin: const EdgeInsets.only(
+                                                bottom: 8),
                                             decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: selectedIndex == index
-                                                  ? AppColors.lightGreen
-                                                  : Colors.transparent,
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                               border: Border.all(
                                                 color: selectedIndex == index
                                                     ? AppColors.lightGreen
-                                                    : Colors.black,
+                                                    : Colors.black12,
                                                 width: 1,
                                               ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                  color: Colors.black45,
+                                                  blurRadius: 0.1,
+                                                ),
+                                              ],
                                             ),
-                                            child: selectedIndex == index
-                                                ? const Icon(Icons.check,
-                                                    size: 15,
-                                                    color: Colors.white)
-                                                : null, // Display check mark only if selected
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    // SvgPicture.network(
+                                                    //   carIcon,
+                                                    //   width: 40,
+                                                    //   height: 40,
+                                                    // ),
+                                                    Image.network(
+                                                      carIcon,
+                                                      width: 40,
+                                                      height: 40,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          SvgPicture.network(
+                                                        carIcon,
+                                                        width: 40,
+                                                        height: 40,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 12),
+                                                    Text(
+                                                      carName,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  width: 24,
+                                                  height: 24,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: selectedIndex ==
+                                                            index
+                                                        ? AppColors.lightGreen
+                                                        : Colors.transparent,
+                                                    border: Border.all(
+                                                      color: selectedIndex ==
+                                                              index
+                                                          ? AppColors.lightGreen
+                                                          : Colors.black,
+                                                      width: 1,
+                                                    ),
+                                                  ),
+                                                  child: selectedIndex == index
+                                                      ? const Icon(Icons.check,
+                                                          size: 15,
+                                                          color: Colors.white)
+                                                      : null, // Display check mark only if selected
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ],
+                                        );
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+
+                              //
+
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    left: 12.0, right: 12, top: 3, bottom: 3),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Divider(
+                                        thickness: 1.5,
+                                        color: AppColors.divider,
                                       ),
                                     ),
-                                  );
-                                },
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "Others",
+                                      style: TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xff202A2A),
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                      child: Divider(
+                                        thickness: 1.5,
+                                        color: AppColors.divider,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
-                          else
-                            // Display a loading indicator or error message if carsData is empty
-                            const Center(
+
+                              //tabs for all A-J K-P others
+
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 43,
+                                  // padding: const EdgeInsets.all(5),
+                                  decoration: const BoxDecoration(
+                                      // borderRadius: BorderRadius.circular(8),
+                                      // border: Border.all(
+                                      //     color: const Color(0xffEEEFF0), width: 1),
+                                      color: Colors.transparent),
+                                  child: TabBar(
+                                    controller: _tabController,
+                                    // controller: DefaultTabController.of(context),
+
+                                    indicatorColor: Colors.transparent,
+                                    dividerColor: Colors.transparent,
+                                    indicator: BoxDecoration(
+                                      color: const Color(0xff425658),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    indicatorSize: TabBarIndicatorSize.tab,
+                                    labelColor: AppColors.white,
+                                    labelStyle: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10),
+                                    unselectedLabelColor:
+                                        AppColors.appThemeColor,
+                                    tabs: const [
+                                      Tab(text: 'All'),
+                                      Tab(text: 'A-J'),
+                                      Tab(text: 'K-R'),
+                                      Tab(text: 'S-Z'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.4,
+                                child: TabBarView(
+                                  controller: _tabController,
+                                  children: [
+                                    // All Cars
+                                    AllCarsPage(
+                                        carsData: carsData, letters: 'all'),
+                                    AllCarsPage(
+                                        carsData: carsData,
+                                        letters: 'A,B,C,D,E,F,G,H,I,J'),
+                                    AllCarsPage(
+                                        carsData: carsData,
+                                        letters: 'K,L,M,N,O,P,Q,R'),
+                                    AllCarsPage(
+                                        carsData: carsData,
+                                        letters: 'S,T,U,V,W,X,Y,Z'),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        : SizedBox(
+                            child: const Center(
                               child: CircularProgressIndicator(),
                             ),
-
-                          //
-
-                          //most popular cars
-                          // Column(
-                          //   children: [
-                          //     if (state.loading != Loader.loading &&
-                          //         newCarz.isNotEmpty)
-                          //       SizedBox(
-                          //         // height:
-                          //         //     MediaQuery.of(context).size.height * 0.30,
-                          //         child: ListView.builder(
-                          //           shrinkWrap: true,
-                          //           itemCount: newCarz.length,
-                          //           itemBuilder: (context, index) {
-                          //             final moticar = newCarz[index];
-                          //             final categoriez = moticar.categories;
-
-                          //             // Check if categoriez is not empty and if index is within bounds
-                          //             if (categoriez.isNotEmpty &&
-                          //                 index < categoriez.length) {
-                          //               final carModelz =
-                          //                   categoriez[index].models;
-                          //               final carname = moticar.name;
-                          //               // final carId = moticar.id;
-
-                          //               if (moticar.name.toLowerCase().contains(
-                          //                   searchQuery.toLowerCase())) {
-                          //                 return GestureDetector(
-                          //                   onTap: () {
-                          //                     setState(() {
-                          //                       moticatz = categoriez;
-                          //                       carmodelz = carModelz;
-                          //                       selectedCarName = carname;
-                          //                     });
-
-                          //                     print(
-                          //                         'my $moticatz $selectedCarName');
-                          //                     print(
-                          //                         'Length of categoriez: ${categoriez.length}');
-                          //                   },
-                          //                   child: Container(
-                          //                     padding:
-                          //                         const EdgeInsets.symmetric(
-                          //                             vertical: 2,
-                          //                             horizontal: 8),
-                          //                     margin: const EdgeInsets.only(
-                          //                         bottom: 8),
-                          //                     decoration: BoxDecoration(
-                          //                       color: Colors.white,
-                          //                       borderRadius:
-                          //                           BorderRadius.circular(8),
-                          //                       border: Border.all(
-                          //                         color: popular == moticar.name
-                          //                             ? AppColors.lightGreen
-                          //                             : const Color(0xfff0f5f5),
-                          //                         width: 1,
-                          //                       ),
-                          //                       boxShadow: const [
-                          //                         BoxShadow(
-                          //                           color: Colors.black45,
-                          //                           blurRadius: 0.1,
-                          //                         ),
-                          //                       ],
-                          //                     ),
-                          //                     child: Row(
-                          //                       mainAxisAlignment:
-                          //                           MainAxisAlignment
-                          //                               .spaceBetween,
-                          //                       children: [
-                          //                         Row(
-                          //                           children: [
-                          //                             getImageWidget(moticar
-                          //                                 .name
-                          //                                 .toString()),
-                          //                             // SvgPicture.asset(
-                          //                             //   "assets/carLogos/toyota.svg",
-                          //                             // ),
-                          //                             const SizedBox(width: 8),
-                          //                             popular == moticar.name
-                          //                                 ? MoticarText(
-                          //                                     text:
-                          //                                         moticar.name,
-                          //                                     fontSize: 14,
-                          //                                     fontWeight:
-                          //                                         FontWeight
-                          //                                             .w700,
-                          //                                     fontColor:
-                          //                                         AppColors
-                          //                                             .green,
-                          //                                   )
-                          //                                 : MoticarText(
-                          //                                     text:
-                          //                                         moticar.name,
-                          //                                     fontSize: 14,
-                          //                                     fontWeight:
-                          //                                         FontWeight
-                          //                                             .w400,
-                          //                                     fontColor:
-                          //                                         const Color(
-                          //                                             0xff495353),
-                          //                                   ),
-                          //                           ],
-                          //                         ),
-                          //                         Radio(
-                          //                           toggleable: true,
-                          //                           value: moticar.name,
-                          //                           activeColor:
-                          //                               AppColors.lightGreen,
-                          //                           groupValue: popular,
-                          //                           onChanged: (value) {
-                          //                             setState(() {
-                          //                               popular =
-                          //                                   value.toString();
-                          //                               moticatz = categoriez;
-                          //                               carmodelz = carModelz;
-                          //                               selectedCarName =
-                          //                                   carname;
-
-                          //                               selectedID = moticar.id
-                          //                                   .toString();
-                          //                             });
-                          //                           },
-                          //                         ),
-                          //                       ],
-                          //                     ),
-                          //                   ),
-                          //                 );
-                          //               } else {
-                          //                 // Return an empty container if item does not match search query
-                          //                 return const SizedBox.shrink();
-                          //               }
-                          //             } else {
-                          //               // Handle the case where categoriez is empty or index is out of bounds
-                          //               return const SizedBox.shrink();
-                          //             }
-
-                          //             //
-                          //           },
-                          //         ),
-                          //       )
-                          //     else if (state.loading == Loader.loading)
-                          //       const Column(
-                          //         mainAxisAlignment: MainAxisAlignment.center,
-                          //         children: [
-                          //           MoticarLoader(
-                          //             size: 40,
-                          //           )
-                          //         ],
-                          //       )
-                          //     else
-                          //       const Center(
-                          //         child: Column(
-                          //           mainAxisAlignment: MainAxisAlignment.center,
-                          //           children: [
-                          //             SizedBox(height: 30),
-                          //             MoticarText(
-                          //               text: 'No Cars Available',
-                          //               fontSize: 13,
-                          //               fontWeight: FontWeight.w500,
-                          //               fontColor: AppColors.textColor,
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //   ],
-                          // ),
-                        ],
-                      ),
-
-                      //
-
-                      const Padding(
-                        padding: EdgeInsets.only(
-                            left: 12.0, right: 12, top: 3, bottom: 3),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                thickness: 1.5,
-                                color: AppColors.divider,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              "Others",
-                              style: TextStyle(
-                                fontFamily: "NeulisAlt",
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xff202A2A),
-                                fontSize: 12,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Expanded(
-                              child: Divider(
-                                thickness: 1.5,
-                                color: AppColors.divider,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      //tabs for all A-J K-P others
-
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 43,
-                          // padding: const EdgeInsets.all(5),
-                          decoration: const BoxDecoration(
-                              // borderRadius: BorderRadius.circular(8),
-                              // border: Border.all(
-                              //     color: const Color(0xffEEEFF0), width: 1),
-                              color: Colors.transparent),
-                          child: TabBar(
-                            controller: _tabController,
-                            // controller: DefaultTabController.of(context),
-
-                            indicatorColor: Colors.transparent,
-                            dividerColor: Colors.transparent,
-                            indicator: BoxDecoration(
-                              color: const Color(0xff425658),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            labelColor: AppColors.white,
-                            labelStyle: const TextStyle(
-                                fontFamily: "NeulisAlt",
-                                fontWeight: FontWeight.w600,
-                                fontSize: 10),
-                            unselectedLabelColor: AppColors.appThemeColor,
-                            tabs: const [
-                              Tab(text: 'All'),
-                              Tab(text: 'A-J'),
-                              Tab(text: 'K-R'),
-                              Tab(text: 'S-Z'),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        child: TabBarView(
-                          controller: _tabController,
-                          children: const [
-                            // All Cars
-                            AllCarsPage(),
-                            AllCarsPage(),
-                            AllCarsPage(),
-                            AllCarsPage(),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                          )),
               ),
             ),
 

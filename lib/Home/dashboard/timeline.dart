@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:moticar/Home/bottom_bar.dart';
 import 'package:moticar/auth/add_car.dart';
+import 'package:moticar/widgets/dashboard/navbar.dart';
 import 'package:moticar/widgets/eard_dialog.dart';
 import 'package:rive/rive.dart';
 import '../../models/expensesmodel.dart';
@@ -231,267 +232,7 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
-                  if (state.loading != Loader.loading &&
-                      state.getallCarz.isNotEmpty)
-                    // if (myCarz.isNotEmpty)
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      padding:
-                          const EdgeInsets.only(top: 10, left: 10, right: 10),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: const BoxDecoration(
-                        color: AppColors.teal,
-                      ),
-                      child: ListView.builder(
-                        // itemCount: myCarz.length,
-                        itemCount: state.getallCarz.isNotEmpty
-                            // myCarz.isNotEmpty
-                            ? 1
-                            : 0, // Only show 1 item if myCarz is not empty
-
-                        itemBuilder: (BuildContext context, int index) {
-                          final carz = myCarz[index];
-                          String myRenewal = carz.vehicleLicense != null
-                              ? carz.vehicleLicense.toString()
-                              : '0';
-
-                          myRenewal = myRenewal.replaceAll('/', '-');
-
-                          DateTime renewalDate = DateTime.parse(myRenewal);
-                          Duration difference =
-                              renewalDate.difference(DateTime.now());
-                          int daysDifference = difference.inDays;
-                          String daysDifferenceText = daysDifference < 1
-                              ? "Expired"
-                              : "exp. $daysDifference days";
-
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    showMoticarBottom(
-                                      context: context,
-                                      child: FractionallySizedBox(
-                                        heightFactor: 0.89,
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(20.0),
-                                            topRight: Radius.circular(20.0),
-                                          ),
-                                          child: MyCarInfoPage(
-                                            exp: int.parse(daysDifferenceText),
-                                            bodyStyle: carz.category!.name,
-                                            cylinder: carz.details!.cylinder,
-                                            segment: carz.details!.segment,
-                                            fuelCapacity:
-                                                carz.details!.fuelCapacity,
-                                            driveType: carz.details!.driveType,
-                                            acceleration:
-                                                carz.details!.acceleration,
-                                            topSpeed: carz.details!.topSpeed,
-                                            tyreSize: carz.details!.tyreSize,
-                                            id: carz.id,
-                                            plateNumber: carz.plateNumber,
-                                            chasisNumber: carz.chasisNumber,
-                                            engineNumber: carz.engineNumber,
-                                            dateOfPurchase: carz.dateOfPurchase,
-                                            vehicleLicense: carz.vehicleLicense,
-                                            roadWorthiness: carz.roadWorthiness,
-                                            thirdPartyInsurance:
-                                                carz.thirdPartyInsurance,
-                                            engine:
-                                                carz.details!.engine.toString(),
-                                            gearbox: carz.details!.gearbox
-                                                .toString(),
-                                            car: carz.car!.name.toString(),
-                                            model: carz.model!.name.toString(),
-                                            category: carz.category.toString(),
-                                            year: carz.details!.year.toString(),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(3),
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(4),
-                                        topRight: Radius.circular(4),
-                                        bottomLeft: Radius.circular(4),
-                                        bottomRight: Radius.circular(4),
-                                      ),
-                                    ),
-                                    child: Image.asset(
-                                      'assets/images/car_ai.png',
-                                      height: 45,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "${carz.car!.name} ${carz.model!.name} ${carz.details!.year}",
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontFamily: "NeulisAlt",
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Container(
-                                          padding: const EdgeInsets.only(
-                                            left: 8,
-                                            right: 8,
-                                            top: 4,
-                                            bottom: 4,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xff00343f),
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                          ),
-                                          child: Text(
-                                            daysDifferenceText,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontFamily: "NeulisAlt",
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 13,
-                                              color: Color(0xff92BEC1),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.6,
-                                      child: Text(
-                                        "${carz.details!.engine} . ${carz.category!.name} . ${carz.details!.gearbox}",
-                                        textAlign: TextAlign.left,
-                                        style: const TextStyle(
-                                          fontFamily: "NeulisAlt",
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                          color: Color(0xff7AE6EB),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 8, bottom: 8.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isVisible = !isVisible;
-                                        selectedCarID = carz.id.toString();
-                                      });
-                                    },
-                                    child: isVisible
-                                        ? const Icon(
-                                            Icons.keyboard_arrow_up_rounded,
-                                            color: AppColors.textGrey,
-                                          )
-                                        : const Icon(
-                                            Icons.keyboard_arrow_down_sharp,
-                                            color: AppColors.textGrey,
-                                          ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 8, bottom: 8.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      _showMyNotification(context);
-                                    },
-                                    child: isVisible
-                                        ? const SizedBox()
-                                        : const Icon(
-                                            Icons.notifications_none_sharp,
-                                            color: AppColors.white,
-                                          ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                  else if (state.loading == Loader.loading)
-                    const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 120,
-                          width: 120,
-                          child: RiveAnimation.asset(
-                            'assets/images/splashscreenanim.riv',
-                          ),
-                        )
-                      ],
-                    )
-                  else
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 30),
-                          const MoticarText(
-                            text: 'No Cars Available',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            fontColor: AppColors.white,
-                          ),
-                          const SizedBox(height: 8),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: SizedBox(
-                              width: 150,
-                              child: MoticarLoginButton(
-                                borderColor: const Color(0xff29D7DE),
-                                myColor: const Color(0xff29D7DE),
-                                child: const Center(
-                                  child: Text(
-                                    'Add new Car',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: 'NeulisAlt',
-                                      color: AppColors.appThemeColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return const AddCarPage(
-                                      isHome: true,
-                                    );
-                                  }));
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  Navbar(),
                   Visibility(
                     visible: isVisible,
                     child: Column(
@@ -1000,8 +741,8 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                                     .toString(),
                                                 category: breakdown.category
                                                     .toString(),
-                                                amount: nairaFormat.format(
-                                                    breakdown.amount),
+                                                amount: nairaFormat
+                                                    .format(breakdown.amount),
                                                 paymode: breakdown
                                                     .methodOfPayment
                                                     .toString(),
@@ -1080,7 +821,8 @@ class _TimelinePageState extends ConsumerState<TimelinePage> {
                                         Row(
                                           children: [
                                             Text(
-                                                nairaFormat.format(breakdown.amount),
+                                                nairaFormat
+                                                    .format(breakdown.amount),
                                                 style: const TextStyle(
                                                     fontFamily: "Neulis",
                                                     color: Color(0xff006C70),

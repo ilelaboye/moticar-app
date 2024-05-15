@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:image_picker/image_picker.dart';
-  
+
 import '../auth/login/login_viewmodel.dart';
-import '../auth/signup/register_viewmodel.dart';
+import '../views/auth/signup/register_viewmodel.dart';
 import '../models/profile_viewmodel.dart';
 import '../network/moticar_backend.dart';
 import '../network/new_back.dart';
@@ -42,7 +42,6 @@ final registerViewmodelProvider =
     StateNotifierProvider<RegisterViewmodel, RegisterState>(
         (ref) => RegisterViewmodel(ref));
 
-
 /////
 // final fingerPrintProvider =
 //     StateNotifierProvider<FingerPrint, bool>((ref) => FingerPrint());
@@ -65,7 +64,6 @@ final registerViewmodelProvider =
 //     StateNotifierProvider<RegisterViewmodel, RegisterState>(
 //         (ref) => RegisterViewmodel(ref));
 
-
 // final openAccountModelProvider =
 //     StateNotifierProvider<OpenAccountViewModel, OpenAccountState>(
 //         (ref) => OpenAccountViewModel(ref.read));
@@ -80,7 +78,6 @@ final profileProvider = StateNotifierProvider<ProfileViewModel, ProfileState>(
 // final airtimeBillProvider =
 //     StateNotifierProvider<AirtimeViewModel, AirtimeState>(
 //         (ref) => AirtimeViewModel(ref));
- 
 
 // final transfersViewmodelprovider =
 //     StateNotifierProvider.autoDispose<TransfersViewModel, TransfersState>(

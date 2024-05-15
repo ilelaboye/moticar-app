@@ -5,19 +5,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:moticar/auth/login/login_email.dart';
-import 'package:moticar/auth/signup/sign_up3_postal.dart';
-import 'package:moticar/auth/signup/signup_4.dart';
+import 'package:moticar/views/auth/login.dart';
+import 'package:moticar/views/auth/signup/sign_up3_postal.dart';
+import 'package:moticar/views/auth/signup/signup_4.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:rive/rive.dart';
 
-import '../../providers/app_providers.dart';
-import '../../services/hivekeys.dart';
-import '../../services/localdatabase.dart';
-import '../../widgets/app_texts.dart';
-import '../../widgets/colors.dart';
-import '../../widgets/eard_dialog.dart';
+import '../../../providers/app_providers.dart';
+import '../../../services/hivekeys.dart';
+import '../../../services/localdatabase.dart';
+import '../../../widgets/app_texts.dart';
+import '../../../widgets/colors.dart';
+import '../../../widgets/eard_dialog.dart';
 
 class SignUpPage3 extends StatefulHookConsumerWidget {
   const SignUpPage3({super.key, required this.token});
@@ -301,7 +301,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                     child: SizedBox(
                                       height: 50,
                                       child: DropdownButtonFormField<String>(
-                                          isDense: false,
+                                          isDense: true,
                                           isExpanded: true,
                                           decoration: const InputDecoration(
                                             contentPadding:
@@ -388,7 +388,7 @@ class _SignUpPage3State extends ConsumerState<SignUpPage3> {
                                     child: SizedBox(
                                       height: 50,
                                       child: DropdownButtonFormField<String>(
-                                          isDense: false,
+                                          isDense: true,
                                           isExpanded: true,
                                           alignment: Alignment.centerLeft,
                                           decoration: const InputDecoration(

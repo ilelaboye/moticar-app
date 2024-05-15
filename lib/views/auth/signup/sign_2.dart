@@ -8,24 +8,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:moticar/auth/login/login_email.dart';
-import 'package:moticar/auth/signup/sign_3.dart';
+import 'package:moticar/views/auth/login.dart';
+import 'package:moticar/views/auth/signup/sign_3.dart';
 import 'package:moticar/widgets/appBar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:moticar/widgets/pass_strength_indicator.dart';
 import 'package:rive/rive.dart';
 
-import '../../providers/app_providers.dart';
-import '../../services/hivekeys.dart';
-import '../../services/localdatabase.dart';
-import '../../utils/validator.dart';
-import '../../widgets/app_texts.dart';
-import '../../widgets/colors.dart';
+import '../../../providers/app_providers.dart';
+import '../../../services/hivekeys.dart';
+import '../../../services/localdatabase.dart';
+import '../../../utils/validator.dart';
+import '../../../widgets/app_texts.dart';
+import '../../../widgets/colors.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../widgets/eard_dialog.dart';
-import '../../widgets/image_picker_bottom_sheet.dart';
-import '../../widgets/picked_image_display.dart';
+import '../../../widgets/eard_dialog.dart';
+import '../../../widgets/image_picker_bottom_sheet.dart';
+import '../../../widgets/picked_image_display.dart';
 
 class SignUpPage2 extends StatefulHookConsumerWidget {
   const SignUpPage2({

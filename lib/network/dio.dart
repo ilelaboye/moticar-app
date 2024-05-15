@@ -2,15 +2,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:moticar/services/hivekeys.dart';
+import 'package:moticar/services/localdatabase.dart';
 import 'package:moticar/utils/constants.dart';
 import 'package:moticar/widgets/flushbar.dart';
 
 class DioClient extends ChangeNotifier {
   final Dio _dio;
-  final String? token;
+  // final String? token;
+  String? token = HiveStorage.get(HiveKeys.token);
   String baseUrl = Constant.baseUrl;
 
-  DioClient(this._dio, {this.token}) {
+  DioClient(this._dio) {
     _dio
       ..options.baseUrl = baseUrl ?? ""
       ..options.connectTimeout = Constant.connectionTimeout
@@ -33,7 +36,11 @@ class DioClient extends ChangeNotifier {
       final Response response = await _dio.get(
         url,
         queryParameters: queryParameters,
-        options: Options(headers: {"Authorization": "Basic $token"}),
+        options: Options(headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }),
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
@@ -61,12 +68,14 @@ class DioClient extends ChangeNotifier {
       ProgressCallback? onReceiveProgress,
       callback}) async {
     try {
+      print('base');
+      print(baseUrl);
       final Response response = await _dio.post(
         url,
         data: data,
         queryParameters: queryParameters,
         options: Options(headers: {
-          // "Authorization": "Bearer $token"
+          "Authorization": "Bearer $token",
           "Content-Type": "application/json",
           "Accept": "application/json"
         }),
@@ -75,7 +84,7 @@ class DioClient extends ChangeNotifier {
         onReceiveProgress: onReceiveProgress,
       );
 
-      // print(response);
+      print(response);
       return {"status": true, "data": response.data};
     } on DioError catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -150,6 +159,10 @@ class DioExceptions implements Exception {
       case 422:
         return error["errors"].values.first[0];
       case 500:
+        print('dkkd');
+        if (error.runtimeType != 'String') {
+          return error['message'];
+        }
         var error2 = jsonDecode(error);
 
         if (error2.containsKey('message')) {
