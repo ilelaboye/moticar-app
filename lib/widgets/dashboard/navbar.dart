@@ -55,301 +55,311 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Visibility(
-          visible: !loading,
-          child: Column(
-            children: [
-              if (myCars.length > 0)
-                // if (myCarz.isNotEmpty)
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: AppColors.teal,
-                  ),
-                  child: ListView.builder(
-                    // itemCount: myCarz.length,
-                    itemCount: 1, // Only show 1 item if myCarz is not empty
+    return RefreshIndicator.adaptive(
+      onRefresh: () async {
+        getMyCars();
+      },
+      child: Column(
+        children: [
+          Visibility(
+            visible: !loading,
+            child: Column(
+              children: [
+                if (myCars.length > 0)
+                  // if (myCarz.isNotEmpty)
+                  Container(
+                    height: 80,
+                    padding: const EdgeInsets.only(
+                        top: 0, left: 10, right: 10, bottom: 0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: AppColors.teal,
+                    ),
+                    child: ListView.builder(
+                      // itemCount: myCarz.length,
+                      itemCount: 1, // Only show 1 item if myCarz is not empty
 
-                    itemBuilder: (BuildContext context, int index) {
-                      final carz = myCars[index];
-                      String myRenewal = carz['vehicle_license'] != null
-                          ? carz['vehicle_license'].toString()
-                          : '0';
-                      print('my renew');
-                      print(carz['vehicle_license']);
-                      String daysDifferenceText = '';
-                      if (myRenewal != '0') {
-                        myRenewal = myRenewal.replaceAll('/', '-');
-                        print('my renew 33');
-                        DateTime renewalDate = DateTime.parse(myRenewal);
-                        Duration difference =
-                            renewalDate.difference(DateTime.now());
-                        int daysDifference = difference.inDays;
-                        daysDifferenceText = daysDifference < 1
-                            ? "Expired"
-                            : "exp. $daysDifference days";
-                      }
+                      itemBuilder: (BuildContext context, int index) {
+                        final carz = myCars[index];
+                        String myRenewal = carz['vehicle_license'] != null
+                            ? carz['vehicle_license'].toString()
+                            : '0';
+                        print('my renew');
+                        print(carz['vehicle_license']);
+                        String daysDifferenceText = '';
+                        int daysDifference = 0;
+                        if (myRenewal != '0') {
+                          myRenewal = myRenewal.replaceAll('/', '-');
+                          print('my renew 33');
+                          DateTime renewalDate = DateTime.parse(myRenewal);
+                          Duration difference =
+                              renewalDate.difference(DateTime.now());
+                          daysDifference = difference.inDays;
+                          daysDifferenceText = daysDifference < 1
+                              ? ""
+                              : "exp. $daysDifference days";
+                        }
 
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                showMoticarBottom(
-                                  context: context,
-                                  child: FractionallySizedBox(
-                                    heightFactor: 0.89,
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(20.0),
-                                        topRight: Radius.circular(20.0),
-                                      ),
-                                      child: MyCarInfoPage(
-                                        exp: daysDifferenceText.isNotEmpty
-                                            ? int.parse(daysDifferenceText)
-                                            : 0,
-                                        bodyStyle: carz['category']['name'],
-                                        cylinder: carz['details']['cylinder'],
-                                        segment: carz['details']['segment'],
-                                        fuelCapacity: carz['details']
-                                            ['fuel_capacity'],
-                                        driveType: carz['details']
-                                            ['drive_type'],
-                                        acceleration: carz['details']
-                                                ['acceleration']
-                                            .toString(),
-                                        topSpeed: carz['details']['top_speed']
-                                            .toString(),
-                                        tyreSize: carz['details']['tyre_size']
-                                            .toString(),
-                                        id: carz['id'],
-                                        plateNumber: carz['plate_number'],
-                                        chasisNumber: carz['chasis_number'],
-                                        engineNumber: carz['engine_number'],
-                                        dateOfPurchase: DateTime.tryParse(
-                                            carz['date_of_purchase']),
-                                        vehicleLicense: carz['vehicle_license'],
-                                        roadWorthiness: carz['road_worthiness'],
-                                        thirdPartyInsurance:
-                                            carz['third_party_insurance'],
-                                        engine: carz['details']['engine']
-                                            .toString(),
-                                        gearbox: carz['details']['gearbox']
-                                            .toString(),
-                                        car: carz['car']['name'].toString(),
-                                        model: carz['model']['name'].toString(),
-                                        category: carz['category'].toString(),
-                                        year:
-                                            carz['details']['year'].toString(),
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  showMoticarBottom(
+                                    context: context,
+                                    child: FractionallySizedBox(
+                                      heightFactor: 0.89,
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(20.0),
+                                          topRight: Radius.circular(20.0),
+                                        ),
+                                        child: MyCarInfoPage(
+                                          exp: daysDifferenceText.isNotEmpty
+                                              ? daysDifference
+                                              : 0,
+                                          bodyStyle: carz['category']['name'],
+                                          cylinder: carz['details']['cylinder'],
+                                          segment: carz['details']['segment'],
+                                          fuelCapacity: carz['details']
+                                              ['fuel_capacity'],
+                                          driveType: carz['details']
+                                              ['drive_type'],
+                                          acceleration: carz['details']
+                                                  ['acceleration']
+                                              .toString(),
+                                          topSpeed: carz['details']['top_speed']
+                                              .toString(),
+                                          tyreSize: carz['details']['tyre_size']
+                                              .toString(),
+                                          id: carz['id'],
+                                          plateNumber: carz['plate_number'],
+                                          chasisNumber: carz['chasis_number'],
+                                          engineNumber: carz['engine_number'],
+                                          dateOfPurchase: DateTime.tryParse(
+                                              carz['date_of_purchase']),
+                                          vehicleLicense:
+                                              carz['vehicle_license'],
+                                          roadWorthiness:
+                                              carz['road_worthiness'],
+                                          thirdPartyInsurance:
+                                              carz['third_party_insurance'],
+                                          engine: carz['details']['engine']
+                                              .toString(),
+                                          gearbox: carz['details']['gearbox']
+                                              .toString(),
+                                          car: carz['car']['name'].toString(),
+                                          model:
+                                              carz['model']['name'].toString(),
+                                          category: carz['category'].toString(),
+                                          year: carz['details']['year']
+                                              .toString(),
+                                        ),
                                       ),
                                     ),
+                                  );
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(3),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(4),
+                                      topRight: Radius.circular(4),
+                                      bottomLeft: Radius.circular(4),
+                                      bottomRight: Radius.circular(4),
+                                    ),
                                   ),
-                                );
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(4),
-                                    topRight: Radius.circular(4),
-                                    bottomLeft: Radius.circular(4),
-                                    bottomRight: Radius.circular(4),
+                                  child: Image.asset(
+                                    'assets/images/car_ai.png',
+                                    height: 45,
                                   ),
-                                ),
-                                child: Image.asset(
-                                  'assets/images/car_ai.png',
-                                  height: 45,
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 8),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "${carz['car']['name']} ${carz['model']['name']} ${carz['details']['year']}",
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontFamily: "NeulisAlt",
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                        color: Colors.white,
+                              const SizedBox(width: 8),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "${carz['car']['name']} ${carz['model']['name']} ${carz['details']['year']}",
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontFamily: "NeulisAlt",
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Visibility(
-                                      visible: daysDifferenceText.isNotEmpty,
-                                      child: Container(
-                                        padding: const EdgeInsets.only(
-                                          left: 8,
-                                          right: 8,
-                                          top: 4,
-                                          bottom: 4,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xff00343f),
-                                          borderRadius:
-                                              BorderRadius.circular(40),
-                                        ),
-                                        child: Text(
-                                          daysDifferenceText,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            fontFamily: "NeulisAlt",
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 13,
-                                            color: Color(0xff92BEC1),
+                                      const SizedBox(width: 8),
+                                      Visibility(
+                                        visible: daysDifferenceText.isNotEmpty,
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                            left: 8,
+                                            right: 8,
+                                            top: 4,
+                                            bottom: 4,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xff00343f),
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          child: Text(
+                                            daysDifferenceText,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontFamily: "NeulisAlt",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 13,
+                                              color: Color(0xff92BEC1),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.6,
-                                  child: Text(
-                                    "${carz['details']['engine']} . ${carz['category']['name']} . ${carz['details']['gearbox']}",
-                                    textAlign: TextAlign.left,
-                                    style: const TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: Color(0xff7AE6EB),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    child: Text(
+                                      "${carz['details']['engine']} . ${carz['category']['name']} . ${carz['details']['gearbox']}",
+                                      textAlign: TextAlign.left,
+                                      style: const TextStyle(
+                                        fontFamily: "NeulisAlt",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                        color: Color(0xff7AE6EB),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8, bottom: 8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isVisible = !isVisible;
-                                    selectedCarID = carz['id'].toString();
-                                  });
-                                },
-                                child: isVisible
-                                    ? const Icon(
-                                        Icons.keyboard_arrow_up_rounded,
-                                        color: AppColors.textGrey,
-                                      )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          _showTopModal();
-                                        },
-                                        child: const Icon(
-                                          Icons.keyboard_arrow_down_sharp,
-                                          size: 35,
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 8.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isVisible = !isVisible;
+                                      selectedCarID = carz['id'].toString();
+                                    });
+                                  },
+                                  child: isVisible
+                                      ? const Icon(
+                                          Icons.keyboard_arrow_up_rounded,
                                           color: AppColors.textGrey,
+                                        )
+                                      : GestureDetector(
+                                          onTap: () {
+                                            _showTopModal();
+                                          },
+                                          child: const Icon(
+                                            Icons.keyboard_arrow_down_sharp,
+                                            size: 35,
+                                            color: AppColors.textGrey,
+                                          ),
                                         ),
-                                      ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 8, bottom: 8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  _showMyNotification(context);
-                                },
-                                child: isVisible
-                                    ? const SizedBox()
-                                    : const Icon(
-                                        Icons.notifications_none_sharp,
-                                        color: AppColors.white,
-                                      ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                )
-              else
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 30),
-                      const MoticarText(
-                        text: 'No Cars Available',
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        fontColor: AppColors.white,
-                      ),
-                      const SizedBox(height: 5),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 0.0,
-                        ),
-                        child: SizedBox(
-                          width: 150,
-                          height: 40,
-                          child: MoticarLoginButton(
-                            borderColor: const Color(0xff29D7DE),
-                            myColor: const Color(0xff29D7DE),
-                            child: const Center(
-                              child: Text(
-                                'Add new Car',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: 'NeulisAlt',
-                                  color: AppColors.appThemeColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 8.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _showMyNotification(context);
+                                  },
+                                  child: isVisible
+                                      ? const SizedBox()
+                                      : const Icon(
+                                          Icons.notifications_none_sharp,
+                                          color: AppColors.white,
+                                        ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                else
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 30),
+                        const MoticarText(
+                          text: 'No Cars Available',
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          fontColor: AppColors.white,
+                        ),
+                        const SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 0.0,
+                          ),
+                          child: SizedBox(
+                            width: 150,
+                            height: 40,
+                            child: MoticarLoginButton(
+                              borderColor: const Color(0xff29D7DE),
+                              myColor: const Color(0xff29D7DE),
+                              child: const Center(
+                                child: Text(
+                                  'Add new Car',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'NeulisAlt',
+                                    color: AppColors.appThemeColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return const AddCarPage(
+                                    isHome: true,
+                                  );
+                                }));
+                              },
                             ),
-                            onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return const AddCarPage(
-                                  isHome: true,
-                                );
-                              }));
-                            },
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-            ],
-          ),
-        ),
-        Visibility(
-            visible: loading,
-            child: Column(
-              // color: Colors.red,
-              children: [
-                SizedBox(
-                  height: 34,
-                  // width: 120,
-                  child: RiveAnimation.asset(
-                    'assets/images/preloader.riv',
-                  ),
-                ),
-                Text(
-                  'Loading...',
-                  style: TextStyle(color: Colors.white, fontSize: 13),
-                )
               ],
-            ))
-      ],
+            ),
+          ),
+          Visibility(
+              visible: loading,
+              child: Column(
+                // color: Colors.red,
+                children: [
+                  SizedBox(
+                    height: 34,
+                    // width: 120,
+                    child: RiveAnimation.asset(
+                      'assets/images/preloader.riv',
+                    ),
+                  ),
+                  Text(
+                    'Loading...',
+                    style: TextStyle(color: Colors.white, fontSize: 13),
+                  )
+                ],
+              ))
+        ],
+      ),
     );
   }
 
@@ -582,195 +592,210 @@ class CarTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('see ca');
+    print(myCars);
     return SafeArea(
       child: Column(
         children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.25,
-            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: AppColors.teal,
+          ConstrainedBox(
+            constraints: new BoxConstraints(
+              minHeight: 0.0,
+              maxHeight: MediaQuery.of(context).size.height * 0.25,
             ),
-            child: ListView.builder(
-              // itemCount: myCarz.length,
-              itemCount:
-                  myCars.length, // Only show 1 item if myCarz is not empty
+            child: DecoratedBox(
+              decoration: BoxDecoration(color: AppColors.teal),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  // itemCount: myCarz.length,
+                  itemCount:
+                      myCars.length, // Only show 1 item if myCarz is not empty
 
-              itemBuilder: (BuildContext context, int index) {
-                final carz = myCars[index];
-                String myRenewal = carz['vehicle_license'] != null
-                    ? carz['vehicle_license'].toString()
-                    : '0';
-                print('my renew');
-                print(carz['vehicle_license']);
-                String daysDifferenceText = '';
-                if (myRenewal != '0') {
-                  myRenewal = myRenewal.replaceAll('/', '-');
-                  print('my renew 33');
-                  DateTime renewalDate = DateTime.parse(myRenewal);
-                  Duration difference = renewalDate.difference(DateTime.now());
-                  int daysDifference = difference.inDays;
-                  daysDifferenceText = daysDifference < 1
-                      ? "Expired"
-                      : "exp. $daysDifference days";
-                }
+                  itemBuilder: (BuildContext context, int index) {
+                    final carz = myCars[index];
+                    String myRenewal = carz['vehicle_license'] != null
+                        ? carz['vehicle_license'].toString()
+                        : '0';
+                    print('my renew');
+                    print(carz['vehicle_license']);
+                    String daysDifferenceText = '';
+                    int daysDifference = 0;
+                    if (myRenewal != '0') {
+                      myRenewal = myRenewal.replaceAll('/', '-');
+                      print('my renew 33');
+                      DateTime renewalDate = DateTime.parse(myRenewal);
+                      Duration difference =
+                          renewalDate.difference(DateTime.now());
+                      daysDifference = difference.inDays;
+                      daysDifferenceText =
+                          daysDifference < 1 ? "" : "exp. $daysDifference days";
+                    }
 
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              showMoticarBottom(
-                                context: context,
-                                child: FractionallySizedBox(
-                                  heightFactor: 0.89,
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(20.0),
-                                      topRight: Radius.circular(20.0),
-                                    ),
-                                    child: MyCarInfoPage(
-                                      exp: daysDifferenceText.isNotEmpty
-                                          ? int.parse(daysDifferenceText)
-                                          : 0,
-                                      bodyStyle: carz['category']['name'],
-                                      cylinder: carz['details']['cylinder'],
-                                      segment: carz['details']['segment'],
-                                      fuelCapacity: carz['details']
-                                          ['fuel_capacity'],
-                                      driveType: carz['details']['drive_type'],
-                                      acceleration: carz['details']
-                                              ['acceleration']
-                                          .toString(),
-                                      topSpeed: carz['details']['top_speed']
-                                          .toString(),
-                                      tyreSize: carz['details']['tyre_size']
-                                          .toString(),
-                                      id: carz['id'],
-                                      plateNumber: carz['plate_number'],
-                                      chasisNumber: carz['chasis_number'],
-                                      engineNumber: carz['engine_number'],
-                                      dateOfPurchase: DateTime.tryParse(
-                                          carz['date_of_purchase']),
-                                      vehicleLicense: carz['vehicle_license'],
-                                      roadWorthiness: carz['road_worthiness'],
-                                      thirdPartyInsurance:
-                                          carz['third_party_insurance'],
-                                      engine:
-                                          carz['details']['engine'].toString(),
-                                      gearbox:
-                                          carz['details']['gearbox'].toString(),
-                                      car: carz['car']['name'].toString(),
-                                      model: carz['model']['name'].toString(),
-                                      category: carz['category'].toString(),
-                                      year: carz['details']['year'].toString(),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(4),
-                                  topRight: Radius.circular(4),
-                                  bottomLeft: Radius.circular(4),
-                                  bottomRight: Radius.circular(4),
-                                ),
+                    return GestureDetector(
+                      onTap: () {
+                        print('tapping ss');
+                        print(carz);
+                        showMoticarBottom(
+                          context: context,
+                          child: FractionallySizedBox(
+                            heightFactor: 0.89,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0),
                               ),
-                              child: Image.asset(
-                                'assets/images/car_ai.png',
-                                height: 50,
+                              child: MyCarInfoPage(
+                                exp: daysDifferenceText.isNotEmpty
+                                    ? daysDifference
+                                    : 0,
+                                bodyStyle: carz['category']['name'],
+                                cylinder: carz['details']['cylinder'],
+                                segment: carz['details']['segment'],
+                                fuelCapacity:
+                                    carz['details']['fuel_capacity'] ?? '',
+                                driveType: carz['details']['drive_type'] ?? '',
+                                acceleration:
+                                    carz['details']['acceleration'].toString(),
+                                topSpeed:
+                                    carz['details']['top_speed'].toString(),
+                                tyreSize:
+                                    carz['details']['tyre_size'].toString(),
+                                id: carz['id'],
+                                plateNumber: carz['plate_number'],
+                                chasisNumber: carz['chasis_number'],
+                                engineNumber: carz['engine_number'],
+                                dateOfPurchase:
+                                    DateTime.tryParse(carz['date_of_purchase']),
+                                vehicleLicense: carz['vehicle_license'],
+                                roadWorthiness: carz['road_worthiness'],
+                                thirdPartyInsurance:
+                                    carz['third_party_insurance'],
+                                engine: carz['details']['engine'].toString(),
+                                gearbox: carz['details']['gearbox'].toString(),
+                                car: carz['car']['name'].toString(),
+                                model: carz['model']['name'].toString(),
+                                category: carz['category'].toString(),
+                                year: carz['details']['year'].toString(),
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "${carz['car']['name']} ${carz['model']['name']} ${carz['details']['year']}",
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontFamily: "NeulisAlt",
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: Colors.white,
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(4),
+                                      topRight: Radius.circular(4),
+                                      bottomLeft: Radius.circular(4),
+                                      bottomRight: Radius.circular(4),
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
-                                  Visibility(
-                                    visible: daysDifferenceText.isNotEmpty,
-                                    child: Container(
-                                      padding: const EdgeInsets.only(
-                                        left: 8,
-                                        right: 8,
-                                        top: 4,
-                                        bottom: 4,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xff00343f),
-                                        borderRadius: BorderRadius.circular(40),
-                                      ),
+                                  child: Image.asset(
+                                    'assets/images/car_ai.png',
+                                    height: 50,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "${carz['car']['name']} ${carz['model']['name']} ${carz['details']['year']}",
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            fontFamily: "NeulisAlt",
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Visibility(
+                                          visible:
+                                              daysDifferenceText.isNotEmpty,
+                                          child: Container(
+                                            padding: const EdgeInsets.only(
+                                              left: 8,
+                                              right: 8,
+                                              top: 4,
+                                              bottom: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xff00343f),
+                                              borderRadius:
+                                                  BorderRadius.circular(40),
+                                            ),
+                                            child: Text(
+                                              daysDifferenceText,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                fontFamily: "NeulisAlt",
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 13,
+                                                color: Color(0xff92BEC1),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
                                       child: Text(
-                                        daysDifferenceText,
-                                        textAlign: TextAlign.center,
+                                        "${carz['details']['engine']} . ${carz['category']['name']} . ${carz['details']['gearbox']}",
+                                        textAlign: TextAlign.left,
                                         style: const TextStyle(
                                           fontFamily: "NeulisAlt",
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 13,
-                                          color: Color(0xff92BEC1),
+                                          fontSize: 12,
+                                          color: Color(0xff7AE6EB),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                child: Text(
-                                  "${carz['details']['engine']} . ${carz['category']['name']} . ${carz['details']['gearbox']}",
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    fontFamily: "NeulisAlt",
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: Color(0xff7AE6EB),
-                                  ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 1),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 8, bottom: 8.0),
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: const Icon(
+                                  Icons.keyboard_arrow_down_sharp,
+                                  size: 35,
+                                  color: AppColors.textGrey,
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 1),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 8.0),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: const Icon(
-                            Icons.keyboard_arrow_down_sharp,
-                            size: 35,
-                            color: AppColors.textGrey,
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                );
-              },
+                    );
+                  },
+                ),
+              ),
             ),
           ),
           Padding(

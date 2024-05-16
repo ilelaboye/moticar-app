@@ -15,12 +15,12 @@ import '../../widgets/bottom_sheet_service.dart';
 import '../../widgets/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:clean_calendar/clean_calendar.dart';
-import '../breakdown/breakdown.dart';
-import '../expense/add_expense.dart';
-import '../expense/add_technician.dart';
-import '../profile/invite_friend.dart';
-import '../profile/my_cars.dart';
-import '../profile/mileage_set_reminder.dart';
+import '../../Home/breakdown/breakdown.dart';
+import '../../Home/expense/add_expense.dart';
+import '../../Home/expense/add_technician.dart';
+import '../../Home/profile/invite_friend.dart';
+import '../../Home/profile/my_cars.dart';
+import '../../Home/profile/mileage_set_reminder.dart';
 import 'pie_chart/pie.dart';
 
 class TimelinePage extends StatefulHookConsumerWidget {

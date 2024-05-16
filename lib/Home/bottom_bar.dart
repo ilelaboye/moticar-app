@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/colors.dart';
-import 'dashboard/me_profile.dart';
-import 'dashboard/more_page.dart';
-import 'dashboard/spend.dart';
-import 'dashboard/timeline.dart';
+import '../views/dashboard/me_profile.dart';
+import '../views/dashboard/more_page.dart';
+import '../views/dashboard/spend.dart';
+import '../views/dashboard/timeline.dart';
 import 'profile/mileage_set_reminder.dart';
 // import 'package:sizer/sizer.dart';
 

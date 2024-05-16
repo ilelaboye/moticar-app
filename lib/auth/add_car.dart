@@ -88,8 +88,6 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
     EasyLoading.dismiss();
     carsData = res['data']['data'];
     mostPopularCars = carsData.take(4).toList();
-    print('all cars');
-    print(carsData);
   }
 
   void searchCar() {
@@ -99,8 +97,6 @@ class _AddCarPageState extends ConsumerState<AddCarPage>
             .toLowerCase()
             .contains(searchQuery.toLowerCase()))
         .toList();
-    print('search');
-    print(mostPopularCars);
   }
 
   @override

@@ -10,9 +10,9 @@ import '../../services/hivekeys.dart';
 import '../../services/localdatabase.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/menu_list_tile.dart';
-import '../profile/about_page.dart';
-import '../profile/notification_sett.dart';
-import '../profile/terms_policies.dart';
+import '../../Home/profile/about_page.dart';
+import '../../Home/profile/notification_sett.dart';
+import '../../Home/profile/terms_policies.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});

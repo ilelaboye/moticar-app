@@ -517,112 +517,125 @@ class _AddCarPage3State extends State<AddCarPage3> {
 
                               Visibility(
                                 visible: isVisible,
-                                child: SizedBox(
-                                  height: 150,
-                                  child: ListView.builder(
-                                      shrinkWrap: true,
-                                      // physics: const NeverScrollableScrollPhysics(),
-                                      itemCount: selectedEngine?.length,
-                                      itemBuilder: (context, index) {
-                                        // final int modelIndex = entry.key;
-                                        final myEngine = selectedEngine![index];
-                                        final engineID = myEngine['id'];
-                                        final engineName = myEngine['engine'];
+                                child: ConstrainedBox(
+                                  // height: 150,
+                                  constraints: new BoxConstraints(
+                                    minHeight: 5.0,
+                                    maxHeight: 150.0,
+                                  ),
+                                  child: DecoratedBox(
+                                    decoration: new BoxDecoration(
+                                        color: Colors.transparent),
+                                    child: ListView.builder(
+                                        shrinkWrap: true,
+                                        // physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: selectedEngine?.length,
+                                        itemBuilder: (context, index) {
+                                          // final int modelIndex = entry.key;
+                                          final myEngine =
+                                              selectedEngine![index];
+                                          final engineID = myEngine['id'];
+                                          final engineName = myEngine['engine'];
 
-                                        return GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              selectedIndex = index;
-                                              selectedPetrol = engineName;
-                                              selectedPetrolID = engineID;
+                                          return GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedIndex = index;
+                                                selectedPetrol = engineName;
+                                                selectedPetrolID = engineID;
 
-                                              print(
-                                                  '$selectedPetrol & $selectedPetrolID');
-                                            });
-                                          },
-                                          child: Container(
-                                            height: 57,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.85,
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 3, horizontal: 15),
-                                            margin: const EdgeInsets.only(
-                                                bottom: 8),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                color: selectedIndex == index
-                                                    ? AppColors.lightGreen
-                                                    : Colors.black12,
-                                                width: 1,
-                                              ),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Colors.black45,
-                                                  blurRadius: 0.1,
+                                                print(
+                                                    '$selectedPetrol & $selectedPetrolID');
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 57,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.85,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 3,
+                                                      horizontal: 15),
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 8),
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                  color: selectedIndex == index
+                                                      ? AppColors.lightGreen
+                                                      : Colors.black12,
+                                                  width: 1,
                                                 ),
-                                              ],
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                selectedIndex == index
-                                                    ? Text(
-                                                        engineName,
-                                                        // myEngine['engine'],
-                                                        style: const TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w700),
-                                                      )
-                                                    : Text(
-                                                        engineName,
-                                                        // myEngine['engine'],
-                                                        style: const TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400),
-                                                      ),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    color: Colors.black45,
+                                                    blurRadius: 0.1,
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  selectedIndex == index
+                                                      ? Text(
+                                                          engineName,
+                                                          // myEngine['engine'],
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700),
+                                                        )
+                                                      : Text(
+                                                          engineName,
+                                                          // myEngine['engine'],
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400),
+                                                        ),
 
-                                                //
-                                                Container(
-                                                  width: 24,
-                                                  height: 24,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: selectedIndex ==
-                                                            index
-                                                        ? AppColors.lightGreen
-                                                        : Colors.transparent,
-                                                    border: Border.all(
+                                                  //
+                                                  Container(
+                                                    width: 24,
+                                                    height: 24,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
                                                       color: selectedIndex ==
                                                               index
                                                           ? AppColors.lightGreen
-                                                          : Colors.black,
-                                                      width: 1,
+                                                          : Colors.transparent,
+                                                      border: Border.all(
+                                                        color: selectedIndex ==
+                                                                index
+                                                            ? AppColors
+                                                                .lightGreen
+                                                            : Colors.black,
+                                                        width: 1,
+                                                      ),
                                                     ),
+                                                    child: selectedIndex ==
+                                                            index
+                                                        ? const Icon(
+                                                            Icons.check,
+                                                            size: 15,
+                                                            color: Colors.white,
+                                                          )
+                                                        : null,
                                                   ),
-                                                  child: selectedIndex == index
-                                                      ? const Icon(
-                                                          Icons.check,
-                                                          size: 15,
-                                                          color: Colors.white,
-                                                        )
-                                                      : null,
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      }),
+                                          );
+                                        }),
+                                  ),
                                 ),
                               ),
 
@@ -1337,66 +1350,44 @@ class _ImageAIState extends State<ImageAI> {
                   myColor: AppColors.appThemeColor,
                   borderColor: AppColors.diaColor,
                   onTap: () async {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (context) {
-                        return Center(
-                          child: AlertDialog(
-                            backgroundColor: AppColors.appThemeColor,
-                            shadowColor: AppColors.appThemeColor,
-                            content: Container(
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  // const SpinKitWave(
-                                  //   color: AppColors.appThemeColor,
-                                  //   size: 30.0,
-                                  // ),
-
-                                  SizedBox(
-                                    height: 100,
-                                    width: 100,
-                                    child: RiveAnimation.asset(
-                                      'assets/images/preloader.riv',
-                                    ),
-                                  ),
-
-                                  //
-                                ],
-                              ),
-                            ),
-                          ),
+                    if (isClicked) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return AddCarPage4(
+                          yearID: widget.yearID,
+                          isHome: widget.isHome,
+                          carYear: widget.carYear,
+                          carID: widget.carID,
+                          gearboxID: widget.gearboxID,
+                          imagePath: 'assets/images/car_ai.png',
+                          carName: widget.carName,
+                          petrol: widget.petrol,
+                          gearbox: widget.gearbox,
+                          model: widget.model,
+                          type: widget.type,
+                          modelID: widget.modelID,
+                          engineID: widget.petrolID,
                         );
-                      },
-                    );
-
-                    await Future.delayed(const Duration(milliseconds: 100));
-
-                    Navigator.pop(context);
-
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return AddCarPage4(
-                        yearID: widget.yearID,
-                        isHome: widget.isHome,
-                        carYear: widget.carYear,
-                        carID: widget.carID,
-                        gearboxID: widget.gearboxID,
-                        imagePath: 'assets/images/car_ai.png',
-                        carName: widget.carName,
-                        petrol: widget.petrol,
-                        gearbox: widget.gearbox,
-                        model: widget.model,
-                        type: widget.type,
-                        modelID: widget.modelID,
-                        engineID: widget.petrolID,
+                      }));
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return MoticarDialog(
+                            icon: const Icon(Icons.info_rounded,
+                                color: AppColors.appThemeColor, size: 50),
+                            title: '',
+                            subtitle: 'Agree to accept the car image',
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            buttonColor: AppColors.appThemeColor,
+                            textColor: AppColors.white,
+                            buttonText: "Dismiss",
+                          );
+                        },
                       );
-                    }));
+                    }
                   },
                   child: const MoticarText(
                     fontColor: AppColors.white,

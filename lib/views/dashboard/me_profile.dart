@@ -17,8 +17,8 @@ import '../../services/localdatabase.dart';
 import '../../utils/enums.dart';
 import '../../widgets/colors.dart';
 import '../../widgets/image_picker_bottom_sheet.dart';
-import '../profile/change_pass.dart';
-import '../profile/email_sub.dart';
+import '../../Home/profile/change_pass.dart';
+import '../../Home/profile/email_sub.dart';
 
 class MePage extends StatefulHookConsumerWidget {
   const MePage({super.key});
@@ -34,6 +34,7 @@ class _MePageState extends ConsumerState<MePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // ref.read(profileProvider.notifier).getExpenses();
       ref.read(profileProvider.notifier).getTechnicians();
+      ref.read(profileProvider.notifier).getMyProfile();
     });
   }
 
@@ -412,7 +413,7 @@ class _MePageState extends ConsumerState<MePage> {
                                     color: const Color(0xff29D7DE),
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Text(
-                                  "User ID : ${state.getProfile.referralCode}",
+                                  "User ID : ${state.getProfile.referralCode.toUpperCase()}",
                                   // 'User ID: ${HiveStorage.get(HiveKeys.userId)}',
                                   textAlign: TextAlign.left,
                                   style: const TextStyle(
@@ -834,9 +835,9 @@ class _MePageState extends ConsumerState<MePage> {
 
                           myTechiez.isNotEmpty
                               ? SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.13,
+                                  height: 120,
                                   child: ListView.builder(
+                                      // shrinkWrap: true,
                                       physics: const BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       itemCount: myTechiez.length,

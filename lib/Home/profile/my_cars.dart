@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -122,7 +123,7 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
 
     var referral_code = HiveStorage.get(HiveKeys.referral);
     print('printing state');
-    print(referral_code);
+    print(widget.plateNumber);
     return Scaffold(
       backgroundColor: const Color(0xff001A1F),
       body: SingleChildScrollView(
@@ -193,29 +194,6 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 8, top: 4, bottom: 4),
-                          decoration: BoxDecoration(
-                            color: const Color(0xffFF594B),
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          child: const Text(
-                            "new",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: "NeulisAlt",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
 
@@ -291,7 +269,7 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                           ),
                         ),
                         Text(
-                          referral_code,
+                          referral_code.toString().toUpperCase(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: "NeulisAlt",
@@ -449,9 +427,11 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                                               AppColors.appThemeColor),
                                     ),
                                     onPressed: () {
+                                      EasyLoading.show(status: 'Loading...');
                                       model.deleteCar(formData: {
-                                        "id": widget.id
+                                        "car_id": widget.id
                                       }).then((value) async {
+                                        EasyLoading.dismiss();
                                         if (value.successMessage.isNotEmpty) {
                                           await showDialog(
                                               context: context,
@@ -460,6 +440,9 @@ class _MyCarInfoPageState extends ConsumerState<MyCarInfoPage> {
                                                 return MoticarDialog(
                                                   subtitle:
                                                       value.successMessage,
+                                                  buttonColor:
+                                                      AppColors.appThemeColor,
+                                                  textColor: AppColors.white,
                                                   onTap: () {
                                                     Navigator.push(context,
                                                         MaterialPageRoute(

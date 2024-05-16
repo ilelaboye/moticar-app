@@ -19,6 +19,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -75,10 +76,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Moticar',
       builder: EasyLoading.init(),
+      // navigatorKey: navigatorKey,
       theme: ThemeData(
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
             // largeSizeConstraints: BoxConstraints.tight(10),

@@ -597,7 +597,7 @@ class GetProfileModel {
   final String phone;
   final String email;
   final String image;
-  final String stage;
+  final int stage;
   final DateTime? emailVerifiedAt;
   final dynamic dob;
   final dynamic gender;
@@ -613,11 +613,11 @@ class GetProfileModel {
   final DateTime? verificationTokenCreatedAt;
   final dynamic resetTokenCreatedAt;
   final String referralCode;
-  final String offersUpdate;
+  final int offersUpdate;
   final dynamic rememberToken;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final String status;
+  final int status;
 
   factory GetProfileModel.fromJson(Map<String, dynamic> json) {
     return GetProfileModel(
@@ -628,7 +628,7 @@ class GetProfileModel {
       phone: json["phone"] ?? "",
       email: json["email"] ?? "",
       image: json["image"] ?? "",
-      stage: json["stage"] ?? "",
+      stage: json["stage"],
       emailVerifiedAt: DateTime.tryParse(json["email_verified_at"] ?? ""),
       dob: json["dob"],
       gender: json["gender"],
@@ -645,11 +645,11 @@ class GetProfileModel {
           DateTime.tryParse(json["verification_token_created_at"] ?? ""),
       resetTokenCreatedAt: json["reset_token_created_at"],
       referralCode: json["referral_code"] ?? "",
-      offersUpdate: json["offers_update"] ?? "",
+      offersUpdate: json["offers_update"],
       rememberToken: json["remember_token"],
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
-      status: json["status"] ?? "",
+      status: json["status"],
     );
   }
 

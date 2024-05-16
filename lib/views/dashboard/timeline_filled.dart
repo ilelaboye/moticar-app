@@ -16,8 +16,8 @@ import '../../widgets/colors.dart';
 import 'package:intl/intl.dart';
 
 import '../../widgets/eard_dialog.dart';
-import '../breakdown/breakdown.dart';
-import '../expense/add_expense.dart';
+import '../../Home/breakdown/breakdown.dart';
+import '../../Home/expense/add_expense.dart';
 import 'pie_chart/pie.dart';
 
 class TimelineFilledPage extends StatefulHookConsumerWidget {

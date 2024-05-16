@@ -62,16 +62,15 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
   List<bool> isExpandedList = [];
   Map<String, int> selectedModelIndexPerCategory = {};
 
-  //
+  List<dynamic> categories = [];
   Map<String, dynamic>? selectedModelMine;
   Map<String, dynamic>? selectedYears;
+  String searchQuery = '';
 
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   ref.read(profileProvider.notifier).getCars();
-    // });
+    categories = widget.selectedCar['categories'];
   }
 
   @override
@@ -80,12 +79,37 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
     super.dispose();
   }
 
+  void searchModel() {
+    categories = [];
+    for (int i = 0; i < widget.selectedCar['categories'].length; i++) {
+      if (widget.selectedCar['categories'][i]['name']
+          .toString()
+          .toLowerCase()
+          .contains(searchQuery.toLowerCase())) {
+        categories.add(widget.selectedCar['categories'][i]);
+      } else {
+        for (int j = 0;
+            j < widget.selectedCar['categories'][i]['models'].length;
+            j++) {
+          if (widget.selectedCar['categories'][i]['models'][j]['name']
+              .toString()
+              .toLowerCase()
+              .contains(searchQuery.toLowerCase())) {
+            categories.add(widget.selectedCar['categories'][i]);
+          }
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // final state = ref.watch(profileProvider);
     // final model = ref.read(profileProvider.notifier);
     // final List<Category> carmodelz = state.getCategories;
-    List<dynamic> categories = widget.selectedCar['categories'];
+    // categories = widget.selectedCar['categories'];
+    // print('model page');
+    // print(categories);
 
     return Scaffold(
       backgroundColor: const Color(0xffEEF5F5),
@@ -249,7 +273,10 @@ class _AddCarPage2State extends ConsumerState<AddCarPage2> {
                                     // email = value!;
                                   },
                                   onChanged: (value) {
-                                    setState(() {});
+                                    setState(() {
+                                      searchQuery = value;
+                                      searchModel();
+                                    });
                                   },
                                   decoration: InputDecoration(
                                     border: InputBorder.none,

@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:moticar/services/hivekeys.dart';
 import 'package:moticar/services/localdatabase.dart';
 import 'package:moticar/utils/constants.dart';
+import 'package:moticar/views/auth/login.dart';
 import 'package:moticar/widgets/flushbar.dart';
 
 class DioClient extends ChangeNotifier {
@@ -96,6 +97,14 @@ class DioClient extends ChangeNotifier {
         context: context,
         notificationType: 1,
       );
+
+      if (e.response?.statusCode == 401) {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return LoginPage();
+          },
+        ));
+      }
 
       // throw errorMessage;
       return {"status": false, "message": errorMessage};

@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:moticar/views/auth/login.dart';
 
 import '../widgets/flushbar.dart';
 
@@ -48,6 +49,13 @@ void handleError({
         );
         break;
       case DioErrorType.response:
+        print('dkkfkkfjj');
+        print(e.response);
+        if (e.response.statusCode == 401) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return LoginPage();
+          }));
+        }
         Alert.showNotificationError(
           message: e.response!.data.runtimeType == String
               ? "${e.response != null && e.response!.data.isNotEmpty ? e.response!.data : "Something went wrong, please try again"}"
@@ -66,8 +74,7 @@ void handleError({
         break;
       case DioErrorType.other:
         Alert.showNotificationError(
-          message:
-              'Please check your internet connection',
+          message: 'Please check your internet connection',
           notificationType: 1,
           context: context,
         );

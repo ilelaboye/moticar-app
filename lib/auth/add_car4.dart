@@ -3,12 +3,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:moticar/Home/bottom_bar.dart';
+import 'package:moticar/services/hivekeys.dart';
+import 'package:moticar/services/localdatabase.dart';
 import 'package:moticar/utils/validator.dart';
+import 'package:moticar/widgets/flushbar.dart';
 import 'package:moticar/widgets/page_indicator.dart';
 import 'package:rive/rive.dart';
 
@@ -124,7 +128,7 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
       context: context,
       initialDate: _selectRenewal ?? DateTime.now(),
       firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
       fieldHintText: "Date of Renewal",
       fieldLabelText: "Date of Renewal",
     );
@@ -638,6 +642,11 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                                   //   FocusScope.of(context)
                                   //       .unfocus(); // Close the keyboard
                                   // },
+                                  onChanged: (value) {
+                                    setState(() {
+                                      plateController.text = value;
+                                    });
+                                  },
                                   maxLength: 8,
                                   textInputAction: TextInputAction.next,
                                   style: const TextStyle(
@@ -2705,6 +2714,16 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                       onTap: () {
                         //showDialog AI Generator
                         // _showOTPVerificationPage(context);
+                        print('pri ren');
+                        if (_selectRenewal == null) {
+                          print(_selectRenewal);
+                          Alert.showNotificationError(
+                            message: "License date field is required",
+                            context: context,
+                            notificationType: 1,
+                          );
+                          return;
+                        }
 
                         if (_formKey.currentState!.validate()) {
                           final String plate = plateController.text;
@@ -2787,23 +2806,10 @@ class _AddCarPage4State extends ConsumerState<AddCarPage4> {
                             );
                           } else {
                             // Show dialog if any required fields are empty
-                            showDialog(
+                            Alert.showNotificationError(
+                              message: "All Fields are required to proceed",
                               context: context,
-                              builder: (BuildContext context) {
-                                return MoticarDialog(
-                                  icon: const Icon(Icons.info_rounded,
-                                      color: AppColors.appThemeColor, size: 50),
-                                  title: '',
-                                  subtitle:
-                                      'All Fields are required to proceed',
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  buttonColor: AppColors.appThemeColor,
-                                  textColor: AppColors.white,
-                                  buttonText: "Dismiss",
-                                );
-                              },
+                              notificationType: 1,
                             );
                           }
                         }
@@ -2958,18 +2964,19 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                 padding: const EdgeInsets.only(
                     top: 15.0, left: 30, right: 30, bottom: 15),
                 child: Container(
-                  // height: 200,
-                  // width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  alignment: Alignment.center,
-                  child: getImageWidget(widget.carName.toString()),
+                    // height: 200,
+                    // width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    alignment: Alignment.center,
+                    child: Image.asset(widget.imagePath)
+                    // getImageWidget(widget.carName.toString()),
 
-                  // Image.asset(widget.imagePath),
-                ),
+                    // Image.asset(widget.imagePath),
+                    ),
               ),
 
               //car model and plate number
@@ -3045,11 +3052,11 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                       color: const Color(0xffF8E761),
                       borderRadius: BorderRadius.circular(32),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "moticarID :",
+                          "moticarID : ",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: "NeulisAlt",
@@ -3059,7 +3066,9 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                           ),
                         ),
                         Text(
-                          "THIFNJ34349",
+                          HiveStorage.get(HiveKeys.referral)
+                              .toString()
+                              .toUpperCase(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: "NeulisAlt",
@@ -3387,43 +3396,7 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                   // Navigator.push(context, MaterialPageRoute(builder: (context) {
                   //   return const BottomHomePage();
                   // }));
-                  showDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    builder: (context) {
-                      return Center(
-                        child: AlertDialog(
-                          backgroundColor: AppColors.appThemeColor,
-                          shadowColor: AppColors.appThemeColor,
-                          content: Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // const SpinKitWave(
-                                //   color: AppColors.appThemeColor,
-                                //   size: 30.0,
-                                // ),
-
-                                SizedBox(
-                                  height: 100,
-                                  width: 100,
-                                  child: RiveAnimation.asset(
-                                    'assets/images/preloader.riv',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-
-                  await Future.delayed(const Duration(seconds: 4));
+                  EasyLoading.show(status: 'Loading...');
                   // All fields are filled, attempt sign-up
                   final signUpResult = await model.addNewCar(
                     formData: {
@@ -3446,9 +3419,10 @@ class _FinishcarPageState extends ConsumerState<FinishcarPage> {
                       "truck_trailer_permit": widget.trucktrailer,
                       "local_govt_permit": widget.lgaPermit,
                       "mid_year_permit": widget.midYear,
+                      "plate_number": widget.plateController
                     },
                   );
-
+                  EasyLoading.dismiss();
                   Navigator.pop(context);
 
                   if (signUpResult.successMessage.isNotEmpty) {
